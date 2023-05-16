@@ -18,7 +18,7 @@ files_to_export = [
     "main.py",
     "monkeys/monkey-manifest.yaml"
 ]
-directory_to_export = "main-backups"
+directory_to_export = "backups/main"
 
 # Create the export archive
 export_filename = f"export-{timestamp}.{archive_format}"
