@@ -34,33 +34,19 @@ We aim to make CodeMonkeys easy to update, even with your customizations. Howeve
 Here is the directory structure of CodeMonkeys:
 
 ├── main.py
-
 ├── monk
-
 ├── monkeys
-
 │   ├── bridge-monkey
-
 │   ├── comment-monkey
-
 │   ├── generic-monkey
-
 │   ├── monkey-manifest.yaml
-
 │   ├── style-monkey
-
 │   └── task-monkey
-
 └── scripts
-
     ├── convert-dir-to-txt.py
-
     ├── generate-monkeys.py
-
     ├── list-code-monkey-files.py
-
     ├── monkey-reset
-    
     └── select-next-file.py
 
 * `main.py`: Your primary customization file.
