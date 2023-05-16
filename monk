@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Get the directory of the current script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+# Directory where the Python scripts are located
+SCRIPTS_DIR="$SCRIPT_DIR/scripts"
+
+# The first argument is the name of the Python script to run
+COMMAND="$1"
+
+# The rest of the arguments are passed to the Python script
+shift
+
+# Run the appropriate Python script with the given arguments
+python3 "$SCRIPTS_DIR/$COMMAND.py" "$@"
+

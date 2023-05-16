@@ -1,0 +1,4 @@
+MAIN_PROMPT='Please generate bridge code to integrate these two components...'
+USAGE_PROMPT='Demonstrate how to use this bridge code...'
+SUMMARIZATION_PROMPT='Summarize this bridge code...'
+SPECIAL_FILE='special_file_bridge.py'

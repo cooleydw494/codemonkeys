@@ -1,0 +1,4 @@
+MAIN_PROMPT='Please add comments to the following code...'
+USAGE_PROMPT='Demonstrate how to use this function, and include comments...'
+SUMMARIZATION_PROMPT='Summarize this well-commented code...'
+SPECIAL_FILE='special_file_comment.py'
