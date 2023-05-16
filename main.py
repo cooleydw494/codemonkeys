@@ -3,51 +3,37 @@ import openai
 import json
 from dotenv import load_dotenv
 from datetime import datetime
+from scripts.get_gpt_client import create_gpt_client
 
-# Set up OpenAI client with API key
+print("🚀 Welcome to the Monkeyspace! Let's wreak the opposite of havok on your [whatever] with Monkey Power! 🌟")
+
+# Define variables from environment 
 openai.api_key = os.getenv("OPENAI_API_KEY")
+codebase = os.getenv("CODEBASE_PATH")
 
-# Define variables
-codebase = "/path/to/your/codebase"  # replace with your codebase path
-special_file = "/path/to/your/special/file"  # replace with your special file path
-main_prompt = "Your main prompt here"  # replace with your main prompt
-usage_prompt = "Your usage prompt here"  # replace with your usage prompt
-summarization_prompt = "Your summarization prompt here"  # replace with your summarization prompt
+# Check if the monkey name argument is provided
+if len(sys.argv) < 2:
+    print("⚠️ Please provide the name of the monkey as a command-line argument.")
+    exit(1)
 
-# Define a class to handle the GPT API calls
-class GPTCommunication:
+# Get monkey name from command-line arg & load config
+# imports variables: main_prompt, usage_prompt, summarization_prompt, special_file
+monkey_name = sys.argv[1]
+monkey_config_file = f"../monkeys/{monkey_name}.py"
+script_path = "scripts/load-monkey-config.py"
+subprocess.run(["python", script_path, monkey_name], check=True)
 
-    def __init__(self, version):
-        self.version = version
-
-    def prompt(self, text):
-        if self.version == 3.5:
-            # Call GPT-3.5 here
-            response = openai.Completion.create(
-              engine="text-davinci-03",
-              prompt=text,
-              max_tokens=4000
-            )
-        elif self.version == 4:
-            # Call GPT-4 here
-            response = openai.Completion.create(
-              engine="text-davinci-04",
-              prompt=text,
-              max_tokens=8000
-            )
-        else:
-            print(f"Unsupported GPT version: {self.version}")
-            return None
-
-        return response
-
-# Create an instance of GPTCommunication for GPT-4
-gpt_4 = GPTCommunication(4)
+# Create an instance of GPTCommunication for 3.5 and 4
+gpt_3 = create_gpt_client(3.5)
+gpt_4 = create_gpt_client(4)
 
 # Summarize the special file
 with open(special_file, "r") as f:
     special_file_contents = f.read()
 special_file_summary = gpt_4.prompt(summarization_prompt + special_file_contents).choices[0].text.strip()
+
+print("📋 Special file summarized successfully! 📝")
+print(f"📝 Summary: {special_file_summary}\n")
 
 # Iterate over each file in the codebase
 for root, dirs, files in os.walk(codebase):
@@ -60,9 +46,15 @@ for root, dirs, files in os.walk(codebase):
         usage_input = usage_prompt + special_file_summary + file_contents
         suggestions = gpt_4.prompt(usage_input).choices[0].text.strip()
 
+        print(f"🔍 Generating suggestions for {file}... 🤔")
+        print(f"💡 Suggestions: {suggestions}\n")
+
         # Apply the main prompt to generate updates
         main_input = main_prompt + special_file_summary + suggestions + file_contents
         updates = gpt_4.prompt(main_input).choices[0].text.strip()
+
+        print(f"⚙️ Applying AI suggestions to {file}... 🤖")
+        print(f"✅ Updates applied successfully!\n")
 
         # Write the updates back to the file
         with open(file_path, "w") as f:
@@ -71,6 +63,11 @@ for root, dirs, files in os.walk(codebase):
         # Stage the file
         repo.git.add(file_path)
 
+        print(f"✨ {file} staged for commit! 📂")
+
         # Commit the changes
         commit_message = f"Applied AI suggestions to {file}"
         repo.git.commit('-m', commit_message)
+
+        print(f"🎉 Changes in {file} committed
+

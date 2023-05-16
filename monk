@@ -1,17 +1,127 @@
 #!/bin/bash
 
 # Get the directory of the current script
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-# Directory where the Python scripts are located
-SCRIPTS_DIR="$SCRIPT_DIR/scripts"
+# Directory where the scripts are located
+scripts_dir="$current_dir/scripts"
 
-# The first argument is the name of the Python script to run
-COMMAND="$1"
+# The first argument is the name of the script to run
+command_name="$1"
 
-# The rest of the arguments are passed to the Python script
+# The rest of the arguments are passed to the script
 shift
 
-# Run the appropriate Python script with the given arguments
-python3 "$SCRIPTS_DIR/$COMMAND.py" "$@"
+# Function to prompt the user for script selection
+select_script() {
+    local prompt="$1"
+    local script_options=("${@:2}")
+    local script_count="${#script_options[@]}"
+    local input
 
+    echo "$prompt"
+    echo "-------------------"
+    for ((i = 0; i < script_count; i++)); do
+        echo "$i. ${script_options[$i]}"
+    done
+    echo "-------------------"
+    echo -n "Enter the number corresponding to the script, or type 'no' to exit: "
+    read -r input
+
+    if [[ $input == "no" ]]; then
+        echo "✋ Exiting."
+        exit 1
+    elif [[ $input == "tab" ]]; then
+        select_script "📜 All available scripts:" "${script_options[@]}"
+    elif [[ $input =~ ^[0-9]+$ && $input -ge 0 && $input -lt $script_count ]]; then
+        local selected_script="${script_options[$input]}"
+        echo "🏃 Running script: $selected_script"
+        run_script "$selected_script"
+    else
+        echo "❌ Invalid input. Please try again."
+        select_script "$prompt" "${script_options[@]}"
+    fi
+}
+
+# Function to run the selected script
+run_script() {
+    local script_path="$1"
+
+    # Get the file extension and run the script accordingly
+    local extension="${script_path##*.}"
+
+    case $extension in
+        sh)
+            bash "$script_path" "$@"
+            ;;
+        py)
+            python3 "$script_path" "$@"
+            ;;
+        *)
+            echo "⚠️ Unsupported script type: .$extension"
+            exit 1
+            ;;
+    esac
+}
+
+# Recursive function to search for the script
+find_script() {
+    local directory="$1"
+    local script_name="$2"
+    local file
+    local matches=()
+
+    for file in "$directory"/*; do
+        if [[ -f "$file" ]]; then
+            local filename=$(basename "$file")
+            local extension="${filename##*.}"
+            local name="${filename%.*}"
+
+            if [[ "$name" == "$script_name" ]]; then
+                echo "$file"
+                return 0
+            fi
+
+            # Check for fuzzy match using Levenshtein distance
+            local distance=$(python3 "$scripts_dir/levenshtein_distance.py" "$script_name" "$name")
+            if [[ $distance -le 3 ]]; then
+                matches+=("$name")
+            fi
+        elif [[ -d "$file" ]]; then
+            find_script "$file" "$script_name"
+        fi
+    done
+
+    # Sort the matches by similarity
+    local sorted_matches=()
+    sorted_matches+=($(printf '%s\n' "${matches[@]}" | sort -n))
+
+    if [[ ${#sorted_matches[@]} -gt 0 ]]; then
+        local prompt="⚠️ Script '$command_name' not found. Did you mean one of these?"
+        local max_matches=5
+        local match_count=${#sorted_matches[@]}
+        if [[ $match_count -gt $max_matches ]]; then
+        prompt+=" (Showing first $max_matches matches)"
+        select_script "$prompt" "${sorted_matches[@]:0:$max_matches}"
+    else
+        select_script "$prompt" "${sorted_matches[@]}"
+    fi
+else
+    echo "⚠️ Script '$command_name' not found. Showing available scripts:"
+
+    # Get all available script options
+    local all_scripts=()
+    for file in "$scripts_dir"/*; do
+        if [[ -f "$file" ]]; then
+            local filename=$(basename "$file")
+            all_scripts+=("${filename%.*}")
+        fi
+    done
+
+    if [[ ${#all_scripts[@]} -gt 0 ]]; then
+        select_script "📜 Available scripts:" "${all_scripts[@]}"
+    else
+        echo "No scripts found."
+        exit 1
+    fi
+fi

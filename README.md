@@ -29,29 +29,10 @@ This project is designed to grow with you. The built-in framework features like 
 
 We aim to make CodeMonkeys easy to update, even with your customizations. However, extensive modifications may complicate the update process. Rest assured, we are working hard to make updates as seamless as possible.
 
-## Directory Structure 📁
+## Directory Overview 📁
 
-Here is the directory structure of CodeMonkeys:
-
-├── main.py
-├── monk
-├── monkeys
-│   ├── bridge-monkey
-│   ├── comment-monkey
-│   ├── generic-monkey
-│   ├── monkey-manifest.yaml
-│   ├── style-monkey
-│   └── task-monkey
-└── scripts
-    ├── convert-dir-to-txt.py
-    ├── generate-monkeys.py
-    ├── list-code-monkey-files.py
-    ├── monkey-reset
-    └── select-next-file.py
-
-* `main.py`: Your primary customization file.
+* `main.py`: Your primary customization file. Created by ./install
 * `monk`: The command to run scripts.
 * `monkeys`: Contains configurations for different 'monkeys' or tasks.
 * `scripts`: Contains Python scripts to be run via the `monk` command.
-* `monkey-manifest.yaml`: The centralized configuration file for all monkeys.
-
+* `monkeys/monkey-manifest.yaml`: The centralized configuration file for all monkeys.

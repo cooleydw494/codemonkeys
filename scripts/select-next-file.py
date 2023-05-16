@@ -1,4 +1,4 @@
-input_file = "code-monkey-files.txt"
+input_file = "monkey-files.txt"
 
 with open(input_file, 'r') as file:
     lines = file.readlines()
