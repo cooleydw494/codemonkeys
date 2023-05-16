@@ -14,7 +14,8 @@ To get started, you'll want to [fork](https://help.github.com/en/articles/fork-a
 
 ```bash
 chmod +x install.sh
-./install.sh```
+./install.sh
+```
 
 ## Usage 🎮
 
