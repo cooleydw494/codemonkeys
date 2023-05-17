@@ -31,9 +31,21 @@ You can create a backup of your current `main.py` file at any time by running `m
 
 ## Customization and Updates 🛠
 
-This project is designed to grow with you. The built-in framework features like `monkey-manifest`, local `.env` files, and others allow you to tailor the project to your needs. To export your customizations, use `monk export`, and to import them, use `monk import [path-to-exported-gz-file]`.
+CodeMonkeys is designed to grow and adapt with you. The framework provides several built-in features that allow you to tailor the project to your needs.
 
-We aim to make CodeMonkeys easy to update, even with your customizations. However, extensive modifications may complicate the update process. Rest assured, we are working hard to make updates as seamless as possible.
+- **Monkey-Manifest**: Define and manage your custom 'monkeys' or tasks in a centralized configuration file.
+
+- **Local `.env` Files**: Manage your environment variables locally without affecting the global settings.
+
+- **Import/Export**: Easily share your customizations or move between different systems.
+
+    - **Export**: Use `monk export` to create an archive that includes your custom `main.py`, monkey configurations, and backups of your main file. The export is timestamped and can be moved to other systems or shared with others.
+
+    - **Import**: Use `monk import [path-to-exported-gz-file]` to import a previously exported archive. This will replace your current `main.py` and monkey configurations with those in the archive. But don't worry - before anything is replaced, your current `main.py` is backed up with a timestamp, and your backups are merged with those from the import.
+
+We strive to make CodeMonkeys easy to update, even with your customizations. However, extensive modifications may complicate the update process. Please note that while we're working hard to make updates as seamless as possible, it's always a good idea to back up your work before updating.
+
+For easy backup of your current `main.py`, simply run `monk backup-main "optional-backup-name-defaults-to-timestamp"`.
 
 ## Directory Overview 📁
 
