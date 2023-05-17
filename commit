@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-echo "🔍 Adding files to the staging area..."
+echo "🔍 Staging files..."
 
 # Run git add, displaying only error output
 add_result=$(git add . 2>&1 >/dev/null)
@@ -19,9 +19,9 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo "✅ Files added to staging area successfully!"
+echo "✅ Changes staged"
 
-echo "🚀 Committing changes with the message \"$1\"..."
+echo "🚀 Committing changes"
 
 # Run git commit, displaying only error output
 commit_result=$(git commit -m "$1" 2>&1 >/dev/null)
@@ -33,7 +33,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo "✅ Commit successful! Your changes have been committed with the message \"$1\"."
+echo "✅ Commit successful!"
 
 # Display commit stats
 echo "📊 Commit stats:"
