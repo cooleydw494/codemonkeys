@@ -3,7 +3,7 @@
 # Check if a commit message argument is provided
 if [ -z "$1" ]; then
   echo "❌ Error: No commit message provided."
-  echo "Usage: .commit \"Your commit message\""
+  echo "Usage: commit \"Your commit message\""
   exit 1
 fi
 
@@ -34,4 +34,8 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "✅ Commit successful! Your changes have been committed with the message \"$1\"."
+
+# Display commit stats
+echo "📊 Commit stats:"
+git diff --shortstat HEAD^
 
