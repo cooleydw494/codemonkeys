@@ -12,9 +12,14 @@ The heart of CodeMonkeys is `main.py.start-here`, a generic template for improvi
 
 To get started, you'll want to [fork](https://help.github.com/en/articles/fork-a-repo) the CodeMonkeys repository. Once you've done that, navigate to the CodeMonkeys directory in your terminal and run the install script with the following commands:
 
+For Mac/Ubuntu
+For Windows
 ```bash
-chmod +x install.sh
-./install.sh
+scripts/install/install.sh
+```
+For Windows
+```bash
+call scripts\install\install.bat
 ```
 
 ## Usage 🎮
