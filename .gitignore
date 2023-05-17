@@ -6,6 +6,7 @@ __pycache__/
 
 # Environment variables
 .env
+.env-backup
 
 # pytest artifacts
 .pytest_cache/
