@@ -25,6 +25,8 @@ call scripts\internal\install\install.bat
 
 CodeMonkeys operates via the `monk` command which runs Python scripts located in the `scripts` directory. For example, to kick off a monkey, simply use `monk kickoff [monkey-name] -n50`, where `n` is the maximum number of iterations to run. There is no default value for `-n` as a measure to encourage thoughtful use and provide a safety measure for those less familiar with the documentation.
 
+If a monkey name is not provided, CodeMonkeys will check the .env file for a DEFAULT_MONKEY variable. If it exists, it will load the corresponding monkey configuration from the ../monkeys/[DEFAULT_MONKEY] directory.
+
 You can create a backup of your current `main.py` file at any time by running `monk backup-main "optional-backup-name-defaults-to-timestamp"`. This ensures your unique modifications are safe and sound.
 
 ## Customization and Updates 🛠
@@ -40,3 +42,12 @@ We aim to make CodeMonkeys easy to update, even with your customizations. Howeve
 * `monkeys`: Contains configurations for different 'monkeys' or tasks.
 * `scripts`: Contains Python scripts to be run via the `monk` command.
 * `monkeys/monkey-manifest.yaml`: The centralized configuration file for all monkeys.
+
+## Convenience Tools
+There are some tools I've found useful in development that I've left here for the sake of simplicity for myself and to allow others to use them.
+
+# Commit Script
+Starting whenever this was added, I'm trying hard to actually make frequent commits to document my progress, so as a lazy person I made a commit script that allows me to type a few characters, a commit message, and then perform a git add, a commit, and an optional push all at once. For me, this is nice, and I might start using it elsewhere. If you use ubuntu or macOS, you can use it like this:
+```bash
+./c "commit message"
+```
