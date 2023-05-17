@@ -15,11 +15,11 @@ To get started, you'll want to [fork](https://help.github.com/en/articles/fork-a
 For Mac/Ubuntu
 For Windows
 ```bash
-scripts/install/install.sh
+scripts/internal/install/install.sh
 ```
 For Windows
 ```bash
-call scripts\install\install.bat
+call scripts\internal\install\install.bat
 ```
 
 ## Usage 🎮
