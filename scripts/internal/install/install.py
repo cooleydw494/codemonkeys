@@ -27,6 +27,18 @@ env_file = os.path.join(base_dir_abs_path, '.env')
 
 if not os.getenv("OPENAI_API_KEY"):
     set_key(env_file, "OPENAI_API_KEY", "your_openai_api_key")
+if not os.getenv("CODEBASE_PATH"):
+    set_key(env_file, "CODEBASE_PATH", "~/project-directory")
+if not os.getenv("FILE_TYPES_INCLUDED"):
+    set_key(env_file, "FILE_TYPES_INCLUDED", '[".js"]')
+if not os.getenv("FILEPATH_MATCH_EXCLUDED"):
+    set_key(env_file, "FILEPATH_MATCH_EXCLUDED", '[".config",".md",".git",".txt"]')
+if not os.getenv("DEFAULT_MONKEY"):
+    set_key(env_file, "DEFAULT_MONKEY", "generic-monkey")
+if not os.getenv("MAX_TOKENS"):
+    set_key(env_file, "MAX_TOKENS", "8000")
+if not os.getenv("TEMPERATURE"):
+    set_key(env_file, "TEMPERATURE", "1")
 
 # Make the monk script executable
 print("🔐 Making the monk script executable... Just a sec! 🔒")

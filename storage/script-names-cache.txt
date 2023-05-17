@@ -1,0 +1,15 @@
+list-code-monkey-files
+get-gpt-client
+generate-monkeys
+select-next-file
+convert-dir-to-txt
+monkey-reset
+load-monkey-config
+list-processes
+kickoff
+import
+find-script
+levenshtein-distance
+cache-autocomplete
+export
+install

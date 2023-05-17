@@ -4,9 +4,9 @@ Welcome to CodeMonkeys, a dynamic and user-friendly project designed to maximize
 
 ## Overview 🌐
 
-CodeMonkeys, while primarily focusing on coding, is highly adaptable and can be tailored to a variety of use cases. The project is structured around a set of flexible Python scripts and easy-to-edit configuration tools. This provides a solid starting point for your customization, while preserving the simplicity and power of the underlying framework.
+CodeMonkeys, while maintaining a strong emphasis on coding tasks, is designed to be a purposefully more focused alternative to broad spectrum tools like AutoGPT. The goal is to reduce resource wastage and provide more control, harnessing the power of automation for tasks that are reliable, predictable, and precisely tailored to user needs. The project is built around a suite of adaptable Python scripts and user-friendly configuration utilities. This approach ensures that while you have a solid foundation for customization, you also maintain the efficiency and potency of the core framework. CodeMonkeys aims to strike a balance between adaptability and specificity, providing a less open-ended but more resource-conscious and dependable tool for your automation needs.
 
-The heart of CodeMonkeys is `main.py.start-here`, a generic template for improving your codebase. During installation, a copy of this file named `main.py` is created and is the primary method for customization. This file is added to .gitignore to avoid interference with your unique modifications.
+The heart of CodeMonkeys is `main.py.start-here`, a generic template for improving your codebase. During installation, a copy of this file named `main.py` is created and is the primary method for in-depth customization. In addition there is a configuration file `monkeys/monkey-manifest.yaml` that allows you to customize high-level variables/options, add additional monkeys, and set a default monkey. Once you've edited the monkey-manifest, you simply run `monk generate-monkeys`.
 
 ## Getting Started 🚀
 
