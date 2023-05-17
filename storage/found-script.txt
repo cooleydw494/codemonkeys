@@ -1,1 +1,1 @@
-/Users/david/local-git/code-monkeys/scripts/internal/cache-autocomplete.py
+/Users/david/local-git/code-monkeys/scripts/internal/help.py

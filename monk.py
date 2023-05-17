@@ -22,7 +22,11 @@ scripts_dir = os.path.join(base_dir_abs_path, "scripts")
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('-e', '--edit', action='store_true', help='Open the script in vim')
+group = parser.add_mutually_exclusive_group() # Create a mutually exclusive group
+group.add_argument('-e', '--edit', action='store_true', help='Open the script in vim')
+group.add_argument('-p', '--print', action='store_true', help='Print the contents of the script to the terminal')
+group.add_argument('-cp', '--copy_path', action='store_true', help='Copy the absolute path of the script to the clipboard')
+group.add_argument('-cc', '--copy_contents', action='store_true', help='Run the script')
 parser.add_argument('command_name', nargs='?', help='The name of the script to run')
 args = parser.parse_args()
 
@@ -50,6 +54,21 @@ if not script_path:
 # Check if open_in_editor is true, if so, open the script in vim and exit
 if args.edit:
     subprocess.run(['vim', script_path.strip()])
+    sys.exit(0)
+
+if args.print:
+    print(script_path.strip())
+    subprocess.run(['cat', script_path.strip()])
+    sys.exit(0)
+
+if args.copy_path:
+    subprocess.run(['pbcopy'], input=script_path.strip().encode('utf-8'))
+    print("✅ Copied script absolute path to clipboard")
+    sys.exit(0)
+
+if args.copy_contents:
+    subprocess.run(['pbcopy'], input=open(script_path.strip(), 'rb').read())
+    print("✅ Copied script contents to clipboard")
     sys.exit(0)
 
 # Get the extension of the script
