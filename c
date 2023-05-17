@@ -40,7 +40,8 @@ echo "📊 Commit stats:"
 git diff --shortstat HEAD^
 
 # Ask the user if they want to perform a git push
-read -p "🚀 Would you like to perform a git push? Press 'n' to cancel, or any other key to continue: " response
+read -n 1 -p "🚀 Would you like to perform a git push? Press 'n' to cancel, or any other key to continue: " response
+echo "" # add a new line for proper formatting
 
 if [ "$response" != "n" ]; then
   echo "📡 Pushing changes to remote repository..."
