@@ -27,8 +27,6 @@ CodeMonkeys operates via the `monk` command which runs Python scripts located in
 
 If a monkey name is not provided, CodeMonkeys will check the .env file for a DEFAULT_MONKEY variable. If it exists, it will load the corresponding monkey configuration from the ../monkeys/[DEFAULT_MONKEY] directory.
 
-You can create a backup of your current `main.py` file at any time by running `monk backup-main "optional-backup-name-defaults-to-timestamp"`. This ensures your unique modifications are safe and sound.
-
 ## Customization and Updates 🛠
 
 CodeMonkeys is designed to grow and adapt with you. The framework provides several built-in features that allow you to tailor the project to your needs.
@@ -39,13 +37,16 @@ CodeMonkeys is designed to grow and adapt with you. The framework provides sever
 
 - **Import/Export**: Easily share your customizations or move between different systems.
 
-    - **Export**: Use `monk export` to create an archive that includes your custom `main.py`, monkey configurations, and backups of your main file. The export is timestamped and can be moved to other systems or shared with others.
+    - **Export**: Use `monk export` to create an archive that includes your custom `main.py`, monkey configurations, and existing backups of your main file. The export is timestamped and can be moved to other systems or shared with others.
 
-    - **Import**: Use `monk import [path-to-exported-gz-file]` to import a previously exported archive. This will replace your current `main.py` and monkey configurations with those in the archive. But don't worry - before anything is replaced, your current `main.py` is backed up with a timestamp, and your backups are merged with those from the import.
+    - **Import**: Use `monk import [path-to-exported-file]` to import a previously exported archive. This will replace your current `main.py` and monkey configurations with those in the archive. But don't worry - before anything is replaced, your current `main.py` is backed up with a timestamp, and your backups are merged with those from the import.
 
 We strive to make CodeMonkeys easy to update, even with your customizations. However, extensive modifications may complicate the update process. Please note that while we're working hard to make updates as seamless as possible, it's always a good idea to back up your work before updating.
 
-For easy backup of your current `main.py`, simply run `monk backup-main "optional-backup-name-defaults-to-timestamp"`.
+For easy backup of your current `main.py`, simply run
+```
+monk backup "optional-custom-name"
+```
 
 ## Directory Overview 📁
 
