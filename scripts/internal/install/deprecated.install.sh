@@ -1,6 +1,12 @@
 #!/bin/bash
 
-cd ../..
+cd ../../..
+
+if [[ -f ./.env ]]; then
+    echo "You already have a .env file, so it's likely you already ran this script."
+    echo "Please address your needs without re-installing or remove/back-up your current .env file and re-run the install script."
+    exit 1
+fi
 
 # Give feedback about the process.
 echo "🚀 Starting the setup... Hang tight! 🌟"
@@ -21,6 +27,8 @@ pip3 install -r requirements.txt
 echo "📝 Creating the .env template file... ✨"
 touch .env
 echo 'OPENAI_API_KEY="your_openai_api_key"' > .env
+scripts_root_dir=$(pwd -P)/scripts
+echo "SCRIPTS_ROOT_DIR=${scripts_root_dir}" > .env
 
 # Make the monk script executable
 echo "🔐 Making the monk script executable... Just a sec! 🔒"

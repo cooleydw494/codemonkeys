@@ -1,7 +1,21 @@
 import os
 import subprocess
 import sys
+from dotenv import load_dotenv
 from typing import List
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get the value of BASE_DIR_ABS_PATH from the environment
+base_dir_abs_path = os.getenv("BASE_DIR_ABS_PATH")
+
+# Check if the value is present and valid
+if not base_dir_abs_path:
+    print("⚠️ BASE_DIR_ABS_PATH environment variable is not set. This must be an absolute path.")
+    exit(1)
+
+scripts_root_dir = os.path.join(base_dir_abs_path, "scripts")
 
 def select_script(prompt: str, script_options: List[str]) -> None:
     script_count = len(script_options)
@@ -19,22 +33,20 @@ def select_script(prompt: str, script_options: List[str]) -> None:
         select_script("📜 All available scripts:", script_options)
     elif input_.isdigit() and 0 <= int(input_) < script_count:
         selected_script = script_options[int(input_)]
-        print(f"🏃 Running script: {selected_script}")
-        run_script(selected_script)
+        print(get_script_path(selected_script))
     else:
         print("❌ Invalid input. Please try again.")
         select_script(prompt, script_options)
 
-def run_script(script_path: str) -> None:
+def get_script_path(script_path: str) -> str:
     extension = os.path.splitext(script_path)[1]
 
-    if extension == ".sh":
-        subprocess.run(["bash", script_path] + sys.argv[1:], check=True)
-    elif extension == ".py":
-        subprocess.run(["python3", script_path] + sys.argv[1:], check=True)
-    else:
+    if extension not in [".sh", ".py"]:
         print(f"⚠️ Unsupported script type: {extension}")
         sys.exit(1)
+
+    return os.path.abspath(script_path)
+
 
 def find_script(directory: str, script_name: str) -> None:
     matches = []
@@ -46,10 +58,10 @@ def find_script(directory: str, script_name: str) -> None:
             name, _ = os.path.splitext(filename)
 
             if name == script_name:
-                print(file)
+                print(os.path.abspath(os.path.join(directory, file)))
                 return
 
-            distance = subprocess.check_output(["python3", os.path.join(directory, "levenshtein_distance.py"), script_name, name])
+            distance = subprocess.check_output(["python3", os.path.join(scripts_root_dir, "internal/levenshtein-distance.py"), script_name, name])
             if int(distance) <= 3:
                 matches.append(name)
 
@@ -64,7 +76,7 @@ def find_script(directory: str, script_name: str) -> None:
         else:
             select_script(prompt, matches)
     else:
-        print(f"⚠️ Script '{script_name}' not found. Showing available scripts:")
+        print(f"⚠️ Script '{script_name}' not found.")
         all_scripts = [os.path.splitext(file)[0] for file in os.listdir(directory) if os.path.isfile(os.path.join(directory, file))]
         if len(all_scripts) > 0:
             select_script("📜 Available scripts:", all_scripts)
@@ -72,3 +84,10 @@ def find_script(directory: str, script_name: str) -> None:
             print("No scripts found.")
             sys.exit(1)
 
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("⚠️ Please provide the name of the script as a command-line argument.")
+        sys.exit(1)
+
+    command_name = sys.argv[1]
+    find_script(scripts_root_dir, command_name)

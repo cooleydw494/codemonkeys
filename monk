@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Get the directory of the current script
-current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+# Load the .env file
+source .env
 
 # Directory where the scripts are located
-scripts_dir="$current_dir/scripts"
+scripts_dir="$BASE_DIR_ABS_PATH/scripts"
 
 # The first argument is the name of the script to run
 command_name="$1"
@@ -12,6 +12,21 @@ command_name="$1"
 # The rest of the arguments are passed to the script
 shift
 
-# Run the Python script helpers
-python3 "$scripts_dir/internal/find-and-run-script.py" "$command_name"
+# Run the Python script helpers and get the path of the script to run
+script_path=$(python3 "$scripts_dir/internal/find-script.py" "$command_name")
+
+# Get the extension of the script
+extension="${script_path##*.}"
+
+# Run the script with the provided arguments
+if [ "$extension" == "sh" ]
+then
+    bash "$script_path" "$@"
+elif [ "$extension" == "py" ]
+then
+    python3 "$script_path" "$@"
+else
+    echo "⚠️ Unsupported script type: $extension"
+    exit 1
+fi
 

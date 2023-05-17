@@ -14,11 +14,12 @@ To get started, you'll want to [fork](https://help.github.com/en/articles/fork-a
 
 For Mac/Ubuntu
 ```bash
-scripts/internal/install/install.sh
+echo "BASE_DIR_ABS_PATH=$(pwd)" > .env && python3 scripts/internal/install/install.py
 ```
 For Windows
 ```bash
-call scripts\internal\install\install.bat
+Set-Content -Path ".env" -Value "BASE_DIR_ABS_PATH=$PWD"
+python3 scripts/internal/install/install.py
 ```
 
 ## Usage 🎮
