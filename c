@@ -24,7 +24,7 @@ echo "✅ Changes staged"
 echo "🚀 Committing changes"
 
 # Run git commit, displaying only error output
-commit_result=$(git commit -m "$1" 2>&1 >/dev/null)
+commit_result=$(git commit -m "$1" 2>&1)
 
 # If git commit was not successful, display the error message
 if [ $? -ne 0 ]; then
