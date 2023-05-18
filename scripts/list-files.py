@@ -6,15 +6,29 @@ from tokenizers import ByteLevelBPETokenizer
 # Load environment variables from .env file
 load_dotenv()
 
-# Do not alter output_file unless you're prepared to make other script alterations
-output_file = "../storage/monkey-files.txt"
-starting_directory = os.getenv("CODEBASE_PATH")
+base_dir_abs_path = os.getenv("BASE_DIR_ABS_PATH")
+
 # Only files with these extensions will be included
-include_extensions = os.getenv("FILE_TYPES_INCLUDED", [".js"])
+include_extensions = os.getenv("FILE_TYPES_INCLUDED", ".js")
+include_extensions = include_extensions.split(',')
+
 # No files with one of these strings in the absolute filepath will be included
-exclude_patterns = os.getenv("FILEPATH_MATCH_EXCLUDED", [".git", ".config", "tests"])
+exclude_patterns = os.getenv("FILEPATH_MATCH_EXCLUDED", ".git,.config,tests")
+exclude_patterns = exclude_patterns.split(',')
+
 # The maximum number of tokens for a file to be included
-max_tokens = os.getenv("FILE_SELECT_MAX_TOKENS", 5500)
+max_tokens = int(os.getenv("FILE_SELECT_MAX_TOKENS", 5500))
+
+def resolve_path(path):
+    path = os.path.expandvars(path)  # Expand environment variables
+    path = os.path.expanduser(path)  # Handle '~'
+    path = os.path.abspath(path)  # Handle relative paths
+    return path
+
+# Do not alter output_file unless you're prepared to make other script alterations
+output_file = os.path.join(base_dir_abs_path, "storage/listed-files.txt")
+starting_directory = resolve_path(os.getenv("CODEBASE_PATH"))
+print(starting_directory)
 
 # Initialize a BPE tokenizer
 tokenizer = ByteLevelBPETokenizer()
@@ -54,4 +68,11 @@ with open(output_file, "w") as f:
         f.write(f"{idx}. {file_path}\n")
 
 print(f"📝 List of files saved to {output_file}. Enjoy coding with your 🐒 code monkeys!")
+# print the contents of the file to the console, truncating it with ellipsis if over 15 lines
+with open(output_file, "r") as f:
+    lines = f.readlines()
+    if len(lines) > 15:
+        print("".join(lines[:15]) + "...")
+    else:
+        print("".join(lines))
 

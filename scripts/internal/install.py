@@ -30,9 +30,9 @@ if not os.getenv("OPENAI_API_KEY"):
 if not os.getenv("CODEBASE_PATH"):
     set_key(env_file, "CODEBASE_PATH", "~/project-directory")
 if not os.getenv("FILE_TYPES_INCLUDED"):
-    set_key(env_file, "FILE_TYPES_INCLUDED", '[".js"]')
+    set_key(env_file, "FILE_TYPES_INCLUDED", ".js,.php")
 if not os.getenv("FILEPATH_MATCH_EXCLUDED"):
-    set_key(env_file, "FILEPATH_MATCH_EXCLUDED", '[".config",".md",".git",".txt"]')
+    set_key(env_file, "FILEPATH_MATCH_EXCLUDED", ".config,.md,.git,.txt")
 if not os.getenv("DEFAULT_MONKEY"):
     set_key(env_file, "DEFAULT_MONKEY", "generic-monkey")
 if not os.getenv("MAX_TOKENS"):

@@ -1,4 +1,4 @@
-list-code-monkey-files
+list-files
 get-gpt-client
 generate-monkeys
 select-next-file

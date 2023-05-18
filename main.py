@@ -1,12 +1,10 @@
 import os
-import openai
-import json
-import pathlib
 import subprocess
 import sys
 from dotenv import load_dotenv
-from datetime import datetime
 from scripts.get_gpt_client import create_gpt_client
+from scripts.get_monkey_name import get_monkey_name
+from termcolor import colored
 
 # Check if the monkey name argument is provided
 if len(sys.argv) < 2:
@@ -20,27 +18,22 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 codebase = os.getenv("CODEBASE_PATH")
 
 # Get monkey name from command-line arg & load config
-# imports variables: main_prompt, usage_prompt, summarization_prompt, special_file
-if len(sys.argv) < 2:
-    if default_monkey:
-        default_monkey_config_file = f"../monkeys/{default_monkey}"
-        # If no monkey name provided, use default if it exists
-        if pathlib.Path(default_monkey_config_file).exists():
-            print(f"🐒 No monkey name provided. Loading default monkey configuration from {default_monkey}...")
-            monkey_config_file = default_monkey_config_file
-        else:
-            print(f"⚠️ No monkey name provided and default configuration {default_monkey} not found. Please specify a monkey name.")
-            exit(1)
-    else:
-        print("⚠️ No monkey name provided and no default monkey configured. Please specify a monkey name.")
-        exit(1)
-else:
-    monkey_name = sys.argv[1]
-    monkey_config_file = f"../monkeys/{monkey_name}"
-    print(f"🐒 Loading {monkey_name} monkey configuration...")
-
+# imports variables: main_prompt, usage_prompt, summarization_prompt, special_file, default_monkey, summarization_model, main_prompt_model, usage_prompt_model
+monkey_name, monkey_config_file = get_monkey_name(sys.argv)
 script_path = "scripts/load-monkey-config.py"
-subprocess.run(["python", script_path, monkey_name], check=True)
+subprocess.run(["python", script_path, monkey_config_file], check=True)
+
+# Give the user feedback regarding the loaded monkey config
+print(colored("🐒 Monkey Configuration Loaded 🐒", 'green'))
+print(colored("Monkey Name: ", 'cyan') + f"{monkey_name}")
+print(colored("Main Prompt: ", 'cyan') + f"{main_prompt}")
+print(colored("Usage Prompt: ", 'cyan') + f"{usage_prompt}")
+print(colored("Summarization Prompt: ", 'cyan') + f"{summarization_prompt}")
+print(colored("Special File: ", 'cyan') + f"{special_file}")
+print(colored("Default Monkey: ", 'cyan') + f"{default_monkey}")
+print(colored("Summarization Model: ", 'cyan') + f"{summarization_model}")
+print(colored("Main Prompt Model: ", 'cyan') + f"{main_prompt_model}")
+print(colored("Usage Prompt Model: ", 'cyan') + f"{usage_prompt_model}")
 
 # Create an instance of GPTCommunication for 3.5 and 4
 gpt_3 = create_gpt_client(3.5)
