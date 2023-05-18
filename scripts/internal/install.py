@@ -25,20 +25,12 @@ subprocess.call('pip3 install -r requirements.txt', shell=True)
 print("📝 Setting default .env values if not already set... ✨")
 env_file = os.path.join(base_dir_abs_path, '.env')
 
-if not os.getenv("OPENAI_API_KEY"):
-    set_key(env_file, "OPENAI_API_KEY", "your_openai_api_key")
-if not os.getenv("CODEBASE_PATH"):
-    set_key(env_file, "CODEBASE_PATH", "~/project-directory")
-if not os.getenv("FILE_TYPES_INCLUDED"):
-    set_key(env_file, "FILE_TYPES_INCLUDED", ".js,.php")
-if not os.getenv("FILEPATH_MATCH_EXCLUDED"):
-    set_key(env_file, "FILEPATH_MATCH_EXCLUDED", ".config,.md,.git,.txt")
-if not os.getenv("DEFAULT_MONKEY"):
-    set_key(env_file, "DEFAULT_MONKEY", "generic-monkey")
-if not os.getenv("MAX_TOKENS"):
-    set_key(env_file, "MAX_TOKENS", "8000")
-if not os.getenv("TEMPERATURE"):
-    set_key(env_file, "TEMPERATURE", "1")
+# if the .env doesn't already exist, copy it from storage/.env.template and print some helpful feedback. If it does exist, let the user know it already exists
+if not os.path.exists(env_file):
+    print("📝 Creating the .env file from the template... 📄")
+    subprocess.call('cp storage/.env.template .env', shell=True)
+else:
+    print("⚠️ The .env file already exists. Skipping... 📄")
 
 # Make the monk script executable
 print("🔐 Making the monk script executable... Just a sec! 🔒")
