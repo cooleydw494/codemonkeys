@@ -33,8 +33,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo "✅ Commit successful!"
-
 # Display commit stats
 echo "📊 Commit stats:"
 git diff --shortstat HEAD^
