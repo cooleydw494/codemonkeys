@@ -17,23 +17,19 @@ print("🚀 Welcome to the Monkeyspace! Let's wreak the opposite of havoc on you
 openai.api_key = os.getenv("OPENAI_API_KEY")
 codebase = os.getenv("CODEBASE_PATH")
 
-# Get monkey name from command-line arg & load config
-# imports variables: main_prompt, usage_prompt, summarization_prompt, special_file, default_monkey, summarization_model, main_prompt_model, usage_prompt_model
 monkey_name, monkey_config_file = get_monkey_name(sys.argv)
 script_path = "scripts/load-monkey-config.py"
-subprocess.run(["python", script_path, monkey_config_file], check=True)
+process = subprocess.run(["python", script_path, monkey_config_file], check=True, stdout=subprocess.PIPE)
+loaded_config = json.loads(process.stdout.decode())
 
-# Give the user feedback regarding the loaded monkey config
-print(colored("🐒 Monkey Configuration Loaded 🐒", 'green'))
-print(colored("Monkey Name: ", 'cyan') + f"{monkey_name}")
-print(colored("Main Prompt: ", 'cyan') + f"{main_prompt}")
-print(colored("Usage Prompt: ", 'cyan') + f"{usage_prompt}")
-print(colored("Summarization Prompt: ", 'cyan') + f"{summarization_prompt}")
-print(colored("Special File: ", 'cyan') + f"{special_file}")
-print(colored("Default Monkey: ", 'cyan') + f"{default_monkey}")
-print(colored("Summarization Model: ", 'cyan') + f"{summarization_model}")
-print(colored("Main Prompt Model: ", 'cyan') + f"{main_prompt_model}")
-print(colored("Usage Prompt Model: ", 'cyan') + f"{usage_prompt_model}")
+main_prompt = loaded_config["main_prompt"]
+usage_prompt = loaded_config["usage_prompt"]
+summarization_prompt = loaded_config["summarization_prompt"]
+special_file = loaded_config["special_file"]
+default_monkey = loaded_config["default_monkey"]
+summarization_model = loaded_config["summarization_model"]
+main_prompt_model = loaded_config["main_prompt_model"]
+usage_prompt_model = loaded_config["usage_prompt_model"]
 
 # Create an instance of GPTCommunication for 3.5 and 4
 gpt_3 = create_gpt_client(3.5)
