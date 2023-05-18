@@ -27,7 +27,7 @@ def resolve_path(path):
 
 # Do not alter output_file unless you're prepared to make other script alterations
 output_file = os.path.join(base_dir_abs_path, "storage/listed-files.txt")
-starting_directory = resolve_path(os.getenv("CODEBASE_PATH"))
+starting_directory = resolve_path(os.getenv("WORK_PATH"))
 print(starting_directory)
 
 # Initialize a BPE tokenizer

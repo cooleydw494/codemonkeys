@@ -1,45 +1,67 @@
+#   Monkey Manifest Options
+#
+#   *Prompts*
+#   The prompts to use for each main function of the AI.
+#   MAIN_PROMPT: The prompt for the main function
+#   USAGE_PROMPT: The prompt for the usage function
+#   SUMMARY_PROMPT: The prompt for the summary function
+#
+#   *Models*
+#   SUMMARY_MODEL: The model to use for the summary function
+#   MAIN_MODEL: The model to use for the main function
+#   USAGE_MODEL: The model to use for the usage function
+#
+#   *Overrides*
+#   OVERRIDE_WORK_PATH: The path to the work_path to use. Supports ~ for home directory
+#   OVERRIDE_PROCESS_FILE_FN: The override for the main function
+#
+#   *Other*
+#   SPECIAL_FILE: A file with always-relevant info to be summarized.
+#   Run `monk help special-file` for more info.
+
 generic-monkey:
   MAIN_PROMPT: "Please generate code for the following task..."
   USAGE_PROMPT: "Show me how to use this function..."
-  SUMMARIZATION_PROMPT: "Provide a summary of this code..."
+  SUMMARY_PROMPT: "Provide a summary of this code..."
   SPECIAL_FILE: "special_file_generic.py"
-  SUMMARIZATION_MODEL: 4
-  MAIN_PROMPT_MODEL: 4
-  USAGE_PROMPT_MODEL: 4
+  SUMMARY_MODEL: 4
+  MAIN_MODEL: 4
+  USAGE_MODEL: 4
+  OVERRIDE_WORK_PATH: ""
+  OVERRIDE_PROCESS_FILE_FN: ""
+  OVERRIDE_OUTPUT_EXT: ""
+  OUTPUT_FILENAME_APPEND: ""
 
-style-monkey:
-  MAIN_PROMPT: "Please refactor the following code to match the PEP 8 style guide..."
-  USAGE_PROMPT: "Demonstrate how to use this function following PEP 8 style..."
-  SUMMARIZATION_PROMPT: "Summarize this PEP 8 styled code..."
-  SPECIAL_FILE: "special_file_style.py"
-  SUMMARIZATION_MODEL: 4
-  MAIN_PROMPT_MODEL: 4
-  USAGE_PROMPT_MODEL: 4
+# Self-Help Monkeys (Monkeys that exist to work on the code-monkeys directory itself
+self-extraction-monkey:
+    MAIN_PROMPT: "Please extract the following code into a new function..."
+    USAGE_PROMPT: "Demonstrate how to use this function..."
+    SUMMARY_PROMPT: "Summarize this extracted code..."
+    SPECIAL_FILE: "special_file_extract.py"
+    SUMMARY_MODEL: 4
+    MAIN_MODEL: 4
+    USAGE_MODEL: 4
+    OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
+    OVERRIDE_PROCESS_FILE_FN: ""
+    OVERRIDE_OUTPUT_EXT: ""
+    OUTPUT_FILENAME_APPEND: ""
 
-task-monkey:
-  MAIN_PROMPT: "Please generate code to accomplish the following task..."
-  USAGE_PROMPT: "Demonstrate the correct usage of this function to perform a task..."
-  SUMMARIZATION_PROMPT: "Summarize this task-oriented code..."
-  SPECIAL_FILE: "special_file_task.py"
-  SUMMARIZATION_MODEL: 4
-  MAIN_PROMPT_MODEL: 4
-  USAGE_PROMPT_MODEL: 4
+self-help-monkey:
+    MAIN_PROMPT: "Provide a visually appealing txt summary of the file and its usage, in the style of documentation for a CLI command. Your ultimate response should contain only the requested txt content."
+    USAGE_PROMPT: "The following is a summary of the monk command, which is used to execute scripts in the CodeMonkeys project. Use it as context for the task of creating a summary of the following script."
+    SUMMARY_PROMPT: "The following is a summary of the monk command, which is used to run scripts in the CodeMonkeys project. Summarize it in a way that will give you adequate context for understanding any one script's intention and usage in the context of the monk command."
+    SPECIAL_FILE: "~/local-git/code-monkeys/monk.py"
+    SUMMARY_MODEL: 4
+    MAIN_MODEL: 4
+    USAGE_MODEL: 4
+    OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
+    OVERRIDE_PROCESS_FILE_FN: ""
+    OVERRIDE_OUTPUT_PATH: "~/local-git/code-monkeys/.help"
+    OVERRIDE_OUTPUT_EXT: ".txt"
+    OUTPUT_FILENAME_APPEND: ""
 
-comment-monkey:
-  MAIN_PROMPT: "Please add comments to the following code..."
-  USAGE_PROMPT: "Demonstrate how to use this function, and include comments..."
-  SUMMARIZATION_PROMPT: "Summarize this well-commented code..."
-  SPECIAL_FILE: "special_file_comment.py"
-  SUMMARIZATION_MODEL: 4
-  MAIN_PROMPT_MODEL: 4
-  USAGE_PROMPT_MODEL: 4
-
-bridge-monkey:
-  MAIN_PROMPT: "Please generate bridge code to integrate these two components..."
-  USAGE_PROMPT: "Demonstrate how to use this bridge code..."
-  SUMMARIZATION_PROMPT: "Summarize this bridge code..."
-  SPECIAL_FILE: "special_file_bridge.py"
-  SUMMARIZATION_MODEL: 4
-  MAIN_PROMPT_MODEL: 4
-  USAGE_PROMPT_MODEL: 4
-
+# Future Monkeys (Monkeys that are not yet implemented)
+#style-monkey:
+#task-monkey:
+#comment-monkey:
+#bridge-monkey:

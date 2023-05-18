@@ -3,8 +3,10 @@ import subprocess
 import sys
 import json
 from dotenv import load_dotenv
-from scripts.get_gpt_client import create_gpt_client
 from scripts.get_monkey_name import get_monkey_name
+from scripts.main_scripts.instantiate_gpt_models import instantiate_gpt_models
+from scripts.main_scripts.summarize_special_file import summarize_special_file
+from scripts.main_scripts.process_file import process_file
 from termcolor import colored
 import openai
 
@@ -17,7 +19,7 @@ print(colored("🚀 Welcome to the Monkeyspace! Let's wreak the opposite of havo
 
 # Define variables from environment
 openai.api_key = os.getenv("OPENAI_API_KEY")
-codebase = os.getenv("CODEBASE_PATH")
+work_path = os.getenv("WORK_PATH")
 
 monkey_name, monkey_config_file = get_monkey_name(sys.argv)
 script_path = "scripts/load-monkey-config.py"
@@ -28,66 +30,35 @@ if process.returncode != 0:
     sys.exit(1)
 
 loaded_config = json.loads(process.stdout.decode())
-main_prompt = loaded_config["MAIN_PROMPT"]
-usage_prompt = loaded_config["USAGE_PROMPT"]
-summarization_prompt = loaded_config["SUMMARIZATION_PROMPT"]
-special_file = loaded_config["SPECIAL_FILE"]
-default_monkey = loaded_config["DEFAULT_MONKEY"]
-summarization_model = loaded_config["SUMMARIZATION_MODEL"]
-main_prompt_model = loaded_config["MAIN_PROMPT_MODEL"]
-usage_prompt_model = loaded_config["USAGE_PROMPT_MODEL"]
 
-# Create instances of necessary GPT models
-gpt_models = {}
-for model in {main_prompt_model, summarization_model, usage_prompt_model}:
-    if model == '3' and '3' not in gpt_models:
-        gpt_models['3'] = create_gpt_client(3.5)
-    elif model == '4' and '4' not in gpt_models:
-        gpt_models['4'] = create_gpt_client(4)
+# mconfig is a dictionary containing the monkey's configuration variables, listed below:
+# MAIN_PROMPT, USAGE_PROMPT, SUMMARY_PROMPT, SPECIAL_FILE, SUMMARY_MODEL, MAIN_MODEL, USAGE_MODEL
+# OVERRIDE_WORK_PATH, OVERRIDE_PROCESS_FILE_FN, OVERRIDE_OUTPUT_PATH, OVERRIDE_OUTPUT_EXT, OUTPUT_FILENAME_APPEND
+mconfig = {key: value for key, value in loaded_config.items()}
+
+# Instantiate necessary GPT models
+gpt_models = instantiate_gpt_models(mconfig['MAIN_MODEL'], mconfig['SUMMARY_MODEL'], mconfig['USAGE_MODEL'])
 
 def gpt_client(model_name):
     return gpt_models.get(model_name)
 
 # Check if the special file exists
-if not os.path.isfile(special_file):
-    print(colored(f"⚠️ Special file '{special_file}' not found.", "yellow"))
+if not os.path.isfile(mconfig['SPECIAL_FILE']):
+    print(colored(f"⚠️ Special file '{mconfig['SPECIAL_FILE']}' not found.", "yellow"))
     exit(1)
 
 # Summarize the special file
-with open(special_file, "r") as f:
-    special_file_contents = f.read()
-special_file_summary = gpt_client(summarization_model).prompt(summarization_prompt + special_file_contents).choices[0].text.strip()
+special_file_summary = summarize_special_file(mconfig['SPECIAL_FILE'], mconfig['SUMMARY_MODEL'], mconfig['SUMMARY_PROMPT'], gpt_client)
 
 print(colored("📋 Special file summarized successfully! 📝", 'green'))
 print(colored(f"📝 Summary: {special_file_summary}\n", 'cyan'))
 
-# Iterate over each file in the codebase
-for root, dirs, files in os.walk(codebase):
+# Iterate over each file in the work_path
+for root, dirs, files in os.walk(work_path):
     for file in files:
         file_path = os.path.join(root, file)
-        with open(file_path, "r") as f:
-            file_contents = f.read()
-
-        # Generate suggestions for implementing the special file
-        usage_input = usage_prompt + special_file_summary + file_contents
-        suggestions = gpt_client(usage_prompt_model).prompt(usage_input).choices[0].text.strip()
-
-        print(colored(f"🔍 Generating suggestions for {file}... 🤔", 'green'))
-        print(colored(f"💡 Suggestions: {suggestions}\n", 'cyan'))
-
-        # Apply the main prompt to generate updates
-        main_input = main_prompt + special_file_summary + suggestions + file_contents
-        updates = gpt_client(main_prompt_model).prompt(main_input).choices[0].text.strip()
-
-        print(colored(f"⚙️ Applying AI suggestions to {file}... 🤖", 'green'))
-        print(colored(f"✅ Updates applied successfully!\n", 'cyan'))
-
-        # Write the updates back to the file
-        with open(file_path, "w") as f:
-            f.write(updates)
-
-        # Git-related operations are removed for now, as they would require additional setup, like a git.Repo object.
-        # It's also a good idea to make sure you're checking which files are being modified before performing commits.
-
-        print(colored(f"✨ {file} updated with AI suggestions!", 'green'))
-
+        # TODO: Make it possible to use an alternate process_file function in the monkey-manifest.yaml config.
+        process_file(file_path, mconfig['USAGE_PROMPT'], special_file_summary, mconfig['USAGE_MODEL'], mconfig['MAIN_PROMPT'], mconfig['MAIN_MODEL'], gpt_client)
+        # TODO: Add optional git add/commit/push functionality, specified by monkey-manifest.yaml config / monkey configs
+        # This should be imported via a script in scripts/internal/git-ops.py and should also be overridable via the monkey-manifest.yaml config
+        # The commit message should be generated by the monkey, and should be a summary of the changes made to the file
