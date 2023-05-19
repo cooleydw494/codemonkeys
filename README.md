@@ -1,13 +1,15 @@
 # CodeMonkeys 🐵👨‍💻
 
-Hi. Are you a moderately-to-highly technical individual with an interest in taking more control over your automated AI coding?
-. . . . . . a lightly-technical individual who wants to try automated AI and can probably figure out how to edit a yaml file?
-. . . . . . a creature with the capacity to learn how to press buttons and a strong motivation to do the AI?
+Are you a highly-technical individual with an interest in taking more control over your automated AI coding?
 
-Welcome to CodeMonkeys, a user-friendly _and_ power-user-friendly project designed to maximize the potential of the GPT API and streamline autonomous tasks with an emphasis on code generation and improvement. It's all about granting you, the user, full control and freedom to shape the AI's capabilities to your specific needs and ideas. Interested? Please scan the rest of the README, and if you find yourself intoxicated by the thought of wielding your own army of Monkeys, read the whole thing. If a great, but typical Github README is a tightly syncopated bop that everyone can groove to instantly, the CodeMonkeys README is a thorough and engaging concept album that conveys a subject intimately. Trust me, the version of you that reads the whole thing will run circles around the version of you that doesn't. Take the win.
+. . . . a lightly-technical individual who wants to automate AI and can probably figure out how to edit a config?
+
+. . . . a creature with the capacity to learn how to press buttons and a strong motivation to do the AI?
+
+Welcome to CodeMonkeys, a user-friendly _and_ power-user-friendly project designed to maximize the potential of the GPT API and streamline autonomous tasks with an emphasis on code generation and improvement. It's all about granting you, the user, full control and freedom to shape the AI's capabilities to your specific needs and ideas. Interested? Please scan the rest of the README, and if you find yourself intoxicated by the thought of wielding your own army of Monkeys, read the whole thing. If a great, but typical Github README is a tightly syncopated bop that everyone can groove to instantly, the CodeMonkeys README is a thorough and engaging concept album that conveys a subject intimately. Trust me, the version of you that reads the whole thing will run circles around the version of you that doesn't. Take the win. Or don't ([cheatcodes](#getting-started)).
 
 ## About The Author
-I'm David. In the interest of establishing trust, I'll shortly describe myself, but then I'll swiftly move on. I'm a very-full-stack engineer with more than 5 and less than 50 years of experience in software dev, mostly web. A generic description of my roles would look something like "coder, lead coder, founder, coder". This project is good in creative ways and I have put a lot of love into it. It may be non-ideal in some ways I don't notice, but the way I see it, if I don't notice it, it isn't making it a bad project. I also believe that my Baby's First Python mentality, coupled with other coding experience and powerful AI models that can write Python very well, has led to an interesting and more-than-viable design.
+I'm David. I'm a very-full-stack engineer with more than 5 and less than 50 years of experience in software dev, mostly web. A generic description of my roles would look something like "coder, lead coder, founder, coder". Oh, I also do not know Python very well. This project is good in creative ways in spite of that and because of it. It may be non-ideal in ways I don't notice, but I believe that my Baby's First Python mentality, coupled with other coding experience and powerful AI models that can write Python very well, has led to an interesting and more-than-viable design.
 
 ## Overview 🌐
 
@@ -72,7 +74,7 @@ monk backup "optional-custom-name"
 ## Convenience Tools
 There are some tools I've found useful in development that I've left here for the sake of simplicity for myself and to allow others to use them.
 
-# Commit Script
+### Commit Script
 Starting whenever this was added, I'm trying hard to actually make frequent commits to document my progress, so as a lazy person I made a commit script that allows me to type a few characters, a commit message, and then perform a git add, a commit, and an optional push all at once. For me, this is nice, and I might start using it elsewhere. If you use ubuntu or macOS, you can use it like this:
 ```bash
 ./c "commit message"
