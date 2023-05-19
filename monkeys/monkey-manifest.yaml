@@ -1,64 +1,101 @@
 #   Monkey Manifest Options
 #
+#   The Monkey Manifest gives you a lot of customization options, effectively
+#   creating preset config management for your automations. With the default
+#   main.py program, Monkeys can accomplish a lot of creative things, which is
+#   also true for any other programs in the programs/ directory. The combo
+#   of config grouping via Monkeys and custom programs is powerful and flexible.
+#   Monkeys are also a way for you to organize and share your own presets, and the
+#   monkey-manifest.yaml file is included in the built-in export/import functionality.
+
+#   Do not include any sensitive info in your monkey-manifest.yaml if you are
+#   using git for the repo (developing a fork or contributing). If you must,
+#   you should .gitignore both the monkeys/ directory and export files by running
+#   `monk gitignore-monkeys` in the root directory of your project.
+#
+#   Run `monk help [PROPERTY_NAME]` for more info.
+#   All monkey-manifest properties can be defaulted in the .env file like so:
+#   `DEFAULT_[PROPERTY_NAME]=[VALUE]`
+#
 #   *Prompts*
-#   The prompts to use for each main function of the AI.
-#   MAIN_PROMPT: The prompt for the main function
-#   USAGE_PROMPT: The prompt for the usage function
-#   SUMMARY_PROMPT: The prompt for the summary function
+#
+#   MAIN_PROMPT: The main prompt
+#   SUMMARY_PROMPT: The prompt for summarizing the SPECIAL_FILE ("" to use verbatim SPECIAL_FILE contents)
+#   USAGE_PROMPT: The prompt for generating guidance. ("" to use verbatim SPECIAL_FILE contents)
+#   MAIN_PROMPT_ULTIMATUM: A final ultimatum for the main prompt ("" for none)
 #
 #   *Models*
-#   SUMMARY_MODEL: The model to use for the summary function
-#   MAIN_MODEL: The model to use for the main function
-#   USAGE_MODEL: The model to use for the usage function
+
+#   MAIN_MODEL, SUMMARY_MODEL, and USAGE_MODEL: The model to use for respective prompts
+#   Note: All models can be set to either 3 (gpt-3.5-turbo) or 4 (gpt-4).
 #
 #   *Overrides*
-#   OVERRIDE_WORK_PATH: The path to the work_path to use. Supports ~ for home directory
-#   OVERRIDE_PROCESS_FILE_FN: The override for the main function
+#   OVERRIDE_WORK_PATH: The path to the work_path to use. (Use absolute path or start with ~ for home dir on Mac/Linux)
+#   OVERRIDE_PROCESS_FILE_FN: Override program's process_file fn (relative path from overrides/process_file/)
+#   OVERRIDE_MAIN_PROGRAM: Override program's main.py from (relative path from programs/)
+#
+#   *Output*
+#   OUTPUT_FILENAME_APPEND: Append to output filenames ("" for none, or "-summary", "-usage", etc.)
+#   OUTPUT_EXT: Override output file extensions ("" for original ext, or ".md", ".txt", etc.)
 #
 #   *Other*
-#   SPECIAL_FILE: A file with always-relevant info to be summarized.
-#   Run `monk help special-file` for more info.
+#   SPECIAL_FILE: A file which will be summarized using SUMMARY_PROMPT to give context for the main prompt. (absolute path)
 
 generic-monkey:
   MAIN_PROMPT: "Please generate code for the following task..."
-  USAGE_PROMPT: "Show me how to use this function..."
   SUMMARY_PROMPT: "Provide a summary of this code..."
+  USAGE_PROMPT: "Show me how to use this function..."
+  MAIN_PROMPT_ULTIMATUM: ""
   SPECIAL_FILE: "special_file_generic.py"
-  SUMMARY_MODEL: 4
   MAIN_MODEL: 4
+  SUMMARY_MODEL: 4
   USAGE_MODEL: 4
+  MAIN_TEMP: 1
+  SUMMARY_TEMP: 1
+  USAGE_TEMP: 1
   OVERRIDE_WORK_PATH: ""
   OVERRIDE_PROCESS_FILE_FN: ""
+  OVERRIDE_MAIN_PROGRAM: ""
   OVERRIDE_OUTPUT_EXT: ""
   OUTPUT_FILENAME_APPEND: ""
 
 # Self-Help Monkeys (Monkeys that exist to work on the code-monkeys directory itself
 self-extraction-monkey:
     MAIN_PROMPT: "Please extract the following code into a new function..."
-    USAGE_PROMPT: "Demonstrate how to use this function..."
     SUMMARY_PROMPT: "Summarize this extracted code..."
+    USAGE_PROMPT: "Demonstrate how to use this function..."
+    MAIN_PROMPT_ULTIMATUM: ""
     SPECIAL_FILE: "special_file_extract.py"
-    SUMMARY_MODEL: 4
     MAIN_MODEL: 4
+    SUMMARY_MODEL: 4
     USAGE_MODEL: 4
+    MAIN_TEMP: 1
+    SUMMARY_TEMP: 1
+    USAGE_TEMP: 1
     OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
     OVERRIDE_PROCESS_FILE_FN: ""
+    OVERRIDE_MAIN_PROGRAM: ""
     OVERRIDE_OUTPUT_EXT: ""
     OUTPUT_FILENAME_APPEND: ""
 
 self-help-monkey:
     MAIN_PROMPT: "Provide a visually appealing txt summary of the file and its usage, in the style of documentation for a CLI command. Your ultimate response should contain only the requested txt content."
-    USAGE_PROMPT: "The following is a summary of the monk command, which is used to execute scripts in the CodeMonkeys project. Use it as context for the task of creating a summary of the following script."
     SUMMARY_PROMPT: "The following is a summary of the monk command, which is used to run scripts in the CodeMonkeys project. Summarize it in a way that will give you adequate context for understanding any one script's intention and usage in the context of the monk command."
+    USAGE_PROMPT: "The following is a summary of the monk command, which is used to execute scripts in the CodeMonkeys project. Use it as context for the task of creating a summary of the following script."
+    MAIN_PROMPT_ULTIMATUM: ""
     SPECIAL_FILE: "~/local-git/code-monkeys/monk.py"
-    SUMMARY_MODEL: 4
     MAIN_MODEL: 4
+    SUMMARY_MODEL: 4
     USAGE_MODEL: 4
+    MAIN_TEMP: 1
+    SUMMARY_TEMP: 1
+    USAGE_TEMP: 1
     OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
     OVERRIDE_PROCESS_FILE_FN: ""
+    OVERRIDE_MAIN_PROGRAM: ""
     OVERRIDE_OUTPUT_PATH: "~/local-git/code-monkeys/.help"
-    OVERRIDE_OUTPUT_EXT: ".txt"
     OUTPUT_FILENAME_APPEND: ""
+    OVERRIDE_OUTPUT_EXT: ".txt"
 
 # Future Monkeys (Monkeys that are not yet implemented)
 #style-monkey:
