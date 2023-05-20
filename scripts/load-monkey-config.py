@@ -1,5 +1,6 @@
 import os
 import sys
+
 from termcolor import colored
 
 # Check if the monkey name argument is provided
@@ -45,4 +46,3 @@ print(colored("Default Monkey: ", 'cyan') + f"{default_monkey}")
 print(colored("Summarization Model: ", 'cyan') + f"{summary_model}")
 print(colored("Main Prompt Model: ", 'cyan') + f"{main_model}")
 print(colored("Usage Prompt Model: ", 'cyan') + f"{usage_model}")
-

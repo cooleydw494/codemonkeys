@@ -1,8 +1,9 @@
 import os
 import subprocess
 import sys
-from dotenv import load_dotenv
 from typing import List
+
+from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,6 +17,7 @@ if not base_dir_abs_path:
     exit(1)
 
 scripts_root_dir = os.path.join(base_dir_abs_path, "scripts")
+
 
 def select_script(prompt: str, script_options: List[tuple[str, int, str]]) -> None:
     script_count = len(script_options)
@@ -39,12 +41,13 @@ def select_script(prompt: str, script_options: List[tuple[str, int, str]]) -> No
         # make sure storage/found-script.txt is empty
         with open(os.path.join(base_dir_abs_path, "storage/found-script.txt"), "w") as f:
             f.write("")
-        #write selected_script's value to the file at base path /storage/found-script.txt
+        # write selected_script's value to the file at base path /storage/found-script.txt
         with open(os.path.join(base_dir_abs_path, "storage/found-script.txt"), "w") as f:
             f.write(selected_script)
     else:
         print("❌ Invalid input. Please try again.")
         select_script(prompt, script_options)
+
 
 def get_script_path(script_path: str) -> str:
     extension = os.path.splitext(script_path)[1]
@@ -54,6 +57,7 @@ def get_script_path(script_path: str) -> str:
         sys.exit(1)
 
     return os.path.abspath(script_path)
+
 
 def find_script(directory: str, script_name: str) -> None:
     matches = []
@@ -71,12 +75,13 @@ def find_script(directory: str, script_name: str) -> None:
                     # make sure storage/found-script.txt is empty
                     with open(os.path.join(base_dir_abs_path, "storage/found-script.txt"), "w") as f:
                         f.write("")
-                    #write selected_script's value to the file at base path /storage/found-script.txt
+                    # write selected_script's value to the file at base path /storage/found-script.txt
                     with open(os.path.join(base_dir_abs_path, "storage/found-script.txt"), "w") as f:
                         f.write(selected_script)
                     return
 
-                distance = subprocess.check_output(["python3", os.path.join(scripts_root_dir, "internal/levenshtein-distance.py"), script_name, name])
+                distance = subprocess.check_output(
+                    ["python3", os.path.join(scripts_root_dir, "internal/levenshtein-distance.py"), script_name, name])
                 if int(distance) <= 3:
                     absolute_path = os.path.join(root, file)
                     matches.append((name, int(distance), absolute_path))

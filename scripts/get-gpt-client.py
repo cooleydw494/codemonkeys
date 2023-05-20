@@ -1,6 +1,7 @@
+import os
+
 import openai
 from dotenv import load_dotenv
-import os
 
 # Load environment variables from .env file
 load_dotenv()
@@ -10,6 +11,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Get the maximum tokens value from the environment variable
 max_tokens = int(os.getenv("MAX_TOKENS", 4000))
+
 
 # Create and return the GPT client
 def create_gpt_client(version):
@@ -28,7 +30,7 @@ def create_gpt_client(version):
         print(f"⚠️ Unsupported GPT version: {version}")
         return None
 
+
 # Check if the API key is available
 if not openai.api_key:
     print("⚠️ OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
-

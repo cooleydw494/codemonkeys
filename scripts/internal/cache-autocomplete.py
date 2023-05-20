@@ -2,6 +2,7 @@ import os
 
 # Load environment variables from .env file
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # Get the value of BASE_DIR_ABS_PATH from the environment
@@ -24,4 +25,3 @@ for root, dirs, files in os.walk(f"{base_dir_abs_path}/scripts"):
 with open(f"{base_dir_abs_path}/storage/script-names-cache.txt", 'w') as f:
     for name in script_names:
         f.write(f"{name}\n")
-

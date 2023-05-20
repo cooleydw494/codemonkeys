@@ -1,6 +1,5 @@
-import os
-import shutil
 import platform
+import shutil
 import time
 
 # Get the current timestamp

@@ -1,4 +1,5 @@
 import os
+
 import yaml
 from dotenv import load_dotenv
 
@@ -21,4 +22,3 @@ for monkey, config in monkeys.items():
     with open(f"{monkeys_directory}/{monkey}", "w") as f:
         for key, value in config.items():
             f.write(f"{key}='{value}'\n")
-

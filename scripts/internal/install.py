@@ -1,6 +1,7 @@
 import os
 import subprocess
-from dotenv import load_dotenv, set_key
+
+from dotenv import load_dotenv
 
 # Load the .env file
 load_dotenv()
@@ -42,7 +43,7 @@ subprocess.call('./monk generate-monkeys', shell=True)
 
 # Feedback to the user
 print("🎉 Installation finished! Woohoo! 🎊")
-print("✨ You're now ready to rock 'n' roll with the 'monk' command inside this directory to run scripts in the 'scripts' directory. ✨")
+print(
+    "✨ You're now ready to rock 'n' roll with the 'monk' command inside this directory to run scripts in the 'scripts' directory. ✨")
 print("📝 Feel free to edit the monkey configurations in the 'monkeys/monkey-manifest.yaml' file. 🐵📄")
 print("💡 To apply changes, regenerate the configurations using the command: './monk generate-monkeys'. Keep going! 🚀")
-

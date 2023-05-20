@@ -1,5 +1,5 @@
 import os
-import shutil
+
 
 def main():
     source_dir = './VirtueMaster'
@@ -16,13 +16,15 @@ def main():
                 input_file_path = os.path.join(root, file)
                 relative_path = os.path.relpath(input_file_path, source_dir)
                 new_root = root.replace(source_dir, output_dir)
-                output_file_path = os.path.join(new_root, f'{os.path.splitext(file)[0]}.{os.path.splitext(file)[1][1:]}.txt')
+                output_file_path = os.path.join(new_root,
+                                                f'{os.path.splitext(file)[0]}.{os.path.splitext(file)[1][1:]}.txt')
 
                 if not os.path.exists(new_root):
                     os.makedirs(new_root)
 
                 with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
-                    outfile.write(f'This is a txt representation of the VirtueMaster file located at {relative_path}\n\n')
+                    outfile.write(
+                        f'This is a txt representation of the VirtueMaster file located at {relative_path}\n\n')
                     outfile.write(infile.read())
 
             elif file == 'README.md':
@@ -31,11 +33,13 @@ def main():
 
     if readme_file:
         readme_new_root = readme_input_file_path.replace(source_dir, output_dir)
-        readme_output_file_path = os.path.join(os.path.dirname(readme_new_root), f'{os.path.splitext("README.md")[0]}.{os.path.splitext("README.md")[1][1:]}.txt')
+        readme_output_file_path = os.path.join(os.path.dirname(readme_new_root),
+                                               f'{os.path.splitext("README.md")[0]}.{os.path.splitext("README.md")[1][1:]}.txt')
         with open(readme_input_file_path, 'r') as infile, open(readme_output_file_path, 'w') as outfile:
-            outfile.write(f'This is a txt representation of the VirtueMaster file located at {readme_relative_path}\n\n')
+            outfile.write(
+                f'This is a txt representation of the VirtueMaster file located at {readme_relative_path}\n\n')
             outfile.write(infile.read())
+
 
 if __name__ == '__main__':
     main()
-

@@ -12,4 +12,3 @@ with open(input_file, 'w') as file:
 
 # Output the saved file path
 print(next_file)
-

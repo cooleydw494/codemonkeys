@@ -18,14 +18,12 @@
 #   `DEFAULT_[PROPERTY_NAME]=[VALUE]`
 #
 #   *Prompts*
-#
 #   MAIN_PROMPT: The main prompt
 #   SUMMARY_PROMPT: The prompt for summarizing the SPECIAL_FILE ("" to use verbatim SPECIAL_FILE contents)
 #   USAGE_PROMPT: The prompt for generating guidance. ("" to use verbatim SPECIAL_FILE contents)
 #   MAIN_PROMPT_ULTIMATUM: A final ultimatum for the main prompt ("" for none)
 #
 #   *Models*
-
 #   MAIN_MODEL, SUMMARY_MODEL, and USAGE_MODEL: The model to use for respective prompts
 #   Note: All models can be set to either 3 (gpt-3.5-turbo) or 4 (gpt-4).
 #
@@ -35,6 +33,8 @@
 #   OVERRIDE_MAIN_PROGRAM: Override program's main.py from (relative path from programs/)
 #
 #   *Output*
+#   OUTPUT_EXAMPLE: An example of the output you want to see. The generic-monkey has a good preset. ("" for none)
+#   OUTPUT_CHECK_PROMPT: A prompt for checking the output. The generic-monkey has a good preset ("" to skip check)
 #   OUTPUT_FILENAME_APPEND: Append to output filenames ("" for none, or "-summary", "-usage", etc.)
 #   OUTPUT_EXT: Override output file extensions ("" for original ext, or ".md", ".txt", etc.)
 #
@@ -58,44 +58,53 @@ generic-monkey:
   OVERRIDE_MAIN_PROGRAM: ""
   OVERRIDE_OUTPUT_EXT: ""
   OUTPUT_FILENAME_APPEND: ""
+  OUTPUT_EXAMPLE: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
+  OUTPUT_CHECK_PROMPT: "Examine the following out put and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
+
 
 # Self-Help Monkeys (Monkeys that exist to work on the code-monkeys directory itself
 self-extraction-monkey:
-    MAIN_PROMPT: "Please extract the following code into a new function..."
-    SUMMARY_PROMPT: "Summarize this extracted code..."
-    USAGE_PROMPT: "Demonstrate how to use this function..."
-    MAIN_PROMPT_ULTIMATUM: ""
-    SPECIAL_FILE: "special_file_extract.py"
-    MAIN_MODEL: 4
-    SUMMARY_MODEL: 4
-    USAGE_MODEL: 4
-    MAIN_TEMP: 1
-    SUMMARY_TEMP: 1
-    USAGE_TEMP: 1
-    OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
-    OVERRIDE_PROCESS_FILE_FN: ""
-    OVERRIDE_MAIN_PROGRAM: ""
-    OVERRIDE_OUTPUT_EXT: ""
-    OUTPUT_FILENAME_APPEND: ""
+  MAIN_PROMPT: "Please extract the following code into a new function..."
+  SUMMARY_PROMPT: "Summarize this extracted code..."
+  USAGE_PROMPT: "Demonstrate how to use this function..."
+  MAIN_PROMPT_ULTIMATUM: ""
+  SPECIAL_FILE: "special_file_extract.py"
+  MAIN_MODEL: 4
+  SUMMARY_MODEL: 4
+  USAGE_MODEL: 4
+  MAIN_TEMP: 1
+  SUMMARY_TEMP: 1
+  USAGE_TEMP: 1
+  OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
+  OVERRIDE_PROCESS_FILE_FN: ""
+  OVERRIDE_MAIN_PROGRAM: ""
+  OVERRIDE_OUTPUT_EXT: ""
+  OUTPUT_FILENAME_APPEND: ""
+  OUTPUT_EXAMPLE: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
+  OUTPUT_CHECK_PROMPT:" Examine the following out put and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
+
 
 self-help-monkey:
-    MAIN_PROMPT: "Provide a visually appealing txt summary of the file and its usage, in the style of documentation for a CLI command. Your ultimate response should contain only the requested txt content."
-    SUMMARY_PROMPT: "The following is a summary of the monk command, which is used to run scripts in the CodeMonkeys project. Summarize it in a way that will give you adequate context for understanding any one script's intention and usage in the context of the monk command."
-    USAGE_PROMPT: "The following is a summary of the monk command, which is used to execute scripts in the CodeMonkeys project. Use it as context for the task of creating a summary of the following script."
-    MAIN_PROMPT_ULTIMATUM: ""
-    SPECIAL_FILE: "~/local-git/code-monkeys/monk.py"
-    MAIN_MODEL: 4
-    SUMMARY_MODEL: 4
-    USAGE_MODEL: 4
-    MAIN_TEMP: 1
-    SUMMARY_TEMP: 1
-    USAGE_TEMP: 1
-    OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
-    OVERRIDE_PROCESS_FILE_FN: ""
-    OVERRIDE_MAIN_PROGRAM: ""
-    OVERRIDE_OUTPUT_PATH: "~/local-git/code-monkeys/.help"
-    OUTPUT_FILENAME_APPEND: ""
-    OVERRIDE_OUTPUT_EXT: ".txt"
+  MAIN_PROMPT: "Provide a visually appealing txt summary of the file and its usage, in the style of documentation for a CLI command. Your ultimate response should contain only the requested txt content."
+  SUMMARY_PROMPT: "The following is a summary of the monk command, which is used to run scripts in the CodeMonkeys project. Summarize it in a way that will give you adequate context for understanding any one script's intention and usage in the context of the monk command."
+  USAGE_PROMPT: "The following is a summary of the monk command, which is used to execute scripts in the CodeMonkeys project. Use it as context for the task of creating a summary of the following script."
+  MAIN_PROMPT_ULTIMATUM: ""
+  SPECIAL_FILE: "~/local-git/code-monkeys/monk.py"
+  MAIN_MODEL: 4
+  SUMMARY_MODEL: 4
+  USAGE_MODEL: 4
+  MAIN_TEMP: 1
+  SUMMARY_TEMP: 1
+  USAGE_TEMP: 1
+  OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
+  OVERRIDE_PROCESS_FILE_FN: ""
+  OVERRIDE_MAIN_PROGRAM: ""
+  OVERRIDE_OUTPUT_PATH: "~/local-git/code-monkeys/.help"
+  OUTPUT_FILENAME_APPEND: ""
+  OVERRIDE_OUTPUT_EXT: ".txt"
+  OUTPUT_EXAMPLE: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
+  OUTPUT_CHECK_PROMPT: "Examine the following out put and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
+
 
 # Future Monkeys (Monkeys that are not yet implemented)
 #style-monkey:

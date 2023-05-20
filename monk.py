@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-import os
 import argparse
+import os
 import subprocess
 import sys
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -22,10 +23,11 @@ scripts_dir = os.path.join(base_dir_abs_path, "scripts")
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
-group = parser.add_mutually_exclusive_group() # Create a mutually exclusive group
+group = parser.add_mutually_exclusive_group()  # Create a mutually exclusive group
 group.add_argument('-e', '--edit', action='store_true', help='Open the script in vim')
 group.add_argument('-p', '--print', action='store_true', help='Print the contents of the script to the terminal')
-group.add_argument('-cp', '--copy_path', action='store_true', help='Copy the absolute path of the script to the clipboard')
+group.add_argument('-cp', '--copy_path', action='store_true',
+                   help='Copy the absolute path of the script to the clipboard')
 group.add_argument('-cc', '--copy_contents', action='store_true', help='Run the script')
 parser.add_argument('command_name', nargs='?', help='The name of the script to run')
 args = parser.parse_args()
@@ -47,7 +49,7 @@ if exit_code != 0:
 with open(os.path.join(base_dir_abs_path, "storage/found-script.txt"), "r") as f:
     script_path = f.read()
 
-#If the script_path is empty, exit
+# If the script_path is empty, exit
 if not script_path:
     sys.exit(1)
 
@@ -82,4 +84,3 @@ elif extension == ".py":
 else:
     print(f"⚠️ Unsupported script type: {extension}")
     sys.exit(1)
-

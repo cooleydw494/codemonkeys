@@ -1,5 +1,6 @@
 import os
 import time
+
 from dotenv import load_dotenv
 from tokenizers import ByteLevelBPETokenizer
 
@@ -19,11 +20,13 @@ exclude_patterns = exclude_patterns.split(',')
 # The maximum number of tokens for a file to be included
 max_tokens = int(os.getenv("FILE_SELECT_MAX_TOKENS", 5500))
 
+
 def resolve_path(path):
     path = os.path.expandvars(path)  # Expand environment variables
     path = os.path.expanduser(path)  # Handle '~'
     path = os.path.abspath(path)  # Handle relative paths
     return path
+
 
 # Do not alter output_file unless you're prepared to make other script alterations
 output_file = os.path.join(base_dir_abs_path, "storage/listed-files.txt")
@@ -33,8 +36,11 @@ print(starting_directory)
 # Initialize a BPE tokenizer
 tokenizer = ByteLevelBPETokenizer()
 
+
 def should_include(file_path):
-    return any(file_path.endswith(ext) for ext in include_extensions) and not any(pattern in file_path for pattern in exclude_patterns)
+    return any(file_path.endswith(ext) for ext in include_extensions) and not any(
+        pattern in file_path for pattern in exclude_patterns)
+
 
 filtered_files = []
 
@@ -75,4 +81,3 @@ with open(output_file, "r") as f:
         print("".join(lines[:15]) + "...")
     else:
         print("".join(lines))
-

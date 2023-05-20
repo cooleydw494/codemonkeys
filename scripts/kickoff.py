@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import sys
 import subprocess
+import sys
 
 # Get the arguments passed to kickoff.py
 args = sys.argv[1:]
@@ -11,4 +11,3 @@ command = ["python", "main.py"] + args
 
 # Run the command
 subprocess.run(command)
-

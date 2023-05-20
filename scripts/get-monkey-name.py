@@ -1,10 +1,11 @@
 import os
-import sys
 import pathlib
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
+
 
 def get_monkey_name(argv):
     default_monkey = os.getenv("DEFAULT_MONKEY")
@@ -18,7 +19,8 @@ def get_monkey_name(argv):
                 print(f"🐒 No monkey name provided. Loading default monkey configuration from {default_monkey}...")
                 monkey_config_file = default_monkey_config_file
             else:
-                print(f"⚠️ No monkey name provided and default configuration {default_monkey} not found. Please specify a monkey name.")
+                print(
+                    f"⚠️ No monkey name provided and default configuration {default_monkey} not found. Please specify a monkey name.")
                 exit(1)
         else:
             print("⚠️ No monkey name provided and no default monkey configured. Please specify a monkey name.")

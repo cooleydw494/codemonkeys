@@ -1,4 +1,5 @@
 import sys
+
 import Levenshtein
 
 if len(sys.argv) != 3:
@@ -14,4 +15,3 @@ if string1 in string2 or string2 in string1:
     sys.exit(0)
 distance = Levenshtein.distance(string1, string2)
 print(distance)
-
