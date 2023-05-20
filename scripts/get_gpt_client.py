@@ -15,6 +15,10 @@ max_tokens = int(os.getenv("MAX_TOKENS", 4000))
 
 # Create and return the GPT client
 def create_gpt_client(version):
+    # Check if the API key is available
+    if not openai.api_key:
+        print("⚠️ OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+
     engines = {
         3.5: "text-davinci-03",
         4: "text-davinci-04"
@@ -31,6 +35,11 @@ def create_gpt_client(version):
         return None
 
 
-# Check if the API key is available
-if not openai.api_key:
-    print("⚠️ OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+def instantiate_gpt_models(main_model, summary_model, usage_model):
+    gpt_models = {}
+    for model in {main_model, summary_model, usage_model}:
+        if model == '3' and '3' not in gpt_models:
+            gpt_models['3'] = create_gpt_client(3.5)
+        elif model == '4' and '4' not in gpt_models:
+            gpt_models['4'] = create_gpt_client(4)
+    return gpt_models

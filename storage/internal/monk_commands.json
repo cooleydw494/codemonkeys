@@ -2,9 +2,12 @@
     "headers": ["Command", "Description", "Note"],
     "show_headers": false,
     "rows": [
-        ["monk [script-name]", "Run a monk script", null],
-        ["monk kickoff [monkey-name]", "Run a Monkey by specifying its name", null],
-        ["monk -e [script-name]", "Open the script in vim", "--edit"],
+        ["monk scripts", "List all monk scripts", ""],
+        ["monk [script-name]", "Run a monk script", ""],
+        ["monk kickoff [monkey-name]", "Run a Monkey", ""],
+        ["monk -a [(rel-path/)script-name]", "Add new script", "--add"],
+        ["monk -b [script-name]", "Backup script", "--backup"],
+        ["monk -e [script-name]", "Open script in vim", "--edit"],
         ["monk -p [script-name]", "Print script contents", "--print"],
         ["monk -cp [script-name]", "Copy script path to clipboard", "--cp-path"],
         ["monk -cc [script-name]", "Copy script contents to clipboard", "--cp-contents"]

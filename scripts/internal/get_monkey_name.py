@@ -8,6 +8,7 @@ load_dotenv()
 
 
 def get_monkey_name(argv):
+    monkey_name = None
     default_monkey = os.getenv("DEFAULT_MONKEY")
 
     # Get monkey name from command-line arg & load config

@@ -39,7 +39,7 @@ if args.command_name in ['install', 'reinstall', 're-install']:
 
 # Run the Python script helpers and get the path of the script to run
 # Using subprocess.call() because it needs to be interactive
-exit_code = subprocess.call([sys.executable, os.path.join(scripts_dir, "internal/find-script.py"), args.command_name])
+exit_code = subprocess.call([sys.executable, os.path.join(scripts_dir, "internal/find_script.py"), args.command_name])
 
 # If the exit code is not 0, exit
 if exit_code != 0:
