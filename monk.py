@@ -46,7 +46,7 @@ if exit_code != 0:
     sys.exit(exit_code)
 
 # Set script path by reading the file at base path /storage/found-script.txt
-with open(os.path.join(base_dir_abs_path, "storage/found-script.txt"), "r") as f:
+with open(os.path.join(base_dir_abs_path, "storage/txt/found-script.txt"), "r") as f:
     script_path = f.read()
 
 # If the script_path is empty, exit
