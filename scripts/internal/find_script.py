@@ -1,7 +1,7 @@
 import os
+import sys
 from typing import Generator, List, Tuple
 from dotenv import load_dotenv
-
 from scripts.internal.levenshtein_distance import levenshtein_distance
 
 load_dotenv()
@@ -44,19 +44,21 @@ def find_scripts(directory: str, script_name: str) -> Generator[Tuple[str, int, 
                 name, _ = os.path.splitext(filename)
                 if name == script_name:
                     yield name, 0, os.path.join(root, file)
-                    return
                 distance = levenshtein_distance(name, script_name)
                 if distance <= 3:
                     yield name, distance, os.path.join(root, file)
 
 
-def find_script(script_name: str) -> None:
+def find_script(script_name: str):
     matches = sorted(find_scripts(scripts_root_dir, script_name), key=lambda x: x[1])
-    selected_script = ""
 
     if matches:
-        prompt = f"⚠️ Script '{script_name}' not found. Did you mean one of these?"
-        selected_script = select_script(prompt, matches[:5])
+        # if there is a perfect match, use that
+        if matches[0][1] == 0:
+            selected_script = matches[0][2]
+        else:
+            prompt = f"⚠️ Script '{script_name}' not found. Did you mean one of these?"
+            selected_script = select_script(prompt, matches[:5])
     else:
         print(f"⚠️ Script '{script_name}' not found.")
         all_scripts = sorted(find_scripts(scripts_root_dir, ""), key=lambda x: x[1])
@@ -64,6 +66,6 @@ def find_script(script_name: str) -> None:
             selected_script = select_script("📜 Available scripts:", all_scripts)
         else:
             print("No scripts found.")
-            sys.exit(1)
+            selected_script = None
 
-    write_to_file(os.path.join(base_dir_abs_path, "storage/found-script.txt"), selected_script)
+    return selected_script

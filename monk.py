@@ -6,6 +6,7 @@ import subprocess
 import sys
 
 from dotenv import load_dotenv
+from scripts.internal.find_script import find_script
 
 # Load environment variables from .env file
 load_dotenv()
@@ -32,26 +33,16 @@ group.add_argument('-cc', '--copy_contents', action='store_true', help='Run the 
 parser.add_argument('command_name', nargs='?', help='The name of the script to run')
 args = parser.parse_args()
 
+# If there is no argument, use 'help'
+if args.command_name is None:
+    args.command_name = 'help'
+
 # If the command_name is 'install', 'reinstall', or 're-install', print an error and exit
 if args.command_name in ['install', 'reinstall', 're-install']:
     print("⚠️  Do not re-install code-monkeys with the install script")
     sys.exit(1)
 
-# Run the Python script helpers and get the path of the script to run
-# Using subprocess.call() because it needs to be interactive
-exit_code = subprocess.call([sys.executable, os.path.join(scripts_dir, "internal/find_script.py"), args.command_name])
-
-# If the exit code is not 0, exit
-if exit_code != 0:
-    sys.exit(exit_code)
-
-# Set script path by reading the file at base path /storage/found-script.txt
-with open(os.path.join(base_dir_abs_path, "storage/txt/found-script.txt"), "r") as f:
-    script_path = f.read()
-
-# If the script_path is empty, exit
-if not script_path:
-    sys.exit(1)
+script_path = find_script(args.command_name)
 
 # Check if open_in_editor is true, if so, open the script in vim and exit
 if args.edit:
