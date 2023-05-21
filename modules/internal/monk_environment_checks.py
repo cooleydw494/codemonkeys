@@ -16,5 +16,5 @@ def monk_environment_checks():
                         os.path.join(sys.prefix, 'lib', 'python3.5', 'site-packages', f"{ROOT_DIR_NAME}.pth")):
                     if not os.path.exists(
                             os.path.join(sys.prefix, 'lib', 'python3', 'site-packages', f"{ROOT_DIR_NAME}.pth")):
-                        print(colored("⚠️ CodeMonkeys must be installed as a source package. Run `setup.py`.", 'red'))
+                        print(colored("⚠️  CodeMonkeys must be installed as a source package. Run `setup.py`.", 'red'))
                         exit(1)

@@ -12,7 +12,7 @@ try:
     from modules.internal.find_script import find_script
     from modules.internal.monk_environment_checks import monk_environment_checks
 except ImportError:
-    print(colored("⚠️ CodeMonkeys must be 'installed' as a source package. Please run the `setup.py` script.", 'red'))
+    print(colored("⚠️  CodeMonkeys must be 'installed' as a source package. Please run the `setup.py` script.", 'red'))
     exit(1)
 
 monk_environment_checks()
