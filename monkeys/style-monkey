@@ -1,7 +1,0 @@
-MAIN_PROMPT='Please refactor the following code to match the PEP 8 style guide...'
-USAGE_PROMPT='Demonstrate how to use this function following PEP 8 style...'
-SUMMARY_PROMPT='Summarize this PEP 8 styled code...'
-SPECIAL_FILE='special_file_style.py'
-SUMMARY_MODEL='4'
-MAIN_MODEL='4'
-USAGE_MODEL='4'

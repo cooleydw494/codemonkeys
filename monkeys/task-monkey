@@ -1,7 +1,0 @@
-MAIN_PROMPT='Please generate code to accomplish the following task...'
-USAGE_PROMPT='Demonstrate the correct usage of this function to perform a task...'
-SUMMARY_PROMPT='Summarize this task-oriented code...'
-SPECIAL_FILE='special_file_task.py'
-SUMMARY_MODEL='4'
-MAIN_MODEL='4'
-USAGE_MODEL='4'

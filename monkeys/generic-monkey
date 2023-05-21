@@ -1,7 +1,0 @@
-MAIN_PROMPT='Please generate code for the following task...'
-USAGE_PROMPT='Show me how to use this function...'
-SUMMARY_PROMPT='Provide a summary of this code...'
-SPECIAL_FILE='special_file_generic.py'
-SUMMARY_MODEL='4'
-MAIN_MODEL='4'
-USAGE_MODEL='4'

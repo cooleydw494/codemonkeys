@@ -1,21 +1,12 @@
 import yaml
 import os
 import sys
-from dotenv import load_dotenv
 
-from get_monkey_name import get_monkey_name
-
-# Load environment variables
-load_dotenv()
-BASE_DIR_ABS_PATH = os.getenv("BASE_DIR_ABS_PATH")
-
-# Ensure the required environment variable is set
-if not BASE_DIR_ABS_PATH:
-    print("Error: The BASE_DIR_ABS_PATH environment variable is not set.")
-    sys.exit(1)
+from modules.internal.get_monkey_name import get_monkey_name
+from definitions import ROOT_PATH
 
 # Load the default monkey configuration
-DEFAULT_MONKEY_CONFIG_PATH = os.path.join(BASE_DIR_ABS_PATH, "storage/internal/default-monkey-config")
+DEFAULT_MONKEY_CONFIG_PATH = os.path.join(ROOT_PATH, "storage/internal/default-monkey-config")
 try:
     with open(DEFAULT_MONKEY_CONFIG_PATH, 'r') as f:
         DEFAULT_MONKEY_CONFIG = yaml.safe_load(f)
@@ -93,8 +84,8 @@ def main():
     data[monkey_name] = new_monkey_data
 
     # Save the modified data back to the file
-    with open('monkey-manifest.yaml', 'w') as f:
-        yaml.dump(data, f, default_flow_style=False)
+    with open('monkey-manifest.yaml', 'w') as file:
+        yaml.dump(data, file, default_flow_style=False)
 
     print("\nConfiguration complete. The 'monkey-manifest.yaml' file has been updated.\n")
 

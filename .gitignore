@@ -1,12 +1,15 @@
+# Environment variables
+.env
+.env-backup
+
+# CodeMonkey
+storage/internal/listed-files.txt
+
 # Python artifacts
 *.pyc
 *.pyo
 *.pyd
 __pycache__/
-
-# Environment variables
-.env
-.env-backup
 
 # pytest artifacts
 .pytest_cache/

@@ -1,17 +1,14 @@
 #   Monkey Manifest Options
 #
-#   The Monkey Manifest gives you a lot of customization options, effectively
-#   creating preset config management for your automations. With the default
-#   main.py program, Monkeys can accomplish a lot of creative things, which is
-#   also true for any other programs in the programs/ directory. The combo
-#   of config grouping via Monkeys and custom programs is powerful and flexible.
-#   Monkeys are also a way for you to organize and share your own presets, and the
-#   monkey-manifest.yaml file is included in the built-in export/import functionality.
+#   The Monkey Manifest offers robust configuration management for your automations,
+#   enabling a variety of creative possibilities with the default main.py program and
+#   other scripts in the programs/ directory. Monkeys provide a powerful and flexible
+#   means to configure and share presets.
 
-#   Do not include any sensitive info in your monkey-manifest.yaml if you are
-#   using git for the repo (developing a fork or contributing). If you must,
-#   you should .gitignore both the monkeys/ directory and export files by running
-#   `monk gitignore-monkeys` in the root directory of your project.
+#   Ensure not to include sensitive information in your monkey-manifest.yaml when using
+#   git (for a fork or contribution). If necessary, use `monk gitignore-monkeys` command
+#   in the root directory to .gitignore the monkeys/ directory and export files.
+
 #
 #   Run `monk help [PROPERTY_NAME]` for more info.
 #   All monkey-manifest properties can be defaulted in the .env file like so:
@@ -81,7 +78,7 @@ self-extraction-monkey:
   OVERRIDE_OUTPUT_EXT: ""
   OUTPUT_FILENAME_APPEND: ""
   OUTPUT_EXAMPLE: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
-  OUTPUT_CHECK_PROMPT:" Examine the following out put and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
+  OUTPUT_CHECK_PROMPT: " Examine the following out put and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
 
 
 self-help-monkey:
@@ -99,15 +96,19 @@ self-help-monkey:
   OVERRIDE_WORK_PATH: "~/local-git/code-monkeys"
   OVERRIDE_PROCESS_FILE_FN: ""
   OVERRIDE_MAIN_PROGRAM: ""
-  OVERRIDE_OUTPUT_PATH: "~/local-git/code-monkeys/.help"
+  OVERRIDE_OUTPUT_PATH: "~/local-git/code-monkeys/help"
   OUTPUT_FILENAME_APPEND: ""
   OVERRIDE_OUTPUT_EXT: ".txt"
   OUTPUT_EXAMPLE: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
   OUTPUT_CHECK_PROMPT: "Examine the following out put and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
 
 
-# Future Monkeys (Monkeys that are not yet implemented)
-#style-monkey:
-#task-monkey:
-#comment-monkey:
-#bridge-monkey:
+# Future Monkeys
+# I find it can be nice to take notes on monkey ideas in the form of just jotting down the names.
+# I often have these ideas while editing the manifest, but don't want to get distracted.
+# If you don't find this useful, feel free to delete this section.
+#
+# style-monkey:
+# task-monkey:
+# comment-monkey:
+# bridge-monkey:

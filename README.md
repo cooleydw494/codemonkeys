@@ -53,20 +53,10 @@ powerful design for using/implementing `scripts`. The `scripts` directory is...
 ## Getting Started 🚀
 
 To get started, you'll want to [fork](https://help.github.com/en/articles/fork-a-repo) the CodeMonkeys repository. Once
-you've done that, navigate to the CodeMonkeys directory in your terminal and run the install script with the following
-commands:
+you've done that, navigate to the CodeMonkeys directory in your terminal and run the setup script:
 
-For Mac/Ubuntu
-
-```bash
-echo "BASE_DIR_ABS_PATH=$(pwd)" > .env && python3 scripts/internal/install/install.py
 ```
 
-For Windows
-
-```bash
-Set-Content -Path ".env" -Value "BASE_DIR_ABS_PATH=$PWD"
-python3 scripts/internal/install/install.py
 ```
 
 ## Usage 🎮
@@ -99,15 +89,17 @@ tailor the project to your needs.
       replaced, your current `main.py` is backed up with a timestamp, and your backups are merged with those from the
       import.
 
-We strive to make CodeMonkeys easy to update, even with your customizations. However, extensive modifications may
-complicate the update process. Please note that while we're working hard to make updates as seamless as possible, it's
+I strive to make CodeMonkeys easy to update, even with your customizations. However, extensive modifications may
+complicate the update process. Please note that while I'm working hard to make updates as seamless as possible, it's
 always a good idea to back up your work before updating.
 
-For easy backup of your current `main.py`, simply run
+For easy export of your `monkey-manifest.yaml`, `programs`, and all `customizable` directories, simply run
 
 ```
-monk backup "optional-custom-name"
+monk export
 ```
+
+The export process will also create a `.env-backup` file that contains your current .env file. `.env-backup` is in the default .gitignore, and is not included in the export. Please also verify that you are not committing your exports if you have sensitive information outside of your .env file, such as in the `monkey-manifest.yaml` (*however, you should not do that*).
 
 ## Directory Overview 📁
 
@@ -132,3 +124,11 @@ ubuntu or macOS, you can use it like this:
 ```bash
 ./c "commit message"
 ```
+
+## Attribution
+
+When forking or creating derivative works from CodeMonkeys, I kindly ask you to:
+
+1. Clearly acknowledge the CodeMonkeys project and provide a hyperlink to the CodeMonkeys repository in the first section of your README.md file.
+
+2. Prominently display an acknowledgement of the usage of CodeMonkeys in any application, framework, or derivative work which is built on top of the CodeMonkeys framework and is distributed through an application store, website, social media, or any other distribution method.

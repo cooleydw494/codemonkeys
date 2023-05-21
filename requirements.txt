@@ -4,3 +4,5 @@ python-dotenv
 python-Levenshtein
 termcolor
 art
+tiktoken
+transformers

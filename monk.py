@@ -5,22 +5,13 @@ import os
 import subprocess
 import sys
 
-from dotenv import load_dotenv
-from scripts.internal.find_script import find_script
-
-# Load environment variables from .env file
-load_dotenv()
-
-# Get the value of BASE_DIR_ABS_PATH from the environment
-base_dir_abs_path = os.getenv("BASE_DIR_ABS_PATH")
+from modules.internal.find_script import find_script
+from definitions import ROOT_PATH
 
 # Check if the value is present and valid
-if not base_dir_abs_path:
-    print("⚠️ BASE_DIR_ABS_PATH environment variable is not set. This must be an absolute path.")
+if not ROOT_PATH:
+    print("⚠️ ROOT_PATH environment variable is not set. This must be an absolute path.")
     exit(1)
-
-# Directory where the scripts are located
-scripts_dir = os.path.join(base_dir_abs_path, "scripts")
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
@@ -37,10 +28,22 @@ args = parser.parse_args()
 if args.command_name is None:
     args.command_name = 'help'
 
-# If the command_name is 'install', 'reinstall', or 're-install', print an error and exit
-if args.command_name in ['install', 'reinstall', 're-install']:
-    print("⚠️  Do not re-install code-monkeys with the install script")
-    sys.exit(1)
+# If the user is not running the script (using the other flags), do not do warn them about the setup script
+if args.command_name in ['install'] and not (args.edit or args.print or args.copy_path or args.copy_contents):
+    answer = input(
+        "⚠️ You are about to run install with the monk command. If you can run the monk command you likely have "
+        "already installed code-monkeys, and running this script may not be a good idea because it is not designed "
+        "to handle post-install edge cases. This is not suggested. Are you sure you want to continue? (y/n): ")
+    if answer.lower() == 'y':
+        print("🚀 Starting the setup... Hang tight! 🌟")
+    else:
+        if answer.lower() == 'n':
+            print("🚀 Aborting setup... 🌟")
+            sys.exit(0)
+        else:
+            print("Invalid input. Aborting setup... 🌟")
+        sys.exit(1)
+
 
 script_path = find_script(args.command_name)
 

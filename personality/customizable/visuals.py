@@ -1,13 +1,12 @@
-import json
 import os
 import textwrap
 
-from art import text2art
 from termcolor import colored
+from definitions import STORAGE_INTERNAL_PATH
 
 
 def print_banner():
-    with open(os.path.join(os.getenv("BASE_DIR_ABS_PATH"), 'storage/internal/art.txt'), 'r') as f:
+    with open(os.path.join(STORAGE_INTERNAL_PATH, 'art.txt'), 'r') as f:
         art = f.read()
     print(colored(art, 'white'))
 
@@ -42,32 +41,28 @@ def print_nice(*args, color='white', max_width=80, **kwargs):
     print(colored(text, color), end=end, file=file, flush=flush)
 
 
-def print_table(config_file, title=None):
+def print_table(table, title=None):
     if title:
-        print(colored(title + "\n", 'white', attrs=['bold']))
-
-    # Load data from the config file
-    with open(config_file, 'r') as f:
-        config_data = json.load(f)
+        print_nice(title + "\n", color="white", attrs=['bold'])
 
     # Calculate column widths
-    col_widths = [max(len(str(x)) for x in col) for col in zip(*config_data["rows"])]
+    col_widths = [max(len(str(x)) for x in col) for col in zip(*table["rows"])]
 
     # Print headers in bold magenta
-    if config_data["show_headers"]:
+    if table["show_headers"]:
         header = '   '.join([colored(name.ljust(width), 'magenta', attrs=['bold']) for name, width in
-                             zip(config_data["headers"], col_widths)])
-        print(header)
-        print(colored('-' * len(header), 'magenta'))
+                             zip(table["headers"], col_widths)])
+        print_nice(header)
+        print_nice('-' * len(header), color="magenta")
 
     # Print rows
-    for row in config_data["rows"]:
+    for row in table["rows"]:
         # Color the command in green, description in cyan, and note in yellow
         colored_row = [colored(str(val).ljust(width), 'green' if i == 0 else 'cyan' if i == 1 else 'yellow') for
                        i, (val, width) in enumerate(zip(row, col_widths))]
-        print('   '.join(colored_row))
+        print_nice('   '.join(colored_row))
 
-    print("\n\n")
+    print_nice("\n\n")
 
 
 def print_tree(start_dir, exclude_dirs, title=None):

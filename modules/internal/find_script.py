@@ -1,12 +1,8 @@
 import os
 import sys
 from typing import Generator, List, Tuple
-from dotenv import load_dotenv
-from scripts.internal.levenshtein_distance import levenshtein_distance
-
-load_dotenv()
-base_dir_abs_path = os.getenv("BASE_DIR_ABS_PATH")
-scripts_root_dir = os.path.join(base_dir_abs_path, "scripts")
+from modules.internal.levenshtein_distance import levenshtein_distance
+from definitions import SCRIPTS_PATH
 
 
 def write_to_file(file_path: str, text: str) -> None:
@@ -50,7 +46,7 @@ def find_scripts(directory: str, script_name: str) -> Generator[Tuple[str, int, 
 
 
 def find_script(script_name: str):
-    matches = sorted(find_scripts(scripts_root_dir, script_name), key=lambda x: x[1])
+    matches = sorted(find_scripts(SCRIPTS_PATH, script_name), key=lambda x: x[1])
 
     if matches:
         # if there is a perfect match, use that
@@ -61,7 +57,7 @@ def find_script(script_name: str):
             selected_script = select_script(prompt, matches[:5])
     else:
         print(f"⚠️ Script '{script_name}' not found.")
-        all_scripts = sorted(find_scripts(scripts_root_dir, ""), key=lambda x: x[1])
+        all_scripts = sorted(find_scripts(SCRIPTS_PATH, ""), key=lambda x: x[1])
         if all_scripts:
             selected_script = select_script("📜 Available scripts:", all_scripts)
         else:

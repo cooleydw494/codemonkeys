@@ -6,10 +6,10 @@ import sys
 import openai
 from termcolor import colored
 
-from scripts.get_gpt_client import instantiate_gpt_models
-from scripts.internal.get_monkey_name import get_monkey_name
-from scripts.main_scripts.process_file import process_file
-from scripts.main_scripts.summarize_special_file import summarize_special_file
+from modules.internal.get_gpt_client import instantiate_gpt_models
+from modules.internal.get_monkey_name import get_monkey_name
+from modules.customizable.process_file import process_file
+from modules.customizable.summarize_special_file import summarize_special_file
 
 
 def check_env_vars():

@@ -1,4 +1,4 @@
-input_file = "listed-files.txt"
+input_file = "../storage/internal/listed-files.txt"
 
 with open(input_file, 'r') as file:
     lines = file.readlines()

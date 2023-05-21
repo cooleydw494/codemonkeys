@@ -1,13 +1,12 @@
 import os
 import time
+from transformers import AutoTokenizer
 
 from dotenv import load_dotenv
-from tokenizers import ByteLevelBPETokenizer
+from definitions import ROOT_PATH
 
 # Load environment variables from .env file
 load_dotenv()
-
-base_dir_abs_path = os.getenv("BASE_DIR_ABS_PATH")
 
 # Only files with these extensions will be included
 include_extensions = os.getenv("FILE_TYPES_INCLUDED", ".js")
@@ -20,6 +19,12 @@ exclude_patterns = exclude_patterns.split(',')
 # The maximum number of tokens for a file to be included
 max_tokens = int(os.getenv("FILE_SELECT_MAX_TOKENS", 5500))
 
+# Initialize a Hugging Face tokenizer
+hf_tokenizer = AutoTokenizer.from_pretrained("gpt2")
+
+# Initialize a Tiktoken tokenizer
+tik_tokenizer = Tokenizer()
+
 
 def resolve_path(path):
     path = os.path.expandvars(path)  # Expand environment variables
@@ -29,12 +34,9 @@ def resolve_path(path):
 
 
 # Do not alter output_file unless you're prepared to make other script alterations
-output_file = os.path.join(base_dir_abs_path, "storage/listed-files.txt")
+output_file = os.path.join(ROOT_PATH, "storage/internal/listed-files.txt")
 starting_directory = resolve_path(os.getenv("WORK_PATH"))
 print(starting_directory)
-
-# Initialize a BPE tokenizer
-tokenizer = ByteLevelBPETokenizer()
 
 
 def should_include(file_path):
@@ -60,7 +62,8 @@ for root, _, files in os.walk(starting_directory):
             # Check the number of tokens
             with open(absolute_path, 'r') as f:
                 text = f.read()
-            num_tokens = len(tokenizer.encode(text).tokens)
+            encoded_text = hf_tokenizer.encode(text)
+            num_tokens = tik_tokenizer.count_tokens(TokenList(encoded_text))
 
             # Only include the file if it doesn't exceed the maximum number of tokens
             if num_tokens <= max_tokens:
