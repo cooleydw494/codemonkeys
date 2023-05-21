@@ -35,7 +35,8 @@ fi
 
 # Display commit stats
 echo "📊 Commit stats:"
-git diff HEAD^
+# the options for detail of the git diff command are:
+git diff --summary HEAD^
 
 # Run git push, capturing any error output
   push_result=$(git push 2>&1)
