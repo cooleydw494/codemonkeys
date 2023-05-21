@@ -1,7 +1,10 @@
+import site
 import os
 import platform
 import subprocess
 from termcolor import colored
+
+from definitions import ROOT_PATH
 
 print(colored("🚀 Initiating the setup process... 🌟", "green"))
 
@@ -70,6 +73,30 @@ elif os_type == "windows":  # If OS is Windows
                   "see something like `monk [script-name]` in the docs, so should instead do something like:"
                   "`python monk.py [script-name]` or `py monk.py [script-name]`. 🖥️", "yellow"))
 
+# Get the site-packages directory and filepath for the pth file
+site_packages_dir = site.getsitepackages()[0]
+pth_file_path = os.path.join(site_packages_dir, 'code-monkeys.pth')
+
+if os.path.exists(pth_file_path):
+    print(colored("Overwriting existing .pth file (making your local code-monkeys repo a source package...", "yellow"))
+else:
+    print(colored("""
+    Let's make your local code-monkeys repo into a source package!
+    
+    Unlike typical packages, Python source packages are not 'installed' per se, but allow easy imports of modules globally.
+    To do this, we'll create 'code-monkeys.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
+    If run from code-monkeys root, this script will correctly set the absolute path of your code-monkeys repo in this file.
+    Making code-monkeys a source package allows both you and I to import modules with ease!
+    """, "cyan"))
+
+# Write the project root directory to the .pth file
+with open(pth_file_path, 'w') as f:
+    f.write(ROOT_PATH)
+
+# give user success feedback which includes the absolute filepath of the .pth file
+print(colored(f"✅ Created the .pth file at {pth_file_path}. 📄", "green"))
+
+
 # Add monk to PATH if monk is not in path
 monk_in_path = subprocess.call('command -v monk', shell=True)
 if monk_in_path == 0:
@@ -90,7 +117,6 @@ if monk_in_path == 0:
         print(colored("⚠️ Please restart your terminal for the changes to take effect. 🖥️", "yellow"))
 else:
     print(colored("✅ The 'monk' command is already in your PATH. 💻", "green"))
-
 
 # Use monk to generate the default configurations
 print("🔧 Generating default monkey configurations... 🐵🎛️")
