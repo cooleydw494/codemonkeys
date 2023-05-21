@@ -4,14 +4,18 @@ import argparse
 import os
 import subprocess
 import sys
+from termcolor import colored
 
-from modules.internal.find_script import find_script
-from definitions import ROOT_PATH
+from definitions import ROOT_DIR_NAME
 
-# Check if the value is present and valid
-if not ROOT_PATH:
-    print("⚠️ ROOT_PATH environment variable is not set. This must be an absolute path.")
+try:
+    from modules.internal.find_script import find_script
+    from modules.internal.monk_environment_checks import monk_environment_checks
+except ImportError:
+    print(colored("⚠️ CodeMonkeys must be 'installed' as a source package. Please run the `setup.py` script.", 'red'))
     exit(1)
+
+monk_environment_checks()
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
@@ -32,7 +36,7 @@ if args.command_name is None:
 if args.command_name in ['install'] and not (args.edit or args.print or args.copy_path or args.copy_contents):
     answer = input(
         "⚠️ You are about to run install with the monk command. If you can run the monk command you likely have "
-        "already installed code-monkeys, and running this script may not be a good idea because it is not designed "
+        f"already installed {ROOT_DIR_NAME}, and running this script may not be a good idea because it is not designed "
         "to handle post-install edge cases. This is not suggested. Are you sure you want to continue? (y/n): ")
     if answer.lower() == 'y':
         print("🚀 Starting the setup... Hang tight! 🌟")

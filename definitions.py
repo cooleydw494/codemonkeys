@@ -1,7 +1,8 @@
 import os
 
-# ROOT DIRECTORY
+# ROOT
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR_NAME = os.path.basename(ROOT_PATH)
 
 
 # MONKEYS

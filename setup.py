@@ -4,7 +4,7 @@ import platform
 import subprocess
 from termcolor import colored
 
-from definitions import ROOT_PATH
+from definitions import ROOT_PATH, ROOT_DIR_NAME
 
 print(colored("🚀 Initiating the setup process... 🌟", "green"))
 
@@ -75,18 +75,17 @@ elif os_type == "windows":  # If OS is Windows
 
 # Get the site-packages directory and filepath for the pth file
 site_packages_dir = site.getsitepackages()[0]
-pth_file_path = os.path.join(site_packages_dir, 'code-monkeys.pth')
+pth_file_path = os.path.join(site_packages_dir, f"{ROOT_DIR_NAME}.pth")
 
 if os.path.exists(pth_file_path):
-    print(colored("Overwriting existing .pth file (making your local code-monkeys repo a source package...", "yellow"))
+    print(colored(f"Overwriting existing .pth file (makes {ROOT_DIR_NAME} repo a source package locally)...", "yellow"))
 else:
-    print(colored("""
-    Let's make your local code-monkeys repo into a source package!
+    print(colored(f"""
+    Let's make your local {ROOT_DIR_NAME} repo into a source package!
     
-    Unlike typical packages, Python source packages are not 'installed' per se, but allow easy imports of modules globally.
-    To do this, we'll create 'code-monkeys.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
-    If run from code-monkeys root, this script will correctly set the absolute path of your code-monkeys repo in this file.
-    Making code-monkeys a source package allows both you and I to import modules with ease!
+    Python source packages are not 'installed' in the typical sense, but allow easy imports of modules globally.
+    Let's create '{ROOT_DIR_NAME}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
+    Making {ROOT_DIR_NAME} a source package allows you and I to import modules with ease!
     """, "cyan"))
 
 # Write the project root directory to the .pth file
