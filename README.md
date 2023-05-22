@@ -12,8 +12,8 @@ the user, full control and freedom to shape the AI's capabilities to your specif
 scan the rest of the README, and if you find yourself intoxicated by the thought of wielding your own army of Monkeys,
 read the whole thing. If a great, but typical Github README is a tightly syncopated bop that everyone can groove to
 instantly, the CodeMonkeys README is a thorough and engaging concept album that conveys a subject intimately. Trust me,
-the version of you that reads the whole thing will run circles around the version of you that doesn't. Take the win. Or
-don't ([cheatcodes](#getting-started-)).
+the version of you that reads the whole thing will run circles around the version of you that doesn't. Take the win. [Or
+Don't (cheatcodes)](#getting-started-).
 
 ## About The Author
 
@@ -52,12 +52,23 @@ powerful design for using/implementing `scripts`. The `scripts` directory is...
 
 ## Getting Started 🚀
 
-To get started, you'll want to [fork](https://help.github.com/en/articles/fork-a-repo) the CodeMonkeys repository. Once
-you've done that, navigate to the CodeMonkeys directory in your terminal and run the setup script:
+You have three options (try #1 first):
+1. [Clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) CodeMonkeys to use as an automation tool. (or contribute 🥺)
+2. [Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) CodeMonkeys to use as a framework for making your own automation tool.
+3. [You]() do you, boo-boo. The line between tool/framework is blurry enough for the weird thing you're thinking.
+
+This is a source package. It isn't installed per se, but is added to Python's `sys.path` in the setup script to allow easy module imports while maintaining a paradigm that serves the framework side of things.
+
+**Important:** Whatever your intentions, co-existing local repos must have distinct directory names. I think this project is best as a source package overall, but I'm relying on `sys.path` for global imports so namespacing is required or Python cannot accurately select modules. To fix imports run `monk fix-namespace`.
+
+If you're using 💻🐒s as a framework this is a good way to rename the project. The source code also makes use of the directory name in this spirit in other ways I won't go into right now.
+
+Run the setup script when you're ready:
 
 ```
-
+python3 setup.py
 ```
+I have relative confidence this works well on macOS/Linux, and I've tried to handle Windows well without over-committing at this early stage. If you have issues with Windows at any time, please open an issue and give me all the info you can.
 
 ## Usage 🎮
 

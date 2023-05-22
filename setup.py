@@ -76,21 +76,22 @@ elif os_type == "windows":  # If OS is Windows
 # Get the site-packages directory and filepath for the pth file
 site_packages_dir = site.getsitepackages()[0]
 pth_file_path = os.path.join(site_packages_dir, f"{ROOT_DIR_NAME}.pth")
+print(colored(f"📝 Checking the .pth file at {pth_file_path}... ✨", "cyan"))
+print(f"ROOTPATH: {ROOT_PATH}")
+# these logs show that pth_file_path and ROOT_PATH are correct, but the .pth file is not being created
 
 if os.path.exists(pth_file_path):
     print(colored(f"Overwriting existing .pth file (makes {ROOT_DIR_NAME} repo a source package locally)...", "yellow"))
 else:
-    print(colored(f"""
-    Let's make your local {ROOT_DIR_NAME} repo into a source package!
+    print(colored(f"""Let's make your local {ROOT_DIR_NAME} repo into a source package!
     
-    Python source packages are not 'installed' in the typical sense, but allow easy imports of modules globally.
-    Let's create '{ROOT_DIR_NAME}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
-    Making {ROOT_DIR_NAME} a source package allows you and I to import modules with ease!
-    """, "cyan"))
+Python source packages are not 'installed' in the typical sense, but allow easy imports of modules globally.
+Let's create '{ROOT_DIR_NAME}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
+Making {ROOT_DIR_NAME} a source package allows you and I to import modules with ease!""", "cyan"))
 
 # Write the project root directory to the .pth file
-with open(pth_file_path, 'w') as f:
-    f.write(ROOT_PATH)
+with open(pth_file_path, "w") as pth_file:
+    pth_file.write(ROOT_PATH)
 
 # give user success feedback which includes the absolute filepath of the .pth file
 print(colored(f"✅ Created the .pth file at {pth_file_path}. 📄", "green"))
