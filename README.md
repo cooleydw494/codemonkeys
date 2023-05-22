@@ -110,7 +110,7 @@ For easy export of your `monkey-manifest.yaml`, `programs`, and all `customizabl
 monk export
 ```
 
-The export process will also create a `.env-backup` file that contains your current .env file. `.env-backup` is in the default .gitignore, and is not included in the export. Please also verify that you are not committing your exports if you have sensitive information outside of your .env file, such as in the `monkey-manifest.yaml` (*however, you should not do that*).
+The export process will also create a `.env-backup` file that contains your current .env file. `.env-backup` is in the default .gitignore, and is not included in the export. Please also verify that you are not committing your exports if you have sensitive information outside your .env file, such as in the `monkey-manifest.yaml` (*please don't do that actually*).
 
 ## Directory Overview 📁
 
@@ -120,20 +120,13 @@ The export process will also create a `.env-backup` file that contains your curr
 * `scripts`: Contains Python scripts to be run via the `monk` command.
 * `monkeys/monkey-manifest.yaml`: The centralized configuration file for all monkeys.
 
-## Convenience Tools
-
-There are some tools I've found useful in development that I've left here for the sake of simplicity for myself and to
-allow others to use them.
-
+## Tiny Helpers
 ### Commit Script
 
-Starting whenever this was added, I'm trying hard to actually make frequent commits to document my progress, so as a
-lazy person I made a commit script that allows me to type a few characters, a commit message, and then perform a git
-add, a commit, and an optional push all at once. For me, this is nice, and I might start using it elsewhere. If you use
-ubuntu or macOS, you can use it like this:
+Stage, Commit, & Push as nature intended: **all at once in 0s**. (may result in afterlife punishment)
 
 ```bash
-./c "commit message"
+./c "<3 added ./c to README. PS: Te amo Mau <3"
 ```
 
 ## Attribution
