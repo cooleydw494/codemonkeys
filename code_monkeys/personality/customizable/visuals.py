@@ -2,11 +2,11 @@ import os
 import textwrap
 
 from termcolor import colored
-from definitions import STORAGE_INTERNAL_PATH
+from definitions import STORAGE_CUSTOMIZABLE_PATH
 
 
 def print_banner():
-    with open(os.path.join(STORAGE_INTERNAL_PATH, 'art.txt'), 'r') as f:
+    with open(os.path.join(STORAGE_CUSTOMIZABLE_PATH, 'art.txt'), 'r') as f:
         art = f.read()
     print(colored(art, 'white'))
 

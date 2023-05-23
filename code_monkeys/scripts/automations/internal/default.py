@@ -28,7 +28,7 @@ def check_env_vars():
 
 def load_monkey_config(argv):
     monkey_name, monkey_config_file = get_monkey_name(argv)
-    script_path = "../../load-monkey-config.py"
+    script_path = "../../internal/load-monkey-config.py"
     process = subprocess.run(["python", script_path, monkey_config_file], check=True, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
     if process.returncode != 0:

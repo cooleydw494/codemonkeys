@@ -1,11 +1,12 @@
-import shutil
-import site
 import os
 import platform
+import shutil
+import site
 import subprocess
+
 from termcolor import colored
 
-from definitions import ROOT_PATH, MONK_PATH, PSEUDO_PACKAGE_PATH, SCRIPTS_INTERNAL_PATH, PSEUDO_PACKAGE_DIR_NAME
+from definitions import ROOT_PATH, SCRIPTS_INTERNAL_PATH, PSEUDO_PACKAGE_PATH, PSEUDO_PACKAGE_DIR_NAME
 
 current_shell_rc = None
 
@@ -84,28 +85,45 @@ elif os_type == "windows":  # If OS is Windows
                   "see something like `monk [script-name]` in the docs, so should instead do something like:"
                   "`python monk.py [script-name]` or `py monk.py [script-name]`. 🖥️", "yellow"))
 
+
 subprocess.call(f'python3 {SCRIPTS_INTERNAL_PATH}/fix-namespace.py', shell=True)
+old_pseudo_package_dir_name = PSEUDO_PACKAGE_DIR_NAME
+
+# ! ! ! ! !  I M P O R T A N T  ! ! ! ! ! ! ! ! ! !  I M P O R T A N T  ! ! ! ! ! ! ! ! !  I M P O R T A N T  ! ! ! ! !
+# For the rest of this script, use lowercase local variables instead of imports from definitions.py
+# The ROOT_PATH (and all derived definitions.py paths) may have changed during execution of fix-namespace.py
+
+
+with open(os.path.join('.', 'storage', 'internal', 'root_path.txt'), 'r') as f:
+    root_path = f.read().strip()
+with open(os.path.join('.', 'storage', 'internal', 'pseudo_package_dir_name.txt'), 'r') as f:
+    pseudo_package_dir_name = f.read().strip()
+pseudo_package_path = os.path.join(root_path, pseudo_package_dir_name)
 
 # Get the site-packages directory and filepath for the pth file
 site_packages_dir = site.getsitepackages()[0]
-pth_file_path = os.path.join(site_packages_dir, f"{PSEUDO_PACKAGE_DIR_NAME}.pth")
-print(colored(f"📝 Checking the .pth file at {pth_file_path}... ✨", "cyan"))
+old_pth_file_path = os.path.join(site_packages_dir, f"{old_pseudo_package_dir_name}.pth")
+pth_file_path = os.path.join(site_packages_dir, f"{pseudo_package_dir_name}.pth")
+
+# Remove the old .pth if changed and not default (likely to be old path on setup and may still be used in first install)
+if old_pseudo_package_dir_name != 'code_monkeys' \
+        and pseudo_package_dir_name != old_pseudo_package_dir_name \
+        and os.path.exists(old_pth_file_path):
+    os.remove(old_pth_file_path)
 
 if os.path.exists(pth_file_path):
-    print(colored(f"Overwriting existing .pth file (installs {PSEUDO_PACKAGE_DIR_NAME} pseudo-package)...", "yellow"))
+    print(colored(f"Overwriting existing .pth file (installs {pseudo_package_dir_name} pseudo-package)...", "yellow"))
 else:
-    print(colored(f"""Let's install the {PSEUDO_PACKAGE_DIR_NAME} pseudo-package!
+    print(colored(f"""Let's install the {pseudo_package_dir_name} pseudo-package!
     
 The pseudo-package isn't "installed" in the typical sense, but allows easy imports of modules globally.
-Let's create '{PSEUDO_PACKAGE_DIR_NAME}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
-"The {PSEUDO_PACKAGE_DIR_NAME} pseudo-package allows you and I to add/edit/import modules with ease!""", "cyan"))
-
-# Write the project root directory to the .pth file
-with open(pth_file_path, "w") as pth_file:
-    pth_file.write(PSEUDO_PACKAGE_PATH)
-
-# give user success feedback which includes the absolute filepath of the .pth file
-print(colored(f"✅ Created the .pth file at {pth_file_path}. 📄", "green"))
+Let's create '{pseudo_package_dir_name}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
+"The {pseudo_package_dir_name} pseudo-package allows you and I to add/edit/import modules with ease!""", "cyan"))
+    # Write the project root directory to the .pth file
+    with open(pth_file_path, "w") as pth_file:
+        pth_file.write(pseudo_package_path)
+    # give user success feedback which includes the absolute filepath of the .pth file
+    print(colored(f"✅ Created the .pth file at {pth_file_path}. 📄", "green"))
 
 if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
     alias_exists = subprocess.call('alias | grep -q "^alias monk="', shell=True)
@@ -121,16 +139,17 @@ if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
         elif current_shell.endswith("fish"):
             current_shell_rc = "~/.config/fish/config.fish"
         else:
-            print(colored("⚠️ Could not determine current shell. Please add the 'monk' alias manually. 🖥️", "yellow"))
+            print(colored("⚠️ Could not determine current shell. Please add the 'monk=./monk' alias manually to be "
+                          "able to use the monk command more easily. 🖥️", "yellow"))
             exit(1)
         subprocess.call(f'echo "alias monk=\'./monk\'" >> {current_shell_rc}', shell=True)
         print(colored("✅ The 'monk' alias was added. 💻", "green"))
 elif os_type.startswith("win"):  # If OS is Windows
-    if os.path.exists(os.path.join(MONK_PATH, "monk.py")):
+    if os.path.exists("monk.py"):
         print(colored("✅ The 'monk.py' command is already present. 💻", "green"))
     else:
         print(colored("🔗 Renaming 'monk' to 'monk.py' for Windows compatibility... ", "cyan"))
-        shutil.move(os.path.join(MONK_PATH, "monk"), os.path.join(MONK_PATH, "monk.py"))
+        shutil.move("monk", "monk.py")
         print(colored("✅ The 'monk' command was renamed to 'monk.py'. Run it using 'python monk.py'. 💻", "green"))
 else:
     print(colored("⚠️ Unrecognized operating system. Please add 'monk' to your PATH manually. 🖥️", "yellow"))

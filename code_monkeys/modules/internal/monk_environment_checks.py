@@ -2,7 +2,7 @@ import os
 import sys
 
 from termcolor import colored
-from definitions import ROOT_DIR_NAME
+from definitions import PSEUDO_PACKAGE_PATH
 
 
 def monk_environment_checks():
@@ -14,6 +14,7 @@ def monk_environment_checks():
     if version < 3:
         print(colored("⚠️ It appears you're running Python 2. Please use Python 3 with CodeMonkeys.", 'red'))
         exit(1)
-    if not os.path.exists(os.path.join(sys.prefix, 'lib', 'python3.8', 'site-packages', f"{ROOT_DIR_NAME}.pth")):
-        print(colored("⚠️  CodeMonkeys must be installed as a source package. Run `setup.py`.", 'red'))
+
+    if str(sys.path).find(os.path.join(PSEUDO_PACKAGE_PATH)) == -1:
+        print(colored("⚠️  CodeMonkeys must be installed into `sys.path`. Run `setup.py`.", 'red'))
         exit(1)
