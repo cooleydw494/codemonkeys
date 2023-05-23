@@ -2,7 +2,7 @@ import os
 import pathlib
 import re
 
-from definitions import ROOT_PATH, ROOT_DIR_NAME, PSEUDO_PACKAGE_PATH
+from definitions import ROOT_PATH, PSEUDO_PACKAGE_PATH, PSEUDO_PACKAGE_DIR_NAME
 
 
 def rename_directory(existing_dir_absolute_path, new_name):
@@ -43,11 +43,11 @@ new_root_name = input(
     "Please enter a new name (like [project-name]-monkeys), or press Enter to skip: ").strip()
 if new_root_name:
     rename_directory(ROOT_PATH, new_root_name)
-    new_pseudo_directory_name = new_root_name.replace('-', '_')
-    rename_directory(PSEUDO_PACKAGE_PATH, new_pseudo_directory_name)
+    old_pseudo_package_name = PSEUDO_PACKAGE_DIR_NAME
+    new_pseudo_package_name = new_root_name.replace('-', '_')
+    rename_directory(PSEUDO_PACKAGE_PATH, new_pseudo_package_name)
+    replace_imports_in_dir(ROOT_PATH)
 else:
     print(
         "You've chosen to skip this (totally fine for a single copy). If you have issues later, you can run this again "
         "with `monk fix-namespace`.")
-
-replace_imports_in_dir(ROOT_PATH)
