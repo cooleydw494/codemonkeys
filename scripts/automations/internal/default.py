@@ -6,10 +6,11 @@ import sys
 import openai
 from termcolor import colored
 
-from code_monkeys.modules.internal.get_gpt_client import instantiate_gpt_models
-from code_monkeys.modules.internal.get_monkey_name import get_monkey_name
-from code_monkeys.modules.customizable.process_file import process_file
-from code_monkeys.modules.customizable.summarize_special_file import summarize_special_file
+from modules.internal.get_gpt_client import instantiate_gpt_models
+from modules.internal.get_monkey_name import get_monkey_name
+from modules.custom.process_file import process_file
+from modules.custom.summarize_special_file import summarize_special_file
+from definitions import PYTHON_COMMAND
 
 
 def check_env_vars():
@@ -29,7 +30,7 @@ def check_env_vars():
 def load_monkey_config(argv):
     monkey_name, monkey_config_file = get_monkey_name(argv)
     script_path = "../../internal/load-monkey-config.py"
-    process = subprocess.run(["python", script_path, monkey_config_file], check=True, stdout=subprocess.PIPE,
+    process = subprocess.run([PYTHON_COMMAND, script_path, monkey_config_file], check=True, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
     if process.returncode != 0:
         print(colored(process.stderr.decode(), 'red'))

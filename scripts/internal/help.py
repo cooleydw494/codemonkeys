@@ -1,16 +1,16 @@
 import os
 from pathlib import Path
 
-from code_monkeys.personality.customizable.visuals import print_banner, print_tree, print_table, print_nice
+from personality.custom.visuals import print_banner, print_tree, print_table, print_nice
 from definitions import ROOT_PATH, SCRIPTS_PATH
 
 
 def main():
     print_banner()
 
-    print_nice("At the heart of CodeMonkeys is Monk. It's not just a Python script, it's a streamlined interface "
-               "that mimics sophisticated CLI tools. The goal? Simplify script execution through intuitive matching "
-               "methods and make adding/editing scripts a breeze. But Monk doesn't stop "
+    print_nice("At the heart of CodeMonkeys is the `monk` command. It's not just a Python script, it's a streamlined "
+               "interface that mimics sophisticated CLI tools. The goal? Simplify script execution through intuitive "
+               "matching methods and make adding/editing scripts a breeze. But Monk doesn't stop "
                "at execution - its flags also support script development, making it an essential tool for both "
                "routine use and boilerplate customization.", color='yellow')
     print("\n\n")

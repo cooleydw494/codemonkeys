@@ -4,6 +4,8 @@ import subprocess
 import sys
 import time
 
+from definitions import PYTHON_COMMAND
+
 # Check if the export filepath argument is provided
 if len(sys.argv) < 2:
     print("⚠️ Please provide the export filepath as a command-line argument.")
@@ -15,7 +17,7 @@ export_filepath = sys.argv[1]
 # Perform a backup of the current main.py
 timestamp = time.strftime("%Y%m%d%H%M%S")
 backup_filename = f"pre-export-{timestamp}"
-subprocess.run(["python", "scripts/backup-main.py", backup_filename])
+subprocess.run([PYTHON_COMMAND, "scripts/backup-main.py", backup_filename])
 
 # Merge the backups/main directories
 shutil.copytree("backups/main", "backups/main-merged", dirs_exist_ok=True)
@@ -30,7 +32,7 @@ else:
     archive_format = "zip"
 
 # Extract the exported project files
-shutil.unpack_archive(export_filepath, ".", format=archive_format)
+shutil.unpack_archive(export_filepath, "", format=archive_format)
 export_filename = os.path.basename(export_filepath).split(".")[0]
 
 # Merge the backups/main directories from the export

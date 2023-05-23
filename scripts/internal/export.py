@@ -21,6 +21,6 @@ directory_to_export = "backups/main"
 
 # Create the export archive
 export_filename = f"export-{timestamp}.{archive_format}"
-shutil.make_archive(export_filename, archive_format, ".", files_to_export, directory_to_export)
+shutil.make_archive(export_filename, archive_format, "", files_to_export, directory_to_export)
 
 print(f"✅ Export created: {export_filename}")

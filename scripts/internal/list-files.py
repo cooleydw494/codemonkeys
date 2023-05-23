@@ -2,7 +2,7 @@ import os
 import time
 
 from dotenv import load_dotenv
-from code_monkeys.modules.internal.token_counter import TokenCounter
+from modules.internal.token_counter import TokenCounter
 from definitions import ROOT_PATH
 
 

@@ -12,7 +12,7 @@
 ### Project Organization
 - Configs become subdirs of monkeys dir, and the monkey-manifest should be a file in the root directory
     These directories will store existing configs, enabling the new/backup functionality above for monkey configs.
-    I had an idea related to internal/customizable but idk. Keep thinking, this is fertile ground.
+    I had an idea related to internal/custom but idk. Keep thinking, this is fertile ground.
 ### Automations
 - Create first non-generic automation. It should write a usage guide for each script in the scripts directory to help/internal/script-usage-guides/[script-name].txt
   Crazy idea version: make them python scripts that interactively help a user understand whatever they need to about the command instead of giving all the info (unless requested)

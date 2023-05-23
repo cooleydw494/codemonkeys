@@ -1,22 +1,14 @@
 import os
 import platform
 import shutil
-import site
 import subprocess
 
 from termcolor import colored
-
-from definitions import ROOT_PATH, SCRIPTS_INTERNAL_PATH, PSEUDO_PACKAGE_PATH, PSEUDO_PACKAGE_DIR_NAME
+from modules.internal.environment_checks import environment_checks
+from definitions import PIP_COMMAND
 
 current_shell_rc = None
-
-
-def rename_directory(new_name):
-    parent_directory = os.path.dirname(ROOT_PATH)
-    new_directory_path = os.path.join(parent_directory, new_name)
-    os.rename(ROOT_PATH, new_directory_path)
-    return new_directory_path
-
+environment_checks()
 
 print(colored("🚀 Initiating the setup process... 🌟", "green"))
 
@@ -24,47 +16,9 @@ print(colored("🚀 Initiating the setup process... 🌟", "green"))
 os_type = platform.system().lower()
 print(colored(f"🔍 Detected {os_type.capitalize()} as your operating system... Let's continue.", "cyan"))
 
-# Check if python3 is installed
-if subprocess.call('command -v python3', shell=True) == 0:
-    print(colored("✅ Detected Python 3. Great! Let's proceed. 🐍", "green"))
-elif subprocess.call('command -v python', shell=True) == 0:
-    print(colored("⚠️ Python 3 was not detected, but Python was found. Our code uses 'python3'.", "yellow"))
-    user_input = input(colored("Would you like to alias 'python3' to 'python'? (y/n).", "yellow"))
-    if user_input.lower() == 'y':
-        if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
-            subprocess.call('echo "alias python3=python" >> ~/.bashrc', shell=True)
-            print(colored("✅ Aliased 'python3' to 'python'. Open a new terminal to start using 'python3'. 🐍", "green"))
-        elif os_type == "windows":  # If OS is Windows
-            print(colored("⚠️ Please alias 'python3' to 'python' manually in your environment. 🖥️", "yellow"))
-    else:
-        print(colored("Makes sense, come back when you have installed python3!", "yellow"))
-        exit(1)
-else:
-    print(colored("⚠️ Python 3 doesn't seem to be installed. Please install it and try again. 🤔", "red"))
-    exit(1)
-
-# Check if pip3 is installed
-if subprocess.call('command -v pip3', shell=True) == 0:
-    print(colored("✅ Detected pip3. Awesome! 🐍", "green"))
-elif subprocess.call('command -v pip', shell=True) == 0:
-    print(colored("⚠️ pip3 was not detected, but pip was found. Our code uses 'pip3'.", "yellow"))
-    user_input = input(colored("Would you like to alias 'pip3' to 'pip'? (y/n).", "yellow"))
-    if user_input.lower() == 'y':
-        if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
-            subprocess.call('echo "alias pip3=pip" >> ~/.bashrc', shell=True)
-            print(colored("✅ Aliased 'pip3' to 'pip'. Open a new terminal to start using 'pip3'. 🐍", "green"))
-        elif os_type == "windows":  # If OS is Windows
-            print(colored("⚠️ Please alias 'pip3' to 'pip' manually in your environment. 🖥️", "yellow"))
-    else:
-        print(colored("Makes sense, come back when you have installed pip3!", "yellow"))
-        exit(1)
-else:
-    print(colored("⚠️ pip3 doesn't seem to be installed. Please install it and try again. 🤔", "red"))
-    exit(1)
-
 # Install required python modules from requirements.txt
 print(colored("⏳ Installing the required Python modules from the requirements.txt file... 🛠️", "cyan"))
-subprocess.call('pip3 install -r requirements.txt', shell=True)
+subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
 # Set default values for .env if not already set
 print(colored("📝 Checking the .env file... ✨", "cyan"))
@@ -85,45 +39,46 @@ elif os_type == "windows":  # If OS is Windows
                   "see something like `monk [script-name]` in the docs, so should instead do something like:"
                   "`python monk.py [script-name]` or `py monk.py [script-name]`. 🖥️", "yellow"))
 
-
-subprocess.call(f'python3 {SCRIPTS_INTERNAL_PATH}/fix-namespace.py', shell=True)
-old_pseudo_package_dir_name = PSEUDO_PACKAGE_DIR_NAME
-
-# ! ! ! ! !  I M P O R T A N T  ! ! ! ! ! ! ! ! ! !  I M P O R T A N T  ! ! ! ! ! ! ! ! !  I M P O R T A N T  ! ! ! ! !
-# For the rest of this script, use lowercase local variables instead of imports from definitions.py
-# The ROOT_PATH (and all derived definitions.py paths) may have changed during execution of fix-namespace.py
-
-
-with open(os.path.join('.', 'storage', 'internal', 'root_path.txt'), 'r') as f:
-    root_path = f.read().strip()
-with open(os.path.join('.', 'storage', 'internal', 'pseudo_package_dir_name.txt'), 'r') as f:
-    pseudo_package_dir_name = f.read().strip()
-pseudo_package_path = os.path.join(root_path, pseudo_package_dir_name)
-
-# Get the site-packages directory and filepath for the pth file
-site_packages_dir = site.getsitepackages()[0]
-old_pth_file_path = os.path.join(site_packages_dir, f"{old_pseudo_package_dir_name}.pth")
-pth_file_path = os.path.join(site_packages_dir, f"{pseudo_package_dir_name}.pth")
-
-# Remove the old .pth if changed and not default (likely to be old path on setup and may still be used in first install)
-if old_pseudo_package_dir_name != 'code_monkeys' \
-        and pseudo_package_dir_name != old_pseudo_package_dir_name \
-        and os.path.exists(old_pth_file_path):
-    os.remove(old_pth_file_path)
-
-if os.path.exists(pth_file_path):
-    print(colored(f"Overwriting existing .pth file (installs {pseudo_package_dir_name} pseudo-package)...", "yellow"))
-else:
-    print(colored(f"""Let's install the {pseudo_package_dir_name} pseudo-package!
-    
-The pseudo-package isn't "installed" in the typical sense, but allows easy imports of modules globally.
-Let's create '{pseudo_package_dir_name}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
-"The {pseudo_package_dir_name} pseudo-package allows you and I to add/edit/import modules with ease!""", "cyan"))
-    # Write the project root directory to the .pth file
-    with open(pth_file_path, "w") as pth_file:
-        pth_file.write(pseudo_package_path)
-    # give user success feedback which includes the absolute filepath of the .pth file
-    print(colored(f"✅ Created the .pth file at {pth_file_path}. 📄", "green"))
+# PSEUDO_PACKAGE
+#
+# subprocess.call(f'python3 {SCRIPTS_INTERNAL_PATH}/fix-namespace.py', shell=True)
+# old_pseudo_package_dir_name = PSEUDO_PACKAGE_DIR_NAME
+#
+# # ! ! ! ! !  I M P O R T A N T  ! ! ! ! ! ! ! ! ! !  I M P O R T A N T  ! ! ! ! ! ! ! ! !  I M P O R T A N T  ! ! ! !
+# # For the rest of this script, use lowercase local variables instead of imports from definitions.py
+# # The ROOT_PATH (and all derived definitions.py paths) may have changed during execution of fix-namespace.py
+#
+#
+# with open(os.path.join('.', 'storage', 'internal', 'root_path.txt'), 'r') as f:
+#     root_path = f.read().strip()
+# with open(os.path.join('.', 'storage', 'internal', 'pseudo_package_dir_name.txt'), 'r') as f:
+#     pseudo_package_dir_name = f.read().strip()
+# pseudo_package_path = os.path.join(root_path, pseudo_package_dir_name)
+#
+# # Get the site-packages directory and filepath for the pth file
+# site_packages_dir = site.getsitepackages()[0]
+# old_pth_file_path = os.path.join(site_packages_dir, f"{old_pseudo_package_dir_name}.pth")
+# pth_file_path = os.path.join(site_packages_dir, f"{pseudo_package_dir_name}.pth")
+#
+# # Remove old .pth if changed and not default (likely to be old path on setup and may still be used in first install)
+# if old_pseudo_package_dir_name != 'code_monkeys' \
+#         and pseudo_package_dir_name != old_pseudo_package_dir_name \
+#         and os.path.exists(old_pth_file_path):
+#     os.remove(old_pth_file_path)
+#
+# if os.path.exists(pth_file_path):
+#     print(colored(f"Overwriting existing .pth file (installs {pseudo_package_dir_name} pseudo-package)...", "yellow"))
+# else:
+#     print(colored(f"""Let's install the {pseudo_package_dir_name} pseudo-package!
+#
+# The pseudo-package isn't "installed" in the typical sense, but allows easy imports of modules globally.
+# Let's create '{pseudo_package_dir_name}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
+# "The {pseudo_package_dir_name} pseudo-package allows you and I to add/edit/import modules with ease!""", "cyan"))
+#     # Write the project root directory to the .pth file
+#     with open(pth_file_path, "w") as pth_file:
+#         pth_file.write(pseudo_package_path)
+#     # give user success feedback which includes the absolute filepath of the .pth file
+#     print(colored(f"✅ Created the .pth file at {pth_file_path}. 📄", "green"))
 
 if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
     alias_exists = subprocess.call('alias | grep -q "^alias monk="', shell=True)
@@ -175,7 +130,9 @@ print(colored("💡 After making any changes, use the command 'monk generate-mon
 print("")
 print("Thanks for using CodeMonkeys! 🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒")
 if current_shell_rc is not None:
-    print("")
-    print(
-        colored('⚠️ You still need to source your {current_shell_rc} to be able to use the `monk` command.', 'yellow'))
+    print(colored('⚠️ You still need to source your {current_shell_rc} to be able to use the `monk` command. Press '
+                  'enter to acknowledge and exit setup.', 'yellow'))
     print(colored(f"source {current_shell_rc}", 'cyan'))
+    input(colored('Press enter to acknowledge and finish setup.', 'yellow'))
+elif os_type == "darwin" or os_type == "linux":
+    print(colored("⚠️ Shell undetermined. Please source your shell profile to enable the 'monk' command"), 'yellow')

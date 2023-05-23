@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import argparse
 import fileinput
@@ -10,44 +10,45 @@ from termcolor import colored
 from definitions import ROOT_PATH, ROOT_DIR_NAME, PSEUDO_PACKAGE_PATH
 
 try:
-    from code_monkeys.modules.internal.monk_helpers import handle_alternate_functionality
-    from code_monkeys.modules.internal.find_script import find_script
-    from code_monkeys.modules.internal.monk_environment_checks import monk_environment_checks
+    from modules.internal.monk_helpers import handle_alternate_functionality
+    from modules.internal.find_script import find_script
+    from modules.internal.monk_environment_checks import monk_environment_checks
 except ImportError:
-    print(colored("⚠️  CodeMonkeys must be 'installed'. Run `setup.py`.", 'red'))
+    print(colored("⚠️  CodeMonkeys modules not imported correctly. Troubleshoot (#add link)'.", 'red'))
     exit(1)
 
 monk_environment_checks()
 
-# Write the contents of definitions.py to PSEUDO_PACKAGE_PATH/definitions.py (always)
-# This will make sure on any script run that the definitions in the pseudo-package are up to date
-with open(os.path.join(ROOT_PATH, 'definitions.py'), 'r') as f:
-    definitions_contents = f.read()
-docstring = f"""
-# this file mimics the outer definitions.py file because CodeMonkeys uses a unique pseudo-package structure
-# for namespacing global imports, we need it at the root and in the pseudo-package.
-# It is rewritten every time the monk command is run, so you can easily re-generate it with `monk`
-
-# do
-# NOT
-# edit
-# this
-# file, unless you're really changing things up in the extreme
-"""
-with open(os.path.join(PSEUDO_PACKAGE_PATH, 'definitions.py'), 'w') as f:
-    f.write(definitions_contents)
-# We need to replace the ROOT_PATH line in the pseudo-package with one that will get the correct path
-# This will trickle down to all other PATH variables. This means only the root definitions.py needs to be updated
-# as long as any updates to the root definitions.py do not depend on paths that are not based on the ROOT_PATH
-new_root_path_line = "ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))\n"
-
-# Open the file and replace the line
-with fileinput.FileInput(os.path.join(PSEUDO_PACKAGE_PATH, 'definitions.py'), inplace=True) as file:
-    for line in file:
-        # Replace lines that start with 'ROOT_PATH' with the new line
-        if line.startswith('ROOT_PATH'):
-            line = new_root_path_line
-        print(line, end='')
+# PSEUDO_PACKAGE
+# # Write the contents of definitions.py to PSEUDO_PACKAGE_PATH/definitions.py (always)
+# # This will make sure on any script run that the definitions in the pseudo-package are up to date
+# with open(os.path.join(ROOT_PATH, 'definitions.py'), 'r') as f:
+#     definitions_contents = f.read()
+# docstring = f"""
+# # this file mimics the outer definitions.py file because CodeMonkeys uses a unique pseudo-package structure
+# # for namespacing global imports, we need it at the root and in the pseudo-package.
+# # It is rewritten every time the monk command is run, so you can easily re-generate it with `monk`
+#
+# # do
+# # NOT
+# # edit
+# # this
+# # file, unless you're really changing things up in the extreme
+# """
+# with open(os.path.join(PSEUDO_PACKAGE_PATH, 'definitions.py'), 'w') as f:
+#     f.write(definitions_contents)
+# # We need to replace the ROOT_PATH line in the pseudo-package with one that will get the correct path
+# # This will trickle down to all other PATH variables. This means only the root definitions.py needs to be updated
+# # as long as any updates to the root definitions.py do not depend on paths that are not based on the ROOT_PATH
+# new_root_path_line = "ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))\n"
+#
+# # Open the file and replace the line
+# with fileinput.FileInput(os.path.join(PSEUDO_PACKAGE_PATH, 'definitions.py'), inplace=True) as file:
+#     for line in file:
+#         # Replace lines that start with 'ROOT_PATH' with the new line
+#         if line.startswith('ROOT_PATH'):
+#             line = new_root_path_line
+#         print(line, end='')
 
 # Create argument parser - use custom help
 parser = argparse.ArgumentParser(add_help=False)

@@ -37,7 +37,7 @@ automation needs.
 # The Default Program (main.py)
 
 The heart of CodeMonkeys is `main.py`, a generic but complete template for improving whatever is in your `WORK_PATH`.
-This file is the default entry-point and is designed to work well out of the box, and to be powerfully customizable
+This file is the default entry-point and is designed to work well out of the box, and to be powerfully custom
 using only `monkey-manifest.yaml` configurations. `main.py` is a top-down look at the default Monkey Program. During
 installation, a copy of this file is stored in `programs/my-first-program`. The `programs` directory is a location for
 your own variations of the main.py file, should you feel the urge to start writing your own programs. If you're thinking
@@ -104,7 +104,7 @@ I strive to make CodeMonkeys easy to update, even with your customizations. Howe
 complicate the update process. Please note that while I'm working hard to make updates as seamless as possible, it's
 always a good idea to back up your work before updating.
 
-For easy export of your `monkey-manifest.yaml`, `programs`, and all `customizable` directories, simply run
+For easy export of your `monkey-manifest.yaml`, `programs`, and all `custom` directories, simply run
 
 ```
 monk export
