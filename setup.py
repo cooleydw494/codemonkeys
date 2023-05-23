@@ -84,7 +84,6 @@ elif os_type == "windows":  # If OS is Windows
                   "see something like `monk [script-name]` in the docs, so should instead do something like:"
                   "`python monk.py [script-name]` or `py monk.py [script-name]`. 🖥️", "yellow"))
 
-
 subprocess.call(f'python3 {SCRIPTS_INTERNAL_PATH}/fix-namespace.py', shell=True)
 
 # Get the site-packages directory and filepath for the pth file
@@ -136,16 +135,14 @@ elif os_type.startswith("win"):  # If OS is Windows
 else:
     print(colored("⚠️ Unrecognized operating system. Please add 'monk' to your PATH manually. 🖥️", "yellow"))
 
-
 # Use monk to generate the default configurations
 print("🔧 Generating default monkey configurations... 🐵🎛️")
 if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
-    subprocess.call('monk generate-monkeys', shell=True)
-    print(colored("Monkey configurations are based on the 'monkey-manifest.yaml' file. Individual configs will be "
-                  "generated in the 'monkeys' directory.", "green"))
+    subprocess.call('./monk generate-monkeys', shell=True)
 elif os_type == "windows":  # If OS is Windows
-    print(colored("⚠️ Please run `python3 ./monk generate-monkeys` to generate the default monkey configurations. 🐵🎛️",
-                  "yellow"))
+    subprocess.call('python monk.py generate-monkeys', shell=True)
+print(colored("Monkey configurations are based on the 'monkey-manifest.yaml' file. Individual configs will be "
+              "generated in the 'monkeys' directory.", "green"))
 
 # Feedback to the user
 print(colored("🎉 Setup complete! You're all set. 🎊", "green"))
@@ -156,10 +153,10 @@ print(colored("📝 Feel free to modify the monkey configurations in the 'monkey
 print(colored("💡 After making any changes, use the command 'monk generate-monkeys' to apply them. Keep going! 🚀",
               "green"))
 
-
 print("")
 print("Thanks for using CodeMonkeys! 🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒")
 if current_shell_rc is not None:
     print("")
-    print(colored('⚠️ You still need to source your {current_shell_rc} to be able to use the `monk` command.', 'yellow'))
+    print(
+        colored('⚠️ You still need to source your {current_shell_rc} to be able to use the `monk` command.', 'yellow'))
     print(colored(f"source {current_shell_rc}", 'cyan'))
