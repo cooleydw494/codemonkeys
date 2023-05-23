@@ -112,7 +112,17 @@ if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
         print(colored("✅ The 'monk' alias is already present. 💻", "green"))
     else:
         print(colored("🔗 Adding 'monk' alias... ", "cyan"))
-        subprocess.call(f'echo "alias monk=\'python3 {MONK_PATH}/monk\'" >> ~/.bashrc', shell=True)
+        current_shell = os.environ['SHELL']
+        if current_shell.endswith("bash"):
+            current_shell_rc = "~/.bashrc"
+        elif current_shell.endswith("zsh"):
+            current_shell_rc = "~/.zshrc"
+        elif current_shell.endswith("fish"):
+            current_shell_rc = "~/.config/fish/config.fish"
+        else:
+            print(colored("⚠️ Could not determine current shell. Please add the 'monk' alias manually. 🖥️", "yellow"))
+            exit(1)
+        subprocess.call(f'echo "alias monk=\'./monk\'" >> {current_shell_rc}', shell=True)
         print(colored("✅ The 'monk' alias was added. 💻", "green"))
         print(colored("⚠️ You may still need to restart or source existing terminals for changes to take effect. 🖥️",
                       "yellow"))
@@ -122,7 +132,7 @@ elif os_type.startswith("win"):  # If OS is Windows
     else:
         print(colored("🔗 Renaming 'monk' to 'monk.py' for Windows compatibility... ", "cyan"))
         shutil.move(os.path.join(MONK_PATH, "monk"), os.path.join(MONK_PATH, "monk.py"))
-        print(colored("✅ The 'monk' command was renamed to 'monk.py'. You can run it using 'python monk.py'. 💻", "green"))
+        print(colored("✅ The 'monk' command was renamed to 'monk.py'. Run it using 'python monk.py'. 💻", "green"))
 else:
     print(colored("⚠️ Unrecognized operating system. Please add 'monk' to your PATH manually. 🖥️", "yellow"))
 
