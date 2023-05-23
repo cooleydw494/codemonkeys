@@ -7,6 +7,8 @@ from termcolor import colored
 
 from definitions import ROOT_PATH, MONK_PATH, PSEUDO_PACKAGE_PATH, SCRIPTS_INTERNAL_PATH, PSEUDO_PACKAGE_DIR_NAME
 
+current_shell_rc = None
+
 
 def rename_directory(new_name):
     parent_directory = os.path.dirname(ROOT_PATH)
@@ -93,7 +95,7 @@ print(colored(f"📝 Checking the .pth file at {pth_file_path}... ✨", "cyan"))
 if os.path.exists(pth_file_path):
     print(colored(f"Overwriting existing .pth file (installs {PSEUDO_PACKAGE_DIR_NAME} pseudo-package)...", "yellow"))
 else:
-    print(colored(f"""Let's make your local {PSEUDO_PACKAGE_DIR_NAME} repo into a source package!
+    print(colored(f"""Let's install the {PSEUDO_PACKAGE_DIR_NAME} pseudo-package!
     
 The pseudo-package isn't "installed" in the typical sense, but allows easy imports of modules globally.
 Let's create '{PSEUDO_PACKAGE_DIR_NAME}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
@@ -124,8 +126,6 @@ if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
             exit(1)
         subprocess.call(f'echo "alias monk=\'./monk\'" >> {current_shell_rc}', shell=True)
         print(colored("✅ The 'monk' alias was added. 💻", "green"))
-        print(colored("⚠️ You may still need to restart or source existing terminals for changes to take effect. 🖥️",
-                      "yellow"))
 elif os_type.startswith("win"):  # If OS is Windows
     if os.path.exists(os.path.join(MONK_PATH, "monk.py")):
         print(colored("✅ The 'monk.py' command is already present. 💻", "green"))
@@ -155,3 +155,11 @@ print(colored("📝 Feel free to modify the monkey configurations in the 'monkey
               "your needs. You can also edit individual configs directly in the 'monkeys' directory. 🐵📄", "green"))
 print(colored("💡 After making any changes, use the command 'monk generate-monkeys' to apply them. Keep going! 🚀",
               "green"))
+
+
+print("")
+print("Thanks for using CodeMonkeys! 🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒🐵🐒")
+if current_shell_rc is not None:
+    print("")
+    print(colored('⚠️ You still need to source your {current_shell_rc} to be able to use the `monk` command.', 'yellow'))
+    print(colored(f"source {current_shell_rc}", 'cyan'))

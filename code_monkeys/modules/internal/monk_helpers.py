@@ -1,5 +1,4 @@
 import subprocess
-import sys
 
 
 def handle_alternate_functionality(args, script_path):
