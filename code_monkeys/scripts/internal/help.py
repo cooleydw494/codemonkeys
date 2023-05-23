@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from personality.customizable.visuals import print_banner, print_tree, print_table, print_nice
+from code_monkeys.personality.customizable.visuals import print_banner, print_tree, print_table, print_nice
 from definitions import ROOT_PATH, SCRIPTS_PATH
 
 

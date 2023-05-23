@@ -2,7 +2,7 @@ import yaml
 import os
 import sys
 
-from modules.internal.get_monkey_name import get_monkey_name
+from code_monkeys.modules.internal.get_monkey_name import get_monkey_name
 from definitions import ROOT_PATH
 
 # Load the default monkey configuration

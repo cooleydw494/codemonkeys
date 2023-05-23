@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from personality.customizable.visuals import print_table, print_nice
+from code_monkeys.personality.customizable.visuals import print_table, print_nice
 
 
 def main():

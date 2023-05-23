@@ -2,13 +2,11 @@
 ### Resources
 [OpenAI Token Optimization Docs](https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them) | [OpenAI tiktoken Cookbook](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) | [placeholder](placeholder) | [placeholder](placeholder) | [placeholder](placeholder)
 ### Prompt Optimization
-- Fix token counting in list-files.py (maybe elsewhere too)
 - Implement prompt/token optimization strategies (incl logit_bias).
 - Implement add/customize for prompt/token optimization strategies.
 - Automate (without AI) prompt/token optimizations (incl logit_bias)
 - Consider using GPT to optimize prompts/tokens.
 ### The `monk` command
-- Add a way to run a script with a flag that will run it in a new terminal tab
 - Add a monk sub-command that allows the user to create or open a new version of an existing X after backing up old
 - Add a monk sub-command that allows the user to create a new X from a template
 ### Project Organization
@@ -34,3 +32,6 @@
 ### README
 - Add section on token counting and mention that the one-shot prompt approach makes it more precise because the message-based formatting of Chat-based API calls to gpt 3/4 API makes it harder to accurately count tokens (CodeMonkeys' default automation uses the Chat Completions API which despite having the word "chat" in it is for making traditional completions tasks)
 - Discuss how the project-wide env vars lend themselves to having a different CodeMonkeys per repo.
+
+### TROUBLESHOOTING
+- The root directory name of the project must be only letters and hyphens. The pseudo-package (default code_monkeys) must be the same as the root directory with underscores instead of hyphens. To verify that imports are changed properly as well, you should just run `monk fix-namespace`, which will ask for the desired directory name and make sure all of this is correct.

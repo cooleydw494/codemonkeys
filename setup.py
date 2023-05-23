@@ -1,10 +1,11 @@
+import shutil
 import site
 import os
 import platform
 import subprocess
 from termcolor import colored
 
-from definitions import ROOT_PATH, ROOT_DIR_NAME, SCRIPTS_INTERNAL_PATH
+from definitions import ROOT_PATH, MONK_PATH, PSEUDO_PACKAGE_PATH, SCRIPTS_INTERNAL_PATH, PSEUDO_PACKAGE_DIR_NAME
 
 
 def rename_directory(new_name):
@@ -75,64 +76,61 @@ else:
 # Make the monk script executable
 print(colored("🔐 Making the monk script executable... 🔒", "cyan"))
 if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
-    subprocess.call('chmod +x monk.py', shell=True)
+    subprocess.call('chmod +x monk', shell=True)
 elif os_type == "windows":  # If OS is Windows
     print(colored("⚠️ On Windows, Python scripts are typically run directly with the Python interpreter, so when you "
                   "see something like `monk [script-name]` in the docs, so should instead do something like:"
                   "`python monk.py [script-name]` or `py monk.py [script-name]`. 🖥️", "yellow"))
 
-# Run the fix-namespace.py script at SCRIPT_PATH/fix-namespace.py
-print(colored("🔧 Fixing the namespace... 🔧", "cyan"))
+
 subprocess.call(f'python3 {SCRIPTS_INTERNAL_PATH}/fix-namespace.py', shell=True)
 
 # Get the site-packages directory and filepath for the pth file
 site_packages_dir = site.getsitepackages()[0]
-pth_file_path = os.path.join(site_packages_dir, f"{ROOT_DIR_NAME}.pth")
+pth_file_path = os.path.join(site_packages_dir, f"{PSEUDO_PACKAGE_DIR_NAME}.pth")
 print(colored(f"📝 Checking the .pth file at {pth_file_path}... ✨", "cyan"))
-print(f"ROOTPATH: {ROOT_PATH}")
-# these logs show that pth_file_path and ROOT_PATH are correct, but the .pth file is not being created
 
 if os.path.exists(pth_file_path):
-    print(colored(f"Overwriting existing .pth file (makes {ROOT_DIR_NAME} repo a source package locally)...", "yellow"))
+    print(colored(f"Overwriting existing .pth file (installs {PSEUDO_PACKAGE_DIR_NAME} pseudo-package)...", "yellow"))
 else:
-    print(colored(f"""Let's make your local {ROOT_DIR_NAME} repo into a source package!
+    print(colored(f"""Let's make your local {PSEUDO_PACKAGE_DIR_NAME} repo into a source package!
     
-Python source packages are not 'installed' in the typical sense, but allow easy imports of modules globally.
-Let's create '{ROOT_DIR_NAME}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
-Making {ROOT_DIR_NAME} a source package allows you and I to import modules with ease!""", "cyan"))
+The pseudo-package isn't "installed" in the typical sense, but allows easy imports of modules globally.
+Let's create '{PSEUDO_PACKAGE_DIR_NAME}.pth' in the 'site-packages' directory, so Python can find CodeMonkeys' modules.
+"The {PSEUDO_PACKAGE_DIR_NAME} pseudo-package allows you and I to add/edit/import modules with ease!""", "cyan"))
 
 # Write the project root directory to the .pth file
 with open(pth_file_path, "w") as pth_file:
-    pth_file.write(ROOT_PATH)
+    pth_file.write(PSEUDO_PACKAGE_PATH)
 
 # give user success feedback which includes the absolute filepath of the .pth file
 print(colored(f"✅ Created the .pth file at {pth_file_path}. 📄", "green"))
 
-# Add monk to PATH if monk is not in path
-monk_in_path = subprocess.call('command -v monk', shell=True)
-if monk_in_path == 0:
-    if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
-        print(colored("🔗 Adding 'monk' to your PATH... ", "cyan"))
-        subprocess.call('echo "export PATH=$PATH:`pwd`" >> ~/.bashrc', shell=True)
-        print(colored("✅ The 'monk' command was added to your PATH. "
-                      "💻", "green"))
-        # source the terminal to make the changes take effect
-        print(colored("🔄 Sourcing the terminal to make the changes take effect... ", "cyan"))
-        subprocess.call('source ~/.bashrc', shell=True)
-        print(colored("✅ The terminal was sourced. You can now use the 'monk' command in this directory to run scripts "
-                      "located in the 'scripts' directory. 🐵🎛️", "green"))
+if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
+    alias_exists = subprocess.call('alias | grep -q "^alias monk="', shell=True)
+    if alias_exists == 0:
+        print(colored("✅ The 'monk' alias is already present. 💻", "green"))
+    else:
+        print(colored("🔗 Adding 'monk' alias... ", "cyan"))
+        subprocess.call(f'echo "alias monk=\'python3 {MONK_PATH}/monk\'" >> ~/.bashrc', shell=True)
+        print(colored("✅ The 'monk' alias was added. 💻", "green"))
         print(colored("⚠️ You may still need to restart or source existing terminals for changes to take effect. 🖥️",
                       "yellow"))
-    elif os_type == "windows":  # If OS is Windows
-        print(colored("⚠️ Please add 'monk' to your PATH manually in your environment. 🖥️", "yellow"))
-        print(colored("⚠️ Please restart your terminal for the changes to take effect. 🖥️", "yellow"))
+elif os_type.startswith("win"):  # If OS is Windows
+    if os.path.exists(os.path.join(MONK_PATH, "monk.py")):
+        print(colored("✅ The 'monk.py' command is already present. 💻", "green"))
+    else:
+        print(colored("🔗 Renaming 'monk' to 'monk.py' for Windows compatibility... ", "cyan"))
+        shutil.move(os.path.join(MONK_PATH, "monk"), os.path.join(MONK_PATH, "monk.py"))
+        print(colored("✅ The 'monk' command was renamed to 'monk.py'. You can run it using 'python monk.py'. 💻", "green"))
 else:
-    print(colored("✅ The 'monk' command is already in your PATH. 💻", "green"))
+    print(colored("⚠️ Unrecognized operating system. Please add 'monk' to your PATH manually. 🖥️", "yellow"))
+
 
 # Use monk to generate the default configurations
 print("🔧 Generating default monkey configurations... 🐵🎛️")
 if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
-    subprocess.call('python3 monk.py generate-monkeys', shell=True)
+    subprocess.call('monk generate-monkeys', shell=True)
     print(colored("Monkey configurations are based on the 'monkey-manifest.yaml' file. Individual configs will be "
                   "generated in the 'monkeys' directory.", "green"))
 elif os_type == "windows":  # If OS is Windows
