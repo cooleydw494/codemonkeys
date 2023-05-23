@@ -17,14 +17,3 @@ def monk_environment_checks():
     if not os.path.exists(os.path.join(sys.prefix, 'lib', 'python3.8', 'site-packages', f"{ROOT_DIR_NAME}.pth")):
         print(colored("⚠️  CodeMonkeys must be installed as a source package. Run `setup.py`.", 'red'))
         exit(1)
-
-
-#  TODO (monk)
-#   - Add a way to run a script with a flag that will run it in a new terminal tab
-#   - Add a monk sub-command that allows the user to create or open a new version of an existing X after backing up old
-#   - Add a monk sub-command that allows the user to create a new X from a template
-
-#  TODO (organization)
-#   - configs become subdirs of monkeys dir, and the monkey-manifest should be a file in the root directory
-#     These directories will store existing configs, enabling the new/backup functionality above for monkey configs.
-#     I had an idea related to internal/customizable but idk. Keep thinking, this is fertile ground.

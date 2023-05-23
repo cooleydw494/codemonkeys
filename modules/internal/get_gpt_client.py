@@ -1,5 +1,4 @@
 import os
-
 import openai
 from dotenv import load_dotenv
 
@@ -9,37 +8,43 @@ load_dotenv()
 # Set up OpenAI client with API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Get the maximum tokens value from the environment variable
-max_tokens = int(os.getenv("MAX_TOKENS", 4000))
 
+class GPTClient:
+    def __init__(self, version, max_tokens=int(os.getenv("MAX_TOKENS", 4000)), temperature=0.5):
+        self.engine_map = {
+            '3': "gpt-3.5-turbo",
+            '4': "gpt-4"
+        }
+        self.engine = self.engine_map.get(str(version))
 
-# Create and return the GPT client
-def create_gpt_client(version):
-    # Check if the API key is available
-    if not openai.api_key:
-        print("⚠️ OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+        if not self.engine:
+            raise ValueError(f"Unsupported GPT version: {version}")
 
-    engines = {
-        3.5: "text-davinci-03",
-        4: "text-davinci-04"
-    }
+        self.max_tokens = max_tokens
+        self.temperature = temperature
 
-    engine = engines.get(version)
-    if engine:
-        return openai.Completion.create(
-            engine=engine,
-            max_tokens=max_tokens
+    def check_api_key(self):
+        if not openai.api_key:
+            raise Exception("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+
+    def generate(self, prompt, temperature=None):
+        self.check_api_key()
+
+        if temperature is None:
+            temperature = self.temperature
+
+        response = openai.Completion.create(
+            engine=self.engine,
+            prompt=prompt,
+            max_tokens=self.max_tokens,
+            temperature=temperature
         )
-    else:
-        print(f"⚠️ Unsupported GPT version: {version}")
-        return None
+
+        return response.choices[0].text.strip()
 
 
 def instantiate_gpt_models(main_model, summary_model, usage_model):
-    gpt_models = {}
-    for model in {main_model, summary_model, usage_model}:
-        if model == '3' and '3' not in gpt_models:
-            gpt_models['3'] = create_gpt_client(3.5)
-        elif model == '4' and '4' not in gpt_models:
-            gpt_models['4'] = create_gpt_client(4)
+    model_versions = {main_model, summary_model, usage_model}
+    gpt_models = {version: GPTClient(version) for version in model_versions}
+
     return gpt_models

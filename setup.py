@@ -4,7 +4,15 @@ import platform
 import subprocess
 from termcolor import colored
 
-from definitions import ROOT_PATH, ROOT_DIR_NAME
+from definitions import ROOT_PATH, ROOT_DIR_NAME, SCRIPTS_INTERNAL_PATH
+
+
+def rename_directory(new_name):
+    parent_directory = os.path.dirname(ROOT_PATH)
+    new_directory_path = os.path.join(parent_directory, new_name)
+    os.rename(ROOT_PATH, new_directory_path)
+    return new_directory_path
+
 
 print(colored("🚀 Initiating the setup process... 🌟", "green"))
 
@@ -73,6 +81,10 @@ elif os_type == "windows":  # If OS is Windows
                   "see something like `monk [script-name]` in the docs, so should instead do something like:"
                   "`python monk.py [script-name]` or `py monk.py [script-name]`. 🖥️", "yellow"))
 
+# Run the fix-namespace.py script at SCRIPT_PATH/fix-namespace.py
+print(colored("🔧 Fixing the namespace... 🔧", "cyan"))
+subprocess.call(f'python3 {SCRIPTS_INTERNAL_PATH}/fix-namespace.py', shell=True)
+
 # Get the site-packages directory and filepath for the pth file
 site_packages_dir = site.getsitepackages()[0]
 pth_file_path = os.path.join(site_packages_dir, f"{ROOT_DIR_NAME}.pth")
@@ -95,7 +107,6 @@ with open(pth_file_path, "w") as pth_file:
 
 # give user success feedback which includes the absolute filepath of the .pth file
 print(colored(f"✅ Created the .pth file at {pth_file_path}. 📄", "green"))
-
 
 # Add monk to PATH if monk is not in path
 monk_in_path = subprocess.call('command -v monk', shell=True)

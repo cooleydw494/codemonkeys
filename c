@@ -1,55 +1,56 @@
-#!/bin/bash
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+import os
 
 # Check if a commit message argument is provided
-if [ -z "$1" ]; then
-  echo "❌ Error: No commit message provided."
-  echo "Usage: commit \"Your commit message\""
-  exit 1
-fi
+if len(sys.argv) < 2:
+    print("❌ Error: No commit message provided.")
+    print("Usage: commit \"Your commit message\"")
+    sys.exit(1)
 
-echo "🔍 Staging changes..."
+print("🔍 Staging changes...")
 
 # Run git add, displaying only error output
-add_result=$(git add . 2>&1 >/dev/null)
+add_result = subprocess.run(["git", "add", "."], universal_newlines=True, stderr=subprocess.PIPE)
 
 # Check if git add was successful
-if [ $? -ne 0 ]; then
-  echo "❌ Error adding files to staging area:"
-  echo "$add_result"
-  exit 1
-fi
+if add_result.returncode != 0:
+    print("❌ Error adding files to staging area:")
+    print(add_result.stderr)
+    sys.exit(1)
 
-echo "✅ Changes staged"
+print("✅ Changes staged")
 
-echo "🚀 Committing changes"
+print("🚀 Committing changes")
 
 # Run git commit, displaying only error output
-commit_result=$(git commit -m "$1" 2>&1)
+commit_result = subprocess.run(["git", "commit", "-m", sys.argv[1]], universal_newlines=True, stderr=subprocess.PIPE)
 
 # If git commit was not successful, display the error message
-if [ $? -ne 0 ]; then
-  echo "❌ Error committing changes:"
-  echo "$commit_result"
-  exit 1
-fi
+if commit_result.returncode != 0:
+    print("❌ Error committing changes:")
+    print(commit_result.stderr)
+    sys.exit(1)
 
 # Display commit stats
-echo "📊 Commit stats:"
-git diff --stat --summary HEAD^
+print("📊 Commit stats:")
+subprocess.run(["git", "diff", "--stat", "--summary", "HEAD^"], universal_newlines=True)
 
 # Run git push, capturing any error output
-  push_result=$(git push 2>&1)
+push_result = subprocess.run(["git", "push"], universal_newlines=True, stderr=subprocess.PIPE)
 
-  # Check if git push was successful
-  if [ $? -ne 0 ]; then
+# Check if git push was successful
+if push_result.returncode != 0:
     # Check for specific error message indicating a pull is needed first
-    if [[ "$push_result" == *"Updates were rejected"* ]]; then
-      echo "❌ Error pushing changes:"
-      echo "It looks like the remote repository has changes that you don't have yet. Please pull those changes and resolve any conflicts before pushing again. 🔄"
-    else
-      echo "❌ Error pushing changes:"
-      echo "$push_result"
-    fi
-    exit 1
-  fi
-  echo "✅ Push successful!"
+    if "Updates were rejected" in push_result.stderr:
+        print("❌ Error pushing changes:")
+        print("It looks like the remote repository has changes that you don't have yet. Please pull those changes "
+              "and resolve any conflicts before pushing again. 🔄")
+    else:
+        print("❌ Error pushing changes:")
+        print(push_result.stderr)
+    sys.exit(1)
+
+print("✅ Push successful!")

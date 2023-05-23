@@ -2,8 +2,9 @@
 .env
 .env-backup
 
-# CodeMonkey
+# CodeMonkey generated files (some are tracked though, like default generated monkey configs)
 storage/internal/listed-files.txt
+.TODO.md
 
 # Python artifacts
 *.pyc
@@ -13,6 +14,10 @@ __pycache__/
 
 # pytest artifacts
 .pytest_cache/
+
+# PyCharm artifacts
+.idea/
+.venv/
 
 # VS Code artifacts
 .vscode/

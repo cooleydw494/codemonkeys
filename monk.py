@@ -17,23 +17,30 @@ except ImportError:
 
 monk_environment_checks()
 
-# Parse command line arguments
-parser = argparse.ArgumentParser()
-group = parser.add_mutually_exclusive_group()  # Create a mutually exclusive group
-group.add_argument('-e', '--edit', action='store_true', help='Open the script in vim')
-group.add_argument('-p', '--print', action='store_true', help='Print the contents of the script to the terminal')
+# Create argument parser - use custom help
+parser = argparse.ArgumentParser(add_help=False)
+# Flags
+# TODO: implement -v --version flag
+parser.add_argument('-v', '--version', action='store_true')
+parser.add_argument('-h', '--help', action='store_true')
+
+# Flags - mutually exclusive
+group = parser.add_mutually_exclusive_group()
+group.add_argument('-e', '--edit', action='store_true')
+group.add_argument('-p', '--print', action='store_true')
 group.add_argument('-cp', '--copy_path', action='store_true',
                    help='Copy the absolute path of the script to the clipboard')
-group.add_argument('-cc', '--copy_contents', action='store_true', help='Run the script')
-parser.add_argument('command_name', nargs='?', help='The name of the script to run')
-args = parser.parse_args()
+group.add_argument('-cc', '--copy_contents', action='store_true')
 
-# If there is no argument, use 'help'
-if args.command_name is None:
+parser.add_argument('command_name', nargs='?')
+args = parser.parse_args()
+flag_args_present = any([arg.startswith('-') for arg in sys.argv[1:]])
+
+if args.command_name is None and (args.help is True):
     args.command_name = 'help'
 
 # If the user is not running the script (using the other flags), do not do warn them about the setup script
-if args.command_name in ['install'] and not (args.edit or args.print or args.copy_path or args.copy_contents):
+if args.command_name in ['install'] and flag_args_present is False:
     answer = input(
         "⚠️ You are about to run install with the monk command. If you can run the monk command you likely have "
         f"already installed {ROOT_DIR_NAME}, and running this script may not be a good idea because it is not designed "
