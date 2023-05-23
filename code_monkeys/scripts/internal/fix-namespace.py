@@ -17,8 +17,8 @@ def replace_imports_in_file(file_path):
     with open(file_path, 'r') as file:
         data = file.read()
 
-    # Use a regex to replace 'from code_monkeys' with 'from base_dir_name'
-    data = re.sub(r'from code_monkeys', f'from {PSEUDO_PACKAGE_PATH}', data)
+    # Use a regex to replace 'from /Users/david/local-git/code-monkeys/code_monkeys' with 'from base_dir_name'
+    data = re.sub(r'from /Users/david/local-git/code-monkeys/code_monkeys', f'from {PSEUDO_PACKAGE_PATH}', data)
 
     with open(file_path, 'w') as file:
         file.write(data)
