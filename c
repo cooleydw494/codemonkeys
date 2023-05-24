@@ -4,38 +4,38 @@ import subprocess
 import sys
 import os
 
+from modules.personality.custom.visuals import printc
+
 # Check if a commit message argument is provided
 if len(sys.argv) < 2:
-    print("❌ Error: No commit message provided.")
-    print("Usage: commit \"Your commit message\"")
+    printc("Error: No commit message provided.", 'error')
+    printc("Usage: commit \"Your commit message\"", 'info')
     sys.exit(1)
 
-print("🔍 Staging changes...")
+printc("Staging local changes...", 'info')
 
 # Run git add, displaying only error output
 add_result = subprocess.run(["git", "add", "."], universal_newlines=True, stderr=subprocess.PIPE)
 
 # Check if git add was successful
 if add_result.returncode != 0:
-    print("❌ Error adding files to staging area:")
-    print(add_result.stderr)
+    printc("Error adding files to staging area:", 'error')
+    printc(add_result.stderr)
     sys.exit(1)
 
-print("✅ Changes staged")
-
-print("🚀 Committing changes")
+printc("Changes staged... 🚀 Committing changes", 'success')
 
 # Run git commit, displaying only error output
 commit_result = subprocess.run(["git", "commit", "-m", sys.argv[1]], universal_newlines=True, stderr=subprocess.PIPE)
 
 # If git commit was not successful, display the error message
 if commit_result.returncode != 0:
-    print("❌ Error committing changes:")
-    print(commit_result.stderr)
+    printc("Error committing changes:", 'error')
+    printc(commit_result.stderr)
     sys.exit(1)
 
 # Display commit stats
-print("📊 Commit stats:")
+printc("📊 Commit stats:", 'info')
 subprocess.run(["git", "diff", "--stat", "--summary", "HEAD^"], universal_newlines=True)
 
 # Run git push, capturing any error output
@@ -45,12 +45,12 @@ push_result = subprocess.run(["git", "push"], universal_newlines=True, stderr=su
 if push_result.returncode != 0:
     # Check for specific error message indicating a pull is needed first
     if "Updates were rejected" in push_result.stderr:
-        print("❌ Error pushing changes:")
-        print("It looks like the remote repository has changes that you don't have yet. Please pull those changes "
-              "and resolve any conflicts before pushing again. 🔄")
+        printc("Error pushing changes:", 'error')
+        printc("🔄 It looks like the remote repository has changes that you don't have yet. Please pull those changes "
+              "and resolve any conflicts before pushing again.", 'info')
     else:
-        print("❌ Error pushing changes:")
-        print(push_result.stderr)
+        printc("Error pushing changes:", 'error')
+        printc(push_result.stderr)
     sys.exit(1)
 
-print("✅ Push successful!")
+printc("Push successful!", 'finished')

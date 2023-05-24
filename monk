@@ -1,54 +1,25 @@
 #!/usr/bin/env python
 
 import argparse
-import fileinput
 import os
 import subprocess
 import sys
-from termcolor import colored
+from modules.personality.custom.visuals import printc
 
-from definitions import ROOT_PATH, ROOT_DIR_NAME, PSEUDO_PACKAGE_PATH
+# DO NOT import modules.definitions in root-dir files.
+from definitions import MODULES_INTERNAL_PATH, ROOT_DIR_NAME, PYTHON_COMMAND
 
 try:
     from modules.internal.monk_helpers import handle_alternate_functionality
     from modules.internal.find_script import find_script
-    from modules.internal.monk_environment_checks import monk_environment_checks
+    from modules.internal.environment_checks import environment_checks
+    from modules.internal.utils.symlinks import verify_or_create_symlink
 except ImportError:
-    print(colored("⚠️  CodeMonkeys modules not imported correctly. Troubleshoot (#add link)'.", 'red'))
+    printc(" CodeMonkeys modules not imported correctly. Troubleshoot (#add link)'.", 'error')
     exit(1)
 
-monk_environment_checks()
-
-# PSEUDO_PACKAGE
-# # Write the contents of definitions.py to PSEUDO_PACKAGE_PATH/definitions.py (always)
-# # This will make sure on any script run that the definitions in the pseudo-package are up to date
-# with open(os.path.join(ROOT_PATH, 'definitions.py'), 'r') as f:
-#     definitions_contents = f.read()
-# docstring = f"""
-# # this file mimics the outer definitions.py file because CodeMonkeys uses a unique pseudo-package structure
-# # for namespacing global imports, we need it at the root and in the pseudo-package.
-# # It is rewritten every time the monk command is run, so you can easily re-generate it with `monk`
-#
-# # do
-# # NOT
-# # edit
-# # this
-# # file, unless you're really changing things up in the extreme
-# """
-# with open(os.path.join(PSEUDO_PACKAGE_PATH, 'definitions.py'), 'w') as f:
-#     f.write(definitions_contents)
-# # We need to replace the ROOT_PATH line in the pseudo-package with one that will get the correct path
-# # This will trickle down to all other PATH variables. This means only the root definitions.py needs to be updated
-# # as long as any updates to the root definitions.py do not depend on paths that are not based on the ROOT_PATH
-# new_root_path_line = "ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))\n"
-#
-# # Open the file and replace the line
-# with fileinput.FileInput(os.path.join(PSEUDO_PACKAGE_PATH, 'definitions.py'), inplace=True) as file:
-#     for line in file:
-#         # Replace lines that start with 'ROOT_PATH' with the new line
-#         if line.startswith('ROOT_PATH'):
-#             line = new_root_path_line
-#         print(line, end='')
+verify_or_create_symlink(os.path.abspath('definitions.py'), os.path.abspath('modules/definitions.py'), output=False)
+environment_checks()
 
 # Create argument parser - use custom help
 parser = argparse.ArgumentParser(add_help=False)
@@ -68,31 +39,40 @@ parser.add_argument('command_or_script_name', nargs='?')
 args = parser.parse_args()
 flag_args_present = any([arg.startswith('-') for arg in sys.argv[1:]])
 
-if args.command_or_script_name is None and (args.help is True):
-    args.command_or_script_name = 'help'
 
 # If the user is not running the script (using the other flags), do not do warn them about the setup script
 if args.command_or_script_name in ['install'] and flag_args_present is False:
     answer = input(
-        "⚠️ You are about to run install with the monk command. If you can run the monk command you likely have "
+        "You are about to run install with the monk command. If you can run the monk command you likely have "
         f"already installed {ROOT_DIR_NAME}, and running this script may not be a good idea because it is not designed "
         "to handle post-install edge cases. This is not suggested. Are you sure you want to continue? (y/n): ")
     if answer.lower() == 'y':
-        print("🚀 Starting the setup... Hang tight! 🌟")
+        printc("🚀 Starting the setup... Hang tight! 🌟")
     else:
         if answer.lower() == 'n':
-            print("🚀 Aborting setup... 🌟")
+            printc("🚀 Aborting setup...", 'done')
             sys.exit(0)
         else:
-            print("Invalid input. Aborting setup... 🌟")
+            printc("Invalid input. Aborting setup...", 'error')
         sys.exit(1)
 
+# Special Commands
+if args.command_or_script_name == 'check-definitions':
+    printc("Verifying definitions.py symlink and ...", 'link')
+    subprocess.call([PYTHON_COMMAND, os.path.join(MODULES_INTERNAL_PATH, 'check_definitions.py')])
+    sys.exit(0)
+
+
+# Detect `monk -h` and `monk --help`
+if args.command_or_script_name is None and (args.help is True):
+    args.command_or_script_name = 'help'
 
 # If command_or_script_name doesn't match a command defined above, it's a script
 script_path = find_script(args.command_or_script_name)
 
 # Handle flags that do something other than run the script (edit, copy path, etc)
 if handle_alternate_functionality(args, script_path):
+    printc("🚀 Done!", 'done')
     sys.exit(0)
 
 # Check for flags that modify how the script is run
@@ -109,5 +89,5 @@ elif extension == ".bat":
 elif extension == ".py":
     subprocess.call([sys.executable, script_path.strip()] + sys.argv[2:])
 else:
-    print(f"⚠️ Unsupported script type: {extension}")
+    printc(f"Unsupported script type: {extension}", 'error')
     sys.exit(1)

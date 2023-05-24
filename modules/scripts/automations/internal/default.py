@@ -4,13 +4,13 @@ import subprocess
 import sys
 
 import openai
-from termcolor import colored
+from modules.personality.custom.visuals import printc
 
 from modules.internal.get_gpt_client import instantiate_gpt_models
 from modules.internal.get_monkey_name import get_monkey_name
 from modules.custom.process_file import process_file
 from modules.custom.summarize_special_file import summarize_special_file
-from definitions import PYTHON_COMMAND
+from modules.definitions import PYTHON_COMMAND
 
 
 def check_env_vars():
@@ -22,7 +22,7 @@ def check_env_vars():
         if work_path is None:
             raise ValueError("WORK_PATH is not set.")
     except ValueError as error:
-        print(colored(f"⚠️ {error}", "red"))
+        printc(f"{error}", "error")
         exit(1)
     return work_path
 
@@ -33,7 +33,7 @@ def load_monkey_config(argv):
     process = subprocess.run([PYTHON_COMMAND, script_path, monkey_config_file], check=True, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
     if process.returncode != 0:
-        print(colored(process.stderr.decode(), 'red'))
+        printc(process.stderr.decode(), 'error')
         exit(1)
     return json.loads(process.stdout.decode())
 
@@ -41,12 +41,12 @@ def load_monkey_config(argv):
 def main():
     # Check command-line arguments
     if len(sys.argv) < 2:
-        print(colored("⚠️ Please provide the name of the monkey as a command-line argument.", "yellow"))
+        printc("Please provide the name of the monkey as a command-line argument.", "yellow")
         exit(1)
 
     print(colored(
         "🚀 Welcome to the Monkeyspace! Let's wreak the opposite of havoc on your [whatever] with Monkey Power! 🌟",
-        "green"))
+        "success"))
 
     # Check and load environment variables
     work_path = check_env_vars()
@@ -62,14 +62,14 @@ def main():
 
     # Check if the special file exists
     if not os.path.isfile(monkey['SPECIAL_FILE']):
-        print(colored(f"⚠️ Special file '{monkey['SPECIAL_FILE']}' not found.", "yellow"))
+        printc(f"Special file '{monkey['SPECIAL_FILE']}' not found.", "error")
         exit(1)
 
     # Summarize the special file
     special_file_summary = summarize_special_file(monkey['SPECIAL_FILE'], monkey['SUMMARY_MODEL'],
                                                   monkey['SUMMARY_PROMPT'], gpt_client)
-    print(colored("📋 Special file summarized successfully! 📝", 'green'))
-    print(colored(f"📝 Summary: {special_file_summary}\n", 'cyan'))
+    printc("Special file summarized successfully!", 'success')
+    printc(f"📝 Summary:\n{special_file_summary}", 'info')
 
     # Iterate over each file in the work_path
     for root, dirs, files in os.walk(work_path):

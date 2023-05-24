@@ -1,6 +1,6 @@
 import os
 import yaml
-from definitions import MONKEYS_PATH
+from modules.definitions import MONKEYS_PATH
 
 # Create the directory if it doesn't exist
 os.makedirs(MONKEYS_PATH, exist_ok=True)

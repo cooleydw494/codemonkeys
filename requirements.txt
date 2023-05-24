@@ -1,7 +1,8 @@
-openai
-pyyaml
-python-dotenv
+openai~=0.27.7
+pyyaml~=6.0
+python-dotenv~=1.0.0
 python-Levenshtein
-termcolor
+termcolor~=2.3.0
 art
-tiktoken
+tiktoken~=0.4.0
+Levenshtein~=0.21.0

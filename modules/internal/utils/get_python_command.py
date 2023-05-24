@@ -1,10 +1,17 @@
 import subprocess
 
-from termcolor import colored
+# IMPORTANT! PLEASE READ
+#
+# This module is used in the root definitions.py to set PYTHON_COMMAND and PIP_COMMAND. It covers the most common cases
+# as a convenience. If you were going to edit this, hard-coding in definitions.py or .env is probably a better idea.
+#
+# Additionally, we can't import any framework modules here. The modules.definitions, used throughout the pseudo-package,
+# is a symlink of the root definitions.py, so importing framework modules could cause circular imports.
+#
+# For instance, we can't import modules.personality.custom.visuals.printc. We must use termcolor directly.
 
+from termcolor import colored  # *DO NOT* import printc or any other framework modules in this file
 
-# This is used to set PYTHON_COMMAND in definitions.py. It covers the most common cases, as a convenience.
-# If you're thinking about editing this, hard-coding in definitions.py is probably a better idea
 
 def get_python_command():
     # Test the 'python3' command
@@ -14,7 +21,7 @@ def get_python_command():
         return "python"
     else:
         print(colored("Neither python3 nor python command is available. Please add one of these to your path, "
-                      "or set the PYTHON_COMMAND manually in definitions.py", 'red'))
+                      "or set the PYTHON_COMMAND manually in definitions.py", 'error'))
 
 
 def get_pip_command():
@@ -25,7 +32,7 @@ def get_pip_command():
         return "pip"
     else:
         print(colored("Neither pip3 nor pip command is available. Please add one of these to your path, "
-                      "or set the PIP_COMMAND manually in definitions.py", 'red'))
+                      "or set the PIP_COMMAND manually in definitions.py", 'error'))
 
 
 # noinspection PyBroadException

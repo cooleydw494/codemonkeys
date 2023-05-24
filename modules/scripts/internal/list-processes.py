@@ -1,11 +1,11 @@
 import os
 import subprocess
 
-from personality.custom.visuals import print_table, print_nice
+from modules.personality.custom.visuals import print_table, print_nice, apply_theme
 
 
 def main():
-    print_nice("Displaying ongoing monk processes\n", color="yellow")
+    print_nice("Displaying ongoing monk processes\n", color="important")
 
     # Get monk processes
     monk_processes = subprocess.run(['pgrep', '-a', 'monk'], stdout=subprocess.PIPE).stdout.decode().split('\n')[:-1]
@@ -18,12 +18,12 @@ def main():
     table = {
         "show_headers": True,
         "header_color": "magenta",
-        "row_colors": ["cyan", "yellow", "green"],
+        "row_colors": ["cyan", "yellow", "light_grey"],
         "headers": ["PID", "Command", "Kill Command"],
         "rows": process_row_data
     }
 
-    print_table(table, "🐵 Monk Processes")
+    print_table(table, apply_theme("Monk Processes", 'monkey'))
 
 
 if __name__ == "__main__":

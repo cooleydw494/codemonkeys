@@ -4,11 +4,12 @@ import subprocess
 import sys
 import time
 
-from definitions import PYTHON_COMMAND
+from modules.definitions import PYTHON_COMMAND
+from modules.personality.custom.visuals import printc
 
 # Check if the export filepath argument is provided
 if len(sys.argv) < 2:
-    print("⚠️ Please provide the export filepath as a command-line argument.")
+    printc("Please provide the export filepath as a command-line argument.", 'error')
     exit(1)
 
 # Get the export filepath from the command-line argument
@@ -43,6 +44,6 @@ shutil.move(f"{export_filename}/main.py", "main.py")
 shutil.move(f"{export_filename}/monkeys/monkey-manifest.yaml", "monkeys/monkey-manifest.yaml")
 shutil.move("backups/main-merged", "backups/main")
 
-print(f"✅ Project files imported from: {export_filepath}")
-print(f"✅ Backup created: {backup_filename}")
-print("✅ Project files successfully updated.")
+printc(f"Project files imported from: {export_filepath}", 'config')
+printc(f"Backup created: {backup_filename}", 'config')
+printc("Project files successfully imported.", 'done')

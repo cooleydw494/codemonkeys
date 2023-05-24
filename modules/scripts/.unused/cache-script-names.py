@@ -1,11 +1,6 @@
 import os
 
-from definitions import ROOT_PATH
-
-# Check if the value is present and valid
-if not ROOT_PATH:
-    print("⚠️ ROOT_PATH environment variable is not set. This must be an absolute path.")
-    exit(1)
+from modules.definitions import ROOT_PATH
 
 script_names = []
 for root, dirs, files in os.walk(f"{ROOT_PATH}/scripts"):

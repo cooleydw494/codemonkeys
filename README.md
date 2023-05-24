@@ -1,4 +1,4 @@
-# CodeMonkeys 🐵👨‍💻
+# CodeMonkeys 🐵
 
 Are you a highly-technical individual with an interest in taking more control over your automated AI coding?
 
