@@ -53,4 +53,4 @@ if push_result.returncode != 0:
         printc(push_result.stderr)
     sys.exit(1)
 
-printc("Push successful!", 'finished')
+printc("Push successful!", 'done')
