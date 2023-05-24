@@ -4,13 +4,13 @@ import subprocess
 import sys
 
 import openai
-from modules.personality.custom.visuals import printc
+from cm_modules.personality.custom.visuals import printc
 
-from modules.internal.get_gpt_client import instantiate_gpt_models
-from modules.internal.get_monkey_name import get_monkey_name
-from modules.custom.process_file import process_file
-from modules.custom.summarize_special_file import summarize_special_file
-from modules.definitions import PYTHON_COMMAND
+from cm_modules.internal.get_gpt_client import instantiate_gpt_models
+from cm_modules.internal.get_monkey_name import get_monkey_name
+from cm_modules.custom.process_file import process_file
+from cm_modules.custom.summarize_special_file import summarize_special_file
+from cm_modules.definitions import PYTHON_COMMAND
 
 
 def check_env_vars():

@@ -1,6 +1,6 @@
 import os
 
-from modules.definitions import ROOT_PATH
+from cm_modules.definitions import ROOT_PATH
 
 script_names = []
 for root, dirs, files in os.walk(f"{ROOT_PATH}/scripts"):

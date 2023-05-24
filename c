@@ -4,7 +4,7 @@ import subprocess
 import sys
 import os
 
-from modules.personality.custom.visuals import printc
+from cm_modules.personality.custom.visuals import printc
 
 # Check if a commit message argument is provided
 if len(sys.argv) < 2:

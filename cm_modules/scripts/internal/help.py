@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
 
-from modules.personality.custom.visuals import print_banner, print_tree, print_table, print_nice
-from modules.definitions import ROOT_PATH, SCRIPTS_PATH
+from cm_modules.personality.custom.visuals import print_banner, print_tree, print_table, print_nice
+from cm_modules.definitions import ROOT_PATH, SCRIPTS_PATH
 
 
 def main():

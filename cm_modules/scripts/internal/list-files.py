@@ -2,9 +2,9 @@ import os
 import time
 
 from dotenv import load_dotenv
-from modules.internal.token_counter import TokenCounter
-from modules.personality.custom.visuals import printc
-from modules.definitions import ROOT_PATH
+from cm_modules.internal.token_counter import TokenCounter
+from cm_modules.personality.custom.visuals import printc
+from cm_modules.definitions import ROOT_PATH
 
 
 def resolve_path(path):

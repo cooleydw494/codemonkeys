@@ -1,7 +1,7 @@
 import os
 import sys
 
-from modules.personality.custom.visuals import printc
+from cm_modules.personality.custom.visuals import printc
 
 # Check if the monkey name argument is provided
 if len(sys.argv) < 2:

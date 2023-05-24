@@ -2,9 +2,9 @@ import yaml
 import os
 import sys
 
-from modules.internal.get_monkey_name import get_monkey_name
-from modules.personality.custom.visuals import printc, inputc
-from modules.definitions import STORAGE_INTERNAL_PATH
+from cm_modules.internal.get_monkey_name import get_monkey_name
+from cm_modules.personality.custom.visuals import printc, inputc
+from cm_modules.definitions import STORAGE_INTERNAL_PATH
 
 # Load the default monkey configuration
 DEFAULT_MONKEY_CONFIG_PATH = os.path.join(STORAGE_INTERNAL_PATH, "default-monkey-config")

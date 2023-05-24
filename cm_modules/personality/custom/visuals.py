@@ -2,7 +2,7 @@ import os
 import textwrap
 
 from termcolor import colored
-from modules.definitions import STORAGE_CUSTOM_PATH
+from cm_modules.definitions import STORAGE_CUSTOM_PATH
 
 theme_colors = {
     # Themes

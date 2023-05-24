@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from modules.personality.custom.visuals import print_table, print_nice, apply_theme
+from cm_modules.personality.custom.visuals import print_table, print_nice, apply_theme
 
 
 def main():

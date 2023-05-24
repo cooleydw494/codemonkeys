@@ -3,9 +3,9 @@ import platform
 import shutil
 import subprocess
 
-from modules.personality.custom.visuals import printc, inputc
-from modules.internal.environment_checks import environment_checks
-from modules.internal.utils.symlinks import check_definitions
+from cm_modules.personality.custom.visuals import printc, inputc
+from cm_modules.internal.environment_checks import environment_checks
+from cm_modules.internal.utils.symlinks import check_definitions
 
 # DO NOT import modules.definitions in root-dir files.
 from definitions import PIP_COMMAND, PYTHON_COMMAND
@@ -13,7 +13,7 @@ from definitions import PIP_COMMAND, PYTHON_COMMAND
 printc("Initiating the setup process...", "start")
 
 current_shell_rc = None
-check_definitions(os.path.abspath('definitions.py'), os.path.abspath('modules/definitions.py'), verify_symlink=True)
+check_definitions(os.path.abspath('definitions.py'), os.path.abspath('cm_modules/definitions.py'), verify_symlink=True)
 environment_checks()
 
 # Get the OS type

@@ -1,9 +1,9 @@
 import os
 import sys
 from typing import Generator, List, Tuple
-from modules.internal.levenshtein_distance import levenshtein_distance
-from modules.personality.custom.visuals import printc, inputc
-from modules.definitions import SCRIPTS_PATH
+from cm_modules.internal.levenshtein_distance import levenshtein_distance
+from cm_modules.personality.custom.visuals import printc, inputc
+from cm_modules.definitions import SCRIPTS_PATH
 
 
 def write_to_file(file_path: str, text: str) -> None:

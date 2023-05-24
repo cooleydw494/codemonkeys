@@ -1,6 +1,6 @@
 import os
 
-from modules.internal.utils.get_python_command import get_python_command, get_pip_command
+from cm_modules.internal.utils.get_python_command import get_python_command, get_pip_command
 
 """
 IMPORTANT - PLEASE READ!
@@ -41,21 +41,21 @@ MONKEYS_CUSTOM_PATH = os.path.join(MONKEYS_PATH, "custom")
 
 
 # AUTOMATIONS
-AUTOMATIONS_PATH = os.path.join(ROOT_PATH, "modules/scripts/automations")
+AUTOMATIONS_PATH = os.path.join(ROOT_PATH, "cm_modules/scripts/automations")
 
 AUTOMATIONS_INTERNAL_PATH = os.path.join(AUTOMATIONS_PATH, "internal")
 AUTOMATIONS_CUSTOM_PATH = os.path.join(AUTOMATIONS_PATH, "custom")
 
 
 # SCRIPTS
-SCRIPTS_PATH = os.path.join(ROOT_PATH, "modules/scripts")
+SCRIPTS_PATH = os.path.join(ROOT_PATH, "cm_modules/scripts")
 
 SCRIPTS_INTERNAL_PATH = os.path.join(SCRIPTS_PATH, "internal")
 SCRIPTS_CUSTOM_PATH = os.path.join(SCRIPTS_PATH, "custom")
 
 
 # MODULES
-MODULES_PATH = os.path.join(ROOT_PATH, "modules")
+MODULES_PATH = os.path.join(ROOT_PATH, "cm_modules")
 
 MODULES_INTERNAL_PATH = os.path.join(MODULES_PATH, "internal")
 MODULES_CUSTOM_PATH = os.path.join(MODULES_PATH, "custom")
@@ -69,7 +69,7 @@ STORAGE_CUSTOM_PATH = os.path.join(STORAGE_PATH, "custom")
 
 
 # PERSONALITY
-PERSONALITY_PATH = os.path.join(ROOT_PATH, "modules/personality")
+PERSONALITY_PATH = os.path.join(ROOT_PATH, "cm_modules/personality")
 
 PERSONALITY_CUSTOM_PATH = os.path.join(PERSONALITY_PATH, "custom")
 PERSONALITY_INTERNAL_PATH = os.path.join(PERSONALITY_PATH, "internal")

@@ -1,9 +1,9 @@
 import os
 import importlib.util
-from modules.personality.custom.visuals import printc
+from cm_modules.personality.custom.visuals import printc
 import platform
 
-from modules.personality.custom.visuals import printc
+from cm_modules.personality.custom.visuals import printc
 
 """
 IMPORTANT!
