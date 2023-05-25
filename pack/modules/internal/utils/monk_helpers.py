@@ -1,16 +1,10 @@
-import os
 import subprocess
 import argparse
 import sys
 import importlib.util
 
 from pack.modules.custom.theme.theme_functions import printc, inputc
-from pack.modules.internal.utils.symlinks import check_definitions
 from pack.commands.internal.help import main as run_help
-
-# IMPORTANT! PLEASE READ
-# definitions.py should not be imported here. It is better to make all direct monk command functionality accept related
-# arguments that are passed from monk (in root), so that definitions.py symlink issues don't break core monk features.
 
 
 def parse_monk_args(commands_path, automations_path, barrels_path, modules_path):
@@ -40,6 +34,7 @@ def parse_monk_args(commands_path, automations_path, barrels_path, modules_path)
 
     # Entity is the name of the command or overridden entity_type
     parser.add_argument('entity', nargs='?')
+
     # Parse Arguments
     args = parser.parse_args()
 
@@ -123,13 +118,6 @@ def handle_special_commands(args, action, entity, entity_type, root_path, python
     # so it is a lot easier to detect it outright and run through custom logic, with a central location for help files.
     elif action == 'help' or entity == 'help':
         handle_help(args, action, entity, entity_type, root_path, python_command)
-
-    # This must be called from the root directory and passed an absolute root_path that is verifiable in the absence
-    # of a functional definitions.py symlink (pack/definitions.py).
-    elif entity == 'check-definitions':
-        root_definitions = os.path.join(root_path, 'definitions.py')
-        pack_definitions = os.path.join(root_path, 'pack', 'definitions.py')
-        check_definitions(root_definitions, pack_definitions, verify_symlink=True)
     else:
         return False
     return True
