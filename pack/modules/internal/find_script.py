@@ -2,7 +2,7 @@ import os
 import sys
 from typing import Generator, List, Tuple
 from pack.modules.internal.utils.levenshtein_distance import levenshtein_distance
-from pack.modules.custom.style.visuals import printc, inputc
+from pack.modules.custom.theme.theme_functions import printc, inputc
 
 
 def write_to_file(file_path: str, text: str) -> None:

@@ -5,7 +5,7 @@ import sys
 import time
 
 from definitions import PYTHON_COMMAND
-from pack.modules.custom.style.visuals import printc
+from pack.modules.custom.theme.theme_functions import printc
 
 # Check if the export filepath argument is provided
 if len(sys.argv) < 2:

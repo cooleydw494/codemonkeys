@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 from definitions import PIP_COMMAND, PYTHON_COMMAND
-from pack.modules.custom.style.visuals import printc
+from pack.modules.custom.theme.theme_functions import printc
 from pack.modules.internal.utils.environment_checks import environment_checks
 
 printc("Initiating the setup process...", "start")

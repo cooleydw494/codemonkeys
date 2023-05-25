@@ -3,8 +3,8 @@ import time
 
 from dotenv import load_dotenv
 from pack.modules.internal.token_counter import TokenCounter
-from pack.modules.custom.style.visuals import printc
-from definitions import ROOT_PATH
+from pack.modules.custom.theme.theme_functions import printc
+from definitions import ROOT_PATH, STORAGE_INTERNAL_PATH
 
 
 def resolve_path(path):
@@ -38,7 +38,7 @@ def filter_files_by_token_count():
     token_counter = TokenCounter('gpt-2')
 
     # Do not alter output_file unless you're prepared to make other script alterations
-    output_file = os.path.join(ROOT_PATH, "storage/internal/listed-files.txt")
+    output_file = os.path.join(STORAGE_INTERNAL_PATH, "listed-files.txt")
     starting_directory = resolve_path(os.getenv("WORK_PATH"))
     printc(f"WORK_PATH: {starting_directory}", 'info')
 

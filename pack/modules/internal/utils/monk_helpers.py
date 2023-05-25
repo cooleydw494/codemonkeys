@@ -4,7 +4,7 @@ import argparse
 import sys
 import importlib.util
 
-from pack.modules.custom.style.visuals import printc, inputc
+from pack.modules.custom.theme.theme_functions import printc, inputc
 from pack.modules.internal.utils.symlinks import check_definitions
 from pack.commands.internal.help import main as run_help
 

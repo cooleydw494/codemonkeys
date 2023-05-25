@@ -2,88 +2,24 @@ import os
 import sys
 import textwrap
 
-import termcolor
-from art import text2art
-from termcolor import colored
+# from art import text2art
+from termcolor import colored, COLORS
+from __init__ import __version__
 from definitions import STORAGE_CUSTOM_PATH
-
-# Specify the color (using termcolor options) for each theme
-theme_colors = {
-    # Green
-    'success': 'green',
-    'start': 'green',
-    'done': 'green',
-    # Red
-    'error': 'red',
-    'warning': 'light_red',
-    # Yellow
-    'important': 'yellow',
-    'loading': 'yellow',
-    'monkey': 'yellow',
-    'file': 'yellow',
-    # Cyan
-    'tip': 'cyan',
-    'user_env': 'cyan',
-    'link': 'cyan',
-    'info': 'cyan',
-    'option': 'cyan',
-    'input': 'cyan',
-    # Magenta
-    'special': 'magenta',
-    'config': 'magenta',
-
-    'quiet': 'light_grey',
-
-    # Color Fallbacks
-    'white': 'white',
-    'red': 'red',
-    'green': 'green',
-    'yellow': 'yellow',
-    'blue': 'blue',
-    'magenta': 'magenta',
-    'cyan': 'cyan',
-    'light_grey': 'light_gray',
-}
-
-theme_emojis = {
-    # Green
-    # 'success': '👍',
-    'start': '🚀',
-    'done': '✅',
-
-    # Red
-    'error': '❌ Error:',
-    'warning': '⚠️  Warning:',
-
-    # Yellow
-    'important': '👉',
-    'monkey': '🐵',
-    'special': '✨',
-    'loading': '⏳',
-    'file': '📁',
-
-    # Cyan
-    'info': '🔹',
-    'tip': '💡',
-    'config': '🔧',
-    'link': '🔗',
-    'option': '🔘',
-    'input': '🔹',
-}
+from pack.modules.custom.theme.theme_config import text_themes
 
 
 def apply_theme(text, theme):
-    # Apply emoji (if any)
-    has_emoji = theme in theme_emojis.keys()
-    if has_emoji:
-        emoji = theme_emojis[theme]
-        text = f"{emoji} {text}"
-    # Apply theme color (if any)
-    if theme in theme_colors.keys():
-        color = theme_colors[theme]
+    # Apply theme (if any)
+    has_theme = theme in text_themes.keys()
+    if has_theme:
+        prefix = text_themes[theme]['pre']
+        if prefix is not None:
+            text = f"{prefix}{text}"
+        color = text_themes[theme]['color']
         text = colored(text, color)
-    # Fallback for termcolor colors
-    elif theme in termcolor.COLORS.keys():
+    # Fallback for color strings
+    elif theme in COLORS.keys():
         text = colored(text, theme)
     return text
 
@@ -133,15 +69,10 @@ def print_nice(*args, color=None, max_width=120, **kwargs):
 
 
 def print_banner():
-    # art = text2art('CodeMonkeys', font='eftirobot')
     with open(os.path.join(STORAGE_CUSTOM_PATH, 'art.txt'), 'r') as f:
         art = f.read()
     printc(art, 'yellow')
-
-    # monkey_emojis = """                🐵    🐵     🐵    🐵    🐵    🐵
-    #             👕 💻 👕     👕 💻 👕    👕 💻 👕
-    #             👖    👖     👖    👖    👖    👖"""
-    # print(monkey_emojis)
+    printc(f'Version {__version__}', 'monkey')
 
 
 def print_table(table, title=None):

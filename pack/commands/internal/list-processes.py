@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from pack.modules.custom.style.visuals import print_table, printc, apply_theme
+from pack.modules.custom.theme.theme_functions import print_table, printc, apply_theme
 
 
 def main():

@@ -2,7 +2,9 @@
     "headers": ["Command", "Description", ""],
     "show_headers": false,
     "rows": [
-
+        ["monk help", "Run this help script", ""],
+        ["monk -v", "Print the CodeMonkeys version", "--version"],
+        ["monk -h [any-entity]", "Run the help script for an entity", "--help"],
         ["monk [command-name]", "Run a script in the commands dir", ""],
         ["monk -a [automation]", "Run an automation", "--automation"],
         ["monk -b [barrel]", "Run a barrel", "--barrel"],
@@ -11,8 +13,5 @@
         ["monk -p [any-entity]", "Print the file contents", "--print"],
         ["monk -cp [any-entity]", "Copy file abspath to clipboard", "--copy-path"],
         ["monk -cc [any-entity]", "Copy file contents to clipboard", "--copy-contents"],
-        ["monk -v", "Print the CodeMonkeys version", "--version"],
-        ["monk -h [any-entity]", "Run the help script for an entity", "--help"],
-        ["monk help", "Run this help script", ""]
     ]
 }

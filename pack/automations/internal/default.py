@@ -4,7 +4,7 @@ import subprocess
 import sys
 import openai
 
-from pack.modules.custom.style.visuals import printc
+from pack.modules.custom.theme.theme_functions import printc
 from pack.modules.internal.get_gpt_client import instantiate_gpt_models
 from pack.modules.internal.get_monkey_name import get_monkey_name
 from pack.modules.custom.process_file import process_file

@@ -3,7 +3,7 @@ import pathlib
 import yaml
 from dotenv import load_dotenv
 from typing import List, Tuple
-from pack.modules.custom.style.visuals import printc, inputc
+from pack.modules.custom.theme.theme_functions import printc, inputc
 
 # Load environment variables from .env file
 load_dotenv()

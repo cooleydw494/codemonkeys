@@ -2,7 +2,7 @@ import platform
 import shutil
 import time
 
-from pack.modules.custom.style.visuals import printc
+from pack.modules.custom.theme.theme_functions import printc
 
 # Get the current timestamp
 timestamp = time.strftime("%Y%m%d%H%M%S")

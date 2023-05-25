@@ -5,7 +5,7 @@ import subprocess
 
 from definitions import COMMANDS_PATH, MODULES_PATH, AUTOMATIONS_PATH, BARRELS_PATH, ROOT_PATH, PYTHON_COMMAND
 from __init__ import __version__
-from pack.modules.custom.style.visuals import printc, inputc
+from pack.modules.custom.theme.theme_functions import printc, inputc
 from pack.modules.internal.utils.monk_helpers import handle_alternate_actions, handle_special_commands, parse_monk_args, \
     run_command_as_module
 from pack.modules.internal.find_script import find_entity

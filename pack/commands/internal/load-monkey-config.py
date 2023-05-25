@@ -2,7 +2,7 @@ import os
 import sys
 
 from definitions import MONKEYS_PATH
-from pack.modules.custom.style.visuals import printc
+from pack.modules.custom.theme.theme_functions import printc
 
 # Check if the monkey name argument is provided
 if len(sys.argv) < 2:

@@ -2,9 +2,8 @@ import json
 import os
 from pathlib import Path
 
-from __init__ import __version__
 from definitions import STORAGE_INTERNAL_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH
-from pack.modules.custom.style.visuals import print_banner, print_table, print_tree, printc, apply_theme
+from pack.modules.custom.theme.theme_functions import print_banner, print_table, print_tree, printc, apply_theme
 
 
 def main():

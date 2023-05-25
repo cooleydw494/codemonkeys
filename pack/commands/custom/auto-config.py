@@ -3,7 +3,7 @@ import os
 import sys
 
 from pack.modules.internal.get_monkey_name import get_monkey_name
-from pack.modules.custom.style.visuals import printc
+from pack.modules.custom.theme.theme_functions import printc
 from definitions import STORAGE_INTERNAL_PATH
 
 # Load the default monkey configuration

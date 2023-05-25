@@ -1,6 +1,6 @@
 import sys
 
-from pack.modules.custom.style.visuals import printc
+from pack.modules.custom.theme.theme_functions import printc
 
 
 def environment_checks():
