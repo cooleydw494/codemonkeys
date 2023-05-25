@@ -1,6 +1,12 @@
 ## TODO List
 ### Resources
 [OpenAI Token Optimization Docs](https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them) | [OpenAI tiktoken Cookbook](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) | [placeholder](placeholder) | [placeholder](placeholder) | [placeholder](placeholder)
+
+
+### Add cm_modules/capabilities
+- Make it so things like summarizing a file, chunking a file, etc are modular and easy to use within an automation.
+
+
 ### Prompt Optimization
 - Implement prompt/token optimization strategies (incl logit_bias).
 - Implement add/customize for prompt/token optimization strategies.

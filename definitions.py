@@ -1,6 +1,6 @@
 import os
 
-from cm_modules.internal.utils.get_python_command import get_python_command, get_pip_command
+from pseudo_package.modules.internal.utils.get_python_command import get_python_command, get_pip_command
 
 """
 IMPORTANT - PLEASE READ!
@@ -33,32 +33,12 @@ ROOT_DIR_NAME = os.path.basename(ROOT_PATH)
 MONK_PATH = os.path.join(ROOT_PATH, "monk")
 
 
-# MONKEYS
+# MONKEYS (configs)
 MONKEYS_PATH = os.path.join(ROOT_PATH, "monkeys")
 
+MONKEY_MANIFEST_PATH = os.path.join(MONKEYS_PATH, "monkey-manifest.yaml")
 MONKEYS_INTERNAL_PATH = os.path.join(MONKEYS_PATH, "internal")
 MONKEYS_CUSTOM_PATH = os.path.join(MONKEYS_PATH, "custom")
-
-
-# AUTOMATIONS
-AUTOMATIONS_PATH = os.path.join(ROOT_PATH, "cm_modules/scripts/automations")
-
-AUTOMATIONS_INTERNAL_PATH = os.path.join(AUTOMATIONS_PATH, "internal")
-AUTOMATIONS_CUSTOM_PATH = os.path.join(AUTOMATIONS_PATH, "custom")
-
-
-# SCRIPTS
-SCRIPTS_PATH = os.path.join(ROOT_PATH, "cm_modules/scripts")
-
-SCRIPTS_INTERNAL_PATH = os.path.join(SCRIPTS_PATH, "internal")
-SCRIPTS_CUSTOM_PATH = os.path.join(SCRIPTS_PATH, "custom")
-
-
-# MODULES
-MODULES_PATH = os.path.join(ROOT_PATH, "cm_modules")
-
-MODULES_INTERNAL_PATH = os.path.join(MODULES_PATH, "internal")
-MODULES_CUSTOM_PATH = os.path.join(MODULES_PATH, "custom")
 
 
 # STORAGE
@@ -68,15 +48,29 @@ STORAGE_INTERNAL_PATH = os.path.join(STORAGE_PATH, "internal")
 STORAGE_CUSTOM_PATH = os.path.join(STORAGE_PATH, "custom")
 
 
-# PERSONALITY
-PERSONALITY_PATH = os.path.join(ROOT_PATH, "cm_modules/personality")
-
-PERSONALITY_CUSTOM_PATH = os.path.join(PERSONALITY_PATH, "custom")
-PERSONALITY_INTERNAL_PATH = os.path.join(PERSONALITY_PATH, "internal")
+# PSEUDO_PACKAGE
+PSEUDO_PACKAGE_PATH = os.path.join(ROOT_PATH, "pseudo_package")
 
 
-# OTHER
-HELP_PATH = os.path.join(ROOT_PATH, "help")
+# MODULES
+MODULES_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "pseudo_package")
+
+MODULES_INTERNAL_PATH = os.path.join(MODULES_PATH, "internal")
+MODULES_CUSTOM_PATH = os.path.join(MODULES_PATH, "custom")
+
+
+# AUTOMATIONS
+AUTOMATIONS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "automations")
+
+AUTOMATIONS_INTERNAL_PATH = os.path.join(AUTOMATIONS_PATH, "internal")
+AUTOMATIONS_CUSTOM_PATH = os.path.join(AUTOMATIONS_PATH, "custom")
+
+
+# SCRIPTS
+SCRIPTS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "scripts")
+
+SCRIPTS_INTERNAL_PATH = os.path.join(SCRIPTS_PATH, "internal")
+SCRIPTS_CUSTOM_PATH = os.path.join(SCRIPTS_PATH, "custom")
 
 
 # It is ok to hard-code this if you have issues

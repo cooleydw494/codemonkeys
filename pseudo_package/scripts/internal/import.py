@@ -4,8 +4,8 @@ import subprocess
 import sys
 import time
 
-from cm_modules.definitions import PYTHON_COMMAND
-from cm_modules.personality.custom.visuals import printc
+from pseudo_package.definitions import PYTHON_COMMAND
+from pseudo_package.modules.custom.visuals import printc
 
 # Check if the export filepath argument is provided
 if len(sys.argv) < 2:

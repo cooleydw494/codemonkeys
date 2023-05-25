@@ -1,6 +1,6 @@
 import os
 import yaml
-from cm_modules.definitions import MONKEYS_PATH
+from pseudo_package.definitions import MONKEYS_PATH
 
 # Create the directory if it doesn't exist
 os.makedirs(MONKEYS_PATH, exist_ok=True)

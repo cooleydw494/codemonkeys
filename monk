@@ -4,21 +4,21 @@ import argparse
 import os
 import subprocess
 import sys
-from cm_modules.personality.custom.visuals import printc
+from pseudo_package.modules.custom.visuals import printc
 
 # DO NOT import modules.definitions in root-dir files.
 from definitions import MODULES_INTERNAL_PATH, ROOT_DIR_NAME, PYTHON_COMMAND
 
 try:
-    from cm_modules.internal.monk_helpers import handle_alternate_functionality
-    from cm_modules.internal.find_script import find_script
-    from cm_modules.internal.environment_checks import environment_checks
-    from cm_modules.internal.utils.symlinks import verify_or_create_symlink
+    from pseudo_package.modules.internal.monk_helpers import handle_alternate_functionality
+    from pseudo_package.modules.internal.find_script import find_script
+    from pseudo_package.modules.internal.environment_checks import environment_checks
+    from pseudo_package.modules.internal.utils.symlinks import verify_or_create_symlink
 except ImportError:
     printc(" CodeMonkeys modules not imported correctly. Troubleshoot (#add link)'.", 'error')
     exit(1)
 
-verify_or_create_symlink(os.path.abspath('definitions.py'), os.path.abspath('cm_modules/definitions.py'), output=False)
+verify_or_create_symlink(os.path.abspath('definitions.py'), os.path.abspath('pseudo_package/definitions.py'), output=False)
 environment_checks()
 
 # Create argument parser - use custom help

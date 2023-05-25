@@ -1,35 +1,32 @@
 import os
 import textwrap
 
+import termcolor
 from termcolor import colored
-from cm_modules.definitions import STORAGE_CUSTOM_PATH
+from pseudo_package.definitions import STORAGE_CUSTOM_PATH
 
+# Specify the color (using termcolor options) for each theme
 theme_colors = {
-    # Themes
-
     # Green
     'success': 'green',
     'start': 'green',
     'done': 'green',
-
     # Red
     'error': 'red',
     'warning': 'light_red',
-
     # Yellow
     'important': 'yellow',
     'loading': 'yellow',
     'monkey': 'yellow',
     'file': 'yellow',
-
-
+    # Cyan
     'tip': 'cyan',
     'user_env': 'cyan',
     'link': 'cyan',
     'info': 'cyan',
     'option': 'cyan',
     'input': 'cyan',
-
+    # Magenta
     'special': 'magenta',
     'config': 'magenta',
 
@@ -74,17 +71,24 @@ theme_emojis = {
 
 
 def apply_theme(text, theme):
+    # Apply emoji (if any)
     has_emoji = theme in theme_emojis.keys()
     if has_emoji:
         emoji = theme_emojis[theme]
         text = f"{emoji} {text}"
-    color = theme_colors[theme]
-    text = colored(text, color)
+    # Apply theme color (if any)
+    if theme in theme_colors.keys():
+        color = theme_colors[theme]
+        text = colored(text, color)
+    # Fallback for termcolor colors
+    elif theme in termcolor.COLORS.keys():
+        text = colored(text, theme)
     return text
 
 
-def printc(text, theme='white', attrs=None):
-    text = apply_theme(text, theme)
+def printc(text, theme=None, attrs=None):
+    if theme:
+        text = apply_theme(text, theme)
     print_nice(text, attrs=attrs)
 
 
