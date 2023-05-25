@@ -1,44 +1,44 @@
 import subprocess
 
-# IMPORTANT! PLEASE READ
-#
-# This module is used in the root definitions.py to set PYTHON_COMMAND and PIP_COMMAND. It covers the most common cases
-# as a convenience. If you were going to edit this, hard-coding in definitions.py or .env is probably a better idea.
-#
-# Additionally, we can't import any framework modules here. The ...definitions.py, used throughout the pseudo-package,
-# is a symlink of the root definitions.py, so importing framework modules could cause circular imports.
-#
-# For instance, we can't import modules.personality.custom.visuals.printc. We must use termcolor directly.
-
 from termcolor import colored  # *DO NOT* import printc or any other framework modules in this file
+
+"""
+IMPORTANT! PLEASE READ
+
+This module is imported to definitions.py to set a reliable, globally-available PYTHON_COMMAND and PIP_COMMAND.
+
+We cannot import definitions.py or any project modules that use it here, or we will get a circular import error.
+Although we could import project modules that don't use definitions.py, it is better to avoid this for maintenance.
+"""
+
+# Lists of python and pip commands to be checked
+python_commands = ["python3", "python3.11", "python3.10", "python3.9", "python3.8", "python3.7", "python3.6", "python"]
+pip_commands = ["pip3", "pip"]
 
 
 def get_python_command():
-    # Test the 'python3' command
-    if test_command("python3"):
-        return "python3"
-    elif test_command("python"):
-        return "python"
-    else:
-        print(colored("Neither python3 nor python command is available. Please add one of these to your path, "
-                      "or set the PYTHON_COMMAND manually in definitions.py", 'error'))
+    # Loop over the python_commands list and return the first valid command
+    for cmd in python_commands:
+        if test_command(cmd):
+            return cmd
+    print(colored("No valid python command is available. Please add one of these to your path, "
+                  "or set the PYTHON_COMMAND manually in definitions.py", 'error'))
 
 
 def get_pip_command():
-    # Test the 'pip3' command
-    if test_command("pip3"):
-        return "pip3"
-    elif test_command("pip"):
-        return "pip"
-    else:
-        print(colored("Neither pip3 nor pip command is available. Please add one of these to your path, "
-                      "or set the PIP_COMMAND manually in definitions.py", 'error'))
+    # Loop over the pip_commands list and return the first valid command
+    for cmd in pip_commands:
+        if test_command(cmd):
+            return cmd
+    print(colored("No valid pip command is available. Please add one of these to your path, "
+                  "or set the PIP_COMMAND manually in definitions.py", 'error'))
 
 
 # noinspection PyBroadException
 def test_command(command):
     try:
-        # Try to get the python version
+        # Use --version flag to check if a command is present
+        # It should throw an Exception if it isn't
         output = subprocess.check_output([command, "--version"])
         return True
     except Exception:

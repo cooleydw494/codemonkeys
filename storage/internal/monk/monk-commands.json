@@ -1,15 +1,18 @@
 {
-    "headers": ["Command", "Description", "Note"],
+    "headers": ["Command", "Description", ""],
     "show_headers": false,
     "rows": [
-        ["monk scripts", "List all monk scripts", ""],
-        ["monk [script-name]", "Run a monk script", ""],
-        ["monk kickoff [monkey-name]", "Run a Monkey", ""],
-        ["monk -a [(rel-path/)script-name]", "Add new script", "--add"],
-        ["monk -b [script-name]", "Backup script", "--backup"],
-        ["monk -e [script-name]", "Open script in vim", "--edit"],
-        ["monk -p [script-name]", "Print script contents", "--print"],
-        ["monk -cp [script-name]", "Copy script path to clipboard", "--cp-path"],
-        ["monk -cc [script-name]", "Copy script contents to clipboard", "--cp-contents"]
+
+        ["monk [command-name]", "Run a script in the commands dir", ""],
+        ["monk -a [automation]", "Run an automation", "--automation"],
+        ["monk -b [barrel]", "Run a barrel", "--barrel"],
+        ["monk -m [module]", "Target a module (include action flag)", "--module"],
+        ["monk -e [any-entity]", "Open an entity in vim", "--edit"],
+        ["monk -p [any-entity]", "Print the file contents", "--print"],
+        ["monk -cp [any-entity]", "Copy file abspath to clipboard", "--copy-path"],
+        ["monk -cc [any-entity]", "Copy file contents to clipboard", "--copy-contents"],
+        ["monk -v", "Print the CodeMonkeys version", "--version"],
+        ["monk -h [any-entity]", "Run the help script for an entity", "--help"],
+        ["monk help", "Run this help script", ""]
     ]
 }

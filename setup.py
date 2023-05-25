@@ -2,19 +2,15 @@ import os
 import platform
 import shutil
 import subprocess
+import sys
 
-from pack.modules.custom.style.visuals import printc
-from pack.modules.internal.utils.symlinks import check_definitions
-from pack.modules.internal.utils.environment_checks import environment_checks
-
-# DO NOT import pack.definitions in root-dir files.
 from definitions import PIP_COMMAND, PYTHON_COMMAND
+from pack.modules.custom.style.visuals import printc
+from pack.modules.internal.utils.environment_checks import environment_checks
 
 printc("Initiating the setup process...", "start")
 
 current_shell_rc = None
-check_definitions(os.path.abspath('definitions.py'), os.path.abspath('pseudo_package/definitions.py'),
-                  verify_symlink=True)
 environment_checks()
 
 # Get the OS type

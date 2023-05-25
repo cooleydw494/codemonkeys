@@ -2,7 +2,7 @@ import os
 import time
 
 from dotenv import load_dotenv
-from ...modules.internal.token_counter import TokenCounter
+from pack.modules.internal.token_counter import TokenCounter
 from pack.modules.custom.style.visuals import printc
 from definitions import ROOT_PATH
 

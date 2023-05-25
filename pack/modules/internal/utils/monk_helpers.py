@@ -24,8 +24,8 @@ def parse_monk_args(commands_path, automations_path, barrels_path, modules_path)
     action_flags = parser.add_mutually_exclusive_group()
     action_flags.add_argument('-e', '--edit', action='store_true')
     action_flags.add_argument('-p', '--print', action='store_true')
-    action_flags.add_argument('-cp', '--copy_path', action='store_true')
-    action_flags.add_argument('-cc', '--copy_contents', action='store_true')
+    action_flags.add_argument('-cp', '--copy-path', action='store_true')
+    action_flags.add_argument('-cc', '--copy-contents', action='store_true')
     action_flags.add_argument('-h', '--help', action='store_true')
 
     # Entity Type flags - mutually exclusive, overrides default of "command"

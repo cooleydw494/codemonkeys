@@ -2,7 +2,7 @@ import yaml
 import os
 import sys
 
-from ...modules.internal.get_monkey_name import get_monkey_name
+from pack.modules.internal.get_monkey_name import get_monkey_name
 from pack.modules.custom.style.visuals import printc
 from definitions import STORAGE_INTERNAL_PATH
 

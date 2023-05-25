@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-import importlib.util
 import os
 import sys
 import subprocess
 
-# IMPORTANT! DO NOT import pack.definitions in root-dir files.
 from definitions import COMMANDS_PATH, MODULES_PATH, AUTOMATIONS_PATH, BARRELS_PATH, ROOT_PATH, PYTHON_COMMAND
 from __init__ import __version__
 from pack.modules.custom.style.visuals import printc, inputc
@@ -12,10 +10,6 @@ from pack.modules.internal.utils.monk_helpers import handle_alternate_actions, h
     run_command_as_module
 from pack.modules.internal.find_script import find_entity
 from pack.modules.internal.utils.environment_checks import environment_checks
-from pack.modules.internal.utils.symlinks import verify_or_create_symlink
-
-# Verify or create definitions.py symlink (to check parity run `monk check-definitions`)
-verify_or_create_symlink(os.path.abspath('definitions.py'), os.path.abspath('pack/definitions.py'), output=False)
 
 # Some basic environment checks
 environment_checks()

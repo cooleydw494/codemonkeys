@@ -1,7 +1,7 @@
 import os
 import sys
 from typing import Generator, List, Tuple
-from ...modules.internal.utils.levenshtein_distance import levenshtein_distance
+from pack.modules.internal.utils.levenshtein_distance import levenshtein_distance
 from pack.modules.custom.style.visuals import printc, inputc
 
 

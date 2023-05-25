@@ -104,7 +104,7 @@ def inputc(text, theme='input'):
     return result
 
 
-def print_nice(*args, color=None, max_width=160, **kwargs):
+def print_nice(*args, color=None, max_width=120, **kwargs):
     """
     Improved print function that automatically wraps long lines to fit the terminal width.
     """
@@ -140,7 +140,7 @@ def print_banner():
                 👕 💻 👕     👕 💻 👕    👕 💻 👕
                 👖    👖     👖    👖    👖    👖"""
     print(monkey_emojis)
-    print("\n\n")
+    print()
 
 
 def print_table(table, title=None):
@@ -170,6 +170,8 @@ def print_table(table, title=None):
 def print_tree(start_dir, exclude_dirs, title=None):
     if title:
         printc(title + "\n", 'white', attrs=['bold'])
+    else:
+        print()
 
     printc(os.path.basename(start_dir), 'magenta')
 
@@ -196,4 +198,3 @@ def print_tree(start_dir, exclude_dirs, title=None):
             name = os.path.splitext(f)[0]
             print('{}{}'.format(sub_indent, colored(name, 'green')))
 
-    print("\n\n")
