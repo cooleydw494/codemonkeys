@@ -4,7 +4,7 @@ import argparse
 import sys
 import importlib.util
 
-from pack.modules.custom.style.visuals import printc
+from pack.modules.custom.style.visuals import printc, inputc
 from pack.modules.internal.utils.symlinks import check_definitions
 from pack.commands.internal.help import main as run_help
 
@@ -14,6 +14,9 @@ from pack.commands.internal.help import main as run_help
 
 
 def parse_monk_args(commands_path, automations_path, barrels_path, modules_path):
+    default_action = 'run'
+    default_entity_type = 'command'
+
     # Create argument parser - use custom help
     parser = argparse.ArgumentParser(add_help=False)
 
@@ -22,6 +25,7 @@ def parse_monk_args(commands_path, automations_path, barrels_path, modules_path)
 
     # Action flags - mutually exclusive, overrides default of "run"
     action_flags = parser.add_mutually_exclusive_group()
+    action_flags.add_argument('-r', '--run', action='store_true')
     action_flags.add_argument('-e', '--edit', action='store_true')
     action_flags.add_argument('-p', '--print', action='store_true')
     action_flags.add_argument('-cp', '--copy-path', action='store_true')
@@ -65,13 +69,23 @@ def parse_monk_args(commands_path, automations_path, barrels_path, modules_path)
         entity_type = 'barrel'
         entity_path = barrels_path
 
+    if entity_type == 'module':
+        default_action = 'edit'
+
     if action is None and args.entity is None and entity_type is None:
         # If all values are default (run <None> command), simulate `monk --help`
         action = 'help'
 
     # Apply any relevant defaults
-    action = action or 'run'
-    entity_type = entity_type or 'command'
+    action = action or default_action
+    entity_type = entity_type or default_entity_type
+
+    # Warning For "run" action on non-commands
+    if action == 'run' and entity_type == 'module':
+        printc(
+            f"You are attempting to use the 'run' action a module with. This could work if there is a default behavior "
+            f"for the module (like a main function), but you may want to exercise caution.", 'warning')
+        inputc("Press Enter to continue or Ctrl+C to cancel...")
 
     return args, action, args.entity, entity_type, entity_path
 

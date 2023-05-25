@@ -1,17 +1,20 @@
-DEFAULT_MONKEY_CONFIG = {
-    'MAIN_PROMPT': "Default main prompt",
-    'SUMMARY_PROMPT': "Default summary prompt",
-    'USAGE_PROMPT': "Default usage prompt",
-    'MAIN_PROMPT_ULTIMATUM': "Default ultimatum for main prompt",
-    'OVERRIDE_WORK_PATH': "Default work path",
-    'OVERRIDE_PROCESS_FILE_FN': "Default process file function",
-    'OVERRIDE_MAIN_PROGRAM': "Default main program",
-    'OUTPUT_EXAMPLE': "Default output example",
-    'OUTPUT_CHECK_PROMPT': "Default prompt for checking the output",
-    'OUTPUT_FILENAME_APPEND': "Default filename append",
-    'OUTPUT_EXT': "Default file extension",
-    'SPECIAL_FILE': "Default special file",
-    'MAIN_MODEL': "Default model",
-    'SUMMARY_MODEL': "Default model",
-    'USAGE_MODEL': "Default model",
+{
+  MAIN_PROMPT="Please generate code for the following task..."
+  SUMMARY_PROMPT: "Provide a summary of this code..."
+  USAGE_PROMPT: "Show me how to use this function..."
+  MAIN_PROMPT_ULTIMATUM: "Limit your response to the full contents of a python script, and nothing else."
+  SPECIAL_FILE: "help.py"
+  MAIN_MODEL: 4
+  SUMMARY_MODEL: 4
+  USAGE_MODEL: 4
+  MAIN_TEMP: 1
+  SUMMARY_TEMP: 1
+  USAGE_TEMP: 1
+  OVERRIDE_WORK_PATH: ""
+  OVERRIDE_PROCESS_FILE_FN: ""
+  OVERRIDE_MAIN_PROGRAM: ""
+  OVERRIDE_OUTPUT_EXT: ""
+  OUTPUT_FILENAME_APPEND: ""
+  OUTPUT_EXAMPLE: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
+  OUTPUT_CHECK_PROMPT: "Examine the following out put and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
 }

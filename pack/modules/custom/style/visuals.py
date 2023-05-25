@@ -3,6 +3,7 @@ import sys
 import textwrap
 
 import termcolor
+from art import text2art
 from termcolor import colored
 from definitions import STORAGE_CUSTOM_PATH
 
@@ -62,7 +63,7 @@ theme_emojis = {
     'file': '📁',
 
     # Cyan
-    # 'info': '🔍',
+    'info': '🔹',
     'tip': '💡',
     'config': '🔧',
     'link': '🔗',
@@ -132,20 +133,21 @@ def print_nice(*args, color=None, max_width=120, **kwargs):
 
 
 def print_banner():
-    with open(os.path.join(STORAGE_CUSTOM_PATH, 'art.txt'), 'r') as f:
-        art = f.read()
+    art = text2art('CodeMonkeys', font='eftirobot')
+    # with open(os.path.join(STORAGE_CUSTOM_PATH, 'art.txt'), 'r') as f:
+    #     art = f.read()
     printc(art, 'yellow')
 
-    monkey_emojis = """                🐵    🐵     🐵    🐵    🐵    🐵
-                👕 💻 👕     👕 💻 👕    👕 💻 👕
-                👖    👖     👖    👖    👖    👖"""
-    print(monkey_emojis)
-    print()
+    # monkey_emojis = """                🐵    🐵     🐵    🐵    🐵    🐵
+    #             👕 💻 👕     👕 💻 👕    👕 💻 👕
+    #             👖    👖     👖    👖    👖    👖"""
+    # print(monkey_emojis)
 
 
 def print_table(table, title=None):
+    print()
     if title:
-        print_nice(title + "\n", color="white", attrs=['bold'])
+        print_nice(title, color="white", attrs=['bold'])
 
     # Calculate column widths
     col_widths = [max(len(str(x)) for x in col) for col in zip(*table["rows"])]
@@ -164,14 +166,12 @@ def print_table(table, title=None):
                        i, (val, width) in enumerate(zip(row, col_widths))]
         print_nice('   '.join(colored_row))
 
-    print_nice("\n\n")
+    print()
 
 
 def print_tree(start_dir, exclude_dirs, title=None):
     if title:
-        printc(title + "\n", 'white', attrs=['bold'])
-    else:
-        print()
+        printc(title, 'white', attrs=['bold'])
 
     printc(os.path.basename(start_dir), 'magenta')
 

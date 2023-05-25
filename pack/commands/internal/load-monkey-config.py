@@ -1,6 +1,7 @@
 import os
 import sys
 
+from definitions import MONKEYS_PATH
 from pack.modules.custom.style.visuals import printc
 
 # Check if the monkey name argument is provided
@@ -10,19 +11,19 @@ if len(sys.argv) < 2:
 
 # Get the monkey name from the command-line argument
 monkey_name = sys.argv[1]
-monkey_config_file = f"../monkeys/{monkey_name}.py"
+monkey_file = os.path.join(MONKEYS_PATH, monkey_name)
 
 # Check if the monkey configuration file exists
-if not os.path.isfile(monkey_config_file):
-    printc(f"Monkey configuration file '{monkey_name}.py' not found.", "error")
+if not os.path.isfile(monkey_file):
+    printc(f"Monkey config file '{monkey_name}.py' not found.", "error")
     sys.exit(1)
 
 # Load the monkey configuration variables
 monkey_config = {}
 try:
-    exec(open(monkey_config_file).read(), monkey_config)
+    exec(open(monkey_file).read(), monkey_config)
 except Exception as e:
-    printc(f"Failed to load monkey configuration file '{monkey_name}.py'. Error: {str(e)}", "error")
+    printc(f"Failed to load monkey config from file: '{monkey_name}'. Error: {str(e)}", "error")
     sys.exit(1)
 
 # Extract the configuration variables

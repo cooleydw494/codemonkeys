@@ -18,18 +18,11 @@ environment_checks()
 args, action, entity, entity_type, entity_type_path =\
     parse_monk_args(COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH)
 
-# print key/values for debugging
-print(f"action: {action}")
-print(f"entity: {entity}")
-print(f"entity_type: {entity_type}")
-print(f"entity_type_path: {entity_type_path}")
-
-# Warning For "run" action on non-commands
-if action == 'run' and entity_type != 'command':
-    printc(f"You are attempting to use the default 'run' action on entity type: {entity_type}. This is allowed, and "
-           f"monk will attempt to run {entity}, but implementation of this hasn't been fully thought through. "
-           f"You may want to exercise caution.", 'warning')
-    inputc("Press Enter to continue or Ctrl+C to cancel...")
+# DEBUG
+# print(f"action: {action}")
+# print(f"entity: {entity}")
+# print(f"entity_type: {entity_type}")
+# print(f"entity_type_path: {entity_type_path}")
 
 # Special Commands that override typical behavior (reasoning in definition)
 if handle_special_commands(args, action, entity, entity_type, ROOT_PATH, PYTHON_COMMAND, __version__):
