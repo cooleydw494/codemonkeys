@@ -1,21 +1,22 @@
 import os
 
-from pseudo_package.modules.internal.utils.get_python_command import get_python_command, get_pip_command
+from pack.modules.internal.utils.get_python_command import get_python_command, get_pip_command
+
 
 """
 IMPORTANT - PLEASE READ!
 
-This file is symlinked in code-monkeys/modules/definitions.py by the setup script.
-This is because the modules of CodeMonkeys are a "pseudo-package". See README.md for more of "pseudo-package" concept.
+The pack/definitions.py version of this file is a symlink (created in the setup.py script) to the root definitions.py.
+This is to give the pack "pseudo-package" access to root definitions. See README.md for more on the pseudo-package.
 This does have some implications on how to use it, but if you follow the rules below, you should be fine.
 
 RULES:
 1. *Always use ROOT_PATH to get other paths*, leaving the ROOT_PATH logic in this file untouched.
 2. Do not change the base structure of the modules directory, or move the symlinked definitions.py file.
-3. If you want to add a new directory, add it to the ROOT_PATH definition below, and then add a new variable
-
-If you don't need python code to set a custom variable, you can just use the code-monkeys/.env file.
+3. Unless you're modifying fundamental framework logic or changing the directory structure of CodeMonkeys...
+   YOU REALLY SHOULDN'T BE EDITING THIS!
 """
+
 
 # ROOT_PATH (works in symlink and original)
 if os.path.islink(os.path.abspath(__file__)):
@@ -49,11 +50,11 @@ STORAGE_CUSTOM_PATH = os.path.join(STORAGE_PATH, "custom")
 
 
 # PSEUDO_PACKAGE
-PSEUDO_PACKAGE_PATH = os.path.join(ROOT_PATH, "pseudo_package")
+PSEUDO_PACKAGE_PATH = os.path.join(ROOT_PATH, "pack")
 
 
 # MODULES
-MODULES_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "pseudo_package")
+MODULES_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "modules")
 
 MODULES_INTERNAL_PATH = os.path.join(MODULES_PATH, "internal")
 MODULES_CUSTOM_PATH = os.path.join(MODULES_PATH, "custom")
@@ -66,11 +67,18 @@ AUTOMATIONS_INTERNAL_PATH = os.path.join(AUTOMATIONS_PATH, "internal")
 AUTOMATIONS_CUSTOM_PATH = os.path.join(AUTOMATIONS_PATH, "custom")
 
 
-# SCRIPTS
-SCRIPTS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "scripts")
+# BARRELS
+BARRELS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "barrels")
 
-SCRIPTS_INTERNAL_PATH = os.path.join(SCRIPTS_PATH, "internal")
-SCRIPTS_CUSTOM_PATH = os.path.join(SCRIPTS_PATH, "custom")
+BARRELS_INTERNAL_PATH = os.path.join(BARRELS_PATH, "internal")
+BARRELS_CUSTOM_PATH = os.path.join(BARRELS_PATH, "custom")
+
+
+# MONK COMMANDS
+COMMANDS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "commands")
+
+COMMANDS_INTERNAL_PATH = os.path.join(COMMANDS_PATH, "internal")
+COMMANDS_CUSTOM_PATH = os.path.join(COMMANDS_PATH, "custom")
 
 
 # It is ok to hard-code this if you have issues

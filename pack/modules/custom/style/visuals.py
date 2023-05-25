@@ -1,9 +1,10 @@
 import os
+import sys
 import textwrap
 
 import termcolor
 from termcolor import colored
-from pseudo_package.definitions import STORAGE_CUSTOM_PATH
+from definitions import STORAGE_CUSTOM_PATH
 
 # Specify the color (using termcolor options) for each theme
 theme_colors = {
@@ -94,7 +95,13 @@ def printc(text, theme=None, attrs=None):
 
 def inputc(text, theme='input'):
     text = apply_theme(text, theme)
-    return input(text)
+    try:
+        result = input(text)
+    except KeyboardInterrupt:
+        print()
+        printc("Exiting due to KeyboardInterrupt from user.", 'yellow')
+        sys.exit(1)
+    return result
 
 
 def print_nice(*args, color=None, max_width=160, **kwargs):
@@ -127,8 +134,7 @@ def print_nice(*args, color=None, max_width=160, **kwargs):
 def print_banner():
     with open(os.path.join(STORAGE_CUSTOM_PATH, 'art.txt'), 'r') as f:
         art = f.read()
-    printc(art, 'white')
-    printc(art, 'white')
+    printc(art, 'yellow')
 
     monkey_emojis = """                🐵    🐵     🐵    🐵    🐵    🐵
                 👕 💻 👕     👕 💻 👕    👕 💻 👕
@@ -184,7 +190,7 @@ def print_tree(start_dir, exclude_dirs, title=None):
 
         sub_indent = ' ' * 4 * (level + 1)
         for f in files:
-            if f.startswith('.'):  # ignore hidden files
+            if f.startswith('.') or f.startswith('_'):  # ignore hidden files
                 continue
 
             name = os.path.splitext(f)[0]

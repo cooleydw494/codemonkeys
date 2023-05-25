@@ -4,13 +4,13 @@ import subprocess
 import sys
 import time
 
-from pseudo_package.definitions import PYTHON_COMMAND
-from pseudo_package.modules.custom.visuals import printc
+from definitions import PYTHON_COMMAND
+from pack.modules.custom.style.visuals import printc
 
 # Check if the export filepath argument is provided
 if len(sys.argv) < 2:
     printc("Please provide the export filepath as a command-line argument.", 'error')
-    exit(1)
+    sys.exit(1)
 
 # Get the export filepath from the command-line argument
 export_filepath = sys.argv[1]

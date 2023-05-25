@@ -3,17 +3,18 @@ import platform
 import shutil
 import subprocess
 
-from pseudo_package.modules.custom.visuals import printc
-from pseudo_package.modules.internal.environment_checks import environment_checks
-from pseudo_package.modules.internal.utils.symlinks import check_definitions
+from pack.modules.custom.style.visuals import printc
+from pack.modules.internal.utils.symlinks import check_definitions
+from pack.modules.internal.utils.environment_checks import environment_checks
 
-# DO NOT import modules.definitions in root-dir files.
+# DO NOT import pack.definitions in root-dir files.
 from definitions import PIP_COMMAND, PYTHON_COMMAND
 
 printc("Initiating the setup process...", "start")
 
 current_shell_rc = None
-check_definitions(os.path.abspath('definitions.py'), os.path.abspath('pseudo_package/definitions.py'), verify_symlink=True)
+check_definitions(os.path.abspath('definitions.py'), os.path.abspath('pseudo_package/definitions.py'),
+                  verify_symlink=True)
 environment_checks()
 
 # Get the OS type
@@ -63,7 +64,7 @@ if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
         if not current_shell_rc:
             printc("Could not determine current shell. Please add the 'monk=./monk' alias manually to be "
                    "able to use the monk command more easily.", "important")
-            exit(1)
+            sys.exit(1)
         subprocess.call(f'echo "alias monk=\'{PYTHON_COMMAND} ./monk\'" >> {current_shell_rc}', shell=True)
         printc("The 'monk' alias was added.", "success")
         printc("You can now use the 'monk' command in this directory to run scripts located in the 'scripts' "

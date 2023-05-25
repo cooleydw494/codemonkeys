@@ -2,15 +2,14 @@ import json
 import os
 import subprocess
 import sys
-
 import openai
-from pseudo_package.modules.custom.visuals import printc
 
-from pseudo_package.modules.internal.get_gpt_client import instantiate_gpt_models
-from pseudo_package.modules.internal.get_monkey_name import get_monkey_name
-from pseudo_package.modules.custom.process_file import process_file
-from pseudo_package.modules.custom.summarize_special_file import summarize_special_file
-from pseudo_package.definitions import PYTHON_COMMAND
+from pack.modules.custom.style.visuals import printc
+from ...modules.internal.get_gpt_client import instantiate_gpt_models
+from ...modules.internal.get_monkey_name import get_monkey_name
+from ...modules.custom.process_file import process_file
+from ...modules.custom.summarize_special_file import summarize_special_file
+from definitions import PYTHON_COMMAND
 
 
 def check_env_vars():
@@ -23,18 +22,18 @@ def check_env_vars():
             raise ValueError("WORK_PATH is not set.")
     except ValueError as error:
         printc(f"{error}", "error")
-        exit(1)
+        sys.exit(1)
     return work_path
 
 
 def load_monkey_config(argv):
     monkey_name, monkey_config_file = get_monkey_name(argv)
-    script_path = "../../internal/load-monkey-config.py"
+    script_path = "../../commands/internal/load-monkey-config.py"
     process = subprocess.run([PYTHON_COMMAND, script_path, monkey_config_file], check=True, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
     if process.returncode != 0:
         printc(process.stderr.decode(), 'error')
-        exit(1)
+        sys.exit(1)
     return json.loads(process.stdout.decode())
 
 
@@ -42,11 +41,9 @@ def main():
     # Check command-line arguments
     if len(sys.argv) < 2:
         printc("Please provide the name of the monkey as a command-line argument.", "yellow")
-        exit(1)
+        sys.exit(1)
 
-    print(colored(
-        "🚀 Welcome to the Monkeyspace! Let's wreak the opposite of havoc on your [whatever] with Monkey Power! 🌟",
-        "success"))
+    printc("Welcome to the Monkeyspace! Let's wreak the opposite of havoc on your [whatever]!", "start")
 
     # Check and load environment variables
     work_path = check_env_vars()
@@ -63,13 +60,13 @@ def main():
     # Check if the special file exists
     if not os.path.isfile(monkey['SPECIAL_FILE']):
         printc(f"Special file '{monkey['SPECIAL_FILE']}' not found.", "error")
-        exit(1)
+        sys.exit(1)
 
     # Summarize the special file
     special_file_summary = summarize_special_file(monkey['SPECIAL_FILE'], monkey['SUMMARY_MODEL'],
                                                   monkey['SUMMARY_PROMPT'], gpt_client)
     printc("Special file summarized successfully!", 'success')
-    printc(f"📝 Summary:\n{special_file_summary}", 'info')
+    printc(f"Summary:\n{special_file_summary}", 'file')
 
     # Iterate over each file in the work_path
     for root, dirs, files in os.walk(work_path):

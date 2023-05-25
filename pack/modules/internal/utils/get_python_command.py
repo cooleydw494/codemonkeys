@@ -5,7 +5,7 @@ import subprocess
 # This module is used in the root definitions.py to set PYTHON_COMMAND and PIP_COMMAND. It covers the most common cases
 # as a convenience. If you were going to edit this, hard-coding in definitions.py or .env is probably a better idea.
 #
-# Additionally, we can't import any framework modules here. The modules.definitions, used throughout the pseudo-package,
+# Additionally, we can't import any framework modules here. The ...definitions.py, used throughout the pseudo-package,
 # is a symlink of the root definitions.py, so importing framework modules could cause circular imports.
 #
 # For instance, we can't import modules.personality.custom.visuals.printc. We must use termcolor directly.

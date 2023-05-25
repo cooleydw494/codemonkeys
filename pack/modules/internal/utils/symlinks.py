@@ -2,7 +2,7 @@ import os
 import importlib.util
 import platform
 
-from pseudo_package.modules.custom.visuals import printc
+from pack.modules.custom.style.visuals import printc
 
 """
 IMPORTANT!
@@ -39,7 +39,8 @@ def verify_or_create_symlink(target, symlink_path, output=True):
                 os.unlink(symlink_path)
             subprocess.check_call(['cmd', '/c', 'mklink', symlink_path, target])
         except subprocess.CalledProcessError:
-            printc(f'Unable to create {symlink_path} symlink. Run script as Administrator or enable Developer Mode.', 'error')
+            printc(f'Unable to create {symlink_path} symlink. Run script as Administrator or enable Developer Mode.',
+                   'error')
     else:
         if os.path.islink(symlink_path):
             os.unlink(symlink_path)
@@ -79,6 +80,6 @@ def check_definitions(original_file_path, symlink_path, verify_symlink=False):
     if diff_count > 0:
         printc(conflicts_text, 'error')
         printc('Please ensure all definitions are compatible with the symlink.', 'error')
-        exit(1)
+        sys.exit(1)
     else:
         printc(conflicts_text, 'success')

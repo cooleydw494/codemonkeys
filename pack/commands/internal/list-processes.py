@@ -1,11 +1,11 @@
 import os
 import subprocess
 
-from pseudo_package.modules.custom.visuals import print_table, print_nice, apply_theme
+from pack.modules.custom.style.visuals import print_table, printc, apply_theme
 
 
 def main():
-    print_nice("Displaying ongoing monk processes\n", color="important")
+    printc("Displaying ongoing monk processes", "important")
 
     # Get monk processes
     monk_processes = subprocess.run(['pgrep', '-a', 'monk'], stdout=subprocess.PIPE).stdout.decode().split('\n')[:-1]

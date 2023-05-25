@@ -1,93 +1,64 @@
 #!/usr/bin/env python
-
-import argparse
+import importlib.util
 import os
-import subprocess
 import sys
-from pseudo_package.modules.custom.visuals import printc
+import subprocess
 
-# DO NOT import modules.definitions in root-dir files.
-from definitions import MODULES_INTERNAL_PATH, ROOT_DIR_NAME, PYTHON_COMMAND
+# IMPORTANT! DO NOT import pack.definitions in root-dir files.
+from definitions import COMMANDS_PATH, MODULES_PATH, AUTOMATIONS_PATH, BARRELS_PATH, ROOT_PATH, PYTHON_COMMAND
+from __init__ import __version__
+from pack.modules.custom.style.visuals import printc, inputc
+from pack.modules.internal.utils.monk_helpers import handle_alternate_actions, handle_special_commands, parse_monk_args, \
+    run_command_as_module
+from pack.modules.internal.find_script import find_entity
+from pack.modules.internal.utils.environment_checks import environment_checks
+from pack.modules.internal.utils.symlinks import verify_or_create_symlink
 
-try:
-    from pseudo_package.modules.internal.monk_helpers import handle_alternate_functionality
-    from pseudo_package.modules.internal.find_script import find_script
-    from pseudo_package.modules.internal.environment_checks import environment_checks
-    from pseudo_package.modules.internal.utils.symlinks import verify_or_create_symlink
-except ImportError:
-    printc(" CodeMonkeys modules not imported correctly. Troubleshoot (#add link)'.", 'error')
-    exit(1)
+# Verify or create definitions.py symlink (to check parity run `monk check-definitions`)
+verify_or_create_symlink(os.path.abspath('definitions.py'), os.path.abspath('pack/definitions.py'), output=False)
 
-verify_or_create_symlink(os.path.abspath('definitions.py'), os.path.abspath('pseudo_package/definitions.py'), output=False)
+# Some basic environment checks
 environment_checks()
 
-# Create argument parser - use custom help
-parser = argparse.ArgumentParser(add_help=False)
-# Flags
-parser.add_argument('-v', '--version', action='store_true')
-parser.add_argument('-h', '--help', action='store_true')
-# Flags - mutually exclusive
-group = parser.add_mutually_exclusive_group()
-group.add_argument('-e', '--edit', action='store_true')
-group.add_argument('-p', '--print', action='store_true')
-group.add_argument('-cp', '--copy_path', action='store_true',
-                   help='Copy the absolute path of the script to the clipboard')
-group.add_argument('-cc', '--copy_contents', action='store_true')
-# Command or script name
-parser.add_argument('command_or_script_name', nargs='?')
+# Setup and Parse Monk Arguments
+args, action, entity, entity_type, entity_type_path =\
+    parse_monk_args(COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH)
 
-args = parser.parse_args()
-flag_args_present = any([arg.startswith('-') for arg in sys.argv[1:]])
+# print key/values for debugging
+print(f"action: {action}")
+print(f"entity: {entity}")
+print(f"entity_type: {entity_type}")
+print(f"entity_type_path: {entity_type_path}")
 
+# Warning For "run" action on non-commands
+if action == 'run' and entity_type != 'command':
+    printc(f"You are attempting to use the default 'run' action on entity type: {entity_type}. This is allowed, and "
+           f"monk will attempt to run {entity}, but implementation of this hasn't been fully thought through. "
+           f"You may want to exercise caution.", 'warning')
+    inputc("Press Enter to continue or Ctrl+C to cancel...")
 
-# If the user is not running the script (using the other flags), do not do warn them about the setup script
-if args.command_or_script_name in ['install'] and flag_args_present is False:
-    answer = input(
-        "You are about to run install with the monk command. If you can run the monk command you likely have "
-        f"already installed {ROOT_DIR_NAME}, and running this script may not be a good idea because it is not designed "
-        "to handle post-install edge cases. This is not suggested. Are you sure you want to continue? (y/n): ")
-    if answer.lower() == 'y':
-        printc("🚀 Starting the setup... Hang tight! 🌟")
-    else:
-        if answer.lower() == 'n':
-            printc("🚀 Aborting setup...", 'done')
-            sys.exit(0)
-        else:
-            printc("Invalid input. Aborting setup...", 'error')
-        sys.exit(1)
-
-# Special Commands
-if args.command_or_script_name == 'check-definitions':
-    printc("Verifying definitions.py symlink and ...", 'link')
-    subprocess.call([PYTHON_COMMAND, os.path.join(MODULES_INTERNAL_PATH, 'check_definitions.py')])
+# Special Commands that override typical behavior (reasoning in definition)
+if handle_special_commands(args, action, entity, entity_type, ROOT_PATH, PYTHON_COMMAND, __version__):
     sys.exit(0)
 
+# Find Entity (includes interactive selection)
+entity_path = find_entity(entity, entity_type_path)
 
-# Detect `monk -h` and `monk --help`
-if args.command_or_script_name is None and (args.help is True):
-    args.command_or_script_name = 'help'
-
-# If command_or_script_name doesn't match a command defined above, it's a script
-script_path = find_script(args.command_or_script_name)
-
-# Handle flags that do something other than run the script (edit, copy path, etc)
-if handle_alternate_functionality(args, script_path):
-    printc("🚀 Done!", 'done')
+# Handle Alternate Actions (edit, print, copy_path, help, etc)
+if handle_alternate_actions(action, entity_path):
     sys.exit(0)
-
-# Check for flags that modify how the script is run
-# TODO
 
 # Get the extension of the script
-extension = os.path.splitext(script_path.strip())[1]
+extension = os.path.splitext(entity_path.strip())[1]
 
 # Run the script with the provided arguments
 if extension == ".sh":
-    subprocess.call(['bash', script_path.strip()] + sys.argv[2:])
+    subprocess.call(['bash', entity_path.strip()] + sys.argv[2:])
 elif extension == ".bat":
-    subprocess.call([script_path.strip()] + sys.argv[2:])
+    subprocess.call([entity_path.strip()] + sys.argv[2:])
 elif extension == ".py":
-    subprocess.call([sys.executable, script_path.strip()] + sys.argv[2:])
+    run_command_as_module(entity_path.strip(), 'main', sys.argv[2:])
+    # subprocess.call([sys.executable, entity_path.strip()] + sys.argv[2:])
 else:
-    printc(f"Unsupported script type: {extension}", 'error')
+    printc(f"Entity Type not supported: {extension}. find_entity.py should have already filtered this out.", 'error')
     sys.exit(1)

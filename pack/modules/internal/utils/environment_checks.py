@@ -1,6 +1,6 @@
 import sys
 
-from pseudo_package.modules.custom.visuals import printc
+from pack.modules.custom.style.visuals import printc
 
 
 def environment_checks():
@@ -12,6 +12,4 @@ def environment_checks():
 
     if version < 3:
         printc("It appears you're running Python 2. Please use Python 3.", 'error')
-        exit(1)
-
-
+        sys.exit(1)
