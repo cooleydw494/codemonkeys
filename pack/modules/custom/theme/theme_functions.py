@@ -4,8 +4,9 @@ import textwrap
 
 # from art import text2art
 from termcolor import colored, COLORS
+
 from __init__ import __version__
-from definitions import STORAGE_CUSTOM_PATH
+from definitions import STORAGE_INTERNAL_PATH
 from pack.modules.custom.theme.theme_config import text_themes
 
 
@@ -69,7 +70,7 @@ def print_nice(*args, color=None, max_width=120, **kwargs):
 
 
 def print_banner():
-    with open(os.path.join(STORAGE_CUSTOM_PATH, 'art.txt'), 'r') as f:
+    with open(os.path.join(STORAGE_INTERNAL_PATH, 'monk', 'art.txt'), 'r') as f:
         art = f.read()
     printc(art, 'yellow')
     printc(f'Version {__version__}', 'monkey')
@@ -128,4 +129,3 @@ def print_tree(start_dir, exclude_dirs, title=None):
 
             name = os.path.splitext(f)[0]
             print('{}{}'.format(sub_indent, colored(name, 'green')))
-
