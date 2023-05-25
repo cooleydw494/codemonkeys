@@ -133,9 +133,9 @@ def print_nice(*args, color=None, max_width=120, **kwargs):
 
 
 def print_banner():
-    art = text2art('CodeMonkeys', font='eftirobot')
-    # with open(os.path.join(STORAGE_CUSTOM_PATH, 'art.txt'), 'r') as f:
-    #     art = f.read()
+    # art = text2art('CodeMonkeys', font='eftirobot')
+    with open(os.path.join(STORAGE_CUSTOM_PATH, 'art.txt'), 'r') as f:
+        art = f.read()
     printc(art, 'yellow')
 
     # monkey_emojis = """                🐵    🐵     🐵    🐵    🐵    🐵
