@@ -2,7 +2,7 @@ import os
 import sys
 from typing import Generator, List, Tuple
 from pack.modules.internal.utils.levenshtein_distance import levenshtein_distance
-from pack.modules.custom.theme.theme_functions import printc, inputc
+from pack.modules.custom.theme.theme_functions import print_t, input_t
 
 
 def write_to_file(file_path: str, text: str) -> None:
@@ -11,24 +11,24 @@ def write_to_file(file_path: str, text: str) -> None:
 
 
 def select_entity(prompt: str, entity_options: List[Tuple[str, int, str]]) -> str:
-    printc(prompt, 'monkey')
-    printc("-------------------", 'cyan')
+    print_t(prompt, 'monkey')
+    print_t("-------------------", 'cyan')
     for i, (name, _, _) in enumerate(entity_options):
-        printc(f"{i}. {name}", 'cyan')
-    printc("-------------------", 'cyan')
+        print_t(f"{i}. {name}", 'cyan')
+    print_t("-------------------", 'cyan')
 
-    input_ = inputc("Enter the number corresponding to the entity, or type 'no' to sys.exit: ", 'input')
-    printc(f"Running option {input_}: {entity_options[int(input_)]}", 'quiet')
+    input_ = input_t("Enter the number corresponding to the entity, or type 'no' to sys.exit: ", 'input')
+    print_t(f"Running option {input_}: {entity_options[int(input_)]}", 'quiet')
 
     if input_ == "no":
-        printc("✋ Exiting.", 'done')
+        print_t("✋ Exiting.", 'done')
         sys.exit(1)
     elif input_ == "tab":
         return select_entity("📜 All Available Commands:", entity_options)
     elif input_.isdigit() and 0 <= int(input_) < len(entity_options):
         return entity_options[int(input_)][2]
     else:
-        printc("Invalid input. Please try again.", 'error')
+        print_t("Invalid input. Please try again.", 'error')
         return select_entity(prompt, entity_options)
 
 
@@ -56,7 +56,7 @@ def find_entity(entity_name: str, entity_path: str):
             prompt = f"Entity '{entity_name}' not found. Did you mean one of these?"
             selected_entity = select_entity(prompt, matches[:5])
     else:
-        printc(f"Entity '{entity_name}' not found.", 'warning')
+        print_t(f"Entity '{entity_name}' not found.", 'warning')
         all_entities = sorted(find_entities(entity_path, ""), key=lambda x: x[1])
         if all_entities:
             selected_entity = select_entity("📜 Available Commands:", all_entities)

@@ -1,11 +1,11 @@
 import os
 import subprocess
 
-from pack.modules.custom.theme.theme_functions import print_table, printc, apply_theme
+from pack.modules.custom.theme.theme_functions import print_table, print_t, apply_theme
 
 
 def main():
-    printc("Displaying ongoing monk processes", "important")
+    print_t("Displaying ongoing monk processes", "important")
 
     # Get monk processes
     monk_processes = subprocess.run(['pgrep', '-a', 'monk'], stdout=subprocess.PIPE).stdout.decode().split('\n')[:-1]
@@ -18,7 +18,7 @@ def main():
     table = {
         "show_headers": True,
         "header_color": "magenta",
-        "row_colors": ["cyan", "yellow", "light_grey"],
+        "row_colors": ["cyan", "yellow", "dark_grey"],
         "headers": ["PID", "Command", "Kill Command"],
         "rows": process_row_data
     }

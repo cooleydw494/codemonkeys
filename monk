@@ -5,9 +5,9 @@ import subprocess
 
 from definitions import COMMANDS_PATH, MODULES_PATH, AUTOMATIONS_PATH, BARRELS_PATH, ROOT_PATH, PYTHON_COMMAND
 from __init__ import __version__
-from pack.modules.custom.theme.theme_functions import printc, inputc
-from pack.modules.internal.utils.monk_helpers import handle_alternate_actions, handle_special_commands, parse_monk_args, \
-    run_command_as_module
+from pack.modules.custom.theme.theme_functions import print_t
+from pack.modules.internal.utils.monk_helpers import handle_alternate_actions, handle_special_commands,\
+    parse_monk_args, run_command_as_module
 from pack.modules.internal.find_script import find_entity
 from pack.modules.internal.utils.environment_checks import environment_checks
 
@@ -17,12 +17,6 @@ environment_checks()
 # Setup and Parse Monk Arguments
 args, action, entity, entity_type, entity_type_path =\
     parse_monk_args(COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH)
-
-# DEBUG
-# print(f"action: {action}")
-# print(f"entity: {entity}")
-# print(f"entity_type: {entity_type}")
-# print(f"entity_type_path: {entity_type_path}")
 
 # Special Commands that override typical behavior (reasoning in definition)
 if handle_special_commands(args, action, entity, entity_type, ROOT_PATH, PYTHON_COMMAND, __version__):
@@ -48,8 +42,8 @@ elif extension == ".py":
         run_command_as_module(entity_path.strip(), 'main', sys.argv[2:])
     except KeyboardInterrupt:
         print()
-        printc("Exiting due to KeyboardInterrupt from user.", 'yellow')
+        print_t("Exiting due to KeyboardInterrupt from user.", 'yellow')
         sys.exit(1)
 else:
-    printc(f"Entity Type not supported: {extension}. find_entity.py should have already filtered this out.", 'error')
+    print_t(f"Entity Type not supported: {extension}. find_entity.py should have already filtered this out.", 'error')
     sys.exit(1)

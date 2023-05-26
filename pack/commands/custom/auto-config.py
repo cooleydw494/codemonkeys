@@ -3,7 +3,7 @@ import os
 import sys
 
 from pack.modules.internal.get_monkey_name import get_monkey_name
-from pack.modules.custom.theme.theme_functions import printc
+from pack.modules.custom.theme.theme_functions import print_t
 from definitions import STORAGE_INTERNAL_PATH
 
 # Load the default monkey configuration
@@ -12,10 +12,10 @@ try:
     with open(DEFAULT_MONKEY_CONFIG_PATH, 'r') as f:
         DEFAULT_MONKEY_CONFIG = yaml.safe_load(f)
 except FileNotFoundError:
-    printc(f"Error: Default monkey configuration file not found at '{DEFAULT_MONKEY_CONFIG_PATH}'.", 'error')
+    print_t(f"Error: Default monkey configuration file not found at '{DEFAULT_MONKEY_CONFIG_PATH}'.", 'error')
     sys.exit(1)
 except yaml.YAMLError:
-    printc(f"Error: Default monkey configuration file at '{DEFAULT_MONKEY_CONFIG_PATH}' is invalid.", 'error')
+    print_t(f"Error: Default monkey configuration file at '{DEFAULT_MONKEY_CONFIG_PATH}' is invalid.", 'error')
     sys.exit(1)
 
 # Define input prompts
@@ -43,7 +43,7 @@ INPUT_PROMPTS = {
 
 def is_valid_path(path):
     if not os.path.exists(os.path.expanduser(path)):
-        printc("Invalid path. Please try again.", 'error')
+        print_t("Invalid path. Please try again.", 'error')
         return False
     return True
 
@@ -64,7 +64,7 @@ def handle_yaml(data):
 
 
 def main():
-    printc("Welcome to the Monkey Manifest Configuration tool.", 'monkey')
+    print_t("Welcome to the Monkey Manifest Configuration tool.", 'monkey')
 
     # Fetch the monkey name to configure
     monkey_name, _ = get_monkey_name(sys.argv, allow_new=True)
@@ -74,13 +74,13 @@ def main():
         with open('monkey-manifest.yaml', 'r') as f:
             data = yaml.safe_load(f)
     except FileNotFoundError:
-        printc("Error: 'monkey-manifest.yaml' file not found.", 'error')
+        print_t("Error: 'monkey-manifest.yaml' file not found.", 'error')
         sys.exit(1)
 
     # If the monkey is new, initialize with the default config, otherwise load existing data
     monkey_data = data.get(monkey_name, DEFAULT_MONKEY_CONFIG)
 
-    printc(f"Now configuring {monkey_name}...", 'config')
+    print_t(f"Now configuring {monkey_name}...", 'config')
     new_monkey_data = handle_yaml(monkey_data)
     data[monkey_name] = new_monkey_data
 
@@ -88,7 +88,7 @@ def main():
     with open('monkey-manifest.yaml', 'w') as file:
         yaml.dump(data, file, default_flow_style=False)
 
-    printc("Configuration complete. The 'monkey-manifest.yaml' file has been updated.", 'done')
+    print_t("Configuration complete. The 'monkey-manifest.yaml' file has been updated.", 'done')
 
 
 if __name__ == '__main__':

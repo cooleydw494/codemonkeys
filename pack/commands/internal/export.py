@@ -2,7 +2,7 @@ import platform
 import shutil
 import time
 
-from pack.modules.custom.theme.theme_functions import printc
+from pack.modules.custom.theme.theme_functions import print_t
 
 # Get the current timestamp
 timestamp = time.strftime("%Y%m%d%H%M%S")
@@ -25,4 +25,4 @@ directory_to_export = "backups/main"
 export_filename = f"export-{timestamp}.{archive_format}"
 shutil.make_archive(export_filename, archive_format, "", files_to_export, directory_to_export)
 
-printc(f"Export created: {export_filename}", 'done')
+print_t(f"Export created: {export_filename}", 'done')

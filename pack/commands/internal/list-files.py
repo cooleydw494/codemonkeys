@@ -3,7 +3,7 @@ import time
 
 from dotenv import load_dotenv
 from pack.modules.internal.token_counter import TokenCounter
-from pack.modules.custom.theme.theme_functions import printc
+from pack.modules.custom.theme.theme_functions import print_t
 from definitions import ROOT_PATH, STORAGE_INTERNAL_PATH
 
 
@@ -40,11 +40,11 @@ def filter_files_by_token_count():
     # Do not alter output_file unless you're prepared to make other script alterations
     output_file = os.path.join(STORAGE_INTERNAL_PATH, "listed-files.txt")
     starting_directory = resolve_path(os.getenv("WORK_PATH"))
-    printc(f"WORK_PATH: {starting_directory}", 'info')
+    print_t(f"WORK_PATH: {starting_directory}", 'info')
 
     filtered_files = []
 
-    printc("Filtering files... this might take a while depending on the size of your WORK_PATH.", 'loading')
+    print_t("Filtering files... this might take a while depending on the size of your WORK_PATH.", 'loading')
 
     # Walk through the starting directory and its subdirectories
     for root, _, files in os.walk(starting_directory):
@@ -66,21 +66,21 @@ def filter_files_by_token_count():
                 if num_tokens <= max_tokens:
                     filtered_files.append(absolute_path)
 
-    printc("File search completed!", 'success')
+    print_t("File search completed!", 'success')
 
     # Write the filtered file paths to the output file
     with open(output_file, "w") as f:
         for idx, file_path in enumerate(filtered_files, start=1):
             f.write(f"{idx}. {file_path}\n")
 
-    printc(f"📝 List of files saved to {output_file}. Enjoy coding with your 🐒 code monkeys!", 'done')
+    print_t(f"📝 List of files saved to {output_file}. Enjoy coding with your 🐒 code monkeys!", 'done')
     # print the contents of the file to the console, truncating it with ellipsis if over 15 lines
     with open(output_file, "r") as f:
         lines = f.readlines()
         if len(lines) > 15:
-            printc("".join(lines[:15]) + "...", 'cyan')
+            print_t("".join(lines[:15]) + "...", 'cyan')
         else:
-            printc("".join(lines), 'cyan')
+            print_t("".join(lines), 'cyan')
 
 
 if __name__ == "__main__":

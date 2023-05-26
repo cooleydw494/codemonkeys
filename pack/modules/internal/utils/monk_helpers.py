@@ -3,7 +3,8 @@ import argparse
 import sys
 import importlib.util
 
-from pack.modules.custom.theme.theme_functions import printc, inputc
+from definitions import COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH
+from pack.modules.custom.theme.theme_functions import print_t, input_t, print_tree
 from pack.commands.internal.help import main as run_help
 
 
@@ -16,6 +17,7 @@ def parse_monk_args(commands_path, automations_path, barrels_path, modules_path)
 
     # Special flags - flags that override normal behaviors significantly.
     parser.add_argument('-v', '--version', action='store_true')
+    parser.add_argument('--all', action='store_true')
 
     # Action flags - mutually exclusive, overrides default of "run"
     action_flags = parser.add_mutually_exclusive_group()
@@ -77,10 +79,10 @@ def parse_monk_args(commands_path, automations_path, barrels_path, modules_path)
 
     # Warning For "run" action on non-commands
     if action == 'run' and entity_type == 'module':
-        printc(
+        print_t(
             f"You are attempting to use the 'run' action a module with. This could work if there is a default behavior "
             f"for the module (like a main function), but you may want to exercise caution.", 'warning')
-        inputc("Press Enter to continue or Ctrl+C to cancel...")
+        input_t("Press Enter to continue or Ctrl+C to cancel...")
 
     return args, action, args.entity, entity_type, entity_path
 
@@ -95,11 +97,11 @@ def handle_alternate_actions(action, script_path):
 
     elif action == 'copy_path':
         subprocess.run(['pbcopy'], input=script_path.strip().encode('utf-8'))
-        printc("Copied script absolute path to clipboard", 'file')
+        print_t("Copied script absolute path to clipboard", 'file')
 
     elif action == 'copy_contents':
         subprocess.run(['pbcopy'], input=open(script_path.strip(), 'rb').read())
-        printc("Copied script contents to clipboard", 'file')
+        print_t("Copied script contents to clipboard", 'file')
     else:
         return False
     return True
@@ -112,12 +114,25 @@ def handle_special_commands(args, action, entity, entity_type, root_path, python
 
     # If -v or --version, print version and sys.exit. Maybe eventually implement versioning for entities?
     if args.version:
-        printc(f"CodeMonkeys v{version}", 'monkey')
+        print_t(f"CodeMonkeys v{version}", 'monkey')
 
     # Help needs to work in many contexts, and it would be a pain to place help executables throughout the framework,
     # so it is a lot easier to detect it outright and run through custom logic, with a central location for help files.
     elif action == 'help' or entity == 'help':
         handle_help(args, action, entity, entity_type, root_path, python_command)
+    elif entity == 'list':
+        if entity_type == 'command' or args.all:
+            print()
+            print_tree(COMMANDS_PATH, [], "📁 Commands - core framework CLI commands")
+        if entity_type == 'barrel' or args.all:
+            print()
+            print_tree(BARRELS_PATH, [], "🛢️  Barrels - scripts that orchestrate multiple Automations")
+        if entity_type == 'automation' or args.all:
+            print()
+            print_tree(AUTOMATIONS_PATH, [], "🤖 Automations - scripts that run automated tasks using monkey configs")
+        if entity_type == 'module' or args.all:
+            print()
+            print_tree(MODULES_PATH, [], "📦 Modules - project modules that can be imported")
     else:
         return False
     return True
@@ -125,12 +140,12 @@ def handle_special_commands(args, action, entity, entity_type, root_path, python
 
 def handle_help(args, action, entity, entity_type, root_path, python_command):
     if entity_type != 'command':
-        printc(f"Help is not available for {entity_type}.", 'error')
+        print_t(f"Help is not available for {entity_type}.", 'error')
         sys.exit(1)
     if entity is None or entity == 'help':
         run_help()
     else:
-        printc(f"Help is not available for specific commands. Working on it.", 'error')
+        print_t(f"Help is not available for specific commands. Working on it.", 'error')
 
 
 # This function is important for maintaining the pack "pseudo-package" paradigm.

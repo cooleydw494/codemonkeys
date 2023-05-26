@@ -10,14 +10,21 @@ from definitions import STORAGE_INTERNAL_PATH
 from pack.modules.custom.theme.theme_config import text_themes
 
 
-def apply_theme(text, theme):
-    # Apply theme (if any)
+def get_theme(theme):
     has_theme = theme in text_themes.keys()
     if has_theme:
         prefix = text_themes[theme]['pre']
-        if prefix is not None:
-            text = f"{prefix}{text}"
         color = text_themes[theme]['color']
+        return has_theme, color, prefix
+    else:
+        return False, None, None
+
+
+def apply_theme(text, theme):
+    # Apply theme (if any)
+    has_theme, color, prefix = get_theme(theme)
+    if has_theme:
+        text = f"{prefix}{text}"
         text = colored(text, color)
     # Fallback for color strings
     elif theme in COLORS.keys():
@@ -25,28 +32,30 @@ def apply_theme(text, theme):
     return text
 
 
-def printc(text, theme=None, attrs=None):
+def print_t(text, theme=None, attrs=None):
+    sub_indent = ''
     if theme:
         text = apply_theme(text, theme)
-    print_nice(text, attrs=attrs)
+        _, __, prefix = get_theme(theme)
+        sub_indent = ' ' * len(f'{prefix} ' or '')
+    print_nice(text, sub_indent=sub_indent, attrs=attrs)
 
 
-def inputc(text, theme='input'):
+def input_t(text, theme='input'):
     text = apply_theme(text, theme)
     try:
         result = input(text)
     except KeyboardInterrupt:
         print()
-        printc("Exiting due to KeyboardInterrupt from user.", 'yellow')
+        print_t("Exiting due to KeyboardInterrupt from user.", 'yellow')
         sys.exit(1)
     return result
 
 
-def print_nice(*args, color=None, max_width=120, **kwargs):
+def print_nice(*args, color=None, sub_indent='', max_width=120, **kwargs):
     """
     Improved print function that automatically wraps long lines to fit the terminal width.
     """
-
     # Default values for print() parameters
     sep = kwargs.get("sep", " ")
     end = kwargs.get("end", "\n")
@@ -58,10 +67,12 @@ def print_nice(*args, color=None, max_width=120, **kwargs):
     # Combine arguments into a single string
     text = sep.join(str(arg) for arg in args)
 
-    # If the text is short enough, print it as-is
     if len(text) > terminal_width:
-        # Wrap long lines
-        text = "\n".join(textwrap.fill(line, terminal_width) for line in text.split("\n"))
+        # Wrap
+        text = "\n".join(
+            textwrap.fill(line, terminal_width, subsequent_indent=sub_indent)
+            for i, line in enumerate(text.split("\n"))
+        )
 
     if color:  # doesn't apply a default color (text may be pre-colored)
         text = colored(text, color)
@@ -72,40 +83,46 @@ def print_nice(*args, color=None, max_width=120, **kwargs):
 def print_banner():
     with open(os.path.join(STORAGE_INTERNAL_PATH, 'monk', 'art.txt'), 'r') as f:
         art = f.read()
-    printc(art, 'yellow')
-    printc(f'Version {__version__}', 'monkey')
 
-
-def print_table(table, title=None):
+    art = art.replace('vX.X.X', f'v{__version__}')
+    print_t(art, 'yellow')
     print()
+
+
+def print_table(table, title=None, sub_indent='   ', min_col_width=25):
     if title:
         print_nice(title, color="white", attrs=['bold'])
 
-    # Calculate column widths
-    col_widths = [max(len(str(x)) for x in col) for col in zip(*table["rows"])]
+    # Calculate column widths, ensuring it's at least min_col_width
+    raw_col_widths = [max(len(str(x)) for x in col) for col in zip(*table["rows"])]
+    raw_col_widths = [max(width, min_col_width) for width in raw_col_widths]
+
+    # Normalize column widths to the maximum across all columns
+    max_col_width = max(raw_col_widths)
+    col_widths = [max_col_width for _ in raw_col_widths]
 
     # Print headers in bold magenta
     if table["show_headers"]:
-        header = '   '.join([colored(name.ljust(width), 'magenta', attrs=['bold']) for name, width in
-                             zip(table["headers"], col_widths)])
-        print_nice(header)
-        print_nice('-' * len(header), color="magenta")
+        header = ''.join([colored(name.ljust(width), 'magenta', attrs=['bold']) for name, width in
+                          zip(table["headers"], col_widths)])
+        header = f"{sub_indent}{header}"
+        print_t(header, 'yellow')
+        print_t('-' * len(header), 'magenta')
 
     # Print rows
     for row in table["rows"]:
         # Color the command in green, description in cyan, and note in yellow
-        colored_row = [colored(str(val).ljust(width), 'cyan' if i == 0 else 'green' if i == 1 else 'light_grey') for
+        colored_row = [colored(str(val).ljust(width), 'cyan' if i == 0 else 'green' if i == 1 else 'dark_grey') for
                        i, (val, width) in enumerate(zip(row, col_widths))]
-        print_nice('   '.join(colored_row))
-
+        print_t(f"{sub_indent}{''.join(colored_row)}")
     print()
 
 
 def print_tree(start_dir, exclude_dirs, title=None):
     if title:
-        printc(title, 'white', attrs=['bold'])
+        print_t(title, 'white', attrs=['bold'])
 
-    printc(os.path.basename(start_dir), 'magenta')
+    # print_t(os.path.basename(start_dir), 'magenta')
 
     for root, dirs, files in os.walk(start_dir):
         dirs[:] = [d for d in dirs if not d[0] in ['.', '_']]  # ignore hidden directories

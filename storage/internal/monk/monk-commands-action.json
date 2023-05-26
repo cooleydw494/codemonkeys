@@ -1,0 +1,12 @@
+{
+    "headers": ["Command", "Description", "Note"],
+    "show_headers": false,
+    "rows": [
+        ["monk -r <name>", "Run an entity", "--run"],
+        ["monk -e <name>", "Open an entity in vim", "--edit"],
+        ["monk -p <name>", "Print the file contents", "--print"],
+        ["monk -cp <name>", "Copy file abspath", "--copy-path"],
+        ["monk -cc <name>", "Copy file contents", "--copy-contents"],
+        ["monk -h <name>", "Help for an entity", "--help"]
+    ]
+}

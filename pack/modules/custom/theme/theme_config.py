@@ -28,5 +28,5 @@ text_themes = {
     'special':    {'color': 'magenta',     'pre': '✨ '},
     'config':     {'color': 'magenta',     'pre': '🔧 '},
 
-    'quiet':      {'color': 'light_grey',  'pre': None},
+    'quiet':      {'color': 'dark_grey',  'pre': None},
 }

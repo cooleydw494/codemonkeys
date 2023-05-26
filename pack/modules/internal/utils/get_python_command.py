@@ -1,6 +1,6 @@
 import subprocess
 
-from termcolor import colored  # *DO NOT* import printc or any other framework modules in this file
+from termcolor import colored  # *DO NOT* import print_t or any other framework modules in this file
 
 """
 IMPORTANT! PLEASE READ
