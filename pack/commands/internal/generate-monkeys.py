@@ -42,9 +42,9 @@ def main():
                 continue
             else:
                 print_t(f"Changes detected for {monkey_name}. Backing up existing config.", 'info')
-                os.makedirs(os.path.join(monkey_dir, 'history'), exist_ok=True)
+                os.makedirs(os.path.join(monkey_dir, '.history'), exist_ok=True)
                 timestamp = time.strftime("%Y-%m-%d_%H:%M:%S")
-                shutil.move(config_file_path, os.path.join(monkey_dir, 'history', f'{timestamp}.yaml'))
+                shutil.move(config_file_path, os.path.join(monkey_dir, '.history', f'{timestamp}.yaml'))
 
         # Write the config file
         with open(os.path.join(monkey_dir, f'{monkey_name}.yaml'), "w") as f:
