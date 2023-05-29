@@ -39,7 +39,7 @@ def parse_monk_args():
     parser.add_argument('entity', nargs='?')
 
     # Parse Arguments
-    args = parser.parse_args()
+    args, unknown_args = parser.parse_known_args()
 
     # Action
     action = None
@@ -81,7 +81,7 @@ def parse_monk_args():
             f"for the module (like a main function), but you may want to exercise caution.", 'warning')
         input_t("Press Enter to continue or Ctrl+C to cancel...")
 
-    return args, action, args.entity, entity_type
+    return args, unknown_args, action, args.entity, entity_type
 
 
 def handle_alternate_actions(action, script_path):

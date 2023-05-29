@@ -14,7 +14,7 @@ from pack.modules.internal.utils.environment_checks import environment_checks
 environment_checks()
 
 # Setup and Parse Monk Arguments
-args, action, entity, entity_type = parse_monk_args()
+args, unknown_args, action, entity, entity_type = parse_monk_args()
 
 # Special Commands that override typical behavior (reasoning in definition)
 if handle_special_commands(args, action, entity, entity_type):
@@ -37,7 +37,7 @@ elif extension == ".bat":
     subprocess.call([entity_path.strip()] + sys.argv[2:])
 elif extension == ".py":
     try:
-        run_command_as_module(entity_path.strip(), 'main', sys.argv[2:])
+        run_command_as_module(entity_path.strip(), 'main', unknown_args)
     except KeyboardInterrupt:
         print()
         print_t("Exiting due to KeyboardInterrupt from user.", 'input')

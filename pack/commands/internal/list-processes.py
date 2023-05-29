@@ -5,11 +5,15 @@ from pack.modules.custom.theme.theme_functions import print_table, print_t, appl
 
 
 def main():
-    print_t("Displaying ongoing monk processes", "important")
-
     # Get monk processes
     monk_processes = subprocess.run(['pgrep', '-a', 'monk'], stdout=subprocess.PIPE).stdout.decode().split('\n')[:-1]
     process_row_data = [process.split(maxsplit=1) for process in monk_processes]
+
+    # Check if there are any ongoing monk processes
+    if not process_row_data:
+        print_t("No ongoing monk processes.", "important")
+        return
+
     # Include kill commands
     for process in process_row_data:
         process.append(f"kill {process[0]}" if os.name != 'nt' else f"taskkill /PID {process[0]} /F")

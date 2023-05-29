@@ -3,12 +3,7 @@ import subprocess
 from termcolor import colored  # *DO NOT* import print_t or any other framework modules in this file
 
 """
-IMPORTANT! PLEASE READ
-
 This module is imported to definitions.py to set a reliable, globally-available PYTHON_COMMAND and PIP_COMMAND.
-
-We cannot import definitions.py or any project modules that use it here, or we will get a circular import error.
-Although we could import project modules that don't use definitions.py, it is better to avoid this for maintenance.
 """
 
 # Lists of python and pip commands to be checked

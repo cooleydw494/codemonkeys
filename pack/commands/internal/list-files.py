@@ -66,7 +66,7 @@ def filter_files_by_token_count():
                 if num_tokens <= max_tokens:
                     filtered_files.append(absolute_path)
 
-    print_t("File search completed!", 'success')
+    print_t("Filtering completed!", 'success')
 
     # Write the filtered file paths to the output file
     with open(output_file, "w") as f:
@@ -81,7 +81,3 @@ def filter_files_by_token_count():
             print_t("".join(lines[:15]) + "...", 'cyan')
         else:
             print_t("".join(lines), 'cyan')
-
-
-if __name__ == "__main__":
-    filter_files_by_token_count()
