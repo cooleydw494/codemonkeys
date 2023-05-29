@@ -3,12 +3,13 @@ import argparse
 import sys
 import importlib.util
 
+from __init__ import __version__
 from definitions import COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH
 from pack.modules.custom.theme.theme_functions import print_t, input_t, print_tree
 from pack.commands.internal.help import main as run_help
 
 
-def parse_monk_args(commands_path, automations_path, barrels_path, modules_path):
+def parse_monk_args():
     default_action = 'run'
     default_entity_type = 'command'
 
@@ -55,16 +56,12 @@ def parse_monk_args(commands_path, automations_path, barrels_path, modules_path)
 
     # Entity Type
     entity_type = None
-    entity_path = commands_path
     if args.module is True:
         entity_type = 'module'
-        entity_path = modules_path
     elif args.automation is True:
         entity_type = 'automation'
-        entity_path = automations_path
     elif args.barrel is True:
         entity_type = 'barrel'
-        entity_path = barrels_path
 
     if entity_type == 'module':
         default_action = 'edit'
@@ -84,7 +81,7 @@ def parse_monk_args(commands_path, automations_path, barrels_path, modules_path)
             f"for the module (like a main function), but you may want to exercise caution.", 'warning')
         input_t("Press Enter to continue or Ctrl+C to cancel...")
 
-    return args, action, args.entity, entity_type, entity_path
+    return args, action, args.entity, entity_type
 
 
 def handle_alternate_actions(action, script_path):
@@ -110,16 +107,16 @@ def handle_alternate_actions(action, script_path):
 # This function is used to handle special commands that are not actually entities.
 # The entity argument maintains that nomenclature for consistency with the rest of the code.
 # It seems intuitive enough given these 'commands' are clearly exceptions.
-def handle_special_commands(args, action, entity, entity_type, root_path, python_command, version):
+def handle_special_commands(args, action, entity, entity_type):
 
     # If -v or --version, print version and sys.exit. Maybe eventually implement versioning for entities?
     if args.version:
-        print_t(f"CodeMonkeys v{version}", 'monkey')
+        print_t(f"CodeMonkeys v{__version__}", 'monkey')
 
     # Help needs to work in many contexts, and it would be a pain to place help executables throughout the framework,
     # so it is a lot easier to detect it outright and run through custom logic, with a central location for help files.
     elif action == 'help' or entity == 'help':
-        handle_help(args, action, entity, entity_type, root_path, python_command)
+        handle_help(args, action, entity, entity_type)
     elif entity == 'list':
         if entity_type == 'command' or args.all:
             print()
@@ -138,7 +135,7 @@ def handle_special_commands(args, action, entity, entity_type, root_path, python
     return True
 
 
-def handle_help(args, action, entity, entity_type, root_path, python_command):
+def handle_help(args, action, entity, entity_type):
     if entity_type != 'command':
         print_t(f"Help is not available for {entity_type}.", 'error')
         sys.exit(1)
