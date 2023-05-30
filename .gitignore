@@ -8,7 +8,7 @@ storage/internal/files-to-process.txt
 .TODO.md
 
 # Generated Monkey Configs (even pre-packaged) are ignored
-# It is good practice to not add files that aren't generated.
+# It is good practice to not add files that are generated.
 monkeys/
 # Monkey Manifest is tracked
 !monkeys/monkey-manifest.yaml
