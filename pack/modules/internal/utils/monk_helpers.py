@@ -1,12 +1,12 @@
-import subprocess
 import argparse
-import sys
 import importlib.util
+import subprocess
+import sys
 
 from __init__ import __version__
 from definitions import COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH
-from pack.modules.custom.theme.theme_functions import print_t, input_t, print_tree
 from pack.commands.internal.help import main as run_help
+from pack.modules.custom.theme.theme_functions import print_t, input_t, print_tree
 
 
 def parse_monk_args():
@@ -85,7 +85,6 @@ def parse_monk_args():
 
 
 def handle_alternate_actions(action, script_path):
-
     if action == 'edit':
         subprocess.run(['vim', script_path.strip()])
 
@@ -108,7 +107,6 @@ def handle_alternate_actions(action, script_path):
 # The entity argument maintains that nomenclature for consistency with the rest of the code.
 # It seems intuitive enough given these 'commands' are clearly exceptions.
 def handle_special_commands(args, action, entity, entity_type):
-
     # If -v or --version, print version and sys.exit. Maybe eventually implement versioning for entities?
     if args.version:
         print_t(f"CodeMonkeys v{__version__}", 'monkey')

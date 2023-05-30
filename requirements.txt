@@ -6,3 +6,4 @@ termcolor~=2.3.0
 art
 tiktoken~=0.4.0
 Levenshtein~=0.21.0
+psutil

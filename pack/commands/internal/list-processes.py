@@ -1,13 +1,22 @@
 import os
-import subprocess
+
+import psutil
 
 from pack.modules.custom.theme.theme_functions import print_table, print_t, apply_theme
 
 
 def main():
     # Get monk processes
-    monk_processes = subprocess.run(['pgrep', '-a', 'monk'], stdout=subprocess.PIPE).stdout.decode().split('\n')[:-1]
-    process_row_data = [process.split(maxsplit=1) for process in monk_processes]
+    monk_processes = []
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+        try:
+            cmdline = ' '.join(proc.info['cmdline']) if proc.info['cmdline'] else ''
+            if 'monk' in proc.info['name'] or ' monk ' in cmdline:
+                monk_processes.append([str(proc.info['pid']), cmdline])
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+
+    process_row_data = [process for process in monk_processes]
 
     # Check if there are any ongoing monk processes
     if not process_row_data:
@@ -16,7 +25,7 @@ def main():
 
     # Include kill commands
     for process in process_row_data:
-        process.append(f"kill {process[0]}" if os.name != 'nt' else f"taskkill /PID {process[0]} /F")
+        process.append(f"taskkill /PID {process[0]} /F" if os.name == 'nt' else f"kill {process[0]}")
 
     # Format monk processes for the table
     table = {

@@ -1,4 +1,5 @@
-def process_file(file_path, usage_prompt, special_file_summary, usage_prompt_model, main_prompt, main_prompt_model, gpt_client):
+def process_file(file_path, usage_prompt, special_file_summary, usage_prompt_model, main_prompt, main_prompt_model,
+                 gpt_client):
     with open(file_path, "r") as f:
         file_contents = f.read()
 

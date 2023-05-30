@@ -2,14 +2,15 @@ import json
 import os
 import subprocess
 import sys
+
 import openai
 
+from definitions import PYTHON_COMMAND
+from pack.modules.custom.process_file import process_file
+from pack.modules.custom.summarize_special_file import summarize_special_file
 from pack.modules.custom.theme.theme_functions import print_t
 from pack.modules.internal.get_gpt_client import instantiate_gpt_models
 from pack.modules.internal.get_monkey_name import get_monkey_name
-from pack.modules.custom.process_file import process_file
-from pack.modules.custom.summarize_special_file import summarize_special_file
-from definitions import PYTHON_COMMAND
 
 
 def check_env_vars():

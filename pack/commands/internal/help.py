@@ -2,8 +2,8 @@ import json
 import os
 from pathlib import Path
 
-from definitions import STORAGE_INTERNAL_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH
-from pack.modules.custom.theme.theme_functions import print_banner, print_table, print_tree, print_t, apply_theme
+from definitions import STORAGE_INTERNAL_PATH
+from pack.modules.custom.theme.theme_functions import print_banner, print_table, print_t, apply_theme
 
 
 def main():
