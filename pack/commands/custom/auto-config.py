@@ -79,10 +79,11 @@ def main(supplied_monkey_name=''):
     data[monkey_name] = new_monkey_data
 
     # Save the modified data back to the file
-    with open('monkey-manifest.yaml', 'w') as file:
+    with open(os.path.join(MONKEYS_PATH, 'monkey-manifest.yaml'), 'w') as file:
         yaml.dump(data, file, default_flow_style=False)
 
     print_t("Configuration complete. The 'monkey-manifest.yaml' file has been updated.", 'done')
+    print_t("Please run `monk generate-monkeys` to complete the configuration process.", 'tip')
 
 
 if __name__ == '__main__':

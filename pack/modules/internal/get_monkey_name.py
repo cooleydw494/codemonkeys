@@ -44,9 +44,13 @@ def get_monkey_name(supplied_name, allow_new: bool = False) -> Tuple[str, str]:
                 print_t(f"{idx}. {monkey}", 'option')
             monkey_index = int(input_t("Enter the number of the monkey: ", 'input'))
             monkey_name = supplied_name if monkey_index == 0 else monkeys[monkey_index - 1]
-            # Add a new monkey to the yaml if the user decides to add a new one
+            # Create a directory/file if new monkey
             if monkey_index == 0:
-                os.makedirs(os.path.join(MONKEYS_PATH, monkey_name))  # Create a directory for the new monkey
+                os.makedirs(os.path.join(MONKEYS_PATH, monkey_name))
+                # create new file
+                monkey_config_file = os.path.join(MONKEYS_PATH, monkey_name, f'{monkey_name}.yaml')
+                with open(monkey_config_file, 'w') as f:
+                    yaml.dump({}, f)
         else:
             print_t("No valid monkey name provided. Please select an existing monkey:", 'warning')
             monkeys = list_monkeys()
