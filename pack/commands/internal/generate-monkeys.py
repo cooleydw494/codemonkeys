@@ -1,6 +1,7 @@
 import os
 import shutil
 import time
+from dotenv import dotenv_values
 
 import yaml
 
@@ -22,6 +23,11 @@ def main():
 
     default_config = get_monkey_config_defaults()
 
+    # Load .env values
+    env_config = dotenv_values(".env")
+    # Filter only those keys present in default_config
+    env_config = {k: env_config[k] for k in env_config if k in default_config}
+
     # Create the directories and configuration files
     for monkey_name, config in monkeys.items():
         print_t(f"Checking {monkey_name}", 'special')
@@ -31,6 +37,7 @@ def main():
 
         # Merge the default configuration with the monkey's own configuration
         merged_config = default_config.copy()  # Start with the defaults
+        merged_config.update(env_config)  # Overwrite with the .env's specific config
         merged_config.update(config)  # Overwrite with the monkey's specific config
 
         config_file_path = os.path.join(monkey_dir, f'{monkey_name}.yaml')

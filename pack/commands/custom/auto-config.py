@@ -68,7 +68,7 @@ def main(supplied_monkey_name=''):
         with open(os.path.join(MONKEYS_PATH, monkey_name, f'{monkey_name}.yaml'), 'r') as f:
             data = yaml.safe_load(f)
     except FileNotFoundError:
-        print_t("Error: 'monkey-manifest.yaml' file not found.", 'error')
+        print_t(f"{monkey_name}.yaml file not found.", 'error')
         sys.exit(1)
 
     # If the monkey is new, initialize with the default config, otherwise load existing data
