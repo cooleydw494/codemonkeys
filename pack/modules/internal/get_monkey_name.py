@@ -47,10 +47,6 @@ def get_monkey_name(supplied_name, allow_new: bool = False) -> Tuple[str, str]:
             # Add a new monkey to the yaml if the user decides to add a new one
             if monkey_index == 0:
                 os.makedirs(os.path.join(MONKEYS_PATH, monkey_name))  # Create a directory for the new monkey
-
-                with open(os.path.join(MONKEYS_PATH, 'monkey-manifest.yaml'), 'w') as f:
-                    data = {}  # Initialize the new monkey with empty data
-                    yaml.dump(data, f, default_flow_style=False)
         else:
             print_t("No valid monkey name provided. Please select an existing monkey:", 'warning')
             monkeys = list_monkeys()
