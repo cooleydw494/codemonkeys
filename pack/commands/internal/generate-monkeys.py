@@ -1,13 +1,17 @@
 import os
 import shutil
 import time
-from dotenv import dotenv_values
 
-import yaml
+from dotenv import dotenv_values
+from ruamel.yaml import YAML
 
 from definitions import MONKEYS_PATH, ROOT_PATH
 from pack.modules.custom.theme.theme_functions import print_t
 from pack.modules.internal.utils.general_helpers import get_monkey_config_defaults
+
+yaml = YAML()
+yaml.default_style = "'"
+yaml.indent(sequence=4, offset=2)
 
 
 def main():
@@ -15,7 +19,7 @@ def main():
     monkey_manifest = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
     try:
         with open(monkey_manifest, "r") as f:
-            monkeys = yaml.safe_load(f)
+            monkeys = yaml.load(f)
         print_t("monkey-manifest.yaml located", 'info')
     except FileNotFoundError:
         print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {monkey_manifest}", 'error')
@@ -41,7 +45,7 @@ def main():
         # Check if new config content is different from the existing one
         if os.path.exists(config_file_path):
             with open(config_file_path, "r") as f:
-                existing_config = yaml.safe_load(f)
+                existing_config = yaml.load(f)
             if existing_config == merged_config:
                 print_t(f"Skipping {monkey_name} (no changes).", 'quiet')
                 continue
@@ -53,7 +57,7 @@ def main():
 
         # Write the config file
         with open(os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml'), "w") as f:
-            yaml.safe_dump(merged_config, f, default_flow_style=False)
+            yaml.dump(merged_config, f)
         print_t(f"Updated config for {monkey_name}.", 'info')
 
     print_t("All monkeys processed successfully. Exiting.", 'done')

@@ -40,7 +40,7 @@ elif extension == ".py":
         run_command_as_module(entity_path.strip(), 'main', unknown_args)
     except KeyboardInterrupt:
         print()
-        print_t("Exiting due to KeyboardInterrupt from user.", 'input')
+        print_t("Exiting due to KeyboardInterrupt from user.")
         sys.exit(1)
 else:
     print_t(f"Entity Type not supported: {extension}. find_entity.py should have already filtered this out.", 'error')

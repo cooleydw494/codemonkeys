@@ -31,7 +31,7 @@ def get_monkey_name(supplied_name) -> Tuple[str, str]:
             monkeys = list_monkeys()
             for idx, monkey in enumerate(monkeys, start=1):
                 print_t(f"{idx}. {monkey}", 'option')
-            monkey_index = int(input_t("Enter the number of the monkey: ", 'input')) - 1
+            monkey_index = int(input_t("Enter the number of the monkey: ")) - 1
             monkey_name = monkeys[monkey_index]
     # Monkey name provided but does not exist
     elif not pathlib.Path(os.path.join(MONKEYS_PATH, supplied_name)).exists():

@@ -14,7 +14,7 @@ def select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, st
         print_t(f"{i}. {name} ({entity_type})", 'cyan')
     print_t("-------------------", 'cyan')
 
-    input_ = input_t("Enter the number corresponding to the entity, or ctrl+c to exit: ", 'input')
+    input_ = input_t("Enter the number corresponding to the entity", "ctrl+c to exit")
     print_t(f"Selected option {input_}: {entity_options[int(input_)][4]}", 'quiet')
 
     if input_ == "no":

@@ -45,7 +45,7 @@ def input_t(text, input_options=None, theme='input'):
     text = apply_theme(text, theme)
     # if input_options is longer than 10 characters, print it on a new line
     if input_options:
-        if len(input_options) > 10:
+        if len(input_options) > 16:
             new_line_maybe = os.linesep
         else:
             new_line_maybe = ''

@@ -27,66 +27,83 @@
 #   OUTPUT_FILENAME_APPEND: Append to output filenames ("" for none, or "-summary", "-usage", etc.)
 #   OUTPUT_EXT: Override output file extensions ("" for original ext, or ".md", ".txt", etc.)
 
-generic-monkey:
-  MAIN_PROMPT: Please generate code for the following task...
-  SUMMARY_PROMPT: Provide a summary of this code...
-  MAIN_PROMPT_ULTIMATUM: ''
-  SPECIAL_FILE: special_file_generic.py
-  MAIN_MODEL: 4
-  SUMMARY_MODEL: 4
-  MAIN_TEMP: 1
-  SUMMARY_TEMP: 1
-  WORK_PATH: ''
-  OUTPUT_EXT: ''
-  OUTPUT_FILENAME_APPEND: ''
-  OUTPUT_EXAMPLE: 'Limit your output strictly to the contents of the file, like this:
-    ```complete contents of file```.'
-  OUTPUT_CHECK_PROMPT: 'Examine the following out put and determine if 1. The output
+'generic-monkey':
+  'MAIN_PROMPT': 'Please generate code for the following task...'
+  'SUMMARY_PROMPT': 'Provide a summary of this code...'
+  'MAIN_PROMPT_ULTIMATUM': ''
+  'SPECIAL_FILE': 'special_file_generic.py'
+  'MAIN_MODEL': !!int '4'
+  'SUMMARY_MODEL': !!int '4'
+  'MAIN_TEMP': !!int '1'
+  'SUMMARY_TEMP': !!int '1'
+  'WORK_PATH': ''
+  'OUTPUT_EXT': ''
+  'OUTPUT_FILENAME_APPEND': ''
+  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, like
+    this: ```complete contents of file```.'
+  'OUTPUT_CHECK_PROMPT': 'Examine the following out put and determine if 1. The output
     is complete and 2. The output is limited strictly to the contents of a file. Format
     your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```.'
 
 # Self-Help Monkeys (Monkeys that exist to work on the code-monkeys directory itself
-self-extraction-monkey:
-  MAIN_PROMPT: Please extract the following code into a new function...
-  SUMMARY_PROMPT: Summarize this extracted code...
-  MAIN_PROMPT_ULTIMATUM: ''
-  SPECIAL_FILE: special_file_extract.py
-  MAIN_MODEL: 4
-  SUMMARY_MODEL: 4
-  MAIN_TEMP: 1
-  SUMMARY_TEMP: 1
-  WORK_PATH: ~/local-git/code-monkeys
-  OUTPUT_EXT: ''
-  OUTPUT_FILENAME_APPEND: ''
-  OUTPUT_EXAMPLE: 'Limit your output strictly to the contents of the file, like this:
-    ```complete contents of file```.'
-  OUTPUT_CHECK_PROMPT: ' Examine the following out put and determine if 1. The output
+'self-extraction-monkey':
+  'MAIN_PROMPT': 'Please extract the following code into a new function...'
+  'SUMMARY_PROMPT': 'Summarize this extracted code...'
+  'MAIN_PROMPT_ULTIMATUM': ''
+  'SPECIAL_FILE': 'special_file_extract.py'
+  'MAIN_MODEL': !!int '4'
+  'SUMMARY_MODEL': !!int '4'
+  'MAIN_TEMP': !!int '1'
+  'SUMMARY_TEMP': !!int '1'
+  'WORK_PATH': '~/local-git/code-monkeys'
+  'OUTPUT_EXT': ''
+  'OUTPUT_FILENAME_APPEND': ''
+  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, like
+    this: ```complete contents of file```.'
+  'OUTPUT_CHECK_PROMPT': ' Examine the following out put and determine if 1. The output
     is complete and 2. The output is limited strictly to the contents of a file. Format
     your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```.'
 
-self-help-monkey:
-  MAIN_PROMPT: Provide a visually appealing txt summary of the file and its usage,
+'self-help-monkey':
+  'MAIN_PROMPT': 'Provide a visually appealing txt summary of the file and its usage,
     in the style of documentation for a CLI command. Your ultimate response should
-    contain only the requested txt content.
-  SUMMARY_PROMPT: The following is a summary of the monk command, which is used to
-    run scripts in the CodeMonkeys project. Summarize it in a way that will give you
-    adequate context for understanding any one script's intention and usage in the
-    context of the monk command.
-  USAGE_PROMPT: The following is a summary of the monk command, which is used to execute
-    scripts in the CodeMonkeys project. Use it as context for the task of creating
-    a summary of the following script.
-  MAIN_PROMPT_ULTIMATUM: ''
-  SPECIAL_FILE: ~/local-git/code-monkeys/monk
-  MAIN_MODEL: 4
-  SUMMARY_MODEL: 4
-  MAIN_TEMP: 1
-  SUMMARY_TEMP: 1
-  WORK_PATH: ~/local-git/code-monkeys
-  OUTPUT_PATH: ~/local-git/code-monkeys/help
-  OUTPUT_FILENAME_APPEND: ''
-  OUTPUT_EXT: .txt
-  OUTPUT_EXAMPLE: 'Limit your output strictly to the contents of the file, like this:
-    ```complete contents of file```.'
-  OUTPUT_CHECK_PROMPT: 'Examine the following out put and determine if 1. The output
+    contain only the requested txt content.'
+  'SUMMARY_PROMPT': 'The following is a summary of the monk command, which is used
+    to run scripts in the CodeMonkeys project. Summarize it in a way that will give
+    you adequate context for understanding any one script''s intention and usage in
+    the context of the monk command.'
+  'USAGE_PROMPT': 'The following is a summary of the monk command, which is used to
+    execute scripts in the CodeMonkeys project. Use it as context for the task of
+    creating a summary of the following script.'
+  'MAIN_PROMPT_ULTIMATUM': ''
+  'SPECIAL_FILE': '~/local-git/code-monkeys/monk'
+  'MAIN_MODEL': !!int '4'
+  'SUMMARY_MODEL': !!int '4'
+  'MAIN_TEMP': !!int '1'
+  'SUMMARY_TEMP': !!int '1'
+  'WORK_PATH': '~/local-git/code-monkeys'
+  'OUTPUT_PATH': '~/local-git/code-monkeys/help'
+  'OUTPUT_FILENAME_APPEND': ''
+  'OUTPUT_EXT': '.txt'
+  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, like
+    this: ```complete contents of file```.'
+  'OUTPUT_CHECK_PROMPT': 'Examine the following out put and determine if 1. The output
     is complete and 2. The output is limited strictly to the contents of a file. Format
     your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```.'
+'new-guy':
+# Config for new-guy generated by `monk add-monkey`
+  'MAIN_PROMPT': 'asdfasdf'
+  'SUMMARY_PROMPT': 'asdfasfd'
+  'MAIN_PROMPT_ULTIMATUM': 'asdfasfd'
+  'WORK_PATH': '/'
+  'OUTPUT_EXAMPLE': ''
+  'OUTPUT_CHECK_PROMPT': ''
+  'OUTPUT_FILENAME_APPEND': ''
+  'OUTPUT_EXT': ''
+  'SPECIAL_FILE': ''
+  'MAIN_MODEL': '4'
+  'SUMMARY_MODEL': '4'
+  'OUTPUT_CHECK_MODEL': '4'
+  'MAIN_TEMP': ''
+  'SUMMARY_TEMP': ''
+  'OUTPUT_CHECK_TEMP': ''
