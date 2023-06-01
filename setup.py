@@ -47,8 +47,8 @@ if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
     subprocess.call('chmod +x monk', shell=True)
 elif os_type == "windows":  # If OS is Windows
     print_t("On Windows, Python scripts are typically run directly with the Python interpreter, so when you "
-           "see something like `monk [script-name]` in the docs, so should instead do something like:"
-           "`python monk.py [script-name]` or `py monk.py [script-name]`.", "tip")
+            "see something like `monk [script-name]` in the docs, so should instead do something like:"
+            "`python monk.py [script-name]` or `py monk.py [script-name]`.", "tip")
 
 if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
     alias_exists = subprocess.call('alias | grep -q "^alias monk="', shell=True)
@@ -59,12 +59,12 @@ if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
 
         if not current_shell_rc:
             print_t("Could not determine current shell. Please add the 'monk=./monk' alias manually to be "
-                   "able to use the monk command more easily.", "important")
+                    "able to use the monk command more easily.", "important")
             sys.exit(1)
         subprocess.call(f'echo "alias monk=\'{PYTHON_COMMAND} ./monk\'" >> {current_shell_rc}', shell=True)
         print_t("The 'monk' alias was added.", "success")
         print_t("You can now use the 'monk' command in this directory to run scripts located in the 'scripts' "
-               "directory.", "success")
+                "directory.", "success")
 elif os_type.startswith("win"):  # If OS is Windows
     if os.path.exists("monk.py"):
         print_t("The 'monk.py' command is already present.", "success")
@@ -82,12 +82,13 @@ if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
 elif os_type == "windows":  # If OS is Windows
     subprocess.call('python monk.py generate-monkeys', shell=True)
 print_t("Monkey configurations are based on the 'monkey-manifest.yaml' file. Individual configs will be "
-       "generated in the 'monkeys' directory.", "info")
+        "generated in the 'monkeys' directory.", "info")
 print_t("After making changes, use 'monk generate-monkeys' to apply them.",
-       "tip")
+        "tip")
 print_t("Thanks for using CodeMonkeys!", 'monkey')
 if current_shell_rc is not None:
-    print_t(f'You still need to source your {current_shell_rc} to use the `monk` command (if initial setup).', 'warning')
+    print_t(f'You still need to source your {current_shell_rc} to use the `monk` command (if initial setup).',
+            'warning')
     print_t(f"Run `source {current_shell_rc}`", 'tip')
 elif os_type == "darwin" or os_type == "linux":
     print_t("Shell undetermined. Please source your shell profile to enable the 'monk' command", 'warning')

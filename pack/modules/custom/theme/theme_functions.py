@@ -41,10 +41,18 @@ def print_t(text, theme=None, attrs=None):
     print_nice(text, sub_indent=sub_indent, attrs=attrs)
 
 
-def input_t(text, theme='input'):
+def input_t(text, input_options=None, theme='input'):
     text = apply_theme(text, theme)
+    # if input_options is longer than 10 characters, print it on a new line
+    if input_options:
+        if len(input_options) > 10:
+            new_line_maybe = os.linesep
+        else:
+            new_line_maybe = ''
+        text = text + new_line_maybe + colored(' - ', 'cyan') + colored(input_options, "yellow")
     try:
-        result = input(text)
+
+        result = input(f'{text}{colored(":", "cyan")}{os.linesep}{colored(">> ", "cyan")}')
     except KeyboardInterrupt:
         print()
         print_t("Exiting due to KeyboardInterrupt from user.", 'yellow')
@@ -58,7 +66,7 @@ def print_nice(*args, color=None, sub_indent='', max_width=120, **kwargs):
     """
     # Default values for print() parameters
     sep = kwargs.get("sep", " ")
-    end = kwargs.get("end", "\n")
+    end = kwargs.get("end", os.linesep)
     file = kwargs.get("file", None)
     flush = kwargs.get("flush", False)
 
@@ -69,9 +77,9 @@ def print_nice(*args, color=None, sub_indent='', max_width=120, **kwargs):
 
     if len(text) > terminal_width:
         # Wrap
-        text = "\n".join(
+        text = os.linesep.join(
             textwrap.fill(line, terminal_width, subsequent_indent=sub_indent)
-            for i, line in enumerate(text.split("\n"))
+            for i, line in enumerate(text.split(os.linesep))
         )
 
     if color:  # doesn't apply a default color (text may be pre-colored)

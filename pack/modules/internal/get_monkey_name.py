@@ -18,7 +18,7 @@ def list_monkeys() -> List[str]:
     return dirs
 
 
-def get_monkey_name(supplied_name, allow_new: bool = False) -> Tuple[str, str]:
+def get_monkey_name(supplied_name) -> Tuple[str, str]:
     default_monkey = os.getenv("DEFAULT_MONKEY")
 
     # No monkey name provided
@@ -35,29 +35,12 @@ def get_monkey_name(supplied_name, allow_new: bool = False) -> Tuple[str, str]:
             monkey_name = monkeys[monkey_index]
     # Monkey name provided but does not exist
     elif not pathlib.Path(os.path.join(MONKEYS_PATH, supplied_name)).exists():
-        if allow_new:
-            print_t(f"Monkey {supplied_name} not found. You can create {supplied_name}, or select "
-                    f"an existing monkey:", 'warning')
-            monkeys = list_monkeys()
-            print_t(f"🐒 0. New Monkey with name {supplied_name}", 'green')
-            for idx, monkey in enumerate(monkeys, start=1):
-                print_t(f"{idx}. {monkey}", 'option')
-            monkey_index = int(input_t("Enter the number of the monkey: ", 'input'))
-            monkey_name = supplied_name if monkey_index == 0 else monkeys[monkey_index - 1]
-            # Create a directory/file if new monkey
-            if monkey_index == 0:
-                os.makedirs(os.path.join(MONKEYS_PATH, monkey_name))
-                # create new file
-                monkey_config_file = os.path.join(MONKEYS_PATH, monkey_name, f'{monkey_name}.yaml')
-                with open(monkey_config_file, 'w') as f:
-                    yaml.dump({}, f)
-        else:
-            print_t("No valid monkey name provided. Please select an existing monkey:", 'warning')
-            monkeys = list_monkeys()
-            for idx, monkey in enumerate(monkeys, start=1):
-                print_t(f"{idx}. {monkey}", 'cyan')
-            monkey_index = int(input("Enter the number of the monkey: ")) - 1
-            monkey_name = monkeys[monkey_index]
+        print_t("No valid monkey name provided. Please select an existing monkey:", 'warning')
+        monkeys = list_monkeys()
+        for idx, monkey in enumerate(monkeys, start=1):
+            print_t(f"{idx}. {monkey}", 'cyan')
+        monkey_index = int(input("Enter the number of the monkey: ")) - 1
+        monkey_name = monkeys[monkey_index]
     # Monkey name provided and exists
     else:
         monkey_name = supplied_name

@@ -10,8 +10,6 @@ storage/internal/files-to-process.txt
 # Generated Monkey Configs (even pre-packaged) are ignored
 # It is good practice to not add files that are generated.
 monkeys/
-# Monkey Manifest is tracked
-!monkeys/monkey-manifest.yaml
 
 # Python artifacts
 *.pyc

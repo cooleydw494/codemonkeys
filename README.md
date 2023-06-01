@@ -34,7 +34,7 @@ you also maintain the efficiency and potency of the core framework. CodeMonkeys 
 adaptability and specificity, providing a less feature-rich but more extensible and capable tool for your unique
 automation needs.
 
-# The Default Program (main.py)
+# The Default Automation
 
 The heart of CodeMonkeys is `main.py`, a generic but complete template for improving whatever is in your `WORK_PATH`.
 This file is the default entry-point and is designed to work well out of the box, and to be powerfully custom
@@ -104,7 +104,7 @@ I strive to make CodeMonkeys easy to update, even with your customizations. Howe
 complicate the update process. Please note that while I'm working hard to make updates as seamless as possible, it's
 always a good idea to back up your work before updating.
 
-For easy export of your `monkey-manifest.yaml`, `programs`, and all `custom` directories, simply run
+For easy export of your `monkey-manifest.yaml`, `automations`, `barrels`, and `custom` directories, simply run
 
 ```
 monk export
@@ -112,18 +112,24 @@ monk export
 
 The export process will also create a `.env-backup` file that contains your current .env file. `.env-backup` is in the default .gitignore, and is not included in the export. Please also verify that you are not committing your exports if you have sensitive information outside your .env file, such as in the `monkey-manifest.yaml` (*please don't do that actually*).
 
-## Directory Overview 📁
+## Framework Overview 📁
 
-* `main.py`: Your primary customization file. Created by ./install
-* `monk`: The command to run scripts.
-* `monkeys`: Contains configurations for different 'monkeys' or tasks.
-* `scripts`: Contains Python scripts to be run via the `monk` command.
+* `monk` or `monk.py`: CodeMonkeys CLI base command.
+* `pack`: A "pseudo-package" structured for easy inspection/modification.
+* `commands`: Python, bash, or bat scripts to be run via the `monk` command.
+* `monkeys`: Generated configs for different 'monkeys' and backups of previous configs.
 * `monkeys/monkey-manifest.yaml`: The centralized configuration file for all monkeys.
+* `automations`: Python scripts that use monkey configs to run automations.
+* `automations/default.py`: Pre-packaged automation, which enables a range of tasks via monkey configs
+* `barrels`: Python scripts meant to orchestrate more than one automation.
+* `barrels/default.py`: Pre-packaged barrel, which enables running a series of parallel or sequential automations.
+* `modules`: Python modules for both framework support and customized functionality.
+* `definitions.py`: A root-level file providing absolute path variables for both framework and custom use.
 
 ## Tiny Helpers
 ### Commit Script
 
-Stage, Commit, & Push as nature intended: **all at once in 0s**. (may result in afterlife punishment)
+Stage, Commit, & Push as nature intended: **all at once in ~0s**. (may result in afterlife punishment)
 
 ```bash
 ./c "<3 added ./c to README. PS: Te amo Mau <3"
@@ -134,5 +140,5 @@ Stage, Commit, & Push as nature intended: **all at once in 0s**. (may result in 
 When forking or creating derivative works from CodeMonkeys, I kindly ask you to:
 
 1. Clearly acknowledge the CodeMonkeys project and provide a hyperlink to the CodeMonkeys repository in the first section of your README.md file.
-
 2. Prominently display an acknowledgement of the usage of CodeMonkeys in any application, framework, or derivative work which is built on top of the CodeMonkeys framework and is distributed through an application store, website, social media, or any other distribution method.
+3. Although I expect no acknowledgement when CodeMonkeys is used as a tool to accomplish things, any mention of its usefulness is greatly appreciated.

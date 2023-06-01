@@ -67,7 +67,7 @@ def main():
     special_file_summary = summarize_special_file(monkey['SPECIAL_FILE'], monkey['SUMMARY_MODEL'],
                                                   monkey['SUMMARY_PROMPT'], gpt_client)
     print_t("Special file summarized successfully!", 'success')
-    print_t(f"Summary:\n{special_file_summary}", 'file')
+    print_t(f"Summary:{os.linesep}{special_file_summary}", 'file')
 
     # Iterate over each file in the work_path
     for root, dirs, files in os.walk(work_path):

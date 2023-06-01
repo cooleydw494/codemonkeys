@@ -41,7 +41,7 @@ shutil.copytree(f"{export_filename}/backups/main", "backups/main-merged", dirs_e
 
 # Replace the current project files with the exported files
 shutil.move(f"{export_filename}/main.py", "main.py")
-shutil.move(f"{export_filename}/monkeys/monkey-manifest.yaml", "monkeys/monkey-manifest.yaml")
+shutil.move(f"{export_filename}/monkey-manifest.yaml", "monkey-manifest.yaml")
 shutil.move("backups/main-merged", "backups/main")
 
 print_t(f"Project files imported from: {export_filepath}", 'config')

@@ -72,7 +72,7 @@ def filter_files_by_token_count():
     # Write the filtered file paths to the output file
     with open(output_file, "w") as f:
         for idx, file_path in enumerate(filtered_files, start=1):
-            f.write(f"{idx}. {file_path}\n")
+            f.write(f"{idx}. {file_path}{os.linesep}")
 
     print_t(f"📝 List of files saved to {output_file}. Enjoy coding with your 🐒 code monkeys!", 'done')
     # print the contents of the file to the console, truncating it with ellipsis if over 15 lines
