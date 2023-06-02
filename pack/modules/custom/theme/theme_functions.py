@@ -53,21 +53,23 @@ def print_t(text, theme=None, attrs=None):
 
 def input_t(text, input_options=None, theme='input'):
     text = apply_theme(text, theme)
-    # if input_options is longer than 10 characters, print it on a new line
     if input_options:
-        if len(input_options) > 16:
+        if len(input_options) > 20:
             new_line_maybe = os.linesep
         else:
             new_line_maybe = ''
-        text = text + new_line_maybe + colored(' - ', 'cyan') + colored(input_options, "yellow")
+        text = text + new_line_maybe + colored(' (', 'cyan') + colored(input_options, "magenta") + colored(')', 'cyan')
     try:
 
-        result = input(f'{text}{colored(":", "cyan")}{os.linesep + os.linesep}{colored(">> ", "cyan", attrs=["blink"])}')
+        input_ = input(f'{text}{colored(":", "cyan")}{os.linesep + os.linesep}{colored(">> ", "cyan", attrs=["blink"])}')
     except KeyboardInterrupt:
         print()
-        print_t("Exiting due to KeyboardInterrupt from user.", 'yellow')
+        print_t("KeyboardInterrupt", 'yellow')
         sys.exit(1)
-    return result
+    if input_ == "exit" or input_ == 'quit':
+        print_t("✋ Exiting.", 'done')
+        sys.exit(0)
+    return input_
 
 
 def print_nice(*args, sub_indent='', no_keywords=False, **kwargs):

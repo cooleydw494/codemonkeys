@@ -65,7 +65,7 @@ def handle_yaml(data):
 def main(monkey_name=None):
     # if monkey_name is '', loop until a valid name is provided
     while not monkey_name:
-        monkey_name = input_t("Please enter a name for your monkey: ", '(letters and hyphens only)')
+        monkey_name = input_t("Please enter a name for your monkey: ", 'letters/hyphens only')
         # only allow letters and hyphens in monkey names
         if ' ' in monkey_name or not monkey_name.replace('-', '').isalpha():
             print_t("Invalid name. Please try again.", 'error')

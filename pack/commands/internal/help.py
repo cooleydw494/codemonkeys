@@ -10,15 +10,16 @@ def main():
     print_banner()
 
     # Overview
-    print_t("The Monk CLI transforms scripts in your commands directory into readily usable CLI commands. It offers "
-            "simplicity, power, and extensibility. Additionally, its flags support development, making it an "
-            "essential tool for both direct use and extension of the framework.")
+    print_t("Welcome to CodeMonkeys, an AI-ready automations framework! The Monk CLI aims to prioritize simplicity, "
+            "power, and extensibility. It provides hard-coded framework utility and transforms the commands directory "
+            "into readily usable CLI commands. Additionally, its flags make it an essential tool for both direct use "
+            "and extension of the framework.")
     print()
 
     # Recursive Name-Matching Logic
-    print_t("`monk` employs recursive name-matching logic to locate existing and custom entities. This requires "
-            "unique filenames within each entity directory. While perhaps limiting, it encourages thoughtful naming "
-            "and keeps things simple, while enabling an easily customizable and powerful CLI.",
+    print_t("`monk` employs recursive name-matching logic to locate existing/custom entities. This requires unique "
+            "filenames within each entity directory. While this is limiting, it also keeps things simple, "
+            "customizable, and powerful.",
             'important')
     print()
 
@@ -30,8 +31,9 @@ def main():
     print_t("Action flags in Monk CLI enable you to edit, print, copy content or path, or seek help using simple "
             "commands.", 'info')
     print()
+    print()
 
-    min_col_widths = [25, 25, 13]
+    min_col_widths = [23, 25, 13]
 
     monk_general_file = os.path.join(STORAGE_INTERNAL_PATH, 'monk', 'monk-commands-general.json')
     monk_general_json = json.loads(Path(monk_general_file).read_text())

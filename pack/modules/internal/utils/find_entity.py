@@ -8,22 +8,22 @@ from pack.modules.internal.utils.general_helpers import levenshtein_distance
 
 
 def select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, str]]) -> str:
+    print()
     print_t(prompt, 'monkey')
-    print_t("-------------------", 'cyan')
+    print()
+    print('````````````````````````````````````````')
     for i, (name, _, _, entity_type, path) in enumerate(entity_options):
-        print_t(f"{i}. {name} ({entity_type})", 'cyan')
-    print_t("-------------------", 'cyan')
+        print_t(f" ({i+1}) {name} ({entity_type})", 'option')
+    print('........................................')
+    print()
 
-    input_ = input_t("Enter the number corresponding to the entity", "ctrl+c to exit")
-    print_t(f"Selected option {input_}: {entity_options[int(input_)][4]}", 'quiet')
+    input_ = input_t("Select an option", "^c to quit")
 
-    if input_ == "no":
-        print_t("✋ Exiting.", 'done')
-        sys.exit(1)
-    elif input_ == "tab":
-        return select_entity(f"📜 Available Entities:", entity_options)
-    elif input_.isdigit() and 0 <= int(input_) < len(entity_options):
-        return entity_options[int(input_)][4]
+    if input_.isdigit() and 0 <= int(input_)-1 < len(entity_options):
+        partial_path = entity_options[int(input_) - 1][4].split("pack/")[1]
+        print_t(f"{partial_path}", 'quiet')
+        print()
+        return entity_options[int(input_)-1][4]
     else:
         print_t("Invalid input. Please try again.", 'error')
         return select_entity(prompt, entity_options)
@@ -33,7 +33,8 @@ def find_entities(entity_directory: str, entity_name: str, entity_type: str) \
         -> Generator[Tuple[str, int, int, str, str], None, None]:
     for root, _, files in os.walk(entity_directory):
         for file in files:
-            if file.endswith(('.sh', '.py')):
+            # if file isn't hidden and is a script
+            if file.endswith(('.sh', '.py')) and not file.startswith(('.', '_')):
                 filename = os.path.basename(file)
                 name, _ = os.path.splitext(filename)
                 distance = levenshtein_distance(name, entity_name or "")
@@ -61,11 +62,11 @@ def find_entity(entity_name: str, entity_type: str):
             return exact_match[4]
         elif substring_match:
             # Prompt the user to confirm the selection of substring match
-            prompt = f"Entity '{entity_name}' is not a complete match. Confirm selection:"
+            prompt = f"'{entity_name}' {entity_type} not found. Did you mean..."
             return select_entity(prompt, [substring_match])  # Wrap tuple in a list
         else:
             # No exact or substring matches, prompt the user with close matches
-            prompt = f"Entity '{entity_name}' not found. Did you mean one of these?"
+            prompt = f"'{entity_name}' {entity_type} not found. Did you mean..."
             return select_entity(prompt, matches[:5])
     else:
         # No matches, show all entities

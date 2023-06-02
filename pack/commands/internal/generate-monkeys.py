@@ -20,7 +20,8 @@ def main():
     try:
         with open(monkey_manifest, "r") as f:
             monkeys = yaml.load(f)
-        print_t("monkey-manifest.yaml located", 'info')
+        print_t("monkey-manifest.yaml located", 'file')
+        print()
     except FileNotFoundError:
         print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {monkey_manifest}", 'error')
         return
@@ -48,6 +49,7 @@ def main():
                 existing_config = yaml.load(f)
             if existing_config == merged_config:
                 print_t(f"Skipping {monkey_name} (no changes).", 'quiet')
+                print()
                 continue
             else:
                 print_t(f"Changes detected for {monkey_name}. Backing up existing config.", 'info')
@@ -59,6 +61,7 @@ def main():
         with open(os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml'), "w") as f:
             yaml.dump(merged_config, f)
         print_t(f"Updated config for {monkey_name}.", 'info')
+        print()
 
     print_t("All monkeys processed successfully. Exiting.", 'done')
 

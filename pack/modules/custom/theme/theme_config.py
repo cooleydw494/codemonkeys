@@ -19,12 +19,14 @@ text_themes = {
     'monkey': {'color': 'yellow', 'pre': '🐵 '},
     'config': {'color': 'yellow', 'pre': '🔧 '},
 
-    'file': {'color': 'light_blue', 'pre': '📁 '},
+    'file': {'color': 'dark_grey', 'pre': '📁 '},
 
     'tip': {'color': 'light_cyan', 'pre': '💡 '},
     'link': {'color': 'cyan', 'pre': '🔗 '},
     'info': {'color': 'cyan', 'pre': '🔹 '},
-    'option': {'color': 'cyan', 'pre': '🔘 '},
+    'option': {'color': 'white', 'pre': ''},
+    # 'option': {'color': 'white', 'pre': '🔘 '},
+
     'input': {'color': 'cyan', 'pre': '⌨️  '},
 
     'special': {'color': 'magenta', 'pre': '✨ '},
