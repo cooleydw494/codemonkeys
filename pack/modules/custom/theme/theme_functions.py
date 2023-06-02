@@ -1,6 +1,8 @@
 import os
 import sys
 import textwrap
+import re
+from math import floor
 
 # from art import text2art
 from termcolor import colored, COLORS
@@ -8,6 +10,8 @@ from termcolor import colored, COLORS
 from __init__ import __version__
 from definitions import STORAGE_INTERNAL_PATH
 from pack.modules.custom.theme.theme_config import text_themes
+
+MAX_TERMINAL_WIDTH = 120
 
 
 def get_theme(theme):
@@ -60,7 +64,7 @@ def input_t(text, input_options=None, theme='input'):
     return result
 
 
-def print_nice(*args, color=None, sub_indent='', max_width=120, **kwargs):
+def print_nice(*args, sub_indent='', **kwargs):
     """
     Improved print function that automatically wraps long lines to fit the terminal width.
     """
@@ -70,22 +74,23 @@ def print_nice(*args, color=None, sub_indent='', max_width=120, **kwargs):
     file = kwargs.get("file", None)
     flush = kwargs.get("flush", False)
 
-    terminal_width = min(os.get_terminal_size().columns, max_width)
+    terminal_width = min(os.get_terminal_size().columns, MAX_TERMINAL_WIDTH)
 
     # Combine arguments into a single string
     text = sep.join(str(arg) for arg in args)
 
-    if len(text) > terminal_width:
+    if len(strip_color_codes(text)) > terminal_width:
         # Wrap
         text = os.linesep.join(
             textwrap.fill(line, terminal_width, subsequent_indent=sub_indent)
             for i, line in enumerate(text.split(os.linesep))
         )
 
-    if color:  # doesn't apply a default color (text may be pre-colored)
-        text = colored(text, color)
-
     print(text, end=end, file=file, flush=flush)
+
+
+def strip_color_codes(s):
+    return re.sub(r'\x1b\[.*?m', '', s)
 
 
 def print_banner():
@@ -97,32 +102,32 @@ def print_banner():
     print()
 
 
-def print_table(table, title=None, sub_indent='   ', min_col_width=25):
+def print_table(table, title=None, sub_indent='   ', min_col_width=None):
+    import os
+
+    terminal_width = min(os.get_terminal_size().columns, MAX_TERMINAL_WIDTH)
+    terminal_width -= len(sub_indent)  # Adjust for indentation
+
     if title:
-        print_nice(title, color="white", attrs=['bold'])
+        print_t(title, attrs=['bold'])
 
-    # Calculate column widths, ensuring it's at least min_col_width
+    if not isinstance(min_col_width, list):
+        min_col_width = [min_col_width] * len(table["headers"])
+
     raw_col_widths = [max(len(str(x)) for x in col) for col in zip(*table["rows"])]
-    raw_col_widths = [max(width, min_col_width) for width in raw_col_widths]
+    raw_col_widths = [max(width, min_width) for width, min_width in zip(raw_col_widths, min_col_width)]
 
-    # Normalize column widths to the maximum across all columns
-    max_col_width = max(raw_col_widths)
-    col_widths = [max_col_width for _ in raw_col_widths]
+    col_widths = [min(width + 2, floor((terminal_width - len(table["headers"]) + 1) / len(table["headers"]))) for width in raw_col_widths]
+    col_widths = [min(width, raw_width + 2) for width, raw_width in zip(col_widths, raw_col_widths)]
 
-    # Print headers in bold magenta
     if table["show_headers"]:
-        header = ''.join([colored(name.ljust(width), 'magenta', attrs=['bold']) for name, width in
-                          zip(table["headers"], col_widths)])
-        header = f"{sub_indent}{header}"
-        print_t(header, 'yellow')
-        print_t('-' * len(header), 'magenta')
+        header = ''.join([colored(name.ljust(width), 'magenta', attrs=['bold']) for name, width in zip(table["headers"], col_widths)])
+        print_t(sub_indent + header, 'yellow')
+        print_t(sub_indent + '-' * len(header), 'magenta')
 
-    # Print rows
     for row in table["rows"]:
-        # Color the command in green, description in cyan, and note in yellow
-        colored_row = [colored(str(val).ljust(width), 'cyan' if i == 0 else 'green' if i == 1 else 'dark_grey') for
-                       i, (val, width) in enumerate(zip(row, col_widths))]
-        print_t(f"{sub_indent}{''.join(colored_row)}")
+        colored_row = [colored(str(val).ljust(width), 'cyan' if i == 0 else 'green' if i == 1 else 'dark_grey') for i, (val, width) in enumerate(zip(row, col_widths))]
+        print_t(sub_indent + ''.join(colored_row))
     print()
 
 

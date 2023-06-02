@@ -32,17 +32,19 @@ def main():
             "commands. They simplify complex tasks, making your coding experience smooth and enjoyable.", 'info')
     print()
 
+    min_col_widths = [25, 25, 13]
+
     monk_general_file = os.path.join(STORAGE_INTERNAL_PATH, 'monk', 'monk-commands-general.json')
     monk_general_json = json.loads(Path(monk_general_file).read_text())
-    print_table(monk_general_json, apply_theme("Monk CLI", 'special'))
+    print_table(monk_general_json, apply_theme("Monk CLI", 'special'), min_col_width=min_col_widths)
 
     monk_type_file = os.path.join(STORAGE_INTERNAL_PATH, 'monk', 'monk-commands-type.json')
     monk_type_json = json.loads(Path(monk_type_file).read_text())
-    print_table(monk_type_json, apply_theme("Types", 'special'))
+    print_table(monk_type_json, apply_theme("Types", 'special'), min_col_width=min_col_widths)
 
     monk_action_file = os.path.join(STORAGE_INTERNAL_PATH, 'monk', 'monk-commands-action.json')
     monk_action_json = json.loads(Path(monk_action_file).read_text())
-    print_table(monk_action_json, apply_theme("Actions", 'special'))
+    print_table(monk_action_json, apply_theme("Actions", 'special'), min_col_width=min_col_widths)
 
     # Wrap up
     print_t("That's it! For more info, use -h on an entity or view CodeMonkeys' docs.",
