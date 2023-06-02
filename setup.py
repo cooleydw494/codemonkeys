@@ -76,7 +76,6 @@ else:
     print_t("OS not detected. Please add 'monk' to your PATH manually to use the `monk` command.", "warning")
 
 # Use monk to generate the default configurations
-print_t("Generating default monkey configurations...", 'config')
 if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
     subprocess.call(f'{PYTHON_COMMAND} ./monk generate-monkeys', shell=True)
 elif os_type == "windows":  # If OS is Windows

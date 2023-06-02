@@ -10,16 +10,15 @@ def main():
     print_banner()
 
     # Overview
-    print_t("At the heart of CodeMonkeys is the Monk CLI, which transforms scripts in your commands directory into "
-            "readily usable CLI commands. It offers simplicity, power, and extensibility. But Monk doesn't stop at "
-            "execution - its flags also support script development, making it an essential tool for both routine use "
-            "and boilerplate customization.")
+    print_t("The Monk CLI transforms scripts in your commands directory into readily usable CLI commands. It offers "
+            "simplicity, power, and extensibility. Additionally, its flags support development, making it an "
+            "essential tool for both direct use and extension of the framework.")
     print()
 
     # Recursive Name-Matching Logic
-    print_t("Monk CLI employs recursive name-matching logic to locate your entities. This means every filename within "
-            "an entity directory must be unique. While this is certainly a limitation, it encourages thoughtful naming "
-            "and ensures a clean, well-organized workspace, making Monk a highly customizable and powerful CLI tool.",
+    print_t("`monk` employs recursive name-matching logic to locate existing and custom entities. This requires "
+            "unique filenames within each entity directory. While perhaps limiting, it encourages thoughtful naming "
+            "and keeps things simple, while enabling an easily customizable and powerful CLI.",
             'important')
     print()
 
@@ -29,7 +28,7 @@ def main():
 
     # Action Flags
     print_t("Action flags in Monk CLI enable you to edit, print, copy content or path, or seek help using simple "
-            "commands. They simplify complex tasks, making your coding experience smooth and enjoyable.", 'info')
+            "commands.", 'info')
     print()
 
     min_col_widths = [25, 25, 13]
@@ -40,14 +39,14 @@ def main():
 
     monk_type_file = os.path.join(STORAGE_INTERNAL_PATH, 'monk', 'monk-commands-type.json')
     monk_type_json = json.loads(Path(monk_type_file).read_text())
-    print_table(monk_type_json, apply_theme("Types", 'special'), min_col_width=min_col_widths)
+    print_table(monk_type_json, apply_theme("Entity Types", 'special'), min_col_width=min_col_widths)
 
     monk_action_file = os.path.join(STORAGE_INTERNAL_PATH, 'monk', 'monk-commands-action.json')
     monk_action_json = json.loads(Path(monk_action_file).read_text())
     print_table(monk_action_json, apply_theme("Actions", 'special'), min_col_width=min_col_widths)
 
     # Wrap up
-    print_t("That's it! For more info, use -h on an entity or view CodeMonkeys' docs.",
+    print_t("That's it! For more info, run `monk -h <entity>` or view the CodeMonkeys' docs.",
             'done')
 
 

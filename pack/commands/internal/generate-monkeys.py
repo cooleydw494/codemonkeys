@@ -15,7 +15,7 @@ yaml.indent(sequence=4, offset=2)
 
 
 def main():
-    print_t("Generating monkey configs...", 'start')
+    print_t("Generating monkey configs...", 'config')
     monkey_manifest = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
     try:
         with open(monkey_manifest, "r") as f:

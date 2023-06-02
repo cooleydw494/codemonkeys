@@ -8,8 +8,8 @@ text_themes = {
     # Theme       # Color                  # Prefix
 
     'success': {'color': 'green', 'pre': ''},
-    'start': {'color': 'green', 'pre': '🚀 '},
-    'done': {'color': 'green', 'pre': '✅ '},
+    'start': {'color': 'light_green', 'pre': '🚀 '},
+    'done': {'color': 'light_green', 'pre': '✅ '},
 
     'warning': {'color': 'red', 'pre': '⚠️  Warning: '},
     'error': {'color': 'light_red', 'pre': '❌ Error: '},
@@ -17,7 +17,9 @@ text_themes = {
     'important': {'color': 'yellow', 'pre': '👉 '},
     'loading': {'color': 'yellow', 'pre': '⏳ '},
     'monkey': {'color': 'yellow', 'pre': '🐵 '},
-    'file': {'color': 'yellow', 'pre': '📁 '},
+    'config': {'color': 'yellow', 'pre': '🔧 '},
+
+    'file': {'color': 'light_blue', 'pre': '📁 '},
 
     'tip': {'color': 'light_cyan', 'pre': '💡 '},
     'link': {'color': 'cyan', 'pre': '🔗 '},
@@ -25,8 +27,7 @@ text_themes = {
     'option': {'color': 'cyan', 'pre': '🔘 '},
     'input': {'color': 'cyan', 'pre': '⌨️  '},
 
-    'special': {'color': 'light_magenta', 'pre': '✨ '},
-    'config': {'color': 'magenta', 'pre': '🔧 '},
+    'special': {'color': 'magenta', 'pre': '✨ '},
 
     'quiet': {'color': 'dark_grey', 'pre': ''},
 }

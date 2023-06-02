@@ -5,13 +5,19 @@ import re
 from math import floor
 
 # from art import text2art
-from termcolor import colored, COLORS
+from termcolor import colored, COLORS, ATTRIBUTES
 
 from __init__ import __version__
 from definitions import STORAGE_INTERNAL_PATH
 from pack.modules.custom.theme.theme_config import text_themes
 
 MAX_TERMINAL_WIDTH = 120
+KEYWORDS = ['pseudo-package', 'entity types', 'definitions.py', 'CodeMonkeys', 'automations', 'action flags',
+            'entity type', 'barrels', 'modules', 'commands', 'monkeys', 'actions', 'barrel', 'module', 'action flag',
+            'automation', 'command', 'monkey', 'types', 'pack', 'cli', 'monk']
+
+# Sort the keywords by their lengths in descending order to avoid partial boldness
+KEYWORDS.sort(key=len, reverse=True)
 
 
 def get_theme(theme):
@@ -56,7 +62,7 @@ def input_t(text, input_options=None, theme='input'):
         text = text + new_line_maybe + colored(' - ', 'cyan') + colored(input_options, "yellow")
     try:
 
-        result = input(f'{text}{colored(":", "cyan")}{os.linesep}{colored(">> ", "cyan")}')
+        result = input(f'{text}{colored(":", "cyan")}{os.linesep + os.linesep}{colored(">> ", "cyan", attrs=["blink"])}')
     except KeyboardInterrupt:
         print()
         print_t("Exiting due to KeyboardInterrupt from user.", 'yellow')
@@ -64,11 +70,10 @@ def input_t(text, input_options=None, theme='input'):
     return result
 
 
-def print_nice(*args, sub_indent='', **kwargs):
+def print_nice(*args, sub_indent='', no_keywords=False, **kwargs):
     """
     Improved print function that automatically wraps long lines to fit the terminal width.
     """
-    # Default values for print() parameters
     sep = kwargs.get("sep", " ")
     end = kwargs.get("end", os.linesep)
     file = kwargs.get("file", None)
@@ -76,21 +81,36 @@ def print_nice(*args, sub_indent='', **kwargs):
 
     terminal_width = min(os.get_terminal_size().columns, MAX_TERMINAL_WIDTH)
 
-    # Combine arguments into a single string
     text = sep.join(str(arg) for arg in args)
 
-    if len(strip_color_codes(text)) > terminal_width:
-        # Wrap
+    if len(strip_color_and_bold_codes(text)) > terminal_width:
         text = os.linesep.join(
             textwrap.fill(line, terminal_width, subsequent_indent=sub_indent)
             for i, line in enumerate(text.split(os.linesep))
         )
 
+    # This pattern matches colored text.
+    color_pattern = re.compile(r'(\x1b\[[0-9;]*m)(.*?)(\x1b\[0m)', re.DOTALL)
+
+    def bold_colored_text(match):
+        """Returns the colored text with bold attribute."""
+        color_start = match.group(1)
+        colored_text = match.group(2)
+        color_end = match.group(3)
+
+        for keyword in KEYWORDS:
+            keyword_pattern = fr"(?i)\b{keyword}\b"  # case-insensitive match whole word
+            colored_text = re.sub(keyword_pattern, '\033[1m' + r'\g<0>' + '\033[22m', colored_text)
+
+        return color_start + colored_text + color_end
+
+    text = color_pattern.sub(bold_colored_text, text)
+
     print(text, end=end, file=file, flush=flush)
 
 
-def strip_color_codes(s):
-    return re.sub(r'\x1b\[.*?m', '', s)
+def strip_color_and_bold_codes(s):
+    return re.sub(r'\x1b\[[0-9;]*m', '', s)
 
 
 def print_banner():
@@ -109,7 +129,7 @@ def print_table(table, title=None, sub_indent='   ', min_col_width=None):
     terminal_width -= len(sub_indent)  # Adjust for indentation
 
     if title:
-        print_t(title, attrs=['bold'])
+        print_t(title)
 
     if not isinstance(min_col_width, list):
         min_col_width = [min_col_width] * len(table["headers"])
