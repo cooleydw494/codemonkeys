@@ -1,10 +1,11 @@
 import argparse
 import importlib.util
+import os
 import subprocess
 import sys
 
 from __init__ import __version__
-from definitions import COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH
+from definitions import COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH, ROOT_PATH
 from pack.commands.internal.help import main as run_help
 from pack.modules.custom.theme.theme_functions import print_t, input_t, print_tree
 
@@ -19,6 +20,7 @@ def parse_monk_args():
     # Special flags - flags that override normal behaviors significantly.
     parser.add_argument('-v', '--version', action='store_true')
     parser.add_argument('--all', action='store_true')
+    parser.add_argument('--toggle-light-mode', action='store_true')
 
     # Action flags - mutually exclusive, overrides default of "run"
     action_flags = parser.add_mutually_exclusive_group()
@@ -110,6 +112,19 @@ def handle_special_commands(args, action, entity, entity_type):
     # If -v or --version, print version and sys.exit. Maybe eventually implement versioning for entities?
     if args.version:
         print_t(f"CodeMonkeys v{__version__}", 'monkey')
+
+    # Toggle light mode
+    elif args.toggle_light_mode:
+        with open(os.path.join(ROOT_PATH, "definitions.py"), "r+") as file:
+            lines = file.readlines()
+            file.seek(0)
+            for line in lines:
+                if "LIGHT_MODE_ENABLED" in line:
+                    is_light_mode = "True" in line
+                    print_t(f"{'Disabling' if is_light_mode else 'Enabling'} Light Mode...", 'monkey')
+                    line = "LIGHT_MODE_ENABLED = False\n" if is_light_mode else "LIGHT_MODE_ENABLED = True\n"
+                file.write(line)
+            file.truncate()
 
     # Help needs to work in many contexts, and it would be a pain to place help executables throughout the framework,
     # so it is a lot easier to detect it outright and run through custom logic, with a central location for help files.

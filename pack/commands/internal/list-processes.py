@@ -2,7 +2,7 @@ import os
 
 import psutil
 
-from pack.modules.custom.theme.theme_functions import print_table, print_t, apply_theme
+from pack.modules.custom.theme.theme_functions import print_table, print_t, apply_t
 
 
 def main():
@@ -36,7 +36,7 @@ def main():
         "rows": process_row_data
     }
 
-    print_table(table, apply_theme("Monk Processes", 'monkey'))
+    print_table(table, apply_t("Monk Processes", 'monkey'))
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ import sys
 import Levenshtein
 import yaml
 
-from definitions import STORAGE_INTERNAL_PATH, MONKEYS_PATH
+from definitions import STORAGE_PATH, MONKEYS_PATH
 from pack.modules.custom.theme.theme_functions import print_t
 
 
@@ -32,7 +32,7 @@ def get_monkey_config_defaults(short=False):
         filename = 'monkey-config-defaults-short.yaml'
     else:
         filename = 'monkey-config-defaults.yaml'
-    monkey_config_defaults_files = os.path.join(STORAGE_INTERNAL_PATH, 'defaults', filename)
+    monkey_config_defaults_files = os.path.join(STORAGE_PATH, 'defaults', filename)
     try:
         with open(monkey_config_defaults_files, 'r') as f:
             return yaml.safe_load(f)
@@ -45,7 +45,7 @@ def get_monkey_config_defaults(short=False):
 
 
 def select_next_file():
-    input_file = os.path.join(STORAGE_INTERNAL_PATH, "files-to-process.txt")
+    input_file = os.path.join(STORAGE_PATH, "files-to-process.txt")
 
     with open(input_file, 'r') as file:
         lines = file.readlines()
