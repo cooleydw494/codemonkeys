@@ -15,15 +15,16 @@ MONKEY_CONFIG_DEFAULTS = get_monkey_config_defaults(short=True)
 
 # Define input prompts
 INPUT_PROMPTS = {
-    'MAIN_PROMPT': "Please generate code for the following task",
-    'SUMMARY_PROMPT': "Provide a summary of this file",
-    'MAIN_PROMPT_ULTIMATUM': "Limit your response to the full contents of a python script, and nothing else.",
-    'WORK_PATH': "Please enter the path to the the directory you'd like to work in",
-    'OUTPUT_EXAMPLE': "Limit your output strictly to the contents of the file, like this: ```complete contents of "
-                      "file```",
-    'OUTPUT_CHECK_PROMPT': "Examine the following output and determine if 1. The output is complete and 2. The output "
-                           "is limited strictly to the contents of a file. Format your response exactly like this: "
-                           "```is_limited_to_file_contents:[1/0],is_complete:[1/0]```.",
+    'MAIN_PROMPT': "Provide the main prompt of your automation. Ex: Translate the file from English to Spanish.",
+    'SUMMARY_PROMPT': "Provide a prompt for summarizing the 'Special File'. Press enter to skip summarization or if "
+                      "no Special File.",
+    'MAIN_PROMPT_ULTIMATUM': "Clearly, forcefully, and briefly assert any criteria, constraints, etc. Ex: Always "
+                             "write Spanish in a Colombian dialect.",
+    'WORK_PATH': "What is the working directory of your automation? Ex: ~/Documents/love-poems",
+    'OUTPUT_EXAMPLE': "A direct example of how the new or updated file should be formatted, (inserted in prompt). Ex: "
+                      "Limit your output strictly to the contents of the translated file, like: ```<translated-poem>```",
+    'CHECK_OUTPUT': "Use another GPT call to check that the output matched the example? Ex: true",
+    'WRITE_METHOD': "How should the output be written? Opts: 'new', 'overwrite', 'append', 'prepend'",
     'OUTPUT_FILENAME_APPEND': "Please enter text to append to output filenames:",
     'OUTPUT_EXT': "Please enter text to override output file extensions",
     'SPECIAL_FILE': "Please enter a file which will be summarized using SUMMARY_PROMPT to give context for the main "
@@ -50,11 +51,12 @@ def is_valid_path():
 def handle_input(prop_name, description):
     input_handlers = {
         'path': lambda p, d: str(is_valid_path()),
-        'model': lambda p, d: str(input_t(p, d)) if input_t(p, d) in ['3', '4'] else '4',
+        'model': lambda p, d: int(input_t(p, d)) if int(input_t(p, d)) in [3, 4] else 4,
+        'temp': lambda p, d: float(input_t(p, d)) if 0 <= float(input_t(p, d)) <= 1 else 0.5,
         'default': lambda p, d: str(input_t(p, d))
     }
     prop_lower = prop_name.lower()
-    input_type = 'path' if 'path' in prop_lower else 'model' if 'model' in prop_lower else 'default'
+    input_type = 'path' if 'path' in prop_lower else 'model' if 'model' in prop_lower else 'temp' if 'temp' in prop_lower else 'default'
     return input_handlers[input_type](prop_name, description)
 
 

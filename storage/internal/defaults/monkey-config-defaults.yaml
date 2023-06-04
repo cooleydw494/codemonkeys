@@ -9,6 +9,7 @@ MAIN_PROMPT_ULTIMATUM: "Limit your response to the full contents of a python scr
 
 # Final Output
 OUTPUT_EXAMPLE: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
+CHECK_OUTPUT: true
 OUTPUT_CHECK_PROMPT: "Examine the following output and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
 OUTPUT_EXT: ".py"
 OUTPUT_FILENAME_APPEND: "-help"

@@ -32,10 +32,10 @@
   'SUMMARY_PROMPT': 'Provide a summary of this code...'
   'MAIN_PROMPT_ULTIMATUM': ''
   'SPECIAL_FILE': 'special_file_generic.py'
-  'MAIN_MODEL': !!int '4'
-  'SUMMARY_MODEL': !!int '4'
-  'MAIN_TEMP': !!int '1'
-  'SUMMARY_TEMP': !!int '1'
+  'MAIN_MODEL': 4
+  'SUMMARY_MODEL': 4
+  'MAIN_TEMP': 1
+  'SUMMARY_TEMP': 1
   'WORK_PATH': ''
   'OUTPUT_EXT': ''
   'OUTPUT_FILENAME_APPEND': ''
@@ -51,10 +51,10 @@
   'SUMMARY_PROMPT': 'Summarize this extracted code...'
   'MAIN_PROMPT_ULTIMATUM': ''
   'SPECIAL_FILE': 'special_file_extract.py'
-  'MAIN_MODEL': !!int '4'
-  'SUMMARY_MODEL': !!int '4'
-  'MAIN_TEMP': !!int '1'
-  'SUMMARY_TEMP': !!int '1'
+  'MAIN_MODEL': 4
+  'SUMMARY_MODEL': 4
+  'MAIN_TEMP': 1
+  'SUMMARY_TEMP': 1
   'WORK_PATH': '~/local-git/code-monkeys'
   'OUTPUT_EXT': ''
   'OUTPUT_FILENAME_APPEND': ''
@@ -77,10 +77,10 @@
     creating a summary of the following script.'
   'MAIN_PROMPT_ULTIMATUM': ''
   'SPECIAL_FILE': '~/local-git/code-monkeys/monk'
-  'MAIN_MODEL': !!int '4'
-  'SUMMARY_MODEL': !!int '4'
-  'MAIN_TEMP': !!int '1'
-  'SUMMARY_TEMP': !!int '1'
+  'MAIN_MODEL': 4
+  'SUMMARY_MODEL': 4
+  'MAIN_TEMP': 1
+  'SUMMARY_TEMP': 1
   'WORK_PATH': '~/local-git/code-monkeys'
   'OUTPUT_PATH': '~/local-git/code-monkeys/help'
   'OUTPUT_FILENAME_APPEND': ''
