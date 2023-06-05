@@ -22,7 +22,7 @@ __pycache__/
 
 # PyCharm artifacts
 /.idea/
-venv/*
+/venv/
 
 # VS Code artifacts
 .vscode/*
