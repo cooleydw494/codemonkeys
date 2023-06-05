@@ -6,22 +6,6 @@ Are you a highly-technical individual with an interest in taking more control ov
 
 . . . . a creature with the capacity to learn how to press buttons and a strong motivation to do the AI?
 
-Welcome to CodeMonkeys, a user-friendly _and_ power-user-friendly project designed to maximize the potential of the GPT
-API and streamline autonomous tasks with an emphasis on code generation and improvement. It's all about granting you,
-the user, full control and freedom to shape the AI's capabilities to your specific needs and ideas. Interested? Please
-scan the rest of the README, and if you find yourself intoxicated by the thought of wielding your own army of Monkeys,
-read the whole thing. If a great, but typical Github README is a tightly syncopated bop that everyone can groove to
-instantly, the CodeMonkeys README is a thorough and engaging concept album that conveys a subject intimately. Trust me,
-the version of you that reads the whole thing will run circles around the version of you that doesn't. Take the win. [Or
-Don't (cheatcodes)](#getting-started-).
-
-## About The Author
-
-I'm David. I'm a very-full-stack engineer with more than 5 and less than 50 years of experience in software dev, mostly
-web. A generic description of my roles would look something like "coder, lead coder, founder, coder". Oh, I also do not
-know Python very well. This project is good in creative ways in spite of that and because of it. It may be non-ideal in
-ways I don't notice, but I believe that my Baby's First Python mentality, coupled with other coding experience and
-powerful AI models that can write Python very well, has led to an interesting and more-than-viable design.
 
 ## Overview 🌐
 
