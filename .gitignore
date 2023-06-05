@@ -5,6 +5,7 @@
 # CodeMonkey generated files (some are tracked though, like default generated monkey configs)
 /storage/temp/
 /TODO.md
+/README.md
 
 # Generated Monkey Configs (even pre-packaged) are ignored
 # It is good practice to not add files that are generated.
