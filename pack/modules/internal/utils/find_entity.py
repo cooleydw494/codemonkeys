@@ -17,7 +17,7 @@ def select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, st
     print('........................................')
     print()
 
-    input_ = input_t("Select an option", "^c to quit")
+    input_ = input_t("Select an option", "(^C to quit)")
 
     if input_.isdigit() and 0 <= int(input_) - 1 < len(entity_options):
         partial_path = entity_options[int(input_) - 1][4].split("pack/")[1]
