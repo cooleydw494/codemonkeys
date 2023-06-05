@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 @dataclass
 class ENV:
+    DEFAULT_MONKEY: str = os.getenv('DEFAULT_MONKEY', 'default')
     WORK_PATH: str = os.getenv('WORK_PATH')
     FILE_TYPES_INCLUDED: str = os.getenv('FILE_TYPES_INCLUDED')
     FILEPATH_MATCH_EXCLUDED: str = os.getenv('FILEPATH_MATCH_EXCLUDED')

@@ -35,15 +35,15 @@ def main():
 
     min_col_widths = [23, 25, 13]
 
-    monk_general_file = os.path.join(STORAGE_MONK_PATH, 'monk', 'monk-commands-general.json')
+    monk_general_file = os.path.join(STORAGE_MONK_PATH, 'monk-commands-general.json')
     monk_general_json = json.loads(Path(monk_general_file).read_text())
     print_table(monk_general_json, apply_t("Monk CLI", 'special'), min_col_width=min_col_widths)
 
-    monk_type_file = os.path.join(STORAGE_MONK_PATH, 'monk', 'monk-commands-type.json')
+    monk_type_file = os.path.join(STORAGE_MONK_PATH, 'monk-commands-type.json')
     monk_type_json = json.loads(Path(monk_type_file).read_text())
     print_table(monk_type_json, apply_t("Entity Types", 'special'), min_col_width=min_col_widths)
 
-    monk_action_file = os.path.join(STORAGE_MONK_PATH, 'monk', 'monk-commands-action.json')
+    monk_action_file = os.path.join(STORAGE_MONK_PATH, 'monk-commands-action.json')
     monk_action_json = json.loads(Path(monk_action_file).read_text())
     print_table(monk_action_json, apply_t("Actions", 'special'), min_col_width=min_col_widths)
 

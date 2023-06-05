@@ -1,34 +1,42 @@
-#   MONKEY MANIFEST
-#
-#   The Monkey Manifest offers robust config management in the form of "Monkeys",
-#   which are essentially config profiles for your automations.
+#######################################################################################################################
+####  MONKEY MANIFEST  ################################################################################################
+#######################################################################################################################
+##                                                                                                                   ##
+##    The Monkey Manifest houses centralized configuration of automation profiles (monkeys).                         ##
+##                                                                                                                   ##
+##    Undefined props will default based on `storage/internal/defaults/monkey-config-defaults.yaml`.                 ##
+##    Monkey props defined in your .env will override the framework defaults.                                        ##
+##                                                                                                                   ##
+#######################################################################################################################
 
-#   Any existing properties that aren't defined for a Monkey here
-#   will default to either a matching .env variable or the hard-coded framework default.
-#   (full list of framework defaults: storage/internal/defaults/monkey-config-defaults.yaml),
-#
-#   Run `monk help [PROPERTY_NAME]` for more info. TODO: implement that)
-#
-#   *General*
-#   WORK_PATH: The path to the work_path to use. (Use absolute path or start with ~ for home dir on Mac/Linux)
-#   SPECIAL_FILE: A file which will be summarized using SUMMARY_PROMPT to give context for the main prompt. (absolute path)
-#
-#   *Prompts*
-#   MAIN_PROMPT: The main prompt
-#   SUMMARY_PROMPT: The prompt for summarizing the SPECIAL_FILE ("" to use verbatim SPECIAL_FILE contents)
-#   MAIN_PROMPT_ULTIMATUM: A final ultimatum for the main prompt ("" for none)
-#
-#   *Models*
-#   Note: All models can be set to either 3 (gpt-3.5-turbo) or 4 (gpt-4).
-#
-#   *Output*
-#   OUTPUT_EXAMPLE: An example of the output you want to see. The generic-monkey has a good preset. ("" for none)
-#   OUTPUT_CHECK_PROMPT: A prompt for checking the output. The generic-monkey has a good preset ("" to skip check)
-#   OUTPUT_PATH: An alternate path (not WORK_PATH) for writing files
-#   OUTPUT_FILENAME_APPEND: Append to output filenames ("" for none, or "-summary", "-usage", etc.)
-#   OUTPUT_EXT: Override output file extensions ("" for original ext, or ".md", ".txt", etc.)
+#### GENERAL ***
+##  WORK_PATH: The path to the work_path to use. (Absolute path; supports ~ on Mac/Linux)
+##  SPECIAL_FILE: A file to be summarized using SUMMARY_PROMPT to give context for the main prompt. (absolute path)
 
-'generic-monkey':
+#### PROMPTS ***
+##  MAIN_PROMPT: The main prompt
+##  SUMMARY_PROMPT: The prompt for summarizing the SPECIAL_FILE ("" to use verbatim SPECIAL_FILE contents)
+##  MAIN_PROMPT_ULTIMATUM: A final ultimatum for the main prompt ("" for none)
+
+#### MODELS ***
+##  All models can be set to either 3 (gpt-3.5-turbo) or 4 (gpt-4).
+
+#### TEMPS ***
+##  All TEMPS (temperatures) can be set to a float between 0.0 (conservative) and 1.0 (creative)
+
+#### OUTPUT ***
+##  OUTPUT_EXAMPLE: An example of the output you want to see.
+##  OUTPUT_CHECK_PROMPT: A prompt for checking the output.
+##  OUTPUT_PATH: An alternate path (not WORK_PATH) for writing files
+##  OUTPUT_FILENAME_APPEND: Optional string to append to output filenames
+##  OUTPUT_EXT: Override output file extensions ("" for original ext, or ".md", ".txt", etc.)
+
+
+###  YOUR MONKEYS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+##  Manually define monkey configs here or run `monk add-monkey <monkey-name>`.
+
+'default':
   'MAIN_PROMPT': 'Please generate code for the following task...'
   'SUMMARY_PROMPT': 'Provide a summary of this code...'
   'MAIN_PROMPT_ULTIMATUM': ''
@@ -47,8 +55,13 @@
     is complete and 2. The output is limited strictly to the contents of a file. Format
     your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```.'
 
-# Self-Help Monkeys (Monkeys that exist to work on the code-monkeys directory itself
-'self-extraction-monkey':
+
+
+###  SELF-HELP MONKEYS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+##  Monkeys that exist to work on the CodeMonkeys framework itself.
+
+'self-extract':
   'MAIN_PROMPT': 'Please extract the following code into a new function...'
   'SUMMARY_PROMPT': 'Summarize this extracted code...'
   'MAIN_PROMPT_ULTIMATUM': ''
@@ -67,7 +80,7 @@
     is complete and 2. The output is limited strictly to the contents of a file. Format
     your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```.'
 
-'self-help-monkey':
+'self-help':
   'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the file and its usage,
     in the style of documentation for a CLI command. Your ultimate response should
     contain only the requested txt content.'

@@ -43,5 +43,5 @@ elif extension == ".py":
         print_t("Exiting due to KeyboardInterrupt from user.", 'quiet')
         sys.exit(1)
 else:
-    print_t(f"Entity Type not supported: {extension}. find_entity.py should have already filtered this out.", 'error')
+    print_t(f"Entity Type not supported: {extension}. find_entity.py should have filtered this out.", 'error')
     sys.exit(1)

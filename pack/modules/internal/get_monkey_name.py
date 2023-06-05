@@ -5,6 +5,7 @@ from typing import List, Tuple
 
 from definitions import MONKEYS_PATH
 from pack.modules.custom.theme.theme_functions import print_t, input_t
+from pack.modules.internal.cm_config_mgmt.env_class import ENV
 
 
 def list_monkeys() -> List[str]:
@@ -24,7 +25,7 @@ def get_monkey_name(given_monkey_name: str = None) -> Tuple[str, str]:
     :param given_monkey_name: A given monkey name
     :return: A tuple consisting of monkey name and its configuration file path
     """
-    default_monkey = os.getenv("DEFAULT_MONKEY")
+    default_monkey = ENV.DEFAULT_MONKEY or None
 
     def select_monkey_from_list() -> str:
         """
