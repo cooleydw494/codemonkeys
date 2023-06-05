@@ -4,8 +4,8 @@ import subprocess
 import sys
 
 from definitions import PIP_COMMAND, PYTHON_COMMAND
-from pack.modules.custom.theme.theme_functions import print_t
 from pack.modules.internal.cm_config_mgmt.environment_checks import monk_env_checks
+from pack.modules.internal.theme.theme_functions import print_t
 
 print_t("Thanks for using CodeMonkeys!", 'monkey')
 print_t("Initiating the setup process...", "start")

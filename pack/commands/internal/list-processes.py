@@ -2,7 +2,7 @@ import os
 
 import psutil
 
-from pack.modules.custom.theme.theme_functions import print_table, print_t, apply_t
+from pack.modules.internal.theme.theme_functions import print_table, print_t, apply_t
 
 
 def main():

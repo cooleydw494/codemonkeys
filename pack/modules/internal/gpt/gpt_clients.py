@@ -1,12 +1,17 @@
 import os
+import sys
 
 import openai
 
 from pack.modules.internal.cm_config_mgmt.env_class import ENV
+from pack.modules.internal.theme.theme_functions import print_t
 
 # Set up OpenAI client with API key
 ENV = ENV()
 openai.api_key = ENV.OPENAI_API_KEY
+
+# Singleton instance variable for GPT models
+GPT_MODELS = None
 
 
 def check_api_key():
@@ -15,7 +20,7 @@ def check_api_key():
 
 
 class GPTClient:
-    def __init__(self, version, max_tokens=int(os.getenv("MAX_TOKENS", 4000)), temperature=0.5):
+    def __init__(self, version, max_tokens=int(os.getenv("MAX_TOKENS", 4000)), temperature=1.0):
         self.engine_map = {
             '3': "gpt-3.5-turbo",
             '4': "gpt-4"
@@ -45,7 +50,24 @@ class GPTClient:
 
 
 def instantiate_gpt_models():
-    model_versions = {3, 4}
-    gpt_models = {version: GPTClient(version) for version in model_versions}
+    global GPT_MODELS
 
-    return gpt_models
+    # Instantiate GPT models only if not done already
+    if GPT_MODELS is None:
+        print_t("Instantiating GPT models...", "info")
+        model_versions = {3, 4}
+        GPT_MODELS = {version: GPTClient(version) for version in model_versions}
+        print_t("GPT models instantiated successfully.", "success")
+
+    return GPT_MODELS
+
+
+def gpt_client(model_name):
+    # Get the GPT models
+    gpt_models = instantiate_gpt_models()
+    """Get the GPT client based on the model name"""
+    client = gpt_models.get(model_name)
+    if not client:
+        print_t(f"Model '{model_name}' not found.", "error")
+        sys.exit(1)
+    return client

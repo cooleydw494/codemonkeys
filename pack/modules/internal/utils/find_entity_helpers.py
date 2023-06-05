@@ -3,7 +3,7 @@ import os
 import sys
 
 from definitions import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH
-from pack.modules.custom.theme.theme_functions import print_t
+from pack.modules.internal.theme.theme_functions import print_t
 
 
 def get_entity_paths():

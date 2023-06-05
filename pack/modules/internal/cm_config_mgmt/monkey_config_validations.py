@@ -1,6 +1,6 @@
 import os
 
-from pack.modules.custom.theme.theme_functions import input_t, print_t
+from pack.modules.internal.theme.theme_functions import input_t, print_t
 
 
 def is_valid_path():

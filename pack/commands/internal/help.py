@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 from definitions import STORAGE_MONK_PATH
-from pack.modules.custom.theme.theme_functions import print_banner, print_table, print_t, apply_t
+from pack.modules.internal.theme.theme_functions import print_banner, print_table, print_t, apply_t
 
 
 def main():

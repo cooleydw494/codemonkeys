@@ -4,7 +4,7 @@ import sys
 import yaml
 
 from definitions import STORAGE_DEFAULTS_PATH
-from pack.modules.custom.theme.theme_functions import print_t
+from pack.modules.internal.theme.theme_functions import print_t
 
 
 def get_monkey_config_defaults(short=False):

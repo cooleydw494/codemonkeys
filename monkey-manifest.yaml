@@ -82,24 +82,18 @@
 
 'self-help':
   'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the file and its usage,
-    in the style of documentation for a CLI command. Your ultimate response should
-    contain only the requested txt content.'
-  'SUMMARY_PROMPT': 'The following is a summary of the monk command, which is used
-    to run scripts in the CodeMonkeys project. Summarize it in a way that will give
-    you adequate context for understanding any one script''s intention and usage in
-    the context of the monk command.'
-  'MAIN_PROMPT_ULTIMATUM': ''
-  'SPECIAL_FILE': '~/local-git/code-monkeys/monk'
+    in the style of documentation for a CLI command.'
+  'SUMMARY_PROMPT': False  # False to skip summary prompt, in this case the summary is pre-prepared
+  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of a complete and informative python help script.'
+  'SPECIAL_FILE': '~/local-git/code-monkeys/self-help-special-file.md'
   'MAIN_MODEL': !!int '4'
-  'SUMMARY_MODEL': !!int '4'
-  'MAIN_TEMP': !!int '1'
-  'SUMMARY_TEMP': !!int '1'
+  'MAIN_TEMP': !!float '0.5'
+  # SUMMARY_MODEL/TEMP don't need to be defined as there is no summary prompt
   'WORK_PATH': '~/local-git/code-monkeys'
-  'OUTPUT_PATH': '~/local-git/code-monkeys/help'
-  'OUTPUT_FILENAME_APPEND': ''
-  'OUTPUT_EXT': '.txt'
-  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, like
-    this: ```complete contents of file```.'
-  'OUTPUT_CHECK_PROMPT': 'Examine the following out put and determine if 1. The output
-    is complete and 2. The output is limited strictly to the contents of a file. Format
-    your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```.'
+  'OUTPUT_PATH': '~/local-git/code-monkeys/storage/monk/help'
+  'OUTPUT_FILENAME_APPEND': '-help'
+  'OUTPUT_EXT': '.py'
+  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, following precisely this format:```complete contents of file```.'
+  'CHECK_OUTPUT': True,
+  'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if the triple-quoted string is limited strictly to the contents of a file. Respond with only one word: "True" or "False".'
+  'OUTPUT_TRIES_LIMIT': !!int '3'

@@ -4,8 +4,8 @@ import pathlib
 from typing import List, Tuple
 
 from definitions import MONKEYS_PATH
-from pack.modules.custom.theme.theme_functions import print_t, input_t
 from pack.modules.internal.cm_config_mgmt.env_class import ENV
+from pack.modules.internal.theme.theme_functions import print_t, input_t
 
 
 def list_monkeys() -> List[str]:

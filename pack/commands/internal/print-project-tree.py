@@ -1,4 +1,4 @@
-from pack.modules.custom.theme.theme_functions import print_tree
+from pack.modules.internal.theme.theme_functions import print_tree
 
 
 def print_project_tree():
@@ -7,7 +7,7 @@ def print_project_tree():
         exclude_dirs=['venv'],
         exclude_file_starts=['.', '_'],
         title="Directory Tree",
-        incl_exts=True
+        show_exts=True
     )
 
 

@@ -2,8 +2,8 @@ import sys
 
 import openai
 
-from pack.modules.custom.theme.theme_functions import print_t
 from pack.modules.internal.cm_config_mgmt.env_class import ENV
+from pack.modules.internal.theme.theme_functions import print_t
 
 ENV = ENV()
 

@@ -20,13 +20,13 @@ def get_theme(theme):
     return False, None, None
 
 
-def apply_t(text, theme, include_prefix=False, attrs=None):
+def apply_t(text, theme, incl_prefix=False, attrs=None):
     has_theme, color, prefix = get_theme(theme)
     if has_theme:
         if theme == 'super_important':
             attrs = attrs if isinstance(attrs, list) else []
             attrs.append('blink')
-        if include_prefix:
+        if incl_prefix:
             text = f"{prefix}{text}"
         text = colored(text, color, attrs=attrs)
     elif theme in COLORS:
@@ -34,10 +34,10 @@ def apply_t(text, theme, include_prefix=False, attrs=None):
     return text
 
 
-def print_t(text, theme=None, attrs=None):
+def print_t(text, theme=None, incl_prefix=True, attrs=None):
     sub_indent = ''
     if theme:
-        text = apply_t(text, theme, include_prefix=True)
+        text = apply_t(text, theme, incl_prefix=incl_prefix)
         _, __, prefix = get_theme(theme)
         sub_indent = ' ' * len(prefix or '')
     if LIGHT_MODE_ENABLED:
@@ -47,7 +47,7 @@ def print_t(text, theme=None, attrs=None):
 
 
 def input_t(text, input_options=None, theme='input'):
-    text = apply_t(text, theme, include_prefix=True)
+    text = apply_t(text, theme, incl_prefix=True)
     if input_options:
         text += f' {apply_t(input_options, "magenta")}' if len(input_options) <= 20 \
             else os.linesep + apply_t(input_options, "info")
@@ -95,7 +95,7 @@ def strip_color_and_bold_codes(s):
 
 
 def print_banner():
-    with open(os.path.join(STORAGE_MONK_PATH, 'art.txt'), 'r') as f:
+    with open(os.path.join(STORAGE_MONK_PATH, 'banner.txt'), 'r') as f:
         art = f.read()
     print_t(art.replace('vX.X.X', f'v{__version__}'), 'light_yellow')
     print()
@@ -130,14 +130,17 @@ def print_table(table, title=None, sub_indent='   ', min_col_width=None):
     print()
 
 
-def print_tree(start_dir: str, exclude_dirs=None, exclude_file_starts=None, title: str = None, incl_exts=False):
+def print_tree(start_dir: str, exclude_dirs=None, exclude_file_starts=None, title: str = None, show_exts=False,
+               incl_prefix=True):
     if exclude_file_starts is None:
         exclude_file_starts = ['.', '_']
     if exclude_dirs is None:
         exclude_dirs = []
 
     if title:
-        print_t(title, 'special', attrs=['bold'])
+        print()
+        print_t(title, 'yellow', attrs=['bold'], incl_prefix=incl_prefix)
+        print()
 
     level = 0
     within_excluded_dir = False
@@ -161,13 +164,13 @@ def print_tree(start_dir: str, exclude_dirs=None, exclude_file_starts=None, titl
 
         if relative_root != ".":
             level = relative_root.count(os.sep) + 1
-            print('{}{}'.format(' ' * 4 * level, apply_t(base_root, 'magenta')))
+            print('{}{}'.format(' ' * 2 * level, apply_t(base_root, 'magenta')))
 
-        sub_indent = ' ' * 4 * (level + 1)
+        sub_indent = ' ' * 2 * (level + 1)
         for f in files:
             if not any(f.startswith(start) for start in exclude_file_starts):
                 without_ext = os.path.splitext(f)[0]
-                filename = f if incl_exts else without_ext
+                filename = f if show_exts else without_ext
                 if f.endswith('.py'):
                     file_theme = 'green'
                 elif f.endswith('.md'):

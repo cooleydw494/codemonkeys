@@ -8,7 +8,7 @@ import sys
 from __init__ import __version__
 from definitions import COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH, ROOT_PATH
 from pack.commands.internal.help import main as run_help
-from pack.modules.custom.theme.theme_functions import print_t, input_t, print_tree
+from pack.modules.internal.theme.theme_functions import print_t, input_t, print_tree
 
 
 def parse_monk_args():
@@ -137,16 +137,20 @@ def handle_special_commands(args, action, entity, entity_type):
     elif entity == 'list':
         if entity_type == 'command' or args.all:
             print()
-            print_tree(COMMANDS_PATH, [], "📁 Commands - core framework CLI commands")
+            print_tree(COMMANDS_PATH, exclude_file_starts=['.', '_'],
+                       title="📁  Commands - Run CLI commands", incl_prefix=False)
         if entity_type == 'barrel' or args.all:
             print()
-            print_tree(BARRELS_PATH, [], "🛢️  Barrels - scripts that orchestrate multiple Automations")
+            print_tree(BARRELS_PATH, exclude_file_starts=['.', '_'],
+                       title="🛢️   Barrels - Combine and orchestrate automations", incl_prefix=False)
         if entity_type == 'automation' or args.all:
             print()
-            print_tree(AUTOMATIONS_PATH, [], "🤖 Automations - scripts that run automated tasks using monkey configs")
+            print_tree(AUTOMATIONS_PATH, exclude_file_starts=['.', '_'],
+                       title="🤖  Automations - Run automations with monkey configs", incl_prefix=False)
         if entity_type == 'module' or args.all:
             print()
-            print_tree(MODULES_PATH, [], "📦 Modules - project modules that can be imported")
+            print_tree(MODULES_PATH, exclude_file_starts=['.', '_'],
+                       title="📦  Modules - project modules that can be imported", incl_prefix=False)
     else:
         return False
     return True
