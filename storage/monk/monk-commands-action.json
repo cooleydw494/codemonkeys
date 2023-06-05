@@ -1,12 +1,40 @@
 {
-    "headers": ["Command", "Description", "Note"],
-    "show_headers": false,
-    "rows": [
-        ["monk -r <entity>", "Run an entity", "--run"],
-        ["monk -e <entity>", "Open in vim", "--edit"],
-        ["monk -p <entity>", "Print file contents", "--print"],
-        ["monk -cp <entity>", "Copy file abspath", "--copy-path"],
-        ["monk -cc <entity>", "Copy file contents", "--copy-contents"],
-        ["monk -h <entity>", "Help for an entity", "--help"]
+  "headers": [
+    "Command",
+    "Description",
+    "Note"
+  ],
+  "show_headers": false,
+  "rows": [
+    [
+      "monk -r <entity>",
+      "Run an entity",
+      "--run"
+    ],
+    [
+      "monk -e <entity>",
+      "Open in vim",
+      "--edit"
+    ],
+    [
+      "monk -p <entity>",
+      "Print file contents",
+      "--print"
+    ],
+    [
+      "monk -cp <entity>",
+      "Copy file abspath",
+      "--copy-path"
+    ],
+    [
+      "monk -cc <entity>",
+      "Copy file contents",
+      "--copy-contents"
+    ],
+    [
+      "monk -h <entity>",
+      "Help for an entity",
+      "--help"
     ]
+  ]
 }

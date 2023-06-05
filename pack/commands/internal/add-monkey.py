@@ -1,74 +1,63 @@
 import os
 import sys
+import tempfile
 from io import StringIO
 
 from ruamel.yaml import YAML, CommentedMap
 
-from definitions import ROOT_PATH
+from definitions import ROOT_PATH, COMMANDS_INTERNAL_PATH
 from pack.modules.custom.theme.theme_functions import print_t, input_t
+from pack.modules.internal.cm_config_mgmt.monkey_config_validations import is_valid_path, is_valid_model, is_valid_temp
 from pack.modules.internal.utils.general_helpers import get_monkey_config_defaults
+from pack.modules.internal.utils.monk_helpers import run_command_as_module
 
 yaml = YAML()
 yaml.default_style = "'"
 yaml.indent(sequence=4, offset=2)
 MONKEY_CONFIG_DEFAULTS = get_monkey_config_defaults(short=True)
 
-# Define input prompts
 INPUT_PROMPTS = {
-    'MAIN_PROMPT': "Provide the main prompt of your automation. Ex: Translate the file from English to Spanish.",
-    'SUMMARY_PROMPT': "Provide a prompt for summarizing the 'Special File'. Press enter to skip summarization or if "
-                      "no Special File.",
-    'MAIN_PROMPT_ULTIMATUM': "Clearly, forcefully, and briefly assert any criteria, constraints, etc. Ex: Always "
-                             "write Spanish in a Colombian dialect.",
-    'WORK_PATH': "What is the working directory of your automation? Ex: ~/Documents/love-poems",
-    'OUTPUT_EXAMPLE': "A direct example of how the new or updated file should be formatted, (inserted in prompt). Ex: "
-                      "Limit your output strictly to the contents of the translated file, like: ```<translated-poem>```",
-    'CHECK_OUTPUT': "Use another GPT call to check that the output matched the example? Ex: true",
-    'WRITE_METHOD': "How should the output be written? Opts: 'new', 'overwrite', 'append', 'prepend'",
-    'OUTPUT_FILENAME_APPEND': "Please enter text to append to output filenames:",
-    'OUTPUT_EXT': "Please enter text to override output file extensions",
-    'SPECIAL_FILE': "Please enter a file which will be summarized using SUMMARY_PROMPT to give context for the main "
-                    "prompt (absolute path)",
-    'MAIN_MODEL': "Enter the model to use for the main prompts. Choose 3 (gpt-3.5-turbo) or 4 (gpt-4)",
-    'SUMMARY_MODEL': "Enter the model to use for the summary prompts. Choose 3 (gpt-3.5-turbo) or 4 (gpt-4)",
-    'OUTPUT_CHECK_MODEL': "Enter the model to use for the usage prompts. Choose 3 (gpt-3.5-turbo) or 4 (gpt-4)",
-    'MAIN_TEMP': "Enter the temperature to use for the main prompts (a value between 0 and 1)",
-    'SUMMARY_TEMP': "Enter the temperature to use for the summary prompts (a value between 0 and 1)",
-    'OUTPUT_CHECK_TEMP': "Enter the temperature to use for the usage prompts (a value between 0 and 1)"
+    # (prompt_message, handler_function)
+    'MAIN_PROMPT': ("Provide the main prompt of your automation. Ex: Translate the file from English to Spanish.", str),
+    'SUMMARY_PROMPT': ("Provide a prompt for summarizing the 'Special File'. Press enter to skip summarization or if "
+                       "no Special File.", str),
+    'MAIN_PROMPT_ULTIMATUM': ("Clearly, forcefully, and briefly assert any criteria, constraints, etc. Ex: Always "
+                              "write Spanish in a Colombian dialect.", str),
+    'WORK_PATH': ("What is the working directory of your automation? Ex: ~/Documents/love-poems", is_valid_path),
+    'OUTPUT_EXAMPLE': ("A direct example of how the new or updated file should be formatted, (inserted in prompt). Ex: "
+                       "Limit your output strictly to the contents of the translated file, "
+                       "like: ```<translated-poem>```",
+                       str),
+    'CHECK_OUTPUT': ("Use another GPT call to check that the output matched the example? Ex: true", bool),
+    'WRITE_METHOD': ("How should the output be written? Opts: 'new', 'overwrite', 'append', 'prepend'", str),
+    'OUTPUT_FILENAME_APPEND': ("Please enter text to append to output filenames", str),
+    'OUTPUT_PATH': ("Please enter a path to write output files to (absolute path) (default: WORK_PATH)", is_valid_path),
+    'OUTPUT_EXT': ("Please enter text to override output file extensions", str),
+    'SPECIAL_FILE': ("Please enter a file which will be summarized using SUMMARY_PROMPT to give context for the main "
+                     "prompt (absolute path)", is_valid_path),
+    'MAIN_MODEL': (
+        "Enter the model to use for the main prompts. Choose 3 (gpt-3.5-turbo) or 4 (gpt-4)", is_valid_model),
+    'SUMMARY_MODEL': (
+        "Enter the model to use for the summary prompts. Choose 3 (gpt-3.5-turbo) or 4 (gpt-4)", is_valid_model),
+    'OUTPUT_CHECK_MODEL': (
+        "Enter the model to use for the usage prompts. Choose 3 (gpt-3.5-turbo) or 4 (gpt-4)", is_valid_model),
+    'MAIN_TEMP': ("Enter the temperature to use for the main prompts (a value between 0 and 1)", is_valid_temp),
+    'SUMMARY_TEMP': ("Enter the temperature to use for the summary prompts (a value between 0 and 1)", is_valid_temp),
+    'OUTPUT_CHECK_TEMP': ("Enter the temperature to use for the usage prompts (a value between 0 and 1)", is_valid_temp)
 }
 
 
-def is_valid_path():
-    while True:
-        path = input_t("Please enter the path: ", "(absolute path or you can use ~ on Mac/Linux)")
-        absolute_path = os.path.expanduser(path)
-        if os.path.exists(absolute_path):
-            return absolute_path
-        else:
-            print_t("Invalid path. Please try again.", 'error')
-
-
-def handle_input(prop_name, description):
-    input_handlers = {
-        'path': lambda p, d: str(is_valid_path()),
-        'model': lambda p, d: int(input_t(p, d)) if int(input_t(p, d)) in [3, 4] else 4,
-        'temp': lambda p, d: float(input_t(p, d)) if 0 <= float(input_t(p, d)) <= 1 else 0.5,
-        'default': lambda p, d: str(input_t(p, d))
-    }
-    prop_lower = prop_name.lower()
-    input_type = 'path' if 'path' in prop_lower else 'model' if 'model' in prop_lower else 'temp' if 'temp' in prop_lower else 'default'
-    return input_handlers[input_type](prop_name, description)
+def handle_input(config_key_name, config_value_desc, handler):
+    return handler(input_t(config_key_name, config_value_desc))
 
 
 def handle_yaml(data):
-    return {key: handle_input(key, value) for key, value in data.items()}
+    return {key: handle_input(key, *value) for key, value in data.items()}
 
 
 def main(monkey_name=None):
-    # if monkey_name is '', loop until a valid name is provided
     while not monkey_name:
         monkey_name = input_t("Please enter a name for your monkey: ", 'letters/hyphens only')
-        # only allow letters and hyphens in monkey names
         if ' ' in monkey_name or not monkey_name.replace('-', '').isalpha():
             print_t("Invalid name. Please try again.", 'error')
             monkey_name = ''
@@ -79,8 +68,11 @@ def main(monkey_name=None):
 
     monkey_manifest_path = os.path.join(ROOT_PATH, 'monkey-manifest.yaml')
     with open(monkey_manifest_path, 'r') as file:
-        # Use yaml object instead of yaml.safe_load to load the data
-        monkey_manifest = yaml.load(file)
+        try:
+            monkey_manifest = yaml.load(file)
+        except Exception as e:
+            print_t("An error occurred while reading the monkey-manifest file: " + str(e), 'error')
+            return
 
     if monkey_name in monkey_manifest.keys():
         print_t(f"A monkey named {monkey_name} already exists.", 'important')
@@ -88,7 +80,7 @@ def main(monkey_name=None):
         if result.lower() != 'y':
             sys.exit(0)
         else:
-            print_t("Continuing configuration...", 'done')
+            print_t("Continuing config...", 'done')
 
     new_monkey_data = handle_yaml(INPUT_PROMPTS)
 
@@ -98,18 +90,25 @@ def main(monkey_name=None):
 
     monkey_manifest[monkey_name] = new_monkey_commented_map
 
-    # Then, dump the YAML data to a string.
     yaml_string = StringIO()
     yaml.dump(monkey_manifest, yaml_string)
 
-    # Then, insert a newline before the new monkey's key.
     yaml_string = yaml_string.getvalue().replace(monkey_name + ":", os.linesep + monkey_name + ":")
 
-    with open(monkey_manifest_path, 'w') as file:
-        file.write(yaml_string)
+    with tempfile.NamedTemporaryFile('w', delete=False) as temp_file:
+        temp_file_name = temp_file.name
+        temp_file.write(yaml_string)
 
-    print_t("Configuration complete. The 'monkey-manifest.yaml' file has been updated.", 'done')
-    print_t("Please run `monk generate-monkeys` to complete the configuration process.", 'tip')
+    try:
+        os.replace(temp_file_name, monkey_manifest_path)
+    except Exception as e:
+        print_t("An error occurred while updating the monkey-manifest file: " + str(e), 'error')
+        return
+
+    print_t("Config complete. The 'monkey-manifest.yaml' file has been updated.", 'done')
+    run_generate = input_t("Run `monk generate-monkeys` to complete the config process?", '(y/n)')
+    if run_generate.lower() == 'y':
+        run_command_as_module(os.path.join(COMMANDS_INTERNAL_PATH, 'generate-monkeys.py'), 'main', [])
 
 
 if __name__ == '__main__':

@@ -21,7 +21,6 @@ def main():
         with open(monkey_manifest, "r") as f:
             monkeys = yaml.load(f)
         print_t("monkey-manifest.yaml located", 'file')
-        print()
     except FileNotFoundError:
         print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {monkey_manifest}", 'error')
         return
@@ -33,11 +32,11 @@ def main():
     # Filter only those keys present in default_config
     env_config = {k: env_config[k] for k in env_config if k in default_config}
 
-    # Create the directories and configuration files
+    # Create the directories and config files
     for monkey_name, config in monkeys.items():
         print_t(f"Checking {monkey_name}", 'special')
 
-        # Merge the default configuration with the monkey's own configuration
+        # Merge the default config with the monkey's own config
         merged_config = default_config.copy()  # Start with the defaults
         merged_config.update(env_config)  # Overwrite with the .env's specific config
         merged_config.update(config)  # Overwrite with the monkey's specific config
@@ -49,7 +48,6 @@ def main():
                 existing_config = yaml.load(f)
             if existing_config == merged_config:
                 print_t(f"Skipping {monkey_name} (no changes).", 'quiet')
-                print()
                 continue
             else:
                 print_t(f"Changes detected for {monkey_name}. Backing up existing config.", 'info')
@@ -61,7 +59,6 @@ def main():
         with open(os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml'), "w") as f:
             yaml.dump(merged_config, f)
         print_t(f"Updated config for {monkey_name}.", 'info')
-        print()
 
     print_t("All monkeys processed successfully. Exiting.", 'done')
 

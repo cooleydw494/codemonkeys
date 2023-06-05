@@ -3,9 +3,8 @@
 .env-backup
 
 # CodeMonkey generated files (some are tracked though, like default generated monkey configs)
-storage/internal/cache/
-storage/temp/files-to-process.txt
-.TODO.md
+/storage/temp/
+/TODO.md
 
 # Generated Monkey Configs (even pre-packaged) are ignored
 # It is good practice to not add files that are generated.
@@ -22,7 +21,8 @@ __pycache__/
 
 # PyCharm artifacts
 .idea/
-.venv/
+venv/
 
 # VS Code artifacts
 .vscode/
+

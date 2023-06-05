@@ -13,17 +13,17 @@ def select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, st
     print()
     print('````````````````````````````````````````')
     for i, (name, _, _, entity_type, path) in enumerate(entity_options):
-        print_t(f" ({i+1}) {name} ({entity_type})", 'option')
+        print_t(f" ({i + 1}) {name} ({entity_type})", 'option')
     print('........................................')
     print()
 
     input_ = input_t("Select an option", "^c to quit")
 
-    if input_.isdigit() and 0 <= int(input_)-1 < len(entity_options):
+    if input_.isdigit() and 0 <= int(input_) - 1 < len(entity_options):
         partial_path = entity_options[int(input_) - 1][4].split("pack/")[1]
         print_t(f"{partial_path}", 'quiet')
         print()
-        return entity_options[int(input_)-1][4]
+        return entity_options[int(input_) - 1][4]
     else:
         print_t("Invalid input. Please try again.", 'error')
         return select_entity(prompt, entity_options)

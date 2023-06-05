@@ -2,7 +2,7 @@ import os
 
 from pack.modules.internal.utils.get_python_command import get_python_command, get_pip_command
 
-"""  P R E F E R E N C E S
+"""  PREFERENCES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - """
 
 # Improved readability for everyone's favorite psychopaths
@@ -10,7 +10,7 @@ LIGHT_MODE_ENABLED = False
 # Looks 👌 with very lil space, but you do you boo-boo
 MAX_TERMINAL_WIDTH = 120
 
-"""  U S E R - D E F I N E D  P A T H S
+"""  USER-DEFINED PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 *Always* begin user-defined PATHs with predefined PATHs.
 Ex) TRANSLATION_AUTOMATIONS_PATH = os.path.join(AUTOMATIONS_CUSTOM_PATH, "translations") """
@@ -18,7 +18,7 @@ Ex) TRANSLATION_AUTOMATIONS_PATH = os.path.join(AUTOMATIONS_CUSTOM_PATH, "transl
 # <User-defined PATHs go here>
 
 
-"""  P R E D E F I N E D  P A T H S
+"""  PREDEFINED PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Unless modifying the framework itself, you probably shouldn't touch this. """
 
@@ -39,9 +39,9 @@ MONKEYS_CUSTOM_PATH = os.path.join(MONKEYS_PATH, "custom")
 
 # STORAGE
 STORAGE_PATH = os.path.join(ROOT_PATH, "storage")
-STORAGE_TEMP = os.path.join(STORAGE_PATH, "temp")
-STORAGE_MONK = os.path.join(STORAGE_PATH, "monk")
-STORAGE_DEFAULTS = os.path.join(STORAGE_PATH, "defaults")
+STORAGE_TEMP_PATH = os.path.join(STORAGE_PATH, "temp")
+STORAGE_MONK_PATH = os.path.join(STORAGE_PATH, "monk")
+STORAGE_DEFAULTS_PATH = os.path.join(STORAGE_PATH, "defaults")
 
 # PSEUDO_PACKAGE
 PSEUDO_PACKAGE_PATH = os.path.join(ROOT_PATH, "pack")
@@ -66,8 +66,7 @@ COMMANDS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "commands")
 COMMANDS_INTERNAL_PATH = os.path.join(COMMANDS_PATH, "internal")
 COMMANDS_CUSTOM_PATH = os.path.join(COMMANDS_PATH, "custom")
 
-
-"""  M I S C  F R A M E W O R K
+"""  MISC FRAMEWORK VARS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - """
 
 # GET user's available python and pip commands
