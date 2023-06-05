@@ -21,7 +21,7 @@ __pycache__/
 .pytest_cache/
 
 # PyCharm artifacts
-.idea
+/.idea/
 venv/*
 
 # VS Code artifacts
