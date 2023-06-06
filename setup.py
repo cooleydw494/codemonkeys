@@ -34,10 +34,10 @@ else:
 print_t("Installing the required Python modules from the requirements.txt file...", "loading")
 subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
-# if the .env doesn't already exist, copy it from storage/.env.template and print some helpful feedback.
+# if the .env doesn't already exist, copy it from storage/.env.default and print some helpful feedback.
 if not os.path.exists('.env'):
     print_t("No .env file found. Creating it from the template...", "file")
-    subprocess.call('cp storage/.env.template .env', shell=True)
+    subprocess.call('cp storage/.env.default .env', shell=True)
 else:
     print_t("The .env file already exists. No changes were made to it.", "file")
 

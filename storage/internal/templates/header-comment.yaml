@@ -1,0 +1,35 @@
+#######################################################################################################################
+####  MONKEY MANIFEST  ################################################################################################
+##                                                                                                                  ###
+##    The Monkey Manifest houses centralized configuration of automation profiles (monkeys).                       ####
+##                                                                                                                #####
+##    Undefined props will default based on `storage/internal/defaults/monkey-config-defaults.yaml`.             ######
+##    Monkey props defined in your .env will override the framework defaults.                                   #######
+##                                                                                                             ########
+#######################################################################################################################
+
+#### GENERAL ***
+EXAMPLE_YAML_PROP: "EXAMPLE_YAML_PROP"
+INTENTION: "SEE HOW THE HEADER-COMMENT WORKS IN A REAL FILE"
+
+#### ADMISSIONS ***
+ADMISSION: "I'm kind of tired and slap-happy and I'll be sure to remove this silliness in favor of example YAML values that actually look like real YAML values. I mean that's kind of the point right."
+ADMISSION_SECONDARY: "I'm totally not going to remove this silliness. It actually looks that a legit enough example to be honest."
+
+#### REFERENCE ***
+# Note: REALLY A MUCH BETTER PAN FLICK THAN THE EMBARRASSINGLY TRITE RECENT DISNEY OFFERING
+ENABLE_REFERENCES: !!bool 'True'
+LOAD_REFERENCE_LIBRARY: "UNDERRATED_FILMS, PIRATE_ADJACENT"
+LOOKIE_LOOKIE: "I'VE GOT HOOKIE ☠️🪝🧚‍🐊🕰️"
+
+#### PREDICTIONS ***
+PREDICTIONS_ENABLED: !!bool 'True'
+REALITY_LEVEL_PERCENTAGE: !!float '0.96'
+PREDICTION_OPT_ONE: "I leave this in either because I still think its funny or because I forget. You are weird enough to have read this far (don't blame me, you're in the driver's seat here bud) and my confidence that I would leave it in the final version seems legit, unless you're enough of a psychopath to *still* be reading this. I mean, I probably never even read it again myself, but no judgement."
+PREDICTION_OPT_THREE: !!bool 'False'
+PREDICTION_OPT_TWO: "I remove this because its not funny and I'm not that forgetful. You never know that I was exaggerating my confidence that I would decide to leave it in"
+
+#### BASE-COVERING ***
+INCLUSION_OF_INT: !!int '42'
+NUMBER_OF_TRIES: !!int '1'
+NUMBER_OF_PROOFREADS: !!int '0'

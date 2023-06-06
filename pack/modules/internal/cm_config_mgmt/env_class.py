@@ -1,3 +1,13 @@
+"""==================================================================================================================***
+***==  MONKEY MANIFEST  =============================================================================================***
+***                                                                                                                  ***
+***    The Monkey Manifest houses centralized configuration of automation profiles (monkeys).                        ***
+***                                                                                                                  ***
+***    Undefined props will default based on `storage/internal/defaults/monkey-config-defaults.yaml`.                ***
+***    Monkey props defined in your .env will override the framework defaults.                                       ***
+***                                                                                                                  ***
+***=================================================================================================================="""
+
 import os
 from dataclasses import dataclass
 
@@ -15,3 +25,5 @@ class ENV:
     FILE_SELECT_MAX_TOKENS: int = int(os.getenv('FILE_SELECT_MAX_TOKENS', 4000))
     OPENAI_API_KEY: str = os.getenv('OPENAI_API_KEY')
     TEMPERATURE: float = float(os.getenv('TEMPERATURE', 1))
+
+    # Add generated env definitions below this line
