@@ -14,7 +14,7 @@ yaml.default_style = "'"
 yaml.indent(sequence=4, offset=2)
 
 
-def main():
+def main(args=None):
     print_t("Generating monkey configs...", 'config')
     monkey_manifest = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
     try:

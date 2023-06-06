@@ -26,11 +26,12 @@ class MonkeyConfig:
     OUTPUT_PATH: Optional[str] = field(default=None)
     OUTPUT_EXT: Optional[str] = field(default=None)
     OUTPUT_FILENAME_APPEND: Optional[str] = field(default=None)
+    OUTPUT_TRIES_LIMIT: Optional[int] = field(default=None)
     MAIN_MODEL: Optional[int] = field(default=None)
     SUMMARY_MODEL: Optional[int] = field(default=None)
     OUTPUT_CHECK_MODEL: Optional[int] = field(default=None)
-    MAIN_TEMP: Optional[int] = field(default=None)
-    SUMMARY_TEMP: Optional[int] = field(default=None)
+    MAIN_TEMP: Optional[float] = field(default=None)
+    SUMMARY_TEMP: Optional[float] = field(default=None)
     OUTPUT_CHECK_TEMP: Optional[float] = field(default=None)
     # [MONKEY_CONFIG_PROPS_END]
 
@@ -54,11 +55,12 @@ class MonkeyConfig:
         self.OUTPUT_PATH = validate_str('OUTPUT_PATH', self.OUTPUT_PATH)
         self.OUTPUT_EXT = validate_str('OUTPUT_EXT', self.OUTPUT_EXT)
         self.OUTPUT_FILENAME_APPEND = validate_str('OUTPUT_FILENAME_APPEND', self.OUTPUT_FILENAME_APPEND)
+        self.OUTPUT_TRIES_LIMIT = validate_int('OUTPUT_TRIES_LIMIT', self.OUTPUT_TRIES_LIMIT)
         self.MAIN_MODEL = validate_int('MAIN_MODEL', self.MAIN_MODEL)
         self.SUMMARY_MODEL = validate_int('SUMMARY_MODEL', self.SUMMARY_MODEL)
         self.OUTPUT_CHECK_MODEL = validate_int('OUTPUT_CHECK_MODEL', self.OUTPUT_CHECK_MODEL)
-        self.MAIN_TEMP = validate_int('MAIN_TEMP', self.MAIN_TEMP)
-        self.SUMMARY_TEMP = validate_int('SUMMARY_TEMP', self.SUMMARY_TEMP)
+        self.MAIN_TEMP = validate_float('MAIN_TEMP', self.MAIN_TEMP)
+        self.SUMMARY_TEMP = validate_float('SUMMARY_TEMP', self.SUMMARY_TEMP)
         self.OUTPUT_CHECK_TEMP = validate_float('OUTPUT_CHECK_TEMP', self.OUTPUT_CHECK_TEMP)
         # [MONKEY_CONFIG_VALIDATIONS_END]
 

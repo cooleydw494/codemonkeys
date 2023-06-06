@@ -42,8 +42,8 @@
   'SPECIAL_FILE': 'special_file_generic.py'
   'MAIN_MODEL': !!int '4'
   'SUMMARY_MODEL': !!int '4'
-  'MAIN_TEMP': !!int '1'
-  'SUMMARY_TEMP': !!int '1'
+  'MAIN_TEMP': !!float '1.0'
+  'SUMMARY_TEMP': !!float '1.0'
   'WORK_PATH': '~/local-git/code-monkeys'
   'OUTPUT_PATH': ''
   'OUTPUT_EXT': ''
@@ -67,8 +67,8 @@
   'SPECIAL_FILE': 'special_file_extract.py'
   'MAIN_MODEL': !!int '4'
   'SUMMARY_MODEL': !!int '4'
-  'MAIN_TEMP': !!int '1'
-  'SUMMARY_TEMP': !!int '1'
+  'MAIN_TEMP': !!float '1.0'
+  'SUMMARY_TEMP': !!float '1.0'
   'WORK_PATH': '~/local-git/code-monkeys'
   'OUTPUT_PATH': ''
   'OUTPUT_EXT': ''
@@ -82,7 +82,7 @@
 'self-help':
   'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the file and its usage,
     in the style of documentation for a CLI command.'
-  'SUMMARY_PROMPT': False  # False to skip summary prompt, in this case the summary is pre-prepared
+  'SUMMARY_PROMPT': ""  # "" to skip summary prompt, in this case the summary is pre-prepared
   'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of a complete and informative python help script.'
   'SPECIAL_FILE': '~/local-git/code-monkeys/self-help-special-file.md'
   'MAIN_MODEL': !!int '4'
@@ -93,6 +93,6 @@
   'OUTPUT_FILENAME_APPEND': '-help'
   'OUTPUT_EXT': '.py'
   'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, following precisely this format:```complete contents of file```.'
-  'CHECK_OUTPUT': True,
+  'CHECK_OUTPUT': True
   'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if the triple-quoted string is limited strictly to the contents of a file. Respond with only one word: "True" or "False".'
   'OUTPUT_TRIES_LIMIT': !!int '3'

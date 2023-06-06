@@ -71,6 +71,8 @@ def validate_range(key, value: Union[int, float], min_value: Any = None, max_val
 
 
 def validate_bool(key, value: bool) -> bool:
+    if str(value) in ['True', 'true', '1', 'Yes', 'yes', 'False', 'false', '0', 'No', 'no']:
+        return str(value) in ['True', 'true', '1', 'Yes', 'yes']
     if not isinstance(value, bool):
         raise ValueError(f"{key} must be a boolean, not {type(value).__name__}")
     return value
