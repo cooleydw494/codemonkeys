@@ -12,18 +12,16 @@ def get_env_prop_type(env_value):
         return 'List[str]'
 
     # Check for integer
-    try:
-        int(env_value)
+    if env_value.isdigit():
         return 'int'
-    except ValueError:
-        pass
 
     # Check for float
-    try:
-        float(env_value)
-        return 'float'
-    except ValueError:
-        pass
+    if '.' in env_value and env_value.replace('.', '', 1).isdigit():
+        try:
+            float(env_value)
+            return 'float'
+        except ValueError:
+            pass
 
     # Default to string
     return 'str'

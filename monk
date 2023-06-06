@@ -4,6 +4,7 @@ import subprocess
 import sys
 
 from pack.modules.internal.config_mgmt.environment_checks import monk_env_checks
+from pack.modules.internal.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
 from pack.modules.internal.theme.theme_functions import print_t
 from pack.modules.internal.utils.find_entity import find_entity
 from pack.modules.internal.utils.monk_helpers import handle_alternate_actions, handle_special_commands, \
@@ -11,6 +12,9 @@ from pack.modules.internal.utils.monk_helpers import handle_alternate_actions, h
 
 # Some basic environment checks
 monk_env_checks()
+
+# Regenerate "magic" config/env stuff
+regenerate_config_env_defs()
 
 # Setup and Parse Monk Arguments
 args, unknown_args, action, entity, entity_type = parse_monk_args()
