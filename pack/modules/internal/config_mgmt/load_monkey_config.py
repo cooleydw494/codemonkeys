@@ -1,7 +1,7 @@
 import os
 
 from definitions import STORAGE_TEMP_PATH
-from pack.modules.internal.cm_config_mgmt.monkey_config import MonkeyConfig
+from pack.modules.internal.config_mgmt.monkey_config_class import MonkeyConfig
 from pack.modules.internal.theme.theme_functions import print_t, input_t, apply_t
 from pack.modules.internal.utils.get_monkey_name import get_monkey_name
 

@@ -6,7 +6,7 @@ from dotenv import dotenv_values
 from ruamel.yaml import YAML
 
 from definitions import MONKEYS_PATH, ROOT_PATH
-from pack.modules.internal.cm_config_mgmt.monkey_config_helpers import get_monkey_config_defaults
+from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
 from pack.modules.internal.theme.theme_functions import print_t
 
 yaml = YAML()

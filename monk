@@ -3,7 +3,7 @@ import os
 import subprocess
 import sys
 
-from pack.modules.internal.cm_config_mgmt.environment_checks import monk_env_checks
+from pack.modules.internal.config_mgmt.environment_checks import monk_env_checks
 from pack.modules.internal.theme.theme_functions import print_t
 from pack.modules.internal.utils.find_entity import find_entity
 from pack.modules.internal.utils.monk_helpers import handle_alternate_actions, handle_special_commands, \

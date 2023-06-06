@@ -2,7 +2,7 @@ import os
 import time
 
 from definitions import STORAGE_TEMP_PATH
-from pack.modules.internal.cm_config_mgmt.env_class import ENV
+from pack.modules.internal.config_mgmt.env_class import ENV
 from pack.modules.internal.gpt.token_counter import TokenCounter
 from pack.modules.internal.theme.theme_functions import print_t
 

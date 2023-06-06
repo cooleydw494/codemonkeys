@@ -6,7 +6,7 @@ from io import StringIO
 from ruamel.yaml import YAML, CommentedMap
 
 from definitions import ROOT_PATH, COMMANDS_INTERNAL_PATH
-from pack.modules.internal.cm_config_mgmt.monkey_config_validations import is_valid_path, is_valid_model, is_valid_temp
+from pack.modules.internal.config_mgmt.monkey_config_validations import is_valid_path, is_valid_model, is_valid_temp
 from pack.modules.internal.theme.theme_functions import print_t, input_t
 from pack.modules.internal.utils.general_helpers import get_monkey_config_defaults
 from pack.modules.internal.utils.monk_helpers import run_command_as_module
