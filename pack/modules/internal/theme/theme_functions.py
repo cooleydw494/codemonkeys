@@ -39,7 +39,7 @@ def print_t(text, theme=None, incl_prefix=True, attrs=None):
     if theme:
         text = apply_t(text, theme, incl_prefix=incl_prefix)
         _, __, prefix = get_theme(theme)
-        sub_indent = ' ' * len(prefix or '')
+        sub_indent = ' ' * (len(prefix) + 1)
     if LIGHT_MODE_ENABLED:
         attrs = attrs if isinstance(attrs, list) else [attrs]
         attrs.append('dark')

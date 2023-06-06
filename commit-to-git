@@ -2,9 +2,8 @@
 
 import subprocess
 import sys
-import os
 
-from pack.modules.custom.theme.theme_functions import print_t
+from pack.modules.internal.theme.theme_functions import print_t
 
 # Check if a commit message argument is provided
 if len(sys.argv) < 2:
@@ -47,7 +46,7 @@ if push_result.returncode != 0:
     if "Updates were rejected" in push_result.stderr:
         print_t("Error pushing changes:", 'error')
         print_t("🔄 It looks like the remote repository has changes that you don't have yet. Please pull those changes "
-              "and resolve any conflicts before pushing again.", 'info')
+                "and resolve any conflicts before pushing again.", 'info')
     else:
         print_t("Error pushing changes:", 'error')
         print_t(push_result.stderr)
