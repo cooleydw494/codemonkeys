@@ -39,9 +39,10 @@ MONKEYS_CUSTOM_PATH = os.path.join(MONKEYS_PATH, "custom")
 
 # STORAGE
 STORAGE_PATH = os.path.join(ROOT_PATH, "storage")
-STORAGE_TEMP_PATH = os.path.join(STORAGE_PATH, "temp")
-STORAGE_MONK_PATH = os.path.join(STORAGE_PATH, "monk")
-STORAGE_DEFAULTS_PATH = os.path.join(STORAGE_PATH, "defaults")
+STORAGE_INTERNAL_PATH = os.path.join(STORAGE_PATH, "internal")
+STORAGE_TEMP_PATH = os.path.join(STORAGE_INTERNAL_PATH, "temp")
+STORAGE_MONK_PATH = os.path.join(STORAGE_INTERNAL_PATH, "monk")
+STORAGE_DEFAULTS_PATH = os.path.join(STORAGE_INTERNAL_PATH, "defaults")
 
 # PSEUDO_PACKAGE
 PSEUDO_PACKAGE_PATH = os.path.join(ROOT_PATH, "pack")

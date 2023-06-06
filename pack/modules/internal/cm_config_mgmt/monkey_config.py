@@ -2,9 +2,10 @@ import os
 from dataclasses import dataclass, field
 from typing import Union, Any, Optional
 
+import yaml
 from ruamel.yaml import YAML
 
-from definitions import MONKEYS_PATH
+from definitions import MONKEYS_PATH, STORAGE_DEFAULTS_PATH, ROOT_PATH
 from pack.modules.internal.cm_config_mgmt.env_class import ENV
 
 
@@ -12,6 +13,7 @@ from pack.modules.internal.cm_config_mgmt.env_class import ENV
 class MonkeyConfig:
     _instance = None
 
+    # [MONKEY_CONFIG_PROPS_START]
     SPECIAL_FILE: Optional[str] = field(default=None)
     WORK_PATH: Optional[str] = field(default=None)
     MAIN_PROMPT: Optional[str] = field(default=None)
@@ -29,6 +31,8 @@ class MonkeyConfig:
     MAIN_TEMP: Optional[float] = field(default=None)
     SUMMARY_TEMP: Optional[float] = field(default=None)
     OUTPUT_CHECK_TEMP: Optional[float] = field(default=None)
+    # [MONKEY_CONFIG_PROPS_END]
+
     ENV: Optional[ENV] = field(default=None)
 
     def __post_init__(self):
@@ -37,6 +41,7 @@ class MonkeyConfig:
             if getattr(self, attribute, None) is None and getattr(env, attribute, None) is not None:
                 setattr(self, attribute, getattr(env, attribute))
 
+        # [MONKEY_CONFIG_VALIDATIONS_START]
         self.SPECIAL_FILE = self._validate_path('SPECIAL_FILE', self.SPECIAL_FILE)
         self.WORK_PATH = self._validate_path('WORK_PATH', self.WORK_PATH)
         self.MAIN_MODEL = self._validate_range('MAIN_MODEL', self.MAIN_MODEL, min_value=3, max_value=4)
@@ -45,6 +50,8 @@ class MonkeyConfig:
         self.MAIN_TEMP = self._validate_range('MAIN_TEMP', self.MAIN_TEMP, min_value=0, max_value=1)
         self.SUMMARY_TEMP = self._validate_range('SUMMARY_TEMP', self.SUMMARY_TEMP, min_value=0, max_value=1)
         self.OUTPUT_CHECK_TEMP = self._validate_range('OUTPUT_CHECK_TEMP', self.OUTPUT_CHECK_TEMP, min_value=0, max_value=1)
+        # [MONKEY_CONFIG_VALIDATIONS_END]
+
         self.ENV = env
 
     @staticmethod
@@ -74,3 +81,31 @@ class MonkeyConfig:
             cls._instance = MonkeyConfig(**monkey_dict)
             cls._instance.__post_init__()
         return cls._instance
+
+    @classmethod
+    def update_env_defaults(cls):
+        # Load the YAML config
+        with open(os.path.join(STORAGE_DEFAULTS_PATH, 'monkey-config-defaults.yaml'), 'r') as yaml_file:
+            config = yaml.safe_load(yaml_file)
+
+        # Format the properties
+        formatted_properties = ["#  " + key + ": " + str(value) for key, value in config.items()]
+
+        # Start and end markers in the .env.default file
+        start_marker = "#  [MONKEY_CONFIG_DEFAULT_OVERRIDES_START]"
+        end_marker = "#  [MONKEY_CONFIG_DEFAULT_OVERRIDES_END]"
+
+        # Load the .env.default file
+        with open(os.path.join(STORAGE_DEFAULTS_PATH, '.env.default'), 'r') as env_file:
+            env_lines = env_file.readlines()
+
+        # Find the section to replace
+        start_index = env_lines.index(start_marker + '\n') + 1
+        end_index = env_lines.index(end_marker + '\n')
+
+        # Replace the section
+        new_env_lines = env_lines[:start_index] + formatted_properties + env_lines[end_index:]
+
+        # Write the updated .env.default file
+        with open(os.path.join(ROOT_PATH, '.env'), 'w') as env_file:
+            env_file.writelines(line + os.linesep for line in new_env_lines)
