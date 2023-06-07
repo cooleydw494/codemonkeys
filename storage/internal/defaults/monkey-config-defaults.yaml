@@ -1,6 +1,9 @@
 # General
-SPECIAL_FILE: "help.py"
-WORK_PATH: ""
+FILE_TYPES_INCLUDED: ".js,.vue,.php"
+FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"
+FILE_SELECT_MAX_TOKENS: 4000
+SPECIAL_FILE_PATH: "help.py"
+WORK_PATH: "ROOT_PATH/storage/custom/default_work_path"
 
 # Prompts
 MAIN_PROMPT: "Please generate code for the following task..."
@@ -11,7 +14,7 @@ MAIN_PROMPT_ULTIMATUM: "Limit your response to the full contents of a python scr
 OUTPUT_EXAMPLE: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
 CHECK_OUTPUT: True
 OUTPUT_CHECK_PROMPT: "Examine the following output and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
-OUTPUT_PATH: "An alternate path (not WORK_PATH) for writing output files."
+OUTPUT_PATH: "ROOT_PATH/storage/custom/default_work_path/output"
 OUTPUT_EXT: ".py"
 OUTPUT_FILENAME_APPEND: "-help"
 OUTPUT_TRIES_LIMIT: 1

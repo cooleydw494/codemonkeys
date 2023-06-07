@@ -174,14 +174,11 @@ def run_command_as_module(module_path, function_name=None, args=None):
 
     if hasattr(module, function_name):
         function = getattr(module, function_name)
-        if args:
-            return function(args)
-        else:
-            return function()
+        return function(args)
+
     else:
         if '__main__' in module.__dict__:
             return module.__dict__['__main__']()
         else:
-            # If there's no main function or '__main__' entry point, execute the script as '__main__'
-            return runpy.run_path(module_path, run_name='__main__')
+            print_t('No main function found in module.', 'error')
 

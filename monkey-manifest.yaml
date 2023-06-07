@@ -10,11 +10,11 @@
 
 #### GENERAL ***
 ##  WORK_PATH: The path to the work_path to use. (Absolute path; supports ~ on Mac/Linux)
-##  SPECIAL_FILE: A file to be summarized using SUMMARY_PROMPT to give context for the main prompt. (absolute path)
+##  SPECIAL_FILE_PATH: A file to be summarized using SUMMARY_PROMPT to give context for the main prompt. (absolute path)
 
 #### PROMPTS ***
 ##  MAIN_PROMPT: The main prompt
-##  SUMMARY_PROMPT: The prompt for summarizing the SPECIAL_FILE ("" to use verbatim SPECIAL_FILE contents)
+##  SUMMARY_PROMPT: The prompt for summarizing the SPECIAL_FILE_PATH ("" to use verbatim SPECIAL_FILE_PATH contents)
 ##  MAIN_PROMPT_ULTIMATUM: A final ultimatum for the main prompt ("" for none)
 
 #### MODELS ***
@@ -39,15 +39,15 @@
   'MAIN_PROMPT': 'Please generate code for the following task...'
   'SUMMARY_PROMPT': 'Provide a summary of this code...'
   'MAIN_PROMPT_ULTIMATUM': ''
-  'SPECIAL_FILE': 'special_file_generic.py'
+  'SPECIAL_FILE_PATH': '/Users/david/local-git/code-monkeys/self-help-special-file.md'
   'MAIN_MODEL': !!int '4'
   'SUMMARY_MODEL': !!int '4'
   'MAIN_TEMP': !!float '1.0'
   'SUMMARY_TEMP': !!float '1.0'
   'WORK_PATH': '~/local-git/code-monkeys'
-  'OUTPUT_PATH': ''
-  'OUTPUT_EXT': ''
-  'OUTPUT_FILENAME_APPEND': ''
+#  'OUTPUT_PATH': ''
+#  'OUTPUT_EXT': ''
+#  'OUTPUT_FILENAME_APPEND': ''
   'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, like
     this: ```complete contents of file```.'
   'OUTPUT_CHECK_PROMPT': 'Examine the following out put and determine if 1. The output
@@ -64,15 +64,15 @@
   'MAIN_PROMPT': 'Please extract the following code into a new function...'
   'SUMMARY_PROMPT': 'Summarize this extracted code...'
   'MAIN_PROMPT_ULTIMATUM': ''
-  'SPECIAL_FILE': 'special_file_extract.py'
+  'SPECIAL_FILE_PATH': '/Users/david/local-git/code-monkeys/self-help-special-file.md'
   'MAIN_MODEL': !!int '4'
   'SUMMARY_MODEL': !!int '4'
   'MAIN_TEMP': !!float '1.0'
   'SUMMARY_TEMP': !!float '1.0'
-  'WORK_PATH': '~/local-git/code-monkeys'
-  'OUTPUT_PATH': ''
-  'OUTPUT_EXT': ''
-  'OUTPUT_FILENAME_APPEND': ''
+#  'WORK_PATH': '~/local-git/code-monkeys'
+#  'OUTPUT_PATH': ''
+#  'OUTPUT_EXT': ''
+#  'OUTPUT_FILENAME_APPEND': ''
   'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, like
     this: ```complete contents of file```.'
   'OUTPUT_CHECK_PROMPT': ' Examine the following out put and determine if 1. The output
@@ -80,19 +80,23 @@
     your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```.'
 
 'self-help':
-  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the file and its usage,
-    in the style of documentation for a CLI command.'
-  'SUMMARY_PROMPT': ""  # "" to skip summary prompt, in this case the summary is pre-prepared
-  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of a complete and informative python help script.'
-  'SPECIAL_FILE': '~/local-git/code-monkeys/self-help-special-file.md'
+  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the file
+    and its usage, in the style of documentation for a CLI command.'
+#  'SUMMARY_PROMPT': 'skip'  in this case the summary is pre-prepared
+  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of a complete and informative
+    python help script.'
+  'SPECIAL_FILE_PATH': '~/local-git/code-monkeys/self-help-special-file.md'
   'MAIN_MODEL': !!int '4'
   'MAIN_TEMP': !!float '0.5'
-  # SUMMARY_MODEL/TEMP don't need to be defined as there is no summary prompt
-  'WORK_PATH': '~/local-git/code-monkeys'
-  'OUTPUT_PATH': '~/local-git/code-monkeys/storage/monk/help'
+#   SUMMARY_MODEL/TEMP don't need to be defined as there is no summary prompt
+#  'WORK_PATH': '~/local-git/code-monkeys'
+#  'OUTPUT_PATH': ''
   'OUTPUT_FILENAME_APPEND': '-help'
   'OUTPUT_EXT': '.py'
-  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, following precisely this format:```complete contents of file```.'
-  'CHECK_OUTPUT': True
-  'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if the triple-quoted string is limited strictly to the contents of a file. Respond with only one word: "True" or "False".'
+  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, following
+    precisely this format:```complete contents of file```.'
+  'CHECK_OUTPUT': !!bool 'true'
+  'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if the triple-quoted
+    string is limited strictly to the contents of a file. Respond with only one word:
+    "True" or "False".'
   'OUTPUT_TRIES_LIMIT': !!int '3'

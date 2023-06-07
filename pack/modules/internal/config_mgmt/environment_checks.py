@@ -21,9 +21,6 @@ def automation_env_checks():
         openai.api_key = ENV.OPENAI_API_KEY
         if openai.api_key is None:
             raise ValueError("OPENAI_API_KEY is not set.")
-        work_path = ENV.WORK_PATH
-        if work_path is None:
-            raise ValueError("WORK_PATH is not set.")
     except ValueError as error:
         print_t(f"{error}", "error")
         sys.exit(1)

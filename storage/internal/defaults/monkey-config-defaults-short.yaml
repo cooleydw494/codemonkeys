@@ -2,7 +2,7 @@
 # Anything that is commented out here is specifiable but is considered ok to default
 
 # General
-SPECIAL_FILE: "help.py"
+SPECIAL_FILE_PATH: "help.py"
 WORK_PATH: ""
 
 # Prompts

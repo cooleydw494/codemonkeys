@@ -50,7 +50,7 @@ def input_t(text, input_options=None, theme='input'):
     text = apply_t(text, theme, incl_prefix=True)
     if input_options:
         text += f' {apply_t(input_options, "magenta")}' if len(input_options) <= 20 \
-            else os.linesep + apply_t(input_options, "info")
+            else os.linesep + apply_t(input_options, "magenta")
     try:
         input_ = input(f'{text}:{os.linesep}' + apply_t('>> ', 'light_cyan', False, ['blink']))
     except KeyboardInterrupt:

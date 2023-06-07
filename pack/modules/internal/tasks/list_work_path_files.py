@@ -3,6 +3,7 @@ import time
 
 from definitions import STORAGE_TEMP_PATH
 from pack.modules.internal.config_mgmt.env_class import ENV
+from pack.modules.internal.config_mgmt.load_monkey_config import load_monkey_config
 from pack.modules.internal.gpt.token_counter import TokenCounter
 from pack.modules.internal.theme.theme_functions import print_t
 
@@ -32,21 +33,23 @@ def should_include(file_path: str, include_extensions: list, exclude_patterns: l
     )
 
 
-def filter_files_by_token_count():
+def main():
     """Filters files by token count and saves a list of valid files."""
-    env = ENV()  # Initialize ENV instance
-    include_extensions = env.FILE_TYPES_INCLUDED.split(',')
-    exclude_patterns = env.FILEPATH_MATCH_EXCLUDED.split(',')
-    max_tokens = env.FILE_SELECT_MAX_TOKENS
+    E = ENV()  # Initialize ENV instance
+    include_extensions = E.FILE_TYPES_INCLUDED.split(',')
+    exclude_patterns = E.FILEPATH_MATCH_EXCLUDED.split(',')
+    max_tokens = E.FILE_SELECT_MAX_TOKENS
     token_counter = TokenCounter('gpt-4')
 
     output_file = os.path.join(STORAGE_TEMP_PATH)
-    print_t(f"WORK_PATH: {env.WORK_PATH}", 'info')
 
     filtered_files = []
     print_t("Filtering files... this might take a while depending on the size of your WORK_PATH.", 'loading')
 
-    for root, _, files in os.walk(env.WORK_PATH):
+    M = load_monkey_config()
+    print_t(f'WORK_PATH: {M.WORK_PATH}', 'info')
+
+    for root, _, files in os.walk(M.WORK_PATH):
         for file in files:
             print(".", end='', flush=True)
             time.sleep(0.001)
@@ -67,11 +70,3 @@ def filter_files_by_token_count():
 
     print_t(f"📝 List of files saved to {output_file}. Enjoy coding with your 🐒 code monkeys!", 'done')
 
-    with open(output_file, "r") as f:
-        lines = f.readlines()
-        preview = "".join(lines[:15]) + "..." if len(lines) > 15 else "".join(lines)
-        print_t(preview, 'cyan')
-
-
-if __name__ == "__main__":
-    filter_files_by_token_count()

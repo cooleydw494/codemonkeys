@@ -1,3 +1,4 @@
+import argparse
 import os
 import sys
 
@@ -9,27 +10,22 @@ from pack.modules.internal.tasks.summarize_special_file import summarize_special
 from pack.modules.internal.theme.theme_functions import print_t
 
 
-def main(args):
+def main(monk_args: argparse.Namespace = None):
     print_t("Monkey Time!", "start")
 
     # Check environment settings for the automation
     automation_env_checks()
 
     # Load the configuration of the specified monkey or the default one if not specified
-    M = load_monkey_config(args.monkey or None)
-
-    # Check if the special file exists
-    if not os.path.isfile(M.SPECIAL_FILE):
-        print_t(f"Special file '{M.SPECIAL_FILE}' not found.", "error")
-        sys.exit(1)
+    M = load_monkey_config(monk_args.monkey or None)
 
     # Summarize the special file
-    special_file_summary = summarize_special_file(M.SPECIAL_FILE, M.SUMMARY_MODEL, M.SUMMARY_PROMPT, gpt_client)
+    special_file_summary = summarize_special_file(M.SPECIAL_FILE_PATH, M.SUMMARY_MODEL, M.SUMMARY_PROMPT, gpt_client)
     print_t("Special file summarized successfully!", 'success')
     print_t(f"Summary:{os.linesep}{special_file_summary}", 'file')
 
     # Iterate over each file in the work_path
-    for root, dirs, files in os.walk(M.ENV.WORK_PATH):
+    for root, dirs, files in os.walk(M.WORK_PATH):
         for file in files:
             file_path = os.path.join(root, file)
             # Check if the file is readable before processing

@@ -24,7 +24,8 @@ def update_monkey_config_class():
         elif isinstance(value, float):
             formatted_validations.append(f"        self.{key} = validate_float('{key}', self.{key})")
         elif isinstance(value, str):
-            if os.path.isabs(value):
+            import re
+            if re.search(r'\bpath\b', str(key).lower()):
                 formatted_validations.append(f"        self.{key} = validate_path('{key}', self.{key})")
             else:
                 formatted_validations.append(f"        self.{key} = validate_str('{key}', self.{key})")

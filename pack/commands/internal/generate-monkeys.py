@@ -1,3 +1,4 @@
+import argparse
 import os
 import shutil
 import time
@@ -6,6 +7,7 @@ from dotenv import dotenv_values
 from ruamel.yaml import YAML
 
 from definitions import MONKEYS_PATH, ROOT_PATH
+from pack.modules.internal.config_mgmt.monkey_config_class import MonkeyConfig
 from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
 from pack.modules.internal.theme.theme_functions import print_t
 
@@ -14,7 +16,7 @@ yaml.default_style = "'"
 yaml.indent(sequence=4, offset=2)
 
 
-def main(args=None):
+def main(monk_args: argparse.Namespace = None):
     print_t("Generating monkey configs...", 'config')
     monkey_manifest = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
     try:
@@ -56,8 +58,7 @@ def main(args=None):
                 shutil.move(config_file_path, os.path.join(MONKEYS_PATH, '.history', monkey_name, f'{timestamp}.yaml'))
 
         # Write the config file
-        with open(os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml'), "w") as f:
-            yaml.dump(merged_config, f)
+        MonkeyConfig.write_to_yaml(merged_config, os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml'))
         print_t(f"Updated config for {monkey_name}.", 'info')
 
     print_t("All monkeys processed successfully. Exiting.", 'done')
