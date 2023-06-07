@@ -1,8 +1,6 @@
 import os
 
-import yaml
-
-from definitions import STORAGE_DEFAULTS_PATH, MONKEY_CONFIG_CLASS_PATH
+from definitions import MONKEY_CONFIG_CLASS_PATH
 from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
 
 

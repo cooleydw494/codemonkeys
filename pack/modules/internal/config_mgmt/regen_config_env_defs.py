@@ -3,8 +3,6 @@ from pack.modules.internal.config_mgmt.update_env_class import update_env_class
 from pack.modules.internal.config_mgmt.update_env_defaults import update_env_defaults
 from pack.modules.internal.config_mgmt.update_monkey_config_class import update_monkey_config_class
 
-import os
-
 
 def regenerate_config_env_defs():
 

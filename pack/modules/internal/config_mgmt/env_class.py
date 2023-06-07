@@ -10,7 +10,6 @@
 
 import os
 from dataclasses import dataclass
-from typing import List
 
 from dotenv import load_dotenv
 

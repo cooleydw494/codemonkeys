@@ -5,11 +5,11 @@ from typing import Optional
 
 from ruamel.yaml import YAML, CommentedMap
 
-from definitions import MONKEYS_PATH, STORAGE_DEFAULTS_PATH
+from definitions import MONKEYS_PATH
 from pack.modules.internal.config_mgmt.env_class import ENV
 from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
 from pack.modules.internal.config_mgmt.monkey_config_validations import validate_str, \
-    validate_bool, validate_int, validate_float, validate_path
+    validate_bool, validate_int, validate_float
 
 
 @dataclass

@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Union, List
+from typing import List
 
 from definitions import ROOT_PATH
 from pack.modules.internal.theme.theme_functions import input_t, print_t

@@ -1,6 +1,5 @@
 import argparse
 import os
-import sys
 
 from pack.modules.internal.config_mgmt.environment_checks import automation_env_checks
 from pack.modules.internal.config_mgmt.load_monkey_config import load_monkey_config
