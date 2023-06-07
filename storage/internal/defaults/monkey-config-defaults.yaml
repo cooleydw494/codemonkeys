@@ -1,3 +1,19 @@
+# Monkey Config Defaults
+#
+# This file is used to set default values for monkey configs.
+# It is also the source of truth for all monkey config options.
+# This means if you add or alter something here, it will proliferated to
+# the MonkeyConfig class and the .env.default.
+# (you'll have to update .env manually if you want notate or override new props)
+
+# RULES
+# - All props must be SNAKE_CASE
+# - A prop with a word-boundaried "PATH" string will be validated as a PATH
+# - A prop with a word-boundaried "PROMPT" string will be validated as a PROMPT
+# - A prop with a word-boundaried "MODEL" string will be validated as a MODEL
+# - A prop with a word-boundaried "TEMP" string will be validated as a TEMP
+# - Otherwise a prop will be validated as whatever it seems like (str, bool, etc)
+
 # General
 FILE_TYPES_INCLUDED: ".js,.vue,.php"
 FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"

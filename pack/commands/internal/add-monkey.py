@@ -16,7 +16,6 @@ from pack.modules.internal.utils.monk_helpers import run_command_as_module
 yaml = YAML()
 yaml.default_style = "'"
 yaml.indent(sequence=4, offset=2)
-MONKEY_CONFIG_DEFAULTS = get_monkey_config_defaults(short=True)
 
 
 def process_input_prompts(data):

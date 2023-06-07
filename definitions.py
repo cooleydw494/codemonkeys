@@ -31,6 +31,9 @@ ROOT_DIR_NAME = os.path.basename(ROOT_PATH)
 # MONK
 MONK_PATH = os.path.join(ROOT_PATH, "monk")
 
+# ENV
+ENV_PATH = os.path.join(ROOT_PATH, "env")
+
 # MONKEYS (configs)
 MONKEYS_PATH = os.path.join(ROOT_PATH, "monkeys")
 MONKEY_MANIFEST_PATH = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
@@ -43,6 +46,9 @@ STORAGE_INTERNAL_PATH = os.path.join(STORAGE_PATH, "internal")
 STORAGE_TEMP_PATH = os.path.join(STORAGE_INTERNAL_PATH, "temp")
 STORAGE_MONK_PATH = os.path.join(STORAGE_INTERNAL_PATH, "monk")
 STORAGE_DEFAULTS_PATH = os.path.join(STORAGE_INTERNAL_PATH, "defaults")
+
+# DEFAULTS
+ENV_DEFAULT_PATH = os.path.join(STORAGE_DEFAULTS_PATH, ".env.default")
 
 # PSEUDO_PACKAGE
 PSEUDO_PACKAGE_PATH = os.path.join(ROOT_PATH, "pack")

@@ -4,13 +4,11 @@ import re
 import yaml
 
 from definitions import STORAGE_DEFAULTS_PATH
+from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
 
 
 def update_env_defaults():
-    MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(STORAGE_DEFAULTS_PATH, 'monkey-config-defaults.yaml')
-    # Load and parse the YAML config
-    with open(MONKEY_CONFIG_DEFAULTS_PATH, 'r') as yaml_file:
-        config = yaml.safe_load(yaml_file)
+    config = get_monkey_config_defaults()
 
     # Format the properties
     formatted_properties = "\n".join("#  " + key + ": " + str(value) for key, value in config.items())

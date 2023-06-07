@@ -3,13 +3,11 @@ import os
 import yaml
 
 from definitions import STORAGE_DEFAULTS_PATH, MONKEY_CONFIG_CLASS_PATH
+from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
 
 
 def update_monkey_config_class():
-    MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(STORAGE_DEFAULTS_PATH, "monkey-config-defaults.yaml")
-
-    with open(MONKEY_CONFIG_DEFAULTS_PATH, 'r') as yaml_file:
-        config = yaml.safe_load(yaml_file)
+    config = get_monkey_config_defaults()
 
     formatted_properties = [
         "    " + key + ": Optional[" + type(config[key]).__name__ + "] = field(default=None)" for key in config.keys()]

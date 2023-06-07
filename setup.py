@@ -3,7 +3,7 @@ import platform
 import subprocess
 import sys
 
-from definitions import PIP_COMMAND, PYTHON_COMMAND
+from definitions import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH
 from pack.modules.internal.config_mgmt.environment_checks import monk_env_checks
 from pack.modules.internal.theme.theme_functions import print_t
 
@@ -36,8 +36,8 @@ subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
 # if the .env doesn't already exist, copy it from storage/.env.default and print some helpful feedback.
 if not os.path.exists('.env'):
-    print_t("No .env file found. Creating it from the template...", "file")
-    subprocess.call('cp storage/.env.default .env', shell=True)
+    print_t("No .env file found. Copying .env.default...", "file")
+    subprocess.call(F'cp {ENV_DEFAULT_PATH} {ENV_PATH}', shell=True)
 else:
     print_t("The .env file already exists. No changes were made to it.", "file")
 

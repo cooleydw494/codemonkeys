@@ -7,6 +7,7 @@ from ruamel.yaml import YAML, CommentedMap
 
 from definitions import MONKEYS_PATH, STORAGE_DEFAULTS_PATH
 from pack.modules.internal.config_mgmt.env_class import ENV
+from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
 from pack.modules.internal.config_mgmt.monkey_config_validations import validate_str, \
     validate_bool, validate_int, validate_float, validate_path
 
@@ -49,8 +50,7 @@ class MonkeyConfig:
 
         yaml = YAML()
         yaml.indent(mapping=2, sequence=4, offset=2)
-        with open(os.path.join(STORAGE_DEFAULTS_PATH, 'monkey-config-defaults.yaml'), 'r') as f:
-            monkey_config_defaults = yaml.load(f)
+        monkey_config_defaults = get_monkey_config_defaults(yaml)
         for attribute in monkey_config_defaults:
             if getattr(self, attribute, None) is None and monkey_config_defaults[attribute] is not None:
                 setattr(self, attribute, monkey_config_defaults[attribute])
