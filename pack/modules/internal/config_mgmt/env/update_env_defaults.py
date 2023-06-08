@@ -2,7 +2,7 @@ import os
 import re
 
 from definitions import STORAGE_DEFAULTS_PATH
-from pack.modules.internal.config_mgmt.monkey_config.monkey_config_helpers import get_monkey_config_defaults
+from pack.modules.internal.config_mgmt.yaml_helpers import get_monkey_config_defaults
 
 
 def update_env_defaults():

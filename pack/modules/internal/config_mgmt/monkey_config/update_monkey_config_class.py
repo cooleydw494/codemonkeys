@@ -1,7 +1,7 @@
 import os
 
 from definitions import MONKEY_CONFIG_CLASS_PATH
-from pack.modules.internal.config_mgmt.monkey_config.monkey_config_helpers import get_monkey_config_defaults
+from pack.modules.internal.config_mgmt.yaml_helpers import get_monkey_config_defaults
 
 
 def update_monkey_config_class():
@@ -63,9 +63,11 @@ def update_monkey_config_class():
     formatted_validations = [v + os.linesep for v in formatted_validations]
 
     # Replace the sections
-    new_class_lines = class_lines[:props_start_index] + formatted_properties + class_lines[
-                                                                               props_end_index:validations_start_index] + formatted_validations + class_lines[
-                                                                                                                                                  validations_end_index:]
+    new_class_lines = class_lines[:props_start_index] + \
+                      formatted_properties + \
+                      class_lines[props_end_index:validations_start_index] + \
+                      formatted_validations + \
+                      class_lines[validations_end_index:]
 
     # Write the updated MonkeyConfig class
     with open(MONKEY_CONFIG_CLASS_PATH, 'w') as class_file:

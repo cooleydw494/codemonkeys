@@ -4,30 +4,24 @@ import shutil
 import time
 
 from dotenv import dotenv_values
-from ruamel.yaml import YAML
 
 from definitions import MONKEYS_PATH, ROOT_PATH
-from pack.modules.internal.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from pack.modules.internal.config_mgmt.monkey_config.monkey_config_helpers import get_monkey_config_defaults
+from pack.modules.internal.config_mgmt.yaml_helpers import get_monkey_config_defaults, read_yaml_file, write_yaml_file
 from pack.modules.internal.theme.theme_functions import print_t
-
-yaml = YAML()
-yaml.default_style = "'"
-yaml.indent(sequence=4, offset=2)
 
 
 def main(monk_args: argparse.Namespace = None):
     print_t("Generating monkey configs...", 'config')
     monkey_manifest = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
+
     try:
-        with open(monkey_manifest, "r") as f:
-            monkeys = yaml.load(f)
+        monkeys = read_yaml_file(monkey_manifest)
         print_t("monkey-manifest.yaml located", 'file')
     except FileNotFoundError:
         print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {monkey_manifest}", 'error')
         return
 
-    default_config = get_monkey_config_defaults(yaml)
+    default_config = get_monkey_config_defaults()
 
     # Load .env values
     env_config = dotenv_values(".env")
@@ -46,8 +40,7 @@ def main(monk_args: argparse.Namespace = None):
         config_file_path = os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml')
         # Check if new config content is different from the existing one
         if os.path.exists(config_file_path):
-            with open(config_file_path, "r") as f:
-                existing_config = yaml.load(f)
+            existing_config = read_yaml_file(config_file_path)
             if existing_config == merged_config:
                 print_t(f"Skipping {monkey_name} (no changes).", 'quiet')
                 continue
@@ -58,11 +51,7 @@ def main(monk_args: argparse.Namespace = None):
                 shutil.move(config_file_path, os.path.join(MONKEYS_PATH, '.history', monkey_name, f'{timestamp}.yaml'))
 
         # Write the config file
-        MonkeyConfig.write_to_yaml(merged_config, os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml'))
+        write_yaml_file(config_file_path, merged_config, ruamel=True)
         print_t(f"Updated config for {monkey_name}.", 'info')
 
     print_t("All monkeys processed successfully. Exiting.", 'done')
-
-
-if __name__ == "__main__":
-    main()

@@ -4,17 +4,15 @@ import sys
 import tempfile
 from io import StringIO
 
-from ruamel.yaml import YAML, CommentedMap
+from pack.modules.internal.config_mgmt.yaml_helpers import read_yaml_file, write_yaml_file
+from ruamel.yaml import CommentedMap
 
 from definitions import ROOT_PATH, COMMANDS_INTERNAL_PATH
 from pack.modules.internal.config_mgmt.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
-from pack.modules.internal.config_mgmt.monkey_config.monkey_config_validations import get_user_config_value, validate_monkey_name
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_validations import get_user_config_value, \
+    validate_monkey_name
 from pack.modules.internal.theme.theme_functions import print_t, input_t
-from pack.modules.internal.utils.monk_helpers import run_command_as_module
-
-yaml = YAML()
-yaml.default_style = "'"
-yaml.indent(sequence=4, offset=2)
+from pack.modules.internal.utils.monk_helpers.run_command_as_module import run_command_as_module
 
 
 def process_input_prompts(data):
@@ -30,12 +28,7 @@ def main(monk_args: argparse.Namespace):
     print_t(f"Let's configure your new {monkey_name} monkey", 'monkey')
 
     monkey_manifest_path = os.path.join(ROOT_PATH, 'monkey-manifest.yaml')
-    with open(monkey_manifest_path, 'r') as file:
-        try:
-            monkey_manifest = yaml.load(file)
-        except Exception as e:
-            print_t("An error occurred while reading the monkey-manifest file: " + str(e), 'error')
-            return
+    monkey_manifest = read_yaml_file(monkey_manifest_path, ruamel=True)
 
     if monkey_name in monkey_manifest.keys():
         print_t(f"A monkey named {monkey_name} already exists.", 'important')
@@ -54,7 +47,7 @@ def main(monk_args: argparse.Namespace):
     monkey_manifest[monkey_name] = new_monkey_commented_map
 
     yaml_string = StringIO()
-    yaml.dump(monkey_manifest, yaml_string)
+    write_yaml_file(yaml_string, monkey_manifest, ruamel=True)
 
     yaml_string = yaml_string.getvalue().replace(monkey_name + ":", os.linesep + monkey_name + ":")
 
@@ -72,7 +65,3 @@ def main(monk_args: argparse.Namespace):
     run_generate = input_t("Run `monk generate-monkeys` to complete the config process?", '(y/n)')
     if run_generate.lower() == 'y':
         run_command_as_module(os.path.join(COMMANDS_INTERNAL_PATH, 'generate-monkeys.py'), 'main', [])
-
-
-if __name__ == '__main__':
-    main()

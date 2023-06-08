@@ -16,12 +16,13 @@ def run_command_as_module(module_path, function_name=None, args=None):
 
         # Default Behavior:
         # Assuming the function takes args, namely the framework-intended monk_args
-        # (ex: generate-monkeys.py@main)
+        # (ex: add-monkey.py@main)
         if args_count == 1:
             return function(args)
 
         # If the function takes no args, just run it. This should work IMO, but framework commands will always define
         # monk_args regardless of need to re-enforce the paradigm (this is inspired by dependency injection)
+        # (ex: generate-monkeys.py@main)
         elif args_count == 0:
             return function()
 
@@ -29,6 +30,12 @@ def run_command_as_module(module_path, function_name=None, args=None):
         # If at some point monk needs to pass a list of args to a function, uncomment this.
         # elif args_count > 1:
         #     return function(*args)
+
+        elif args_count > 1:
+            print_t('Running entities with monk supports only a list of monk_args or no args. View '
+                    'run_command_as_module.py for more details (including some code you could uncomment to enable '
+                    'what you are attempting.', 'error')
+            return None
 
     else:
         if '__main__' in module.__dict__:

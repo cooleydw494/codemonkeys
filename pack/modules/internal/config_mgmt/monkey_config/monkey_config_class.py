@@ -3,13 +3,13 @@ import os
 from dataclasses import dataclass, field
 from typing import Optional
 
-from ruamel.yaml import YAML, CommentedMap
+from ruamel.yaml.scalarfloat import ScalarFloat
 
 from definitions import MONKEYS_PATH
 from pack.modules.internal.config_mgmt.env.env_class import ENV
-from pack.modules.internal.config_mgmt.monkey_config.monkey_config_helpers import get_monkey_config_defaults
 from pack.modules.internal.config_mgmt.monkey_config.monkey_config_validations import validate_str, \
     validate_bool, validate_int, validate_float
+from pack.modules.internal.config_mgmt.yaml_helpers import get_monkey_config_defaults, write_yaml_file
 
 
 @dataclass
@@ -35,9 +35,9 @@ class MonkeyConfig:
     MAIN_MODEL: Optional[int] = field(default=None)
     SUMMARY_MODEL: Optional[int] = field(default=None)
     OUTPUT_CHECK_MODEL: Optional[int] = field(default=None)
-    MAIN_TEMP: Optional[float] = field(default=None)
-    SUMMARY_TEMP: Optional[float] = field(default=None)
-    OUTPUT_CHECK_TEMP: Optional[float] = field(default=None)
+    MAIN_TEMP: Optional[ScalarFloat] = field(default=None)
+    SUMMARY_TEMP: Optional[ScalarFloat] = field(default=None)
+    OUTPUT_CHECK_TEMP: Optional[ScalarFloat] = field(default=None)
     # [MONKEY_CONFIG_PROPS_END]
 
     ENV: Optional[ENV] = field(default=None)
@@ -48,9 +48,7 @@ class MonkeyConfig:
             if getattr(self, attribute, None) is None and getattr(env, attribute, None) is not None:
                 setattr(self, attribute, getattr(env, attribute))
 
-        yaml = YAML()
-        yaml.indent(mapping=2, sequence=4, offset=2)
-        monkey_config_defaults = get_monkey_config_defaults(yaml)
+        monkey_config_defaults = get_monkey_config_defaults()
         for attribute in monkey_config_defaults:
             if getattr(self, attribute, None) is None and monkey_config_defaults[attribute] is not None:
                 setattr(self, attribute, monkey_config_defaults[attribute])
@@ -83,13 +81,15 @@ class MonkeyConfig:
 
     @classmethod
     def load(cls, monkey_name: str) -> 'MonkeyConfig':
+        from pack.modules.internal.config_mgmt.yaml_helpers import read_yaml_file
+
         if cls._instance is None:
-            yaml = YAML(typ='safe')
             monkey_path = os.path.join(MONKEYS_PATH, f"{monkey_name}.yaml")
+
             if not os.path.exists(monkey_path):
                 raise FileNotFoundError(f"Monkey configuration file {monkey_path} not found.")
-            with open(monkey_path) as file:
-                monkey_dict = yaml.load(file)
+
+            monkey_dict = read_yaml_file(monkey_path, ruamel=True)
 
             # Get the properties defined in MonkeyConfig
             config_properties = {f.name for f in dataclasses.fields(cls)}
@@ -99,10 +99,11 @@ class MonkeyConfig:
 
             cls._instance = MonkeyConfig(**monkey_dict)
             cls._instance.__post_init__()
+
         return cls._instance
 
     @classmethod
-    def write_to_yaml(cls, data: dict, file_path: str):
+    def validate_and_write_yaml(cls, data: dict, file_path: str):
         """
         Validate the provided dictionary with MonkeyConfig and write it to a YAML file, skipping 'ENV' field.
 
@@ -110,9 +111,6 @@ class MonkeyConfig:
             data (dict): The dictionary to validate and write to a YAML file.
             file_path (str): The path of the YAML file to write to.
         """
-        yaml = YAML()
-        yaml.default_style = "'"
-        yaml.indent(sequence=4, offset=2)
 
         # Get dictionary of MonkeyConfig properties
         config_properties = {f.name for f in dataclasses.fields(cls)}
@@ -126,11 +124,5 @@ class MonkeyConfig:
         data = validated_config.__dict__
         data.pop('ENV', None)  # Use dict.pop with default to avoid KeyError if ENV doesn't exist
 
-        # Convert to CommentedMap to preserve the order
-        commented_data = CommentedMap(data)
-
         # Write to the file
-        with open(file_path, 'w') as file:
-            yaml.dump(commented_data, file)
-
-
+        write_yaml_file(file_path, data, ruamel=True)
