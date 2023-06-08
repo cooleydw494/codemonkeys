@@ -2,7 +2,7 @@ import argparse
 import os
 
 from pack.modules.internal.config_mgmt.environment_checks import automation_env_checks
-from pack.modules.internal.config_mgmt.load_monkey_config import load_monkey_config
+from pack.modules.internal.config_mgmt.monkey_config.load_monkey_config import load_monkey_config
 from pack.modules.internal.gpt.gpt_clients import gpt_client
 from pack.modules.internal.tasks.process_file import process_file
 from pack.modules.internal.tasks.summarize_special_file import summarize_special_file

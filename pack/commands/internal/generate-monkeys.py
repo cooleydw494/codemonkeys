@@ -7,8 +7,8 @@ from dotenv import dotenv_values
 from ruamel.yaml import YAML
 
 from definitions import MONKEYS_PATH, ROOT_PATH
-from pack.modules.internal.config_mgmt.monkey_config_class import MonkeyConfig
-from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_helpers import get_monkey_config_defaults
 from pack.modules.internal.theme.theme_functions import print_t
 
 yaml = YAML()
@@ -27,7 +27,7 @@ def main(monk_args: argparse.Namespace = None):
         print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {monkey_manifest}", 'error')
         return
 
-    default_config = get_monkey_config_defaults()
+    default_config = get_monkey_config_defaults(yaml)
 
     # Load .env values
     env_config = dotenv_values(".env")

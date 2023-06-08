@@ -1,4 +1,4 @@
-from pack.modules.internal.config_mgmt.monkey_config_validations import validate_str, validate_path, validate_int, \
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_validations import validate_str, validate_path, validate_int, \
     validate_float, validate_bool
 
 INPUT_PROMPTS = [

@@ -1,7 +1,7 @@
 # from definitions import STORAGE_DEFAULTS_PATH, ROOT_PATH, MODULES_CONFIG_MGMT_PATH
-from pack.modules.internal.config_mgmt.update_env_class import update_env_class
-from pack.modules.internal.config_mgmt.update_env_defaults import update_env_defaults
-from pack.modules.internal.config_mgmt.update_monkey_config_class import update_monkey_config_class
+from pack.modules.internal.config_mgmt.env.update_env_class import update_env_class
+from pack.modules.internal.config_mgmt.env.update_env_defaults import update_env_defaults
+from pack.modules.internal.config_mgmt.monkey_config.update_monkey_config_class import update_monkey_config_class
 
 
 def regenerate_config_env_defs():

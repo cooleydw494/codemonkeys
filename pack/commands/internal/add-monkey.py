@@ -7,8 +7,8 @@ from io import StringIO
 from ruamel.yaml import YAML, CommentedMap
 
 from definitions import ROOT_PATH, COMMANDS_INTERNAL_PATH
-from pack.modules.internal.config_mgmt.add_monkey_input_prompts import INPUT_PROMPTS
-from pack.modules.internal.config_mgmt.monkey_config_validations import get_user_config_value, validate_monkey_name
+from pack.modules.internal.config_mgmt.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_validations import get_user_config_value, validate_monkey_name
 from pack.modules.internal.theme.theme_functions import print_t, input_t
 from pack.modules.internal.utils.monk_helpers import run_command_as_module
 

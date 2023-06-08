@@ -3,7 +3,7 @@ import sys
 
 import openai
 
-from pack.modules.internal.config_mgmt.env_class import ENV
+from pack.modules.internal.config_mgmt.env.env_class import ENV
 from pack.modules.internal.theme.theme_functions import print_t
 
 # Set up OpenAI client with API key

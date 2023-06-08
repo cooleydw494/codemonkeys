@@ -4,7 +4,7 @@ import re
 from dotenv import dotenv_values
 
 from definitions import ENV_CLASS_PATH, ROOT_PATH, STORAGE_DEFAULTS_PATH
-from pack.modules.internal.config_mgmt.env_helpers import get_env_prop_type
+from pack.modules.internal.config_mgmt.env.get_env_prop_type import get_env_prop_type
 
 ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
 ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_name}', '{default}')"

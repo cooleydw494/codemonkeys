@@ -6,9 +6,9 @@ from typing import Optional
 from ruamel.yaml import YAML, CommentedMap
 
 from definitions import MONKEYS_PATH
-from pack.modules.internal.config_mgmt.env_class import ENV
-from pack.modules.internal.config_mgmt.monkey_config_helpers import get_monkey_config_defaults
-from pack.modules.internal.config_mgmt.monkey_config_validations import validate_str, \
+from pack.modules.internal.config_mgmt.env.env_class import ENV
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_helpers import get_monkey_config_defaults
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_validations import validate_str, \
     validate_bool, validate_int, validate_float
 
 
