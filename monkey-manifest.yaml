@@ -18,10 +18,10 @@
 ##  MAIN_PROMPT_ULTIMATUM: A final ultimatum for the main prompt ("" for none)
 
 #### MODELS ***
-##  All models can be set to either 3 (gpt-3.5-turbo) or 4 (gpt-4).
+##  MODEL props can be set to int 3 or 4 (gpt-3.5-turbo or gpt-4).
 
 #### TEMPS ***
-##  All TEMPS (temperatures) can be set to a float between 0.0 (conservative) and 1.0 (creative)
+##  TEMP props can be floats from 0.0-1.0 (conservative-creative)
 
 #### OUTPUT ***
 ##  OUTPUT_EXAMPLE: An example of the output you want to see.
