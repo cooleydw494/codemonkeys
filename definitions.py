@@ -60,8 +60,8 @@ MODULES_CUSTOM_PATH = os.path.join(MODULES_PATH, "custom")
 MODULES_CONFIG_MGMT_PATH = os.path.join(MODULES_INTERNAL_PATH, "config_mgmt")
 
 # ENV CLASS
-ENV_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "env_class.py")
-MONKEY_CONFIG_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "monkey_config_class.py")
+ENV_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "env", "env_class.py")
+MONKEY_CONFIG_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "monkey_config", "monkey_config_class.py")
 
 # AUTOMATIONS
 AUTOMATIONS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "automations")

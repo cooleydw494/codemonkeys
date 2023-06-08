@@ -37,7 +37,3 @@ def main():
     }
 
     print_table(table, apply_t("Monk Processes", 'monkey'))
-
-
-if __name__ == "__main__":
-    main()
