@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 from pathlib import Path
@@ -6,7 +7,7 @@ from definitions import STORAGE_MONK_PATH
 from pack.modules.internal.theme.theme_functions import print_banner, print_table, print_t, apply_t
 
 
-def main():
+def main(monk_args: argparse.Namespace = None):
     print_banner()
 
     # Overview
@@ -50,7 +51,3 @@ def main():
     # Wrap up
     print_t("That's it! For more info, run `monk -h <entity>` or view the CodeMonkeys' docs.",
             'done')
-
-
-if __name__ == "__main__":
-    main()

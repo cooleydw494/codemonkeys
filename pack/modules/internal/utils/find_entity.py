@@ -20,9 +20,7 @@ def select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, st
     input_ = input_t("Select an option", "(^C to quit)")
 
     if input_.isdigit() and 0 <= int(input_) - 1 < len(entity_options):
-        partial_path = entity_options[int(input_) - 1][4].split("pack/")[1]
-        print_t(f"{partial_path}", 'quiet')
-        print()
+        print_partial_path(entity_options[int(input_) - 1][4])
         return entity_options[int(input_) - 1][4]
     else:
         print_t("Invalid input. Please try again.", 'error')
@@ -58,7 +56,8 @@ def find_entity(entity_name: str, entity_type: str):
         substring_match = next((m for m in matches if m[1] == 1 and m[2] < 3), None)
 
         if exact_match:
-            # Return the full path of exact match
+            # Print and return the full path of exact match
+            print_partial_path(exact_match[4])
             return exact_match[4]
         elif substring_match:
             # Prompt the user to confirm the selection of substring match
@@ -80,3 +79,12 @@ def find_entity(entity_name: str, entity_type: str):
                 "entities.",
                 'error')
             sys.exit(1)
+
+
+def print_partial_path(path: str):
+    if 'pack/' in path:
+        partial_path = path.split("pack/")[1]
+    else:
+        partial_path = path
+    print_t(f"{partial_path}", 'quiet')
+    print()

@@ -1,3 +1,4 @@
+import argparse
 import os
 
 import psutil
@@ -5,7 +6,7 @@ import psutil
 from pack.modules.internal.theme.theme_functions import print_table, print_t, apply_t
 
 
-def main():
+def main(monk_args: argparse.Namespace = None):
     # Get monk processes
     monk_processes = []
     for proc in psutil.process_iter(['pid', 'name', 'cmdline']):

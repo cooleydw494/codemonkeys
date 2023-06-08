@@ -84,7 +84,7 @@ print_t("After making changes, use 'monk generate-monkeys' to apply them.",
 if current_shell_rc is not None:
     print_t(f'You still need to source your {current_shell_rc} to use the `monk` command (if initial setup).',
             'super_important')
-    print_t(f"Run `source {current_shell_rc}`", 'tip')
+    print_t(f"Run `source {current_shell_rc} && monk`", 'tip')
 elif os_type == "darwin" or os_type == "linux":
     print_t("Shell undetermined. Please source your shell profile to enable the 'monk' command", 'warning')
 

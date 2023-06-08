@@ -19,8 +19,6 @@ load_dotenv()
 A List tracking the framework's env props. This is currently unused, but could be useful. """
 # [DEFINE_FRAMEWORK_ENV_PROPS_LIST_START]
 required_env_props = ["OPENAI_API_KEY", "DEFAULT_MONKEY", "CUSTOM_PROP"]
-
-
 # [DEFINE_FRAMEWORK_ENV_PROPS_LIST_END]
 
 @dataclass
