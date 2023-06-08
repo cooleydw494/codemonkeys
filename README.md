@@ -70,9 +70,6 @@ to kick off a monkey, simply use `monk kickoff [monkey-name] -n50`, where `n` is
 run. There is no default value for `-n` as a measure to encourage thoughtful use and provide a safety measure for those
 less familiar with the documentation.
 
-If a monkey name is not provided, CodeMonkeys will check the .env file for a DEFAULT_MONKEY variable. If it exists, it
-will load the corresponding monkey config from the ../monkeys/[DEFAULT_MONKEY] directory.
-
 ## Customization and Updates 🛠
 
 CodeMonkeys is designed to grow and adapt with you. The framework provides several built-in features that allow you to

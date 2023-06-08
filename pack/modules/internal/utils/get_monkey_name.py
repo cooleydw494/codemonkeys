@@ -25,8 +25,6 @@ def get_monkey_name(given_monkey_name: str = None) -> Tuple[str, str]:
     :param given_monkey_name: A given monkey name
     :return: A tuple consisting of monkey name and its configuration file path
     """
-    default_monkey = ENV.DEFAULT_MONKEY or None
-
     def select_monkey_from_list() -> str:
         """
         Lists all monkeys and lets user select one.
@@ -50,9 +48,9 @@ def get_monkey_name(given_monkey_name: str = None) -> Tuple[str, str]:
         return pathlib.Path(os.path.join(MONKEYS_PATH, f'{name}.yaml')).exists()
 
     if given_monkey_name is None:
-        if default_monkey and monkey_exists(default_monkey):
-            print_t(f"No monkey name provided. Loading default monkey config from {default_monkey}...", 'monkey')
-            monkey_name = default_monkey
+        if monkey_exists('default'):
+            print_t(f"No monkey name provided. Loading default monkey config...", 'monkey')
+            monkey_name = 'default'
         else:
             monkey_name = select_monkey_from_list()
     elif not monkey_exists(given_monkey_name):
