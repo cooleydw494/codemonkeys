@@ -13,6 +13,8 @@
 # - Keys with a word-boundaried "TEMP" are validated as TEMP
 # - Other keys are validated as primitives (str, bool, etc)
 #
+#   PATH values will replace 'ROOT_PATH' with your project's root path
+#
 # - Validation logic is defined in
 #   `pack/modules/internal/config_mgmt/monkey_config_validations.py`
 
