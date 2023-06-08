@@ -6,6 +6,7 @@ from pack.modules.internal.config_mgmt.monkey_config.load_monkey_config import l
 from pack.modules.internal.gpt.gpt_clients import gpt_client
 from pack.modules.internal.tasks.process_file import process_file
 from pack.modules.internal.tasks.summarize_special_file import summarize_special_file
+from pack.modules.internal.helpers.file_processor import FileProcessor
 from pack.modules.internal.theme.theme_functions import print_t
 
 
@@ -23,12 +24,24 @@ def main(monk_args: argparse.Namespace = None):
     print_t("Special file summarized successfully!", 'success')
     print_t(f"Summary:{os.linesep}{special_file_summary}", 'file')
 
-    # Iterate over each file in the work_path
-    for root, dirs, files in os.walk(M.WORK_PATH):
-        for file in files:
-            file_path = os.path.join(root, file)
-            # Check if the file is readable before processing
-            if os.access(file_path, os.R_OK):
-                process_file(file_path, special_file_summary, M.MAIN_PROMPT, M.MAIN_MODEL, gpt_client)
-            else:
-                print_t(f"Unable to read the file {file_path}. Skipped.", 'warning')
+    # Create an instance of the FileProcessor class
+    fp = FileProcessor()
+
+    # Write list of valid files to files-to-process.txt
+    fp.write_files_to_process()  # file list defaults to fp.get_filtered_files()
+
+    # Process the files one by one, removing them from the list as they are processed
+    while True:
+        # Select a file from the list and remove it from the saved list
+        selected_file = fp.select_and_remove_file()
+
+        # Check if the selected_file is None, indicating the list is empty
+        if selected_file is None:
+            print_t("All files have been processed.", 'done')
+            break
+
+        # Check if the file is readable before processing
+        if os.access(selected_file, os.R_OK):
+            process_file(selected_file, special_file_summary, M.MAIN_PROMPT, M.MAIN_MODEL, gpt_client)
+        else:
+            print_t(f"Unable to read the file {selected_file}. Skipped.", 'warning')
