@@ -6,7 +6,7 @@ from definitions import ROOT_PATH
 from pack.modules.internal.theme.theme_functions import input_t, print_t
 
 valid_values = {
-    'temperature': [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+    'temp': [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
     'model': [3, 4]
 }
 
@@ -66,8 +66,8 @@ def validate_int(key, value):
 
 
 def validate_float(key, value):
-    if re.search(r'\btemperature\b', str(key).lower()):
-        return validate_type('temperature', value, float)
+    if re.search(r'\btemp\b', str(key).lower()):
+        return validate_type('temp', value, float)
     return validate_type(key, value, float)
 
 

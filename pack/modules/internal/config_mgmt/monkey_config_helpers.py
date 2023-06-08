@@ -21,6 +21,6 @@ def get_monkey_config_defaults(yaml_override=None):
     except FileNotFoundError:
         print_t(f"Error: Monkey config defaults file not found at '{monkey_config_defaults_file}'.", 'error')
         sys.exit(1)
-    except yaml_instance.YAMLError:
+    except yaml.YAMLError:
         print_t(f"Error: Monkey config defaults file at '{monkey_config_defaults_file}' is invalid.", 'error')
         sys.exit(1)

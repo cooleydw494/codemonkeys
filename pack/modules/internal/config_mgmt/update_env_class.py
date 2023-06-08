@@ -31,7 +31,8 @@ def update_env_class():
     start_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_AND_MONKEY_CONFIG_OVERRIDE_PROPS_START\s*\]')
     end_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_AND_MONKEY_CONFIG_OVERRIDE_PROPS_END\s*\]')
 
-    required_start_index = required_end_index = framework_start_index = framework_end_index = start_index = end_index = None
+    required_start_index = required_end_index = framework_start_index = framework_end_index = start_index = end_index\
+        = None
 
     for i, line in enumerate(content_lines):
         if required_start_marker_re.search(line):
@@ -47,7 +48,8 @@ def update_env_class():
         elif end_marker_re.search(line):
             end_index = i
 
-    if None in [required_start_index, required_end_index, framework_start_index, framework_end_index, start_index, end_index]:
+    if None in [required_start_index, required_end_index, framework_start_index, framework_end_index, start_index,
+                end_index]:
         raise Exception("Couldn't find all markers in the class file.")
 
     # Get all environment variables and generate corresponding class definitions
@@ -56,26 +58,24 @@ def update_env_class():
         if key not in framework_env_vars.keys():
             env_definitions.append(ENV_DEFINITION_TEMPLATE.format(var_name=key, var_type=get_env_prop_type(value)))
 
-    ...
     # Get framework environment variables and generate corresponding class definitions
     framework_env_definitions = []
     for key, value in framework_env_vars.items():
         var_type = get_env_prop_type(value)
         framework_env_definitions.append(
-             ENV_DEFINITION_TEMPLATE_DEFAULT.format(var_name=key, var_type=var_type, default=value))
+            ENV_DEFINITION_TEMPLATE_DEFAULT.format(var_name=key, var_type=var_type, default=value))
 
     # Generate the required env props list
     required_env_props_list = ', '.join(['"' + key + '"' for key in framework_env_vars.keys()])
     required_env_props_def = f"required_env_props = [{required_env_props_list}]"
 
     # Replace placeholder in class definition with generated definitions
-    new_content_lines = content_lines[:required_start_index] + [required_env_props_def, "\n"] + content_lines[
-                                                                                                required_end_index:framework_start_index] + [
-                            line + '\n' for line in framework_env_definitions] + ["\n"] + content_lines[
-                                                                                          framework_end_index:start_index] + [
-                            line + '\n' for line in env_definitions] + ["\n"] + content_lines[end_index:]
+    new_content_lines = content_lines[:required_start_index] + [required_env_props_def, os.linesep] + \
+                            content_lines[required_end_index:framework_start_index] + [
+                            line + os.linesep for line in framework_env_definitions] + [os.linesep] + \
+                            content_lines[framework_end_index:start_index] + [
+                            line + os.linesep for line in env_definitions] + [os.linesep] + content_lines[end_index:]
 
     # Write updated contents
     with open(ENV_CLASS_PATH, "w") as f:
         f.writelines(new_content_lines)
-

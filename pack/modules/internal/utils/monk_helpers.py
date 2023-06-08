@@ -125,7 +125,7 @@ def handle_special_commands(args, action, entity, entity_type):
                 if "LIGHT_MODE_ENABLED" in line:
                     is_light_mode = "True" in line
                     print_t(f"{'Disabling' if is_light_mode else 'Enabling'} Light Mode...", 'monkey')
-                    line = "LIGHT_MODE_ENABLED = False\n" if is_light_mode else "LIGHT_MODE_ENABLED = True\n"
+                    line = f"LIGHT_MODE_ENABLED = False{os.linesep}" if is_light_mode else f"LIGHT_MODE_ENABLED = True{os.linesep}"
                 file.write(line)
             file.truncate()
 

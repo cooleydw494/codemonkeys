@@ -33,7 +33,7 @@
 
 ###  YOUR MONKEYS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-##  Manually define monkey configs here or run `monk add-monkey <monkey-name>`.
+#  Manually define monkey configs here or run `monk add-monkey <monkey-name>`.
 
 'default':
   'MAIN_PROMPT': 'Please generate code for the following task...'
@@ -58,7 +58,7 @@
 
 ###  SELF-HELP MONKEYS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-##  Monkeys that exist to work on the CodeMonkeys framework itself.
+#  Monkeys that exist to work on the CodeMonkeys framework itself.
 
 'self-extract':
   'MAIN_PROMPT': 'Please extract the following code into a new function...'
