@@ -16,6 +16,8 @@ from pack.modules.internal.config_mgmt.yaml_helpers import get_monkey_config_def
 class MonkeyConfig:
     _instance = None
 
+    """ MONKEY_CONFIG_PROPS - DO NOT MODIFY
+        Definitions of MonkeyConfig props, generated from monkey-config-defaults. """
     # [MONKEY_CONFIG_PROPS_START]
     FILE_TYPES_INCLUDED: Optional[str] = field(default=None)
     FILEPATH_MATCH_EXCLUDED: Optional[str] = field(default=None)
@@ -53,6 +55,8 @@ class MonkeyConfig:
             if getattr(self, attribute, None) is None and monkey_config_defaults[attribute] is not None:
                 setattr(self, attribute, monkey_config_defaults[attribute])
 
+        """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
+        Set MonkeyConfig props with validations, generated from monkey-config-defaults & monkey_config_validations. """
         # [MONKEY_CONFIG_VALIDATIONS_START]
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
         self.FILEPATH_MATCH_EXCLUDED = validate_str('FILEPATH_MATCH_EXCLUDED', self.FILEPATH_MATCH_EXCLUDED)
