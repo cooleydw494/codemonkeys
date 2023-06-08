@@ -46,6 +46,7 @@ class GPTClient:
             temperature=temperature
         )
 
+        # TODO: implement control of the number of options and selection
         return response.choices[0].text.strip()
 
 

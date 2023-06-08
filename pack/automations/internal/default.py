@@ -20,15 +20,16 @@ def main(monk_args: argparse.Namespace = None):
     M = load_monkey_config(monk_args.monkey or None)
 
     # Summarize the special file
-    special_file_summary = summarize_special_file(M.SPECIAL_FILE_PATH, M.SUMMARY_MODEL, M.SUMMARY_PROMPT, gpt_client)
+    special_file_summary = summarize_special_file(M)
     print_t("Special file summarized successfully!", 'success')
-    print_t(f"Summary:{os.linesep}{special_file_summary}", 'file')
+    print_t(f"Summary:{os.linesep}```{special_file_summary}```", 'file')
 
     # Create an instance of the FileProcessor class
     fp = FileProcessor()
 
     # Write list of valid files to files-to-process.txt
-    fp.write_files_to_process()  # file list defaults to fp.get_filtered_files()
+    # file list defaults to fp.get_filtered_files()
+    fp.write_files_to_process()
 
     # Process the files one by one, removing them from the list as they are processed
     while True:
