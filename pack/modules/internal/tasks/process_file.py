@@ -1,5 +1,7 @@
-def process_file(file_path, special_file_summary, main_prompt, main_prompt_model,
-                 gpt_client):
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
+
+
+def process_file(file_path, m: MonkeyConfig = None):
     with open(file_path, "r") as f:
         file_contents = f.read()
 

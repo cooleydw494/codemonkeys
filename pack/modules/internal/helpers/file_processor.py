@@ -11,7 +11,7 @@ from pack.modules.internal.theme.theme_functions import print_t
 class FileProcessor:
 
     def __init__(self):
-        self.M = load_monkey_config()
+        self.m = load_monkey_config()
         self.include_extensions = self.M.FILE_TYPES_INCLUDED.split(',')
         self.exclude_patterns = self.M.FILEPATH_MATCH_EXCLUDED.split(',')
         self.max_tokens = self.M.FILE_SELECT_MAX_TOKENS

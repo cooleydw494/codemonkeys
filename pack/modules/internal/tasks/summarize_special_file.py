@@ -6,10 +6,9 @@ from pack.modules.internal.gpt.token_counter import TokenCounter
 from pack.modules.internal.theme.theme_functions import print_t
 
 
-def summarize_special_file(monkey_config: MonkeyConfig):
-    M = monkey_config
-    summary_client = GPTClient(M.SUMMARY_MODEL, M.FILE_SELECT_MAX_TOKENS, M.SUMMARY_TEMP)
-    special_file = os.path.expanduser(M.SPECIAL_FILE_PATH)
+def summarize_special_file(m: MonkeyConfig):
+    summary_client = GPTClient(m.SUMMARY_MODEL, m.FILE_SELECT_MAX_TOKENS, m.SUMMARY_TEMP)
+    special_file = os.path.expanduser(m.SPECIAL_FILE_PATH)
     if not os.path.isfile(special_file):
         raise FileNotFoundError(f"The special file {special_file} does not exist.")
 
@@ -17,7 +16,7 @@ def summarize_special_file(monkey_config: MonkeyConfig):
         special_file_contents = f.read()
 
     token_counter = TokenCounter('gpt-4')
-    special_file_contents = token_counter.split_into_chunks(special_file_contents, M.FILE_SELECT_MAX_TOKENS)
+    special_file_contents = token_counter.split_into_chunks(special_file_contents, m.FILE_SELECT_MAX_TOKENS)
 
     if len(special_file_contents) > 1:
         print_t(f"Split the special file {special_file} into {len(special_file_contents)} chunks.", 'info')
@@ -27,7 +26,7 @@ def summarize_special_file(monkey_config: MonkeyConfig):
         exit()
 
     # If not chunked (length 1), summarize the special file
-    full_prompt = f'{M.SUMMARY_PROMPT}: ```{special_file_contents[0]}```'
+    full_prompt = f'{m.SUMMARY_PROMPT}: ```{special_file_contents[0]}```'
     special_file_summary = summary_client.generate(full_prompt)
 
     # Check if a summary was successfully generated
