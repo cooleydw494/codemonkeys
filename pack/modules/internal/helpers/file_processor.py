@@ -58,7 +58,7 @@ class FileProcessor:
             for idx, file_path in enumerate(filtered_files, start=1):
                 f.write(f"{file_path}{os.linesep}")
 
-        print_t(f"📝 List of files saved to {self.output_file}. Enjoy coding with your 🐒 code monkeys!", 'done')
+        print_t(f"File list saved to {self.output_file}. Enjoy your 🐒 !", 'done')
 
     def select_and_remove_file(self):
         with open(self.output_file, "r") as f:

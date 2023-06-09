@@ -1,7 +1,7 @@
-Use the following summary of the monk cli, theme functions avaiable to writing help scripts, and text themes for those theme functions, to help you write your final help script:
+Use the following summary of the monk cli, theme functions avaiable to writing help scripts, and text themes for those theme functions, to help you write your final help script. Use this knowledge to inform your approach rather than directly referencing it or making it the focus of your script:
 
 ```
-CodeMonkeys & Monk CLI:
+CodeMonkeys & Monk CLI description. This is the CLI that will run the commands you're writing help scripts for:
 CodeMonkeys is an AI-ready automations framework with the Monk CLI. Monk offers unique functionality through recursive name-matching logic. Its flags allow targeting barrels, automations, and modules, and also facilitate actions such as editing, printing, and copying. 
 monk help: Run general help script
 monk list: List existing entities
@@ -17,11 +17,10 @@ monk -cp <entity>: Copy file abspath
 monk -cc <entity>: Copy file contents
 monk -h <entity>: Help script for an entity
 
-Theme Functions for Writing CLI Help Scripts:
-Theme functions are integral for creating visually appealing CLI interfaces. Functions like print_t and print_table are used extensively to output information in a readable and organized manner.
+Functions available to use in help scripts. Assume they're imported:
 print_t: This function applies a chosen theme to the text and then prints it with nice formatting. It can be used to print normal, warning, and error messages with appropriate colors and symbols.
-print_table: This function is useful for printing tables with headers. The color of headers and rows can be adjusted using themes. It is useful for presenting data in tabular format in CLI.
 
-Text Themes For print_t:
-print_t takes a theme arg for visual cues and readability. They have unique color and prefix properties. Some themes include 'success', 'start', 'done' (task progress), 'warning', 'error' (alerts), 'super_important', 'important' (emphasis), 'tip', 'info' (details), 'input' (user prompts), 'special' (special sections), 'file' (file operations).
+print_t takes a theme. Some themes include 'success', 'start', 'done' (task progress), 'warning', 'error' (alerts), 'super_important', 'important' (emphasis), 'tip', 'info' (details), 'input' (user prompts), 'special' (special sections), 'file' (file operations).
+
+Example print_t usage: `print_t('The generate-monkeys command...', 'info')`
 ```

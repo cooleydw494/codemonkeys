@@ -105,15 +105,15 @@
   'FILE_SELECT_MAX_TOKENS': 3000
   'MAX_TOKENS': 4000
   'SPECIAL_FILE_PATH': '~/local-git/code-monkeys/self-help-special-file.md'
-  'WORK_PATH': "ROOT_PATH/pack/commands/internal"  # default
+  'WORK_PATH': "ROOT_PATH/pack/commands/internal"
 
-  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the FILE TO PROCESS and its usage, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as the FILE TO PROCESS, use the provided monk command context and print_t function to generate a script that prints a help summary for the FILE TO PROCESS.'
+  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the {file-to-process} scripts and its usage via `monk {file-to-process}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {file-to-process}, use the provided monk command context and print_t function to generate a script that prints a help summary for the {file-to-process}.'
   'SUMMARY_PROMPT': null  # SPECIAL_FILE is pre-prepared summary
-  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of script that prints a helpful summary and usage explanation of the FILE TO PROCESS.'
+  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of script that prints a helpful summary and usage explanation of the {file-to-process}.'
 
-  'OUTPUT_EXAMPLE': "Make your output exactly like this with absolutely no other content: ```<full-script-that-prints-help-screen-for-FILE-TO-PROCESS>```."
+  'OUTPUT_EXAMPLE': "Make your output exactly like this with absolutely no additional content: <requested-file-content>."
   'CHECK_OUTPUT': True
-  'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if the triple-quoted string is limited strictly to the contents of a file. Respond with only one word: "True" or "False".'
+  'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 #  'OUTPUT_PATH': "ROOT_PATH/storage/custom/default_work_path/output"  # default
   'OUTPUT_EXT': '.py'
   'OUTPUT_FILENAME_APPEND': "-help"
@@ -121,7 +121,7 @@
 
   'MAIN_MODEL': 4
   'SUMMARY_MODEL': null  # SPECIAL_FILE is pre-prepared summary
-  'OUTPUT_CHECK_MODEL': 4
+  'OUTPUT_CHECK_MODEL': 3
 
   'MAIN_TEMP': 1.0
   'SUMMARY_TEMP': null  # SPECIAL_FILE is pre-prepared summary

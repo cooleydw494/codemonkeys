@@ -7,19 +7,28 @@ from pack.modules.internal.theme.theme_functions import print_t
 
 
 def summarize_special_file(m: MonkeyConfig):
-    if not m.SUMMARY_PROMPT:
-        print_t('No summary prompt was provided. Skipping summarization.', 'quiet')
-        return None
 
     special_file = os.path.expanduser(m.SPECIAL_FILE_PATH)
     if not os.path.isfile(special_file):
         raise FileNotFoundError(f"The special file {special_file} does not exist.")
 
-    with open(special_file, "r") as f:
-        special_file_contents = f.read()
+    special_file_contents = ''
 
-    token_counter = TokenCounter('gpt-4')  # TODO use correct model (counter needs to handle 3/4)
-    special_file_contents = token_counter.split_into_chunks(special_file_contents, m.MAX_TOKENS)
+    if m.SPECIAL_FILE_PATH:
+        with open(special_file, "r") as f:
+            special_file_contents = f.read()
+
+    if not m.SUMMARY_PROMPT:
+        print_t('No summary prompt was provided. Skipping summarization.', 'quiet')
+        if special_file_contents != '':
+            print_t(f"Un-summarized Special File:{os.linesep}{special_file}", 'file')
+            return special_file_contents
+        else:
+            print_t(f"No Special File", 'quiet')
+        return None
+    else:
+        token_counter = TokenCounter('gpt-4')  # TODO use correct model (counter needs to handle 3/4)
+        special_file_contents = token_counter.split_into_chunks(special_file_contents, m.MAX_TOKENS)
 
     if len(special_file_contents) > 1:
         print_t(f"Split the special file {special_file} into {len(special_file_contents)} chunks.", 'info')
@@ -29,11 +38,11 @@ def summarize_special_file(m: MonkeyConfig):
         exit()
 
     # If not chunked (length 1), summarize the special file
-    full_prompt = f'{m.SUMMARY_PROMPT}: ```{special_file_contents[0]}```'
-    full_prompt_tokens = token_counter.count_tokens(full_prompt)
-    remaining_tokens = m.MAX_TOKENS - full_prompt_tokens - 5  # 5 is just meant to be a counting imprecision buffer
+    summary_prompt = f'{m.SUMMARY_PROMPT}: ```{special_file_contents[0]}```'
+    summary_prompt_tokens = token_counter.count_tokens(summary_prompt)
+    remaining_tokens = m.MAX_TOKENS - summary_prompt_tokens - 5  # 5 is just meant to be a counting imprecision buffer
     summary_client = GPTClient(m.SUMMARY_MODEL, remaining_tokens, m.SUMMARY_TEMP)
-    special_file_summary = summary_client.generate(full_prompt)
+    special_file_summary = summary_client.generate(summary_prompt)
 
     # Check if a summary was successfully generated
     if not special_file_summary:
