@@ -107,9 +107,9 @@
   'SPECIAL_FILE_PATH': '~/local-git/code-monkeys/self-help-special-file.md'
   'WORK_PATH': "ROOT_PATH/pack/commands/internal"
 
-  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the {file-to-process} scripts and its usage via `monk {file-to-process}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {file-to-process}, use the provided monk command context and print_t function to generate a script that prints a help summary for the {file-to-process}.'
+  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the {file-to-process} scripts and its usage via `monk {file-to-process}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {file-to-process}, use the provided monk command context and print_t function to generate a script that prints a help summary for {file-to-process}.'
   'SUMMARY_PROMPT': null  # SPECIAL_FILE is pre-prepared summary
-  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of script that prints a helpful summary and usage explanation of the {file-to-process}.'
+  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of script that prints a helpful summary and usage explanation of {file-to-process}.'
 
   'OUTPUT_EXAMPLE': "Make your output exactly like this with absolutely no additional content: <requested-file-content>."
   'CHECK_OUTPUT': True
@@ -118,6 +118,7 @@
   'OUTPUT_EXT': '.py'
   'OUTPUT_FILENAME_APPEND': "-help"
   'OUTPUT_TRIES_LIMIT': 2
+  'OUTPUT_REMOVE_STRINGS': "```,```python"
 
   'MAIN_MODEL': 4
   'SUMMARY_MODEL': null  # SPECIAL_FILE is pre-prepared summary

@@ -22,15 +22,15 @@ def process_file(file_path, special_file_summary: str = '', m: MonkeyConfig = No
     if special_file_summary != '':
         special_file_summary = f"{special_file_summary}"
 
-    ultimatum = f"```{m.MAIN_PROMPT_ULTIMATUM.replace('{file-to-process}')}```" if m.MAIN_PROMPT_ULTIMATUM != '' else ''
+    ultimatum = f"{m.MAIN_PROMPT_ULTIMATUM.replace('{file-to-process}', file_to_process_name)}" if m.MAIN_PROMPT_ULTIMATUM != '' else ''
 
     output_example = f"{m.OUTPUT_EXAMPLE.replace('{file-to-process}', file_to_process_name)}" if m.OUTPUT_EXAMPLE != '' else ''
 
     full_prompt = f"{main_prompt}{sep}{special_file_summary}{sep}{file_to_process_name}:{sep}" \
-                  f"```{file_contents}```{ultimatum}{sep}{output_example}"
+                  f"```{file_contents}```{sep}{ultimatum}{sep}{output_example}"
 
-    full_prompt_log = f"{main_prompt}{sep2}{special_file_summary}{sep2}{file_to_process_name}:{os.linesep}" \
-                      f"```<file contents>```{ultimatum}{sep2}{output_example}"
+    full_prompt_log = f"{main_prompt}{sep2}<special-file-summary-or-content>{sep2}{file_to_process_name}:{os.linesep}" \
+                      f"```<file contents>```{sep2}{ultimatum}{sep2}{output_example}"
     print_t(f"Full prompt:{os.linesep}{full_prompt_log}", 'info')
 
     token_counter = TokenCounter('gpt-4')  # TODO: use correct model (counter needs to handle 3/4)
@@ -46,6 +46,10 @@ def process_file(file_path, special_file_summary: str = '', m: MonkeyConfig = No
     for attempt in range(1, m.OUTPUT_TRIES_LIMIT + 1):
         print_t(f"Attempt {attempt} of {m.OUTPUT_TRIES_LIMIT} to process: {file_to_process_name}...", 'loading')
         main_gpt_response = main_gpt_client.generate(full_prompt)
+
+        if m.OUTPUT_REMOVE_STRINGS is not None:
+            for remove_str in m.OUTPUT_REMOVE_STRINGS.split():
+                main_gpt_response = main_gpt_response.replace(remove_str, '')
 
         print_t("Output returned!", 'success')
         print_t(f"{main_gpt_response}", 'file')

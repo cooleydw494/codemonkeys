@@ -17,7 +17,7 @@ def check_output(updates: str, m: MonkeyConfig) -> bool:
     check_result = check_output_gpt_client.generate(check_prompt)
 
     if check_result.lower() == 'true':
-        print_t(f"Output is valid:{os.linesep}{check_result}", 'special')
+        print_t(f"Output is valid: {check_result}", 'special')
         return True
     else:
         print("Output did not pass the check. Retrying...", 'warning')

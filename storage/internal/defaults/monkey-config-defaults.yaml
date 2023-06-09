@@ -41,6 +41,7 @@ OUTPUT_CHECK_PROMPT: "Examine the following output and determine if 1. The outpu
 OUTPUT_PATH: "ROOT_PATH/storage/custom/default_work_path/output"
 OUTPUT_EXT: ".py"
 OUTPUT_FILENAME_APPEND: ""
+OUTPUT_REMOVE_STRINGS: "```,```python"
 
 # Prompt-specific Models
 MAIN_MODEL: 4

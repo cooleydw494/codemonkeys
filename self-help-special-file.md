@@ -20,7 +20,7 @@ monk -h <entity>: Help script for an entity
 Functions available to use in help scripts. Assume they're imported:
 print_t: This function applies a chosen theme to the text and then prints it with nice formatting. It can be used to print normal, warning, and error messages with appropriate colors and symbols.
 
-print_t takes a theme. Some themes include 'success', 'start', 'done' (task progress), 'warning', 'error' (alerts), 'super_important', 'important' (emphasis), 'tip', 'info' (details), 'input' (user prompts), 'special' (special sections), 'file' (file operations).
+print_t takes a theme. Some themes include 'success', 'warning', 'important' (emphasis), 'tip', 'info' (details), 'input' (user prompts), 'special' (special sections), 'file' (file operations).
 
 Example print_t usage: `print_t('The generate-monkeys command...', 'info')`
 ```

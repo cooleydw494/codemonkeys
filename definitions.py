@@ -8,7 +8,7 @@ from pack.modules.internal.utils.get_python_command import get_python_command, g
 # Improved readability for everyone's favorite psychopaths
 LIGHT_MODE_ENABLED = False
 # Looks 👌 with very lil space, but you do you boo-boo
-MAX_TERMINAL_WIDTH = 120
+MAX_TERMINAL_WIDTH = 160
 
 """  USER-DEFINED PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

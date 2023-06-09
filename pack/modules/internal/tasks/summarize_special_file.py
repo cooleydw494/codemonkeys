@@ -21,7 +21,7 @@ def summarize_special_file(m: MonkeyConfig):
     if not m.SUMMARY_PROMPT:
         print_t('No summary prompt was provided. Skipping summarization.', 'quiet')
         if special_file_contents != '':
-            print_t(f"Un-summarized Special File:{os.linesep}{special_file}", 'file')
+            print_t(f"Un-summarized Special File:{os.linesep}{special_file_contents}", 'file')
             return special_file_contents
         else:
             print_t(f"No Special File", 'quiet')
