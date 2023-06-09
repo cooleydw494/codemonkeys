@@ -25,12 +25,11 @@ def main(monk_args: argparse.Namespace = None):
     print()
 
     # Handling of Barrels, Automations, and Modules
-    print_t("Entity Type flags allow `monk` to target barrels (-b), automations (-a), and modules (-m).", 'info')
+    print_t("Entity Type flags allow you to target barrels (-b), automations (-a), and modules (-m).", 'info')
     print()
 
     # Action Flags
-    print_t("Action flags in Monk CLI enable you to edit, print, copy content or path, or seek help using simple "
-            "commands.", 'info')
+    print_t("Action flags allow you to perform a variety of operations on any targetable entity.", 'info')
     print()
     print()
 
