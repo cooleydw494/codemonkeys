@@ -98,29 +98,31 @@
 
 
 'self-help':
+  # A monkey for generating help scripts for `monk` entities
 
   'FILE_TYPES_INCLUDED': ".py"
-  'FILEPATH_MATCH_EXCLUDED': "help.py"
-#  'FILE_SELECT_MAX_TOKENS': 4000  # default
+  'FILEPATH_MATCH_EXCLUDED': "help.py,__init__.py"
+  'FILE_SELECT_MAX_TOKENS': 3000
+  'MAX_TOKENS': 4000
   'SPECIAL_FILE_PATH': '~/local-git/code-monkeys/self-help-special-file.md'
-  'WORK_PATH': "ROOT_PATH/pack/commands"  # default
+  'WORK_PATH': "ROOT_PATH/pack/commands/internal"  # default
 
-  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the file and its usage, in the style of documentation for a CLI command.'
-#  'SUMMARY_PROMPT': "Provide a summary of this file..."  # SPECIAL_FILE is pre-prepared summary
-  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of a complete and informative python help script.'
+  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the FILE TO PROCESS and its usage, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as the FILE TO PROCESS, use the provided monk command context and print_t function to generate a script that prints a help summary for the FILE TO PROCESS.'
+  'SUMMARY_PROMPT': null  # SPECIAL_FILE is pre-prepared summary
+  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of script that prints a helpful summary and usage explanation of the FILE TO PROCESS.'
 
-  'OUTPUT_EXAMPLE': "Limit your output strictly to help script contents, like this: ```<full-help-script>```."
+  'OUTPUT_EXAMPLE': "Make your output exactly like this with absolutely no other content: ```<full-script-that-prints-help-screen-for-FILE-TO-PROCESS>```."
   'CHECK_OUTPUT': True
   'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if the triple-quoted string is limited strictly to the contents of a file. Respond with only one word: "True" or "False".'
 #  'OUTPUT_PATH': "ROOT_PATH/storage/custom/default_work_path/output"  # default
-  'OUTPUT_EXT': ".py"
+  'OUTPUT_EXT': '.py'
   'OUTPUT_FILENAME_APPEND': "-help"
-  'OUTPUT_TRIES_LIMIT': 3
+  'OUTPUT_TRIES_LIMIT': 2
 
   'MAIN_MODEL': 4
-#  'SUMMARY_MODEL': 4  # SPECIAL_FILE is pre-prepared summary
+  'SUMMARY_MODEL': null  # SPECIAL_FILE is pre-prepared summary
   'OUTPUT_CHECK_MODEL': 4
 
   'MAIN_TEMP': 1.0
-#  'SUMMARY_TEMP': 1.0  # SPECIAL_FILE is pre-prepared summary
+  'SUMMARY_TEMP': null  # SPECIAL_FILE is pre-prepared summary
   'OUTPUT_CHECK_TEMP': .5

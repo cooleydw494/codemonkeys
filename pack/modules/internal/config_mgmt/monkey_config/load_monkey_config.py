@@ -27,10 +27,14 @@ def load_monkey_config(given_monkey_name=None) -> MonkeyConfig:
         use_current = input_t(f"Currently loaded monkey: {apply_t(loaded_monkey_name, 'important')}."
                               + apply_t(" Continue with this monkey?", 'input'), '(y/n)')
         if use_current == 'y':
-            return MonkeyConfig.load(monkey_name=loaded_monkey_name)
-    elif given_monkey_name is None:
+            monkey_name = loaded_monkey_name
+        else:
+            monkey_name, _ = get_monkey_name(prompt_user=True)
+    elif given_monkey_name is not None:
+        monkey_name = given_monkey_name
+    else:
         print_t("No monkey name or currently loaded monkey.", "quiet")
+        monkey_name = get_monkey_name(prompt_user=True)
 
-    monkey_name, _ = get_monkey_name(given_monkey_name)
     set_loaded_monkey(monkey_name)
     return MonkeyConfig.load(monkey_name=monkey_name)

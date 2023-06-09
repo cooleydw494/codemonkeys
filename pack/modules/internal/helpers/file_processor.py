@@ -3,18 +3,18 @@ import time
 from typing import List
 
 from definitions import STORAGE_TEMP_PATH
-from pack.modules.internal.config_mgmt.monkey_config.load_monkey_config import load_monkey_config
+from pack.modules.internal.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.internal.gpt.token_counter import TokenCounter
 from pack.modules.internal.theme.theme_functions import print_t
 
 
 class FileProcessor:
 
-    def __init__(self):
-        self.m = load_monkey_config()
-        self.include_extensions = self.M.FILE_TYPES_INCLUDED.split(',')
-        self.exclude_patterns = self.M.FILEPATH_MATCH_EXCLUDED.split(',')
-        self.max_tokens = self.M.FILE_SELECT_MAX_TOKENS
+    def __init__(self, m: MonkeyConfig):
+        self.m = m
+        self.include_extensions = self.m.FILE_TYPES_INCLUDED.split(',')
+        self.exclude_patterns = self.m.FILEPATH_MATCH_EXCLUDED.split(',')
+        self.max_tokens = self.m.FILE_SELECT_MAX_TOKENS
         self.token_counter = TokenCounter('gpt-4')
         self.output_file = os.path.join(STORAGE_TEMP_PATH, 'files-to-process.txt')
 
@@ -25,16 +25,16 @@ class FileProcessor:
     def should_include(self, file_path: str) -> bool:
         return (
                 any(file_path.endswith(ext) for ext in self.include_extensions) and
-                not any(pattern in file_path for pattern in self.exclude_patterns)
+                not any(pattern.strip() in file_path for pattern in self.exclude_patterns)
         )
 
     def get_filtered_files(self):
         """Filters files by token count and returns a list of valid files."""
         filtered_files = []
         print_t("Filtering files... this might take a while depending on the size of your WORK_PATH.", 'loading')
-        print_t(f'WORK_PATH: {self.M.WORK_PATH}', 'info')
+        print_t(f'WORK_PATH: {self.m.WORK_PATH}', 'info')
 
-        for root, _, files in os.walk(self.M.WORK_PATH):
+        for root, _, files in os.walk(self.m.WORK_PATH):
             for file in files:
                 print(".", end='', flush=True)
                 time.sleep(0.001)
@@ -56,7 +56,7 @@ class FileProcessor:
             filtered_files = self.get_filtered_files()
         with open(self.output_file, "w") as f:
             for idx, file_path in enumerate(filtered_files, start=1):
-                f.write(f"{idx}. {file_path}{os.linesep}")
+                f.write(f"{file_path}{os.linesep}")
 
         print_t(f"📝 List of files saved to {self.output_file}. Enjoy coding with your 🐒 code monkeys!", 'done')
 
@@ -64,9 +64,11 @@ class FileProcessor:
         with open(self.output_file, "r") as f:
             lines = f.readlines()
 
+        if len(lines) == 0:
+            return None
         selected_file = lines.pop(0)
 
         with open(self.output_file, "w") as f:
             f.writelines(lines)
 
-        return selected_file
+        return selected_file.strip()

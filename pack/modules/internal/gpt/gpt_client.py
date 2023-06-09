@@ -39,15 +39,15 @@ class GPTClient:
         if temperature is None:
             temperature = self.temperature
 
-        response = openai.Completion.create(
-            engine=self.engine,
-            prompt=prompt,
+        response = openai.ChatCompletion.create(
+            model=self.engine,
+            messages=[{'role': 'user', 'content': prompt}],
             max_tokens=self.max_tokens,
             temperature=temperature
         )
 
         # TODO: implement control of the number of options and selection
-        return response.choices[0].text.strip()
+        return response.choices[0].message.content.strip()
 
 
 def instantiate_gpt_models():

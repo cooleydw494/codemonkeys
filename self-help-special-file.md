@@ -1,3 +1,6 @@
+Use the following summary of the monk cli, theme functions avaiable to writing help scripts, and text themes for those theme functions, to help you write your final help script:
+
+```
 CodeMonkeys & Monk CLI:
 CodeMonkeys is an AI-ready automations framework with the Monk CLI. Monk offers unique functionality through recursive name-matching logic. Its flags allow targeting barrels, automations, and modules, and also facilitate actions such as editing, printing, and copying. 
 monk help: Run general help script
@@ -21,3 +24,4 @@ print_table: This function is useful for printing tables with headers. The color
 
 Text Themes For print_t:
 print_t takes a theme arg for visual cues and readability. They have unique color and prefix properties. Some themes include 'success', 'start', 'done' (task progress), 'warning', 'error' (alerts), 'super_important', 'important' (emphasis), 'tip', 'info' (details), 'input' (user prompts), 'special' (special sections), 'file' (file operations).
+```

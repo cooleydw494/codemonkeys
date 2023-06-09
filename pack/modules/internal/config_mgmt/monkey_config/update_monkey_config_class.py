@@ -21,7 +21,7 @@ def update_monkey_config_class():
             formatted_validations.append(f"        self.{key} = validate_float('{key}', self.{key})")
         elif isinstance(value, str):
             import re
-            if re.search(r'\bpath\b', str(key).lower()):
+            if re.search(r'\bpath\b', str(key).lower().replace('_', ' ')):
                 formatted_validations.append(f"        self.{key} = validate_path('{key}', self.{key})")
             else:
                 formatted_validations.append(f"        self.{key} = validate_str('{key}', self.{key})")
@@ -62,10 +62,25 @@ def update_monkey_config_class():
     formatted_properties = [p + os.linesep for p in formatted_properties]
     formatted_validations = [v + os.linesep for v in formatted_validations]
 
+    # Import types so that IDE optimization of imports removal gets fixed on each generation
+    prop_type_imports = [
+        f"    from types import NoneType{os.linesep}",
+        f"    from typing import Optional{os.linesep}{os.linesep}",
+        f"    from ruamel.yaml.scalarfloat import ScalarFloat{os.linesep}",
+        f"    from dataclasses import field{os.linesep}"
+    ]
+
+    validations_imports = [
+        f"        from pack.modules.internal.config_mgmt.monkey_config.monkey_config_validations import validate_str, "
+        f"validate_bool, validate_int, validate_float, validate_path, validate_list_str{os.linesep}"
+    ]
+
     # Replace the sections
     new_class_lines = class_lines[:props_start_index] + \
+                      prop_type_imports + \
                       formatted_properties + \
                       class_lines[props_end_index:validations_start_index] + \
+                      validations_imports + \
                       formatted_validations + \
                       class_lines[validations_end_index:]
 

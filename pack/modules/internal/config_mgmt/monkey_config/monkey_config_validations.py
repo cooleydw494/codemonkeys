@@ -16,70 +16,79 @@ def get_user_config_value(key: str, validate_func, hint=""):
         user_provided_value = input_t(key, hint)
         try:
             return validate_func(key, user_provided_value)
-        except ValueError as e:
+        except TypeError as e:
             print_t(str(e), 'error')
 
 
-def validate_path(key, path: str) -> str:
+def validate_path(key, path: str) -> (str, None):
+    if path is None:
+        return None
     if path.startswith('ROOT_PATH/'):
         path = os.path.join(ROOT_PATH, path[10:])
     absolute_path = os.path.expanduser(path)
     if not os.path.exists(absolute_path):
-        raise ValueError(f"{key} value {absolute_path} does not exist.")
+        raise TypeError(f"{key} value {absolute_path} does not exist.")
     if not os.path.isfile(absolute_path) and not os.path.isdir(absolute_path):
-        raise ValueError(f"{key} value {absolute_path} does not point to a correct path.")
+        raise TypeError(f"{key} value {absolute_path} does not point to a correct path.")
     return str(absolute_path)
 
 
 def validate_monkey_name(key: str = 'Monkey Name', monkey_name: str = None) -> str:
     if not monkey_name.replace('-', '').isalpha():
-        raise ValueError(f"Monkey name must contain only letters and hyphens")
+        raise TypeError(f"Monkey name must contain only letters and hyphens")
     return monkey_name
 
 
-def validate_bool(key, value: bool) -> bool:
+def validate_bool(key, value: bool) -> (bool, None):
+    if value is None:
+        return None
     if isinstance(value, bool):
         return value
     if str(value).lower() in ['true', '1', 'yes']:
         return True
     if str(value).lower() in ['false', '0', 'no']:
         return False
-    raise ValueError(f"{key} must be a boolean, not {type(value).__name__}")
+    raise TypeError(f"{key} must be a boolean, not {type(value).__name__}")
 
 
 def validate_type(key, value, expected_type: type):
+    if value is None:
+        return None
     try:
         value = expected_type(value)
-    except ValueError:
-        raise ValueError(f"{key} must be a {expected_type.__name__}")
+    except TypeError:
+        raise TypeError(f"{key} must be a {expected_type.__name__}")
 
     valid_type_values = valid_values.get(key)
     if valid_type_values and value not in valid_type_values:
-        raise ValueError(f"{key} value {value} is not in valid values {valid_type_values}")
+        raise TypeError(f"{key} value {value} is not in valid values {valid_type_values}")
     return value
 
 
 def validate_int(key, value):
-    if re.search(r'\bmodel\b', str(key).lower()):
+    if re.search(r'\bmodel\b', str(key).lower().replace('_', ' ')):
         return validate_type('model', value, int)
     return validate_type(key, value, int)
 
 
 def validate_float(key, value):
-    if re.search(r'\btemp\b', str(key).lower()):
+    if re.search(r'\btemp\b', str(key).lower().replace('_', ' ')):
         return validate_type('temp', value, float)
     return validate_type(key, value, float)
 
 
 def validate_str(key, value):
+    if type(value) in [int, float, bool]:
+        raise TypeError(f"{key} must be a string, not {type(value).__name__}")
     string_value = validate_type(key, value, str)
-    if re.search(r'\bpath\b', str(key).lower()):
+    if string_value == str and re.search(r'\bpath\b', key.lower().replace('_', ' ')):
+        print('validating as path')
         return validate_path(key, value)
     return string_value
 
 
-def validate_list_str(key, value: List[str]) -> List[str]:
+def validate_list_str(key, value: List[str]) -> (List[str], None):
     value = validate_type(key, value, list)
     if not all(isinstance(item, str) for item in value):
-        raise ValueError(f"{key} must be a list of strings")
+        raise TypeError(f"{key} must be a list of strings")
     return value

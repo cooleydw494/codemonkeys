@@ -18,10 +18,11 @@ def list_monkeys() -> List[str]:
     return [os.path.splitext(os.path.basename(file))[0] for file in file_paths]
 
 
-def get_monkey_name(given_monkey_name: str = None) -> Tuple[str, str]:
+def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) -> Tuple[str, str]:
     """
     Retrieve the monkey name and corresponding configuration file path.
 
+    :param prompt_user:
     :param given_monkey_name: A given monkey name
     :return: A tuple consisting of monkey name and its configuration file path
     """
@@ -48,7 +49,7 @@ def get_monkey_name(given_monkey_name: str = None) -> Tuple[str, str]:
         return pathlib.Path(os.path.join(MONKEYS_PATH, f'{name}.yaml')).exists()
 
     if given_monkey_name is None:
-        if monkey_exists('default'):
+        if monkey_exists('default') and not prompt_user:
             print_t(f"No monkey name provided. Loading default monkey config...", 'monkey')
             monkey_name = 'default'
         else:
