@@ -70,11 +70,11 @@ def update_env_class():
     required_env_props_def = f"required_env_props = [{required_env_props_list}]"
 
     # Replace placeholder in class definition with generated definitions
-    new_content_lines = content_lines[:required_start_index] + [required_env_props_def, os.linesep] + \
+    new_content_lines = content_lines[:required_start_index] + [required_env_props_def, n] + \
                             content_lines[required_end_index:framework_start_index] + [
-                            line + os.linesep for line in framework_env_definitions] + [os.linesep] + \
+                            line + n for line in framework_env_definitions] + [n] + \
                             content_lines[framework_end_index:start_index] + [
-                            line + os.linesep for line in env_definitions] + [os.linesep] + content_lines[end_index:]
+                            line + n for line in env_definitions] + [n] + content_lines[end_index:]
 
     # Write updated contents
     with open(ENV_CLASS_PATH, "w") as f:

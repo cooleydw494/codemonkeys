@@ -24,7 +24,7 @@
 ##  TEMP props can be floats from 0.0-1.0 (conservative-creative)
 
 #### OUTPUT ***
-##  OUTPUT_EXAMPLE: An example of the output you want to see.
+##  OUTPUT_EXAMPLE_PROMPT: An example of the output you want to see.
 ##  OUTPUT_CHECK_PROMPT: A prompt for checking the output.
 ##  OUTPUT_PATH: An alternate path (not WORK_PATH) for writing files
 ##  OUTPUT_FILENAME_APPEND: Optional string to append to output filenames
@@ -51,7 +51,7 @@
 #  'OUTPUT_PATH': ''
 #  'OUTPUT_EXT': ''
 #  'OUTPUT_FILENAME_APPEND': ''
-  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, like
+  'OUTPUT_EXAMPLE_PROMPT': 'Limit your output strictly to the contents of the file, like
     this: ```complete contents of file```.'
   'OUTPUT_CHECK_PROMPT': 'Examine the following out put and determine if 1. The output
     is complete and 2. The output is limited strictly to the contents of a file. Format
@@ -90,7 +90,7 @@
 #  'OUTPUT_PATH': ''
 #  'OUTPUT_EXT': ''
 #  'OUTPUT_FILENAME_APPEND': ''
-  'OUTPUT_EXAMPLE': 'Limit your output strictly to the contents of the file, like
+  'OUTPUT_EXAMPLE_PROMPT': 'Limit your output strictly to the contents of the file, like
     this: ```complete contents of file```.'
   'OUTPUT_CHECK_PROMPT': ' Examine the following out put and determine if 1. The output
     is complete and 2. The output is limited strictly to the contents of a file. Format
@@ -100,18 +100,18 @@
 'self-help':
   # A monkey for generating help scripts for `monk` entities
 
+  'WORK_PATH': "ROOT_PATH/pack/commands/internal"
   'FILE_TYPES_INCLUDED': ".py"
   'FILEPATH_MATCH_EXCLUDED': "help.py,__init__.py"
   'FILE_SELECT_MAX_TOKENS': 3000
   'MAX_TOKENS': 4000
   'SPECIAL_FILE_PATH': '~/local-git/code-monkeys/self-help-special-file.md'
-  'WORK_PATH': "ROOT_PATH/pack/commands/internal"
 
-  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the {file-to-process} scripts and its usage via `monk {file-to-process}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {file-to-process}, use the provided monk command context and print_t function to generate a script that prints a help summary for {file-to-process}.'
+  'MAIN_PROMPT': 'Write a python script that prints an appealing summary of the {the-file} scripts and its usage via `monk {the-file}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {the-file}, use the provided monk command context and print_t function to generate a script that prints a help summary for {the-file}.'
   'SUMMARY_PROMPT': null  # SPECIAL_FILE is pre-prepared summary
-  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of script that prints a helpful summary and usage explanation of {file-to-process}.'
+  'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of script that prints a helpful summary and usage explanation of {the-file}.'
 
-  'OUTPUT_EXAMPLE': "Make your output exactly like this with absolutely no additional content: <requested-file-content>."
+  'OUTPUT_EXAMPLE_PROMPT': "Make your output exactly like this with absolutely no additional content: <requested-file-content>."
   'CHECK_OUTPUT': True
   'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 #  'OUTPUT_PATH': "ROOT_PATH/storage/custom/default_work_path/output"  # default
@@ -119,6 +119,7 @@
   'OUTPUT_FILENAME_APPEND': "-help"
   'OUTPUT_TRIES_LIMIT': 2
   'OUTPUT_REMOVE_STRINGS': "```,```python"
+  'SKIP_EXISTING_OUTPUT_FILES': True
 
   'MAIN_MODEL': 4
   'SUMMARY_MODEL': null  # SPECIAL_FILE is pre-prepared summary

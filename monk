@@ -3,6 +3,7 @@ import os
 import subprocess
 import sys
 
+from definitions import nl
 from pack.modules.internal.config_mgmt.environment_checks import monk_env_checks
 from pack.modules.internal.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
 from pack.modules.internal.theme.theme_functions import print_t
@@ -45,8 +46,7 @@ elif extension == ".py":
         # args = vars(args)
         run_command_as_module(entity_path.strip(), 'main', args)
     except KeyboardInterrupt:
-        print()
-        print_t("Exiting due to KeyboardInterrupt from user.", 'quiet')
+        print_t(f"{nl}Exiting due to KeyboardInterrupt from user.", 'quiet')
         sys.exit(1)
 else:
     print_t(f"Entity Type not supported: {extension}. find_entity.py should have filtered this out.", 'error')

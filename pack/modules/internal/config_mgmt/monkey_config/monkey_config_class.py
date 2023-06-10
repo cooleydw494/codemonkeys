@@ -31,12 +31,13 @@ class MonkeyConfig:
     MAIN_PROMPT_ULTIMATUM: Optional[str] = field(default=None)
     CHECK_OUTPUT: Optional[bool] = field(default=None)
     OUTPUT_TRIES_LIMIT: Optional[int] = field(default=None)
-    OUTPUT_EXAMPLE: Optional[str] = field(default=None)
+    OUTPUT_EXAMPLE_PROMPT: Optional[str] = field(default=None)
     OUTPUT_CHECK_PROMPT: Optional[str] = field(default=None)
     OUTPUT_PATH: Optional[str] = field(default=None)
     OUTPUT_EXT: Optional[str] = field(default=None)
     OUTPUT_FILENAME_APPEND: Optional[str] = field(default=None)
     OUTPUT_REMOVE_STRINGS: Optional[str] = field(default=None)
+    SKIP_EXISTING_OUTPUT_FILES: Optional[bool] = field(default=None)
     MAIN_MODEL: Optional[int] = field(default=None)
     SUMMARY_MODEL: Optional[int] = field(default=None)
     OUTPUT_CHECK_MODEL: Optional[int] = field(default=None)
@@ -65,12 +66,13 @@ class MonkeyConfig:
         self.MAIN_PROMPT_ULTIMATUM = validate_str('MAIN_PROMPT_ULTIMATUM', self.MAIN_PROMPT_ULTIMATUM)
         self.CHECK_OUTPUT = validate_bool('CHECK_OUTPUT', self.CHECK_OUTPUT)
         self.OUTPUT_TRIES_LIMIT = validate_int('OUTPUT_TRIES_LIMIT', self.OUTPUT_TRIES_LIMIT)
-        self.OUTPUT_EXAMPLE = validate_str('OUTPUT_EXAMPLE', self.OUTPUT_EXAMPLE)
+        self.OUTPUT_EXAMPLE_PROMPT = validate_str('OUTPUT_EXAMPLE_PROMPT', self.OUTPUT_EXAMPLE_PROMPT)
         self.OUTPUT_CHECK_PROMPT = validate_str('OUTPUT_CHECK_PROMPT', self.OUTPUT_CHECK_PROMPT)
         self.OUTPUT_PATH = validate_path('OUTPUT_PATH', self.OUTPUT_PATH)
         self.OUTPUT_EXT = validate_str('OUTPUT_EXT', self.OUTPUT_EXT)
         self.OUTPUT_FILENAME_APPEND = validate_str('OUTPUT_FILENAME_APPEND', self.OUTPUT_FILENAME_APPEND)
         self.OUTPUT_REMOVE_STRINGS = validate_str('OUTPUT_REMOVE_STRINGS', self.OUTPUT_REMOVE_STRINGS)
+        self.SKIP_EXISTING_OUTPUT_FILES = validate_bool('SKIP_EXISTING_OUTPUT_FILES', self.SKIP_EXISTING_OUTPUT_FILES)
         self.MAIN_MODEL = validate_int('MAIN_MODEL', self.MAIN_MODEL)
         self.SUMMARY_MODEL = validate_int('SUMMARY_MODEL', self.SUMMARY_MODEL)
         self.OUTPUT_CHECK_MODEL = validate_int('OUTPUT_CHECK_MODEL', self.OUTPUT_CHECK_MODEL)
@@ -159,3 +161,7 @@ class MonkeyConfig:
 
         return config_values
 
+    def replace_prompt_str(self, to_replace, replace_with):
+        for attr in dir(self):
+            if attr.endswith('_PROMPT'):
+                setattr(self, attr, getattr(self, attr).replace(to_replace, replace_with))

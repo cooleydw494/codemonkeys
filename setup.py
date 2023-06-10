@@ -3,7 +3,7 @@ import platform
 import subprocess
 import sys
 
-from definitions import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH
+from definitions import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
 from pack.modules.internal.config_mgmt.environment_checks import monk_env_checks
 from pack.modules.internal.theme.theme_functions import print_t
 
@@ -67,7 +67,7 @@ elif os_type.startswith("win"):  # If OS is Windows
     else:
         print_t("Creating 'monk.bat' batch file for Windows compatibility... ", "link")
         with open("monk.bat", "w") as batch_file:
-            batch_file.write(f"@echo off{os.linesep}{PYTHON_COMMAND} ./monk %*")
+            batch_file.write(f"@echo off{nl}{PYTHON_COMMAND} ./monk %*")
         print_t("The 'monk.bat' batch file was created. Run it using 'monk'.", "success")
 else:
     print_t("OS not detected. Please add 'monk' to your PATH manually to use the `monk` command.", "warning")

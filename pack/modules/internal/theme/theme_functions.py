@@ -7,7 +7,7 @@ from math import floor
 from termcolor import colored, COLORS
 
 from __init__ import __version__
-from definitions import LIGHT_MODE_ENABLED, KEYWORDS, MAX_TERMINAL_WIDTH, STORAGE_MONK_PATH
+from definitions import LIGHT_MODE_ENABLED, KEYWORDS, MAX_TERMINAL_WIDTH, STORAGE_MONK_PATH, nl
 from pack.modules.custom.theme.theme_config import text_themes
 
 
@@ -50,12 +50,11 @@ def input_t(text, input_options=None, theme='input'):
     text = apply_t(text, theme, incl_prefix=True)
     if input_options:
         text += f' {apply_t(input_options, "magenta")}' if len(input_options) <= 20 \
-            else os.linesep + apply_t(input_options, "magenta")
+            else nl + apply_t(input_options, "magenta")
     try:
-        input_ = input(f'{text}:{os.linesep}' + apply_t('>> ', 'light_cyan', False, ['blink']))
+        input_ = input(f'{text}:{nl}' + apply_t('>> ', 'light_cyan', False, ['blink']))
     except KeyboardInterrupt:
-        print()
-        print_t("KeyboardInterrupt", 'yellow')
+        print_t(f"{nl}KeyboardInterrupt", 'yellow')
         sys.exit(1)
     if input_ in ("exit", "exit()", "quit"):
         print_t("✋ Exiting.", 'done')
@@ -65,7 +64,7 @@ def input_t(text, input_options=None, theme='input'):
 
 def print_nice(*args, sub_indent='', **kwargs):
     sep = kwargs.get("sep", " ")
-    end = kwargs.get("end", os.linesep)
+    end = kwargs.get("end", nl)
     file = kwargs.get("file", None)
     flush = kwargs.get("flush", False)
 
@@ -74,9 +73,9 @@ def print_nice(*args, sub_indent='', **kwargs):
     text = sep.join(str(arg) for arg in args)
 
     if len(strip_color_and_bold_codes(text)) > terminal_width:
-        text = os.linesep.join(
+        text = nl.join(
             textwrap.fill(line, terminal_width, subsequent_indent=sub_indent)
-            for i, line in enumerate(text.split(os.linesep))
+            for i, line in enumerate(text.split(nl))
         )
 
     color_pattern = re.compile(r'(\x1b\[[0-9;]*m)(.*?)(\x1b\[0m)', re.DOTALL)
@@ -97,8 +96,7 @@ def strip_color_and_bold_codes(s):
 def print_banner():
     with open(os.path.join(STORAGE_MONK_PATH, 'banner.txt'), 'r') as f:
         art = f.read()
-    print_t(art.replace('vX.X.X', f'v{__version__}'), 'light_yellow')
-    print()
+    print_t(art.replace('vX.X.X', f'v{__version__}{nl}'), 'light_yellow')
 
 
 def print_table(table, title=None, sub_indent='   ', min_col_width=None):
@@ -138,9 +136,7 @@ def print_tree(start_dir: str, exclude_dirs=None, exclude_file_starts=None, titl
         exclude_dirs = []
 
     if title:
-        print()
-        print_t(title, 'yellow', attrs=['bold'], incl_prefix=incl_prefix)
-        print()
+        print_t(f'{nl}title{nl}', 'yellow', attrs=['bold'], incl_prefix=incl_prefix)
 
     level = 0
     within_excluded_dir = False

@@ -1,7 +1,7 @@
 import os
 
 from __init__ import __version__
-from definitions import ROOT_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH
+from definitions import ROOT_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH, nl
 from pack.modules.internal.theme.theme_functions import print_t, print_tree
 from pack.modules.internal.utils.monk_helpers.handle_alternate_actions import handle_help
 
@@ -23,7 +23,7 @@ def handle_special_commands(args, action, entity, entity_type):
                 if "LIGHT_MODE_ENABLED" in line:
                     is_light_mode = "True" in line
                     print_t(f"{'Disabling' if is_light_mode else 'Enabling'} Light Mode...", 'monkey')
-                    line = f"LIGHT_MODE_ENABLED = False{os.linesep}" if is_light_mode else f"LIGHT_MODE_ENABLED = True{os.linesep}"
+                    line = f"LIGHT_MODE_ENABLED = False{nl}" if is_light_mode else f"LIGHT_MODE_ENABLED = True{n}"
                 file.write(line)
             file.truncate()
 

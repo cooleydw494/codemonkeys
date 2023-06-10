@@ -2,20 +2,18 @@ import os
 import sys
 from typing import Generator, List, Tuple
 
+from definitions import nl
 from pack.modules.internal.theme.theme_functions import print_t, input_t
 from pack.modules.internal.utils.find_entity_helpers import get_entity_paths, verify_unique_entity_names
 from pack.modules.internal.utils.general_helpers import levenshtein_distance
 
 
 def select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, str]]) -> str:
-    print()
-    print_t(prompt, 'monkey')
-    print()
+    print_t(f"{nl}prompt{nl}", 'monkey')
     print('````````````````````````````````````````')
     for i, (name, _, _, entity_type, path) in enumerate(entity_options):
         print_t(f" ({i + 1}) {name} ({entity_type})", 'option')
-    print('........................................')
-    print()
+    print(f'........................................')
 
     input_ = input_t("Select an option", "(^C to quit)")
 
@@ -86,5 +84,4 @@ def print_partial_path(path: str):
         partial_path = path.split("pack/")[1]
     else:
         partial_path = path
-    print_t(f"{partial_path}", 'quiet')
-    print()
+    print_t(f"{partial_path}{nl}", 'quiet')

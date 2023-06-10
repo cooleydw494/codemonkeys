@@ -1,6 +1,6 @@
 import os
 
-from definitions import MONKEY_CONFIG_CLASS_PATH
+from definitions import MONKEY_CONFIG_CLASS_PATH, nl
 from pack.modules.internal.config_mgmt.yaml_helpers import get_monkey_config_defaults
 
 
@@ -59,20 +59,20 @@ def update_monkey_config_class():
         raise Exception("Couldn't find all markers in the class file.")
 
     # Add newlines to the formatted properties and validations
-    formatted_properties = [p + os.linesep for p in formatted_properties]
-    formatted_validations = [v + os.linesep for v in formatted_validations]
+    formatted_properties = [p + nl for p in formatted_properties]
+    formatted_validations = [v + nl for v in formatted_validations]
 
     # Import types so that IDE optimization of imports removal gets fixed on each generation
     prop_type_imports = [
-        f"    from types import NoneType{os.linesep}",
-        f"    from typing import Optional{os.linesep}{os.linesep}",
-        f"    from ruamel.yaml.scalarfloat import ScalarFloat{os.linesep}",
-        f"    from dataclasses import field{os.linesep}"
+        f"    from types import NoneType{nl}",
+        f"    from typing import Optional{nl}{nl}",
+        f"    from ruamel.yaml.scalarfloat import ScalarFloat{nl}",
+        f"    from dataclasses import field{nl}"
     ]
 
     validations_imports = [
         f"        from pack.modules.internal.config_mgmt.monkey_config.monkey_config_validations import validate_str, "
-        f"validate_bool, validate_int, validate_float, validate_path, validate_list_str{os.linesep}"
+        f"validate_bool, validate_int, validate_float, validate_path, validate_list_str{nl}"
     ]
 
     # Replace the sections

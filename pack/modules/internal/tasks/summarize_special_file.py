@@ -1,5 +1,6 @@
 import os
 
+from definitions import TOKEN_UNCERTAINTY_BUFFER, nl
 from pack.modules.internal.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.internal.gpt.gpt_client import GPTClient
 from pack.modules.internal.gpt.token_counter import TokenCounter
@@ -21,26 +22,27 @@ def summarize_special_file(m: MonkeyConfig):
     if not m.SUMMARY_PROMPT:
         print_t('No summary prompt was provided. Skipping summarization.', 'quiet')
         if special_file_contents != '':
-            print_t(f"Un-summarized Special File:{os.linesep}{special_file_contents}", 'file')
+            print_t(f"Un-summarized Special File:{nl}{special_file_contents}", 'file')
             return special_file_contents
         else:
             print_t(f"No Special File", 'quiet')
         return None
     else:
-        token_counter = TokenCounter('gpt-4')  # TODO use correct model (counter needs to handle 3/4)
+        token_counter = TokenCounter(m.SUMMARY_MODEL)
         special_file_contents = token_counter.split_into_chunks(special_file_contents, m.MAX_TOKENS)
+
+    special_file_contents = '' if special_file_contents == '' else special_file_contents
 
     if len(special_file_contents) > 1:
         print_t(f"Split the special file {special_file} into {len(special_file_contents)} chunks.", 'info')
-        print_t('Summarizing each chunk...', 'loading')
+        print_t('Summarizing each chunk... [see TODO in summarize_special_file.py]', 'loading')
         # TODO: implement summarization of chunked special files
-        print_t('Just kidding, this still needs to be implemented.', 'error')
         exit()
 
     # If not chunked (length 1), summarize the special file
     summary_prompt = f'{m.SUMMARY_PROMPT}: ```{special_file_contents[0]}```'
     summary_prompt_tokens = token_counter.count_tokens(summary_prompt)
-    remaining_tokens = m.MAX_TOKENS - summary_prompt_tokens - 5  # 5 is just meant to be a counting imprecision buffer
+    remaining_tokens = m.MAX_TOKENS - summary_prompt_tokens - TOKEN_UNCERTAINTY_BUFFER
     summary_client = GPTClient(m.SUMMARY_MODEL, remaining_tokens, m.SUMMARY_TEMP)
     special_file_summary = summary_client.generate(summary_prompt)
 
@@ -49,6 +51,6 @@ def summarize_special_file(m: MonkeyConfig):
         raise RuntimeError(f"Failed to generate a summary for the special file {special_file}.")
 
     print_t("Special file summarized!", 'success')
-    print_t(f"Summary:{os.linesep}{special_file_summary}", 'file')
+    print_t(f"Summary:{nl}{special_file_summary}", 'file')
 
     return special_file_summary

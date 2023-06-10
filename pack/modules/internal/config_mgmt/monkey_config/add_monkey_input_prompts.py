@@ -21,7 +21,7 @@ INPUT_PROMPTS = [
      "Enter the temperature to use for the main prompts (a value between 0 and 1)"),
     ('SUMMARY_TEMP', validate_float,
      "Enter the temperature to use for the summary prompts (a value between 0 and 1)"),
-    ('OUTPUT_EXAMPLE', validate_str,
+    ('OUTPUT_EXAMPLE_PROMPT', validate_str,
      "A direct example of how the new or updated file should be formatted, (inserted in prompt). Ex: Limit your "
      "output strictly to the contents of the translated file, like: ```<translated-poem>```"),
     ('CHECK_OUTPUT', validate_bool,

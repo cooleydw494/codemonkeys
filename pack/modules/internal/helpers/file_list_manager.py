@@ -2,20 +2,20 @@ import os
 import time
 from typing import List
 
-from definitions import STORAGE_TEMP_PATH
+from definitions import STORAGE_TEMP_PATH, nl
 from pack.modules.internal.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.internal.gpt.token_counter import TokenCounter
 from pack.modules.internal.theme.theme_functions import print_t
 
 
-class FileProcessor:
+class FileListManager:
 
     def __init__(self, m: MonkeyConfig):
         self.m = m
         self.include_extensions = self.m.FILE_TYPES_INCLUDED.split(',')
         self.exclude_patterns = self.m.FILEPATH_MATCH_EXCLUDED.split(',')
         self.max_tokens = self.m.FILE_SELECT_MAX_TOKENS
-        self.token_counter = TokenCounter('gpt-4')
+        self.token_counter = TokenCounter(m.MAIN_MODEL)
         self.output_file = os.path.join(STORAGE_TEMP_PATH, 'files-to-process.txt')
 
     @staticmethod
@@ -56,7 +56,7 @@ class FileProcessor:
             filtered_files = self.get_filtered_files()
         with open(self.output_file, "w") as f:
             for idx, file_path in enumerate(filtered_files, start=1):
-                f.write(f"{file_path}{os.linesep}")
+                f.write(f"{file_path}{nl}")
 
         print_t(f"File list saved to {self.output_file}. Enjoy your 🐒 !", 'done')
 

@@ -9,7 +9,7 @@ def update_env_defaults():
     config = get_monkey_config_defaults()
 
     # Format the properties
-    formatted_properties = os.linesep.join("#  " + key + ": " + str(value) for key, value in config.items())
+    formatted_properties = n.join("#  " + key + ": " + str(value) for key, value in config.items())
 
     # Load the .env.default file
     ENV_DEFAULTS_PATH = os.path.join(STORAGE_DEFAULTS_PATH, '.env.default')

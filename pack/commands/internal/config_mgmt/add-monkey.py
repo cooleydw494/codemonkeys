@@ -49,7 +49,7 @@ def main(monk_args: argparse.Namespace):
     yaml_string = StringIO()
     write_yaml_file(yaml_string, monkey_manifest, ruamel=True)
 
-    yaml_string = yaml_string.getvalue().replace(monkey_name + ":", os.linesep + monkey_name + ":")
+    yaml_string = yaml_string.getvalue().replace(monkey_name + ":", n + monkey_name + ":")
 
     with tempfile.NamedTemporaryFile('w', delete=False) as temp_file:
         temp_file_name = temp_file.name

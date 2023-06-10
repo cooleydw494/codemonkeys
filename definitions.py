@@ -5,10 +5,10 @@ from pack.modules.internal.utils.get_python_command import get_python_command, g
 """  PREFERENCES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - """
 
-# Improved readability for everyone's favorite psychopaths
+# Improved readability for psychopaths
 LIGHT_MODE_ENABLED = False
 # Looks 👌 with very lil space, but you do you boo-boo
-MAX_TERMINAL_WIDTH = 160
+MAX_TERMINAL_WIDTH = 140
 
 """  USER-DEFINED PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -90,3 +90,17 @@ KEYWORDS = (lambda words: sorted(words, key=len, reverse=True))([
     'pseudo-package', 'entity types', 'definitions.py', 'CodeMonkeys', 'automations', 'action flags', 'entity type',
     'barrels', 'modules', 'commands', 'monkeys', 'actions', 'barrel', 'module', 'action flag', 'automation', 'command',
     'monkey', 'types', 'pack', 'cli', 'monk'])
+
+TOKEN_UNCERTAINTY_BUFFER = 10
+
+# OS-agnostic newline characters
+nl = os.linesep
+nl2 = nl * 2
+
+
+# prop or empty string helper
+def _or(obj_or_class_prop, default=''):
+    try:
+        return obj_or_class_prop
+    except AttributeError:
+        return default
