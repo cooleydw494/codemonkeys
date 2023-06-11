@@ -96,7 +96,7 @@ def strip_color_and_bold_codes(s):
 def print_banner():
     with open(os.path.join(STOR_MONK_PATH, 'banner.txt'), 'r') as f:
         art = f.read()
-    print_t(art.replace('vX.X.X', f'v{__version__}{nl}'), 'light_yellow')
+    print_t(art.replace('vX.X.X', f'v{__version__}') + nl, 'light_yellow')
 
 
 def print_table(table, title=None, sub_indent='   ', min_col_width=None):

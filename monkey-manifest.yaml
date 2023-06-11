@@ -111,7 +111,7 @@
   'SUMMARY_PROMPT': null  # SPECIAL_FILE is pre-prepared summary
   'MAIN_PROMPT_ULTIMATUM': 'Return only the contents of script that prints a helpful summary and usage explanation of {the-file}.'
 
-  'OUTPUT_EXAMPLE_PROMPT': "Make your output exactly like this with absolutely no additional content: <requested-file-content>."
+  'OUTPUT_EXAMPLE_PROMPT': "Make your output resemble this example: ```{cop:~/local-git/code-monkeys/self-help-special-file.md}```."
   'CHECK_OUTPUT': True
   'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 #  'OUTPUT_PATH': "ROOT_PATH/stor/usr/default_work_path/output"  # default

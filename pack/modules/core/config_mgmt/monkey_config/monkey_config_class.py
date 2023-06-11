@@ -1,11 +1,26 @@
 import dataclasses
 import os
+import re
 from dataclasses import dataclass
 
 from definitions import MONKEYS_PATH
 from pack.modules.core.config_mgmt.env.env_class import ENV
+from pack.modules.core.config_mgmt.monkey_config.monkey_config_validations import is_path_key, is_prompt_key
 from pack.modules.core.config_mgmt.yaml_helpers import get_monkey_config_defaults
 from pack.modules.core.theme.theme_functions import print_t
+
+
+def insert_cop_file_contents(value: str) -> str:
+    matches = re.findall(r'{cop:(.*?)}', value)
+    for match in matches:
+        expanded_path = os.path.expanduser(match)
+        if os.path.isfile(expanded_path):
+            with open(expanded_path, "r") as file:
+                file_content = file.read()
+            value = value.replace(f'{{cop:{match}}}', file_content)
+        else:
+            raise FileNotFoundError(f"Could not find the file specified in the 'cop' placeholder: {expanded_path}")
+    return value
 
 
 @dataclass
@@ -83,6 +98,8 @@ class MonkeyConfig:
 
         self.ENV = ENV()
 
+        self.cop_paths()
+
     @classmethod
     def load(cls, monkey_name: str) -> 'MonkeyConfig':
         from pack.modules.core.config_mgmt.yaml_helpers import read_yaml_file
@@ -150,7 +167,7 @@ class MonkeyConfig:
         env = ENV()
 
         for attribute in env.__annotations__:
-            if attribute in config_properties and config_values.get(attribute, '**unset') == '**unset'\
+            if attribute in config_properties and config_values.get(attribute, '**unset') == '**unset' \
                     and getattr(env, attribute, None) is not None:
                 config_values[attribute] = getattr(env, attribute)
 
@@ -162,11 +179,21 @@ class MonkeyConfig:
         return config_values
 
     def replace_prompt_str(self, to_replace, replace_with):
-        for attr in dir(self):
-            if attr.endswith('_PROMPT'):
-                setattr(self, attr, getattr(self, attr).replace(to_replace, replace_with))
+        for attr in vars(self):
+            value = getattr(self, attr)
+            if is_prompt_key(attr) and value is not None:
+                setattr(self, attr, value.replace(to_replace, replace_with))
 
-
-    # def cop_paths(self):
-    #
-    #     #  for each property containing 'PATH' word-bound (replace _ with ' '), do a replace on any string matching "{cop:<a-file-path>}" with the read content of the file at <a-file-path>. Throw a clear error if the file doesn't exist.
+    def cop_paths(self):
+        # for each property containing 'PATH' word-bound (replace _ with ' '), do a replace on any string matching "{
+        # cop:<a-file-path>}" with the read content of the file at <a-file-path>. Throw a clear error if the file
+        # doesn't exist.
+        for attr in vars(self):
+            value = getattr(self, attr)
+            if is_prompt_key(attr) and value is not None and re.search(r'{cop:.*?}', value):
+                try:
+                    new_value = insert_cop_file_contents(value)
+                except FileNotFoundError as e:
+                    print_t(f"{e}", 'error')
+                    exit()
+                setattr(self, attr, new_value)

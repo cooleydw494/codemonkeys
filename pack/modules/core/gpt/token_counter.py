@@ -4,18 +4,18 @@ import tiktoken
 
 
 class TokenCounter:
-    def __init__(self, model: str):
-        supported_model_args = ['3', '4']
+    def __init__(self, model: int):
+        supported_model_args = [3, 4]
         model_names = {
-            '3': 'gpt-3.5-turbo',
-            '4': 'gpt-4'
+            3: 'gpt-3.5-turbo',
+            4: 'gpt-4'
         }
 
         if model not in supported_model_args:
             raise ValueError(f"Unsupported model '{model}'. Supported models are {supported_model_args}.")
 
         self.model = model_names[model]
-        self.encoding = tiktoken.encoding_for_model(model)
+        self.encoding = tiktoken.encoding_for_model(self.model)
 
     def tokenize(self, text: str) -> List[int]:
         return self.encoding.encode(text)
