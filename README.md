@@ -153,3 +153,5 @@ monkey-config-defaults
 add-monkey
 generate-monkeys
 auto-generation of monkeyconfig and env and .env.default
+replace_prompt_str
+cop_paths

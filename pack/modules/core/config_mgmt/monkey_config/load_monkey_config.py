@@ -24,8 +24,7 @@ def get_loaded_monkey() -> str or None:
 def load_monkey_config(given_monkey_name=None) -> MonkeyConfig:
     loaded_monkey_name = get_loaded_monkey()
     if loaded_monkey_name is not None and given_monkey_name is None:
-        use_current = input_t(f"Currently loaded monkey: {apply_t(loaded_monkey_name, 'important')}."
-                              + apply_t(" Continue with this monkey?", 'input'), '(y/n)')
+        use_current = input_t(f"Continue with loaded monkey: {apply_t(loaded_monkey_name, 'important')}?", '(y/n)')
         if use_current == 'y':
             monkey_name = loaded_monkey_name
         else:

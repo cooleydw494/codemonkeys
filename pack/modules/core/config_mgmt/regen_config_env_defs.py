@@ -6,12 +6,6 @@ from pack.modules.core.config_mgmt.monkey_config.update_monkey_config_class impo
 
 def regenerate_config_env_defs():
 
-    # ENV_PATH = os.path.join(ROOT_PATH, ".env")
-    # ENV_DEFAULTS_PATH = os.path.join(STOR_DEFAULTS_PATH, ".env.default")
-    # ENV_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "env_class.py")
-    # MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(STOR_DEFAULTS_PATH, "monkey-config-defaults.yaml")
-    # MONKEY_CONFIG_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "monkey_config_class.py")
-
     # print_t("updating env defaults", 'special')
     update_env_defaults()
 

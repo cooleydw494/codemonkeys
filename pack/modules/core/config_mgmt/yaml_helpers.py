@@ -4,7 +4,7 @@ import sys
 import yaml
 from ruamel.yaml import YAML
 
-from definitions import STOR_DEFAULTS_PATH
+from definitions import STOR_DEFAULTS_PATH, MONKEY_CONFIG_DEFAULTS_PATH
 from pack.modules.core.theme.theme_functions import print_t
 
 
@@ -45,6 +45,6 @@ def get_ruamel_yaml() -> YAML:
 
 
 def get_monkey_config_defaults():
-    monkey_config_defaults_file = os.path.join(STOR_DEFAULTS_PATH, 'monkey-config-defaults.yaml')
+    monkey_config_defaults_file = os.path.join(MONKEY_CONFIG_DEFAULTS_PATH)
     return read_yaml_file(monkey_config_defaults_file, ruamel=True)
 

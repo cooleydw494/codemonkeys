@@ -18,7 +18,7 @@ load_dotenv()
 """ FRAMEWORK_ENV_PROPS_LIST - DO NOT MODIFY
 A List tracking the framework's env props. This is currently unused, but could be useful. """
 # [DEFINE_FRAMEWORK_ENV_PROPS_LIST_START]
-required_env_props = ["OPENAI_API_KEY", "DEFAULT_MONKEY", "CUSTOM_PROP"]
+required_env_props = ["OPENAI_API_KEY", "CUSTOM_PROP"]
 # [DEFINE_FRAMEWORK_ENV_PROPS_LIST_END]
 
 @dataclass
@@ -27,7 +27,6 @@ class ENV:
     Definitions of the framework's env props. These are used to generate the ENV class. """
     # [DEFINE_FRAMEWORK_ENV_PROPS_START]
     OPENAI_API_KEY: str = os.getenv('OPENAI_API_KEY', 'THIS-ONES-ON-YOU')
-    DEFAULT_MONKEY: str = os.getenv('DEFAULT_MONKEY', 'default')
     CUSTOM_PROP: str = os.getenv('CUSTOM_PROP', 'custom_value')
 
     # [DEFINE_FRAMEWORK_ENV_PROPS_END]

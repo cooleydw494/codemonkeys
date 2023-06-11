@@ -34,9 +34,14 @@ MONK_PATH = os.path.join(ROOT_PATH, "monk")
 # ENV
 ENV_PATH = os.path.join(ROOT_PATH, "env")
 
+# MONKEY MANIFEST
+MONKEY_MANIFEST_PATH = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
+
+# MONKEY CONFIG DEFAULTS
+MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(ROOT_PATH, "monkey-config-defaults.yaml")
+
 # MONKEYS (configs)
 MONKEYS_PATH = os.path.join(ROOT_PATH, "monkeys")
-MONKEY_MANIFEST_PATH = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
 MONKEYS_CORE_PATH = os.path.join(MONKEYS_PATH, "core")
 MONKEYS_USR_PATH = os.path.join(MONKEYS_PATH, "usr")
 
