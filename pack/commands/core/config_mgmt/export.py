@@ -2,6 +2,7 @@ import platform
 import shutil
 import time
 
+from definitions import MONKEY_MANIFEST_PATH
 from pack.modules.core.theme.theme_functions import print_t
 
 
@@ -18,8 +19,7 @@ def main():
 
     # Define the files and directories to include in the archive
     files_to_export = [
-        "main.py",
-        "monkeys/monkey-manifest.yaml"
+        MONKEY_MANIFEST_PATH
     ]
     directory_to_export = "backups/main"
 

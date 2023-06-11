@@ -5,7 +5,7 @@ import time
 
 from dotenv import dotenv_values
 
-from definitions import MONKEYS_PATH, ROOT_PATH
+from definitions import MONKEYS_PATH, ROOT_PATH, MONKEY_MANIFEST_PATH
 from pack.modules.core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.config_mgmt.yaml_helpers import get_monkey_config_defaults, read_yaml_file, write_yaml_file
 from pack.modules.core.theme.theme_functions import print_t
@@ -13,13 +13,12 @@ from pack.modules.core.theme.theme_functions import print_t
 
 def main(monk_args: argparse.Namespace = None):
     print_t("Generating monkey configs...", 'config')
-    monkey_manifest = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
 
     try:
-        manifest_monkeys = read_yaml_file(monkey_manifest)
+        manifest_monkeys = read_yaml_file(MONKEY_MANIFEST_PATH)
         print_t("monkey-manifest.yaml located", 'file')
     except FileNotFoundError:
-        print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {monkey_manifest}", 'error')
+        print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {MONKEY_MANIFEST_PATH}", 'error')
         return
 
     # Create the directories and config files

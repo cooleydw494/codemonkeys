@@ -50,11 +50,11 @@ STOR_DEFAULTS_PATH = os.path.join(STOR_CORE_PATH, "defaults")
 # DEFAULTS
 ENV_DEFAULT_PATH = os.path.join(STOR_DEFAULTS_PATH, ".env.default")
 
-# PSEUDO_PACKAGE
-PSEUDO_PACKAGE_PATH = os.path.join(ROOT_PATH, "pack")
+# PSEUDO-PACKAGE PATH
+PACK_PATH = os.path.join(ROOT_PATH, "pack")
 
 # MODULES
-MODULES_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "modules")
+MODULES_PATH = os.path.join(PACK_PATH, "modules")
 MODULES_CORE_PATH = os.path.join(MODULES_PATH, "core")
 MODULES_USR_PATH = os.path.join(MODULES_PATH, "usr")
 MODULES_CONFIG_MGMT_PATH = os.path.join(MODULES_CORE_PATH, "config_mgmt")
@@ -64,17 +64,17 @@ ENV_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "env", "env_class.py")
 MONKEY_CONFIG_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "monkey_config", "monkey_config_class.py")
 
 # AUTOMATIONS
-AUTOMATIONS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "automations")
+AUTOMATIONS_PATH = os.path.join(PACK_PATH, "automations")
 AUTOMATIONS_CORE_PATH = os.path.join(AUTOMATIONS_PATH, "core")
 AUTOMATIONS_USR_PATH = os.path.join(AUTOMATIONS_PATH, "usr")
 
 # BARRELS
-BARRELS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "barrels")
+BARRELS_PATH = os.path.join(PACK_PATH, "barrels")
 BARRELS_CORE_PATH = os.path.join(BARRELS_PATH, "core")
 BARRELS_USR_PATH = os.path.join(BARRELS_PATH, "usr")
 
 # MONK COMMANDS
-COMMANDS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "commands")
+COMMANDS_PATH = os.path.join(PACK_PATH, "commands")
 COMMANDS_CORE_PATH = os.path.join(COMMANDS_PATH, "core")
 COMMANDS_USR_PATH = os.path.join(COMMANDS_PATH, "usr")
 

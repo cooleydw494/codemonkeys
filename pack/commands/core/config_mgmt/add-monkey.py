@@ -7,7 +7,7 @@ from io import StringIO
 from pack.modules.core.config_mgmt.yaml_helpers import read_yaml_file, write_yaml_file
 from ruamel.yaml import CommentedMap
 
-from definitions import ROOT_PATH, COMMANDS_CORE_PATH
+from definitions import ROOT_PATH, COMMANDS_CORE_PATH, MONKEY_MANIFEST_PATH, nl
 from pack.modules.core.config_mgmt.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
 from pack.modules.core.config_mgmt.monkey_config.monkey_config_validations import get_user_config_value, \
     validate_monkey_name
@@ -27,8 +27,7 @@ def main(monk_args: argparse.Namespace):
 
     print_t(f"Let's configure your new {monkey_name} monkey", 'monkey')
 
-    monkey_manifest_path = os.path.join(ROOT_PATH, 'monkey-manifest.yaml')
-    monkey_manifest = read_yaml_file(monkey_manifest_path, ruamel=True)
+    monkey_manifest = read_yaml_file(MONKEY_MANIFEST_PATH, ruamel=True)
 
     if monkey_name in monkey_manifest.keys():
         print_t(f"A monkey named {monkey_name} already exists.", 'important')
@@ -49,14 +48,14 @@ def main(monk_args: argparse.Namespace):
     yaml_string = StringIO()
     write_yaml_file(yaml_string, monkey_manifest, ruamel=True)
 
-    yaml_string = yaml_string.getvalue().replace(monkey_name + ":", n + monkey_name + ":")
+    yaml_string = yaml_string.getvalue().replace(monkey_name + ":", nl + monkey_name + ":")
 
     with tempfile.NamedTemporaryFile('w', delete=False) as temp_file:
         temp_file_name = temp_file.name
         temp_file.write(yaml_string)
 
     try:
-        os.replace(temp_file_name, monkey_manifest_path)
+        os.replace(temp_file_name, MONKEY_MANIFEST_PATH)
     except Exception as e:
         print_t("An error occurred while updating the monkey-manifest file: " + str(e), 'error')
         return
