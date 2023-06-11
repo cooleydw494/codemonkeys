@@ -1,10 +1,12 @@
 # CodeMonkeys 🐵
 
-Are you a highly-technical individual with an interest in taking more control over your automated AI coding?
+Are you
 
-. . . . a lightly-technical individual who wants to automate AI and can probably figure out how to edit a config?
+... a highly-technical individual with an interest in taking more control over your automated AI coding?
 
-. . . . a creature with the capacity to learn how to press buttons and a strong motivation to do the AI?
+... a lightly-technical individual who wants to automate AI and can probably figure out how to edit a config?
+
+... a creature with the capacity to learn how to press buttons and a strong motivation to do the AI?
 
 
 ## Overview 🌐
@@ -143,3 +145,11 @@ When forking or creating derivative works from CodeMonkeys, I kindly ask you to:
 
 
 # Things To Include
+psuedo-package
+core/usr
+monkey-config class
+env class
+monkey-config-defaults
+add-monkey
+generate-monkeys
+auto-generation of monkeyconfig and env and .env.default
