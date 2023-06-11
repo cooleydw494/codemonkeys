@@ -1,6 +1,6 @@
 import os
 
-from pack.modules.internal.utils.get_python_command import get_python_command, get_pip_command
+from pack.modules.core.utils.get_python_command import get_python_command, get_pip_command
 
 """  PREFERENCES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - """
@@ -13,7 +13,7 @@ MAX_TERMINAL_WIDTH = 140
 """  USER-DEFINED PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 *Always* begin user-defined PATHs with predefined PATHs.
-Ex) TRANSLATION_AUTOMATIONS_PATH = os.path.join(AUTOMATIONS_CUSTOM_PATH, "translations") """
+Ex) TRANSLATION_AUTOMATIONS_PATH = os.path.join(AUTOMATIONS_USR_PATH, "translations") """
 
 # <User-defined PATHs go here>
 
@@ -37,27 +37,27 @@ ENV_PATH = os.path.join(ROOT_PATH, "env")
 # MONKEYS (configs)
 MONKEYS_PATH = os.path.join(ROOT_PATH, "monkeys")
 MONKEY_MANIFEST_PATH = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
-MONKEYS_INTERNAL_PATH = os.path.join(MONKEYS_PATH, "internal")
-MONKEYS_CUSTOM_PATH = os.path.join(MONKEYS_PATH, "custom")
+MONKEYS_CORE_PATH = os.path.join(MONKEYS_PATH, "core")
+MONKEYS_USR_PATH = os.path.join(MONKEYS_PATH, "usr")
 
-# STORAGE
-STORAGE_PATH = os.path.join(ROOT_PATH, "storage")
-STORAGE_INTERNAL_PATH = os.path.join(STORAGE_PATH, "internal")
-STORAGE_TEMP_PATH = os.path.join(STORAGE_INTERNAL_PATH, "temp")
-STORAGE_MONK_PATH = os.path.join(STORAGE_INTERNAL_PATH, "monk")
-STORAGE_DEFAULTS_PATH = os.path.join(STORAGE_INTERNAL_PATH, "defaults")
+# STOR
+STOR_PATH = os.path.join(ROOT_PATH, "stor")
+STOR_CORE_PATH = os.path.join(STOR_PATH, "core")
+STOR_TEMP_PATH = os.path.join(STOR_CORE_PATH, "temp")
+STOR_MONK_PATH = os.path.join(STOR_CORE_PATH, "monk")
+STOR_DEFAULTS_PATH = os.path.join(STOR_CORE_PATH, "defaults")
 
 # DEFAULTS
-ENV_DEFAULT_PATH = os.path.join(STORAGE_DEFAULTS_PATH, ".env.default")
+ENV_DEFAULT_PATH = os.path.join(STOR_DEFAULTS_PATH, ".env.default")
 
 # PSEUDO_PACKAGE
 PSEUDO_PACKAGE_PATH = os.path.join(ROOT_PATH, "pack")
 
 # MODULES
 MODULES_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "modules")
-MODULES_INTERNAL_PATH = os.path.join(MODULES_PATH, "internal")
-MODULES_CUSTOM_PATH = os.path.join(MODULES_PATH, "custom")
-MODULES_CONFIG_MGMT_PATH = os.path.join(MODULES_INTERNAL_PATH, "config_mgmt")
+MODULES_CORE_PATH = os.path.join(MODULES_PATH, "core")
+MODULES_USR_PATH = os.path.join(MODULES_PATH, "usr")
+MODULES_CONFIG_MGMT_PATH = os.path.join(MODULES_CORE_PATH, "config_mgmt")
 
 # ENV CLASS
 ENV_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "env", "env_class.py")
@@ -65,18 +65,18 @@ MONKEY_CONFIG_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "monkey_config
 
 # AUTOMATIONS
 AUTOMATIONS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "automations")
-AUTOMATIONS_INTERNAL_PATH = os.path.join(AUTOMATIONS_PATH, "internal")
-AUTOMATIONS_CUSTOM_PATH = os.path.join(AUTOMATIONS_PATH, "custom")
+AUTOMATIONS_CORE_PATH = os.path.join(AUTOMATIONS_PATH, "core")
+AUTOMATIONS_USR_PATH = os.path.join(AUTOMATIONS_PATH, "usr")
 
 # BARRELS
 BARRELS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "barrels")
-BARRELS_INTERNAL_PATH = os.path.join(BARRELS_PATH, "internal")
-BARRELS_CUSTOM_PATH = os.path.join(BARRELS_PATH, "custom")
+BARRELS_CORE_PATH = os.path.join(BARRELS_PATH, "core")
+BARRELS_USR_PATH = os.path.join(BARRELS_PATH, "usr")
 
 # MONK COMMANDS
 COMMANDS_PATH = os.path.join(PSEUDO_PACKAGE_PATH, "commands")
-COMMANDS_INTERNAL_PATH = os.path.join(COMMANDS_PATH, "internal")
-COMMANDS_CUSTOM_PATH = os.path.join(COMMANDS_PATH, "custom")
+COMMANDS_CORE_PATH = os.path.join(COMMANDS_PATH, "core")
+COMMANDS_USR_PATH = os.path.join(COMMANDS_PATH, "usr")
 
 """  MISC FRAMEWORK VARS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - """

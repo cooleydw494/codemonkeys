@@ -3,7 +3,7 @@
 ###                                                                                                                  ##
 ##    The Monkey Manifest houses centralized configuration of automation profiles (monkeys).                         ##
 ##                                                                                                                   ##
-##    Undefined props will default based on `storage/internal/defaults/monkey-config-defaults.yaml`.                 ##
+##    Undefined props will default based on `stor/core/defaults/monkey-config-defaults.yaml`.                 ##
 ##    Monkey props defined in your .env will override the framework defaults.                                        ##
 ##                                                                                                                   ##
 #######################################################################################################################
@@ -100,7 +100,7 @@
 'self-help':
   # A monkey for generating help scripts for `monk` entities
 
-  'WORK_PATH': "ROOT_PATH/pack/commands/internal"
+  'WORK_PATH': "ROOT_PATH/pack/commands/core"
   'FILE_TYPES_INCLUDED': ".py"
   'FILEPATH_MATCH_EXCLUDED': "help.py,__init__.py"
   'FILE_SELECT_MAX_TOKENS': 3000
@@ -114,7 +114,7 @@
   'OUTPUT_EXAMPLE_PROMPT': "Make your output exactly like this with absolutely no additional content: <requested-file-content>."
   'CHECK_OUTPUT': True
   'OUTPUT_CHECK_PROMPT': 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
-#  'OUTPUT_PATH': "ROOT_PATH/storage/custom/default_work_path/output"  # default
+#  'OUTPUT_PATH': "ROOT_PATH/stor/usr/default_work_path/output"  # default
   'OUTPUT_EXT': '.py'
   'OUTPUT_FILENAME_APPEND': "-help"
   'OUTPUT_TRIES_LIMIT': 2

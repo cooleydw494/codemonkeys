@@ -4,8 +4,8 @@ import subprocess
 import sys
 
 from definitions import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
-from pack.modules.internal.config_mgmt.environment_checks import monk_env_checks
-from pack.modules.internal.theme.theme_functions import print_t
+from pack.modules.core.config_mgmt.environment_checks import monk_env_checks
+from pack.modules.core.theme.theme_functions import print_t
 
 print_t("Thanks for using CodeMonkeys!", 'monkey')
 print_t("Initiating the setup process...", "start")
@@ -34,7 +34,7 @@ else:
 print_t("Installing the required Python modules from the requirements.txt file...", "loading")
 subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
-# if the .env doesn't already exist, copy it from storage/.env.default and print some helpful feedback.
+# if the .env doesn't already exist, copy it from stor/.env.default and print some helpful feedback.
 if not os.path.exists('.env'):
     print_t("No .env file found. Copying .env.default...", "file")
     subprocess.call(F'cp {ENV_DEFAULT_PATH} {ENV_PATH}', shell=True)

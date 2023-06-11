@@ -3,7 +3,7 @@
 import subprocess
 import sys
 
-from pack.modules.internal.theme.theme_functions import print_t
+from pack.modules.core.theme.theme_functions import print_t
 
 # Check if a commit message argument is provided
 if len(sys.argv) < 2:

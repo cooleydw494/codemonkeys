@@ -4,14 +4,14 @@ import subprocess
 import sys
 
 from definitions import nl
-from pack.modules.internal.config_mgmt.environment_checks import monk_env_checks
-from pack.modules.internal.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
-from pack.modules.internal.theme.theme_functions import print_t
-from pack.modules.internal.utils.find_entity import find_entity
-from pack.modules.internal.utils.monk_helpers.handle_alternate_actions import handle_alternate_actions
-from pack.modules.internal.utils.monk_helpers.handle_special_commands import handle_special_commands
-from pack.modules.internal.utils.monk_helpers.parse_monk_args import parse_monk_args
-from pack.modules.internal.utils.monk_helpers.run_command_as_module import run_command_as_module
+from pack.modules.core.config_mgmt.environment_checks import monk_env_checks
+from pack.modules.core.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
+from pack.modules.core.theme.theme_functions import print_t
+from pack.modules.core.utils.find_entity import find_entity
+from pack.modules.core.utils.monk_helpers.handle_alternate_actions import handle_alternate_actions
+from pack.modules.core.utils.monk_helpers.handle_special_commands import handle_special_commands
+from pack.modules.core.utils.monk_helpers.parse_monk_args import parse_monk_args
+from pack.modules.core.utils.monk_helpers.run_command_as_module import run_command_as_module
 
 # Some basic environment checks
 monk_env_checks()
