@@ -12,7 +12,7 @@ from pack.modules.core.config.monkey_config.add_monkey_input_prompts import INPU
 from pack.modules.core.config.monkey_config.monkey_config_validations import get_user_config_value, \
     validate_monkey_name
 from pack.modules.core.theme.theme_functions import print_t, input_t
-from pack.modules.core.utils.monk_helpers.run_command_as_module import run_command_as_module
+from pack.modules.core.utils.monk_helpers.run_as_module import run_as_module
 
 
 def process_input_prompts(data):
@@ -63,4 +63,4 @@ def main(monk_args: argparse.Namespace):
     print_t("Config complete. The 'monkey-manifest.yaml' file has been updated.", 'done')
     run_generate = input_t("Run `monk generate-monkeys` to complete the config process?", '(y/n)')
     if run_generate.lower() == 'y':
-        run_command_as_module(os.path.join(COMMANDS_CORE_PATH, 'generate-monkeys.py'), 'main', [])
+        run_as_module(os.path.join(COMMANDS_CORE_PATH, 'generate-monkeys.py'), 'main', [])

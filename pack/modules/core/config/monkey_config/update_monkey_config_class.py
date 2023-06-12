@@ -71,7 +71,7 @@ def update_monkey_config_class():
     ]
 
     validations_imports = [
-        f"        from pack.modules.core.config_mgmt.monkey_config.monkey_config_validations import validate_str, "
+        f"        from pack.modules.core.config.monkey_config.monkey_config_validations import validate_str, "
         f"validate_bool, validate_int, validate_float, validate_path, validate_list_str{nl}"
     ]
 

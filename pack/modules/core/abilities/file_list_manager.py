@@ -72,4 +72,10 @@ class FileListManager:
         with open(self.output_file, "w") as f:
             f.writelines(lines)
 
-        return selected_file.strip()
+        selected_file = selected_file.strip()
+
+        # Skip files that are not readable
+        if os.access(selected_file, os.R_OK) is not True:
+            print_t(f"Unable to read the file:{nl}{selected_file}{nl}Skipped.", 'warning')
+
+        return selected_file

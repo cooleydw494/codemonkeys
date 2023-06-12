@@ -15,8 +15,6 @@ def summarize_context_file(m: MonkeyConfig, allow_unsummarized: bool = False):
     if not os.path.isfile(context_file):
         raise FileNotFoundError(f"The context file {context_file} does not exist.")
 
-    summary_client = GPTClient(m.SUMMARY_MODEL, m.SUMMARY_TEMP, m.MAX_TOKENS)
-
     context_file_contents = ''
 
     if m.CONTEXT_FILE_PATH:
@@ -32,6 +30,7 @@ def summarize_context_file(m: MonkeyConfig, allow_unsummarized: bool = False):
             print_t(f"No Special File", 'quiet')
         return None
     else:
+        summary_client = GPTClient(m.SUMMARY_MODEL, m.SUMMARY_TEMP, m.MAX_TOKENS)
         context_file_contents = summary_client.split_into_chunks(context_file_contents, m.MAX_TOKENS)
 
     context_file_contents = '' if context_file_contents == '' else context_file_contents

@@ -5,7 +5,7 @@ from pack.modules.core.theme.theme_functions import print_t
 
 
 # This function is important for maintaining the pack "pseudo-package" paradigm.
-def run_command_as_module(module_path, function_name=None, args=None):
+def run_as_module(module_path, function_name='main', monk_args=None):
     spec = importlib.util.spec_from_file_location('module', module_path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -18,7 +18,7 @@ def run_command_as_module(module_path, function_name=None, args=None):
         # Assuming the function takes args, namely the framework-intended monk_args
         # (ex: add-monkey.py@main)
         if args_count == 1:
-            return function(args)
+            return function(monk_args)
 
         # If the function takes no args, just run it. This should work IMO, but framework commands will always define
         # monk_args regardless of need to re-enforce the paradigm (this is inspired by dependency injection)
@@ -33,7 +33,7 @@ def run_command_as_module(module_path, function_name=None, args=None):
 
         elif args_count > 1:
             print_t('Running entities with monk supports only a list of monk_args or no args. View '
-                    'run_command_as_module.py for more details (including some code you could uncomment to enable '
+                    'run_as_module.py for more details (including some code you could uncomment to enable '
                     'what you are attempting.', 'error')
             return None
 
