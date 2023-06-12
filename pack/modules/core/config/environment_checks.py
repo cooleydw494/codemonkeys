@@ -2,7 +2,7 @@ import sys
 
 import openai
 
-from pack.modules.core.config_mgmt.env.env_class import ENV
+from pack.modules.core.config.env.env_class import ENV
 from pack.modules.core.theme.theme_functions import print_t
 
 ENV = ENV()

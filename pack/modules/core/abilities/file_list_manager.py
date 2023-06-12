@@ -3,8 +3,8 @@ import time
 from typing import List
 
 from definitions import STOR_TEMP_PATH, nl
-from pack.modules.core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from pack.modules.core.gpt.gpt_client import GPTClient
+from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
+from pack.modules.core.abilities.gpt_client import GPTClient
 from pack.modules.core.theme.theme_functions import print_t
 
 
@@ -51,7 +51,7 @@ class FileListManager:
 
         return filtered_files
 
-    def write_files_to_process(self, filtered_files: List = None):
+    def write_files_to_process(self, filtered_files: List = None) -> 'FileListManager':
         if filtered_files is None:
             filtered_files = self.get_filtered_files()
         with open(self.output_file, "w") as f:
@@ -59,6 +59,7 @@ class FileListManager:
                 f.write(f"{file_path}{nl}")
 
         print_t(f"File list saved to {self.output_file}. Enjoy your 🐒 !", 'done')
+        return self
 
     def select_and_remove_file(self):
         with open(self.output_file, "r") as f:

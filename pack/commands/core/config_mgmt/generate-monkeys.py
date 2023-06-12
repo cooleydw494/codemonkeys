@@ -6,8 +6,8 @@ import time
 from dotenv import dotenv_values
 
 from definitions import MONKEYS_PATH, ROOT_PATH, MONKEY_MANIFEST_PATH
-from pack.modules.core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from pack.modules.core.config_mgmt.yaml_helpers import get_monkey_config_defaults, read_yaml_file, write_yaml_file
+from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
+from pack.modules.core.config.yaml_helpers import get_monkey_config_defaults, read_yaml_file, write_yaml_file
 from pack.modules.core.theme.theme_functions import print_t
 
 

@@ -3,7 +3,7 @@ import tiktoken
 from typing import List
 import openai
 
-from pack.modules.core.config_mgmt.env.env_class import ENV
+from pack.modules.core.config.env.env_class import ENV
 
 # Set up OpenAI client with API key
 ENV = ENV()

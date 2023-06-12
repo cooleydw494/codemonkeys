@@ -4,12 +4,12 @@ import sys
 import tempfile
 from io import StringIO
 
-from pack.modules.core.config_mgmt.yaml_helpers import read_yaml_file, write_yaml_file
+from pack.modules.core.config.yaml_helpers import read_yaml_file, write_yaml_file
 from ruamel.yaml import CommentedMap
 
 from definitions import ROOT_PATH, COMMANDS_CORE_PATH, MONKEY_MANIFEST_PATH, nl
-from pack.modules.core.config_mgmt.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
-from pack.modules.core.config_mgmt.monkey_config.monkey_config_validations import get_user_config_value, \
+from pack.modules.core.config.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
+from pack.modules.core.config.monkey_config.monkey_config_validations import get_user_config_value, \
     validate_monkey_name
 from pack.modules.core.theme.theme_functions import print_t, input_t
 from pack.modules.core.utils.monk_helpers.run_command_as_module import run_command_as_module

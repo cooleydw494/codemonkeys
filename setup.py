@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 from definitions import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
-from pack.modules.core.config_mgmt.environment_checks import monk_env_checks
+from pack.modules.core.config.environment_checks import monk_env_checks
 from pack.modules.core.theme.theme_functions import print_t
 
 print_t("Thanks for using CodeMonkeys!", 'monkey')

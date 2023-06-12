@@ -4,34 +4,27 @@ import pathlib
 from typing import List, Tuple
 
 from definitions import MONKEYS_PATH
-from pack.modules.core.config_mgmt.env.env_class import ENV
+from pack.modules.core.config.env.env_class import ENV
 from pack.modules.core.theme.theme_functions import print_t, input_t
 
 
 def list_monkeys() -> List[str]:
-    """
-    List all monkey YAML files in the directory.
-
-    :return: A list of monkey names (without the .yaml extension)
-    """
+    """ List all monkey configs.
+    :return: A list of monkey names """
     file_paths = glob.glob(os.path.join(MONKEYS_PATH, '*.yaml'))
     return [os.path.splitext(os.path.basename(file))[0] for file in file_paths]
 
 
 def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) -> Tuple[str, str]:
-    """
-    Retrieve the monkey name and corresponding configuration file path.
-
-    :param prompt_user:
+    """ Retrieve the monkey name and corresponding config path.
+    :param prompt_user: Whether or not to prompt the user
     :param given_monkey_name: A given monkey name
-    :return: A tuple consisting of monkey name and its configuration file path
-    """
-    def select_monkey_from_list() -> str:
-        """
-        Lists all monkeys and lets user select one.
+    :return: A tuple consisting of monkey name and its configuration file path """
 
-        :return: Selected monkey name
-        """
+    def select_monkey_from_list() -> str:
+        """ Lists all monkeys and lets user select one.
+        :return: Selected monkey name """
+
         print_t("Please select from the available monkeys:", 'warning')
         monkeys = list_monkeys()
         for idx, monkey in enumerate(monkeys, start=1):
@@ -40,11 +33,9 @@ def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) ->
         return monkeys[monkey_index]
 
     def monkey_exists(name: str) -> bool:
-        """
-        Check if monkey configuration file exists.
-
+        """ Checks if a generated monkey config exists.
         :param name: Monkey name
-        :return: True if file exists, False otherwise
+        :return: True if a generated config exists, False otherwise
         """
         return pathlib.Path(os.path.join(MONKEYS_PATH, f'{name}.yaml')).exists()
 

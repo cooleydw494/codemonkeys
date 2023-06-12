@@ -1,4 +1,4 @@
-from pack.modules.core.config_mgmt.monkey_config.monkey_config_validations import validate_str, validate_path, validate_int, \
+from pack.modules.core.config.monkey_config.monkey_config_validations import validate_str, validate_path, validate_int, \
     validate_float, validate_bool
 
 INPUT_PROMPTS = [
@@ -9,9 +9,9 @@ INPUT_PROMPTS = [
      "dialect."),
     ('WORK_PATH', validate_path,
      "What is the working directory of your automation? Ex: ~/Documents/love-poems"),
-    ('SPECIAL_FILE_PATH', validate_path,
-     "Enter the path to a file to be summarized using SUMMARY_PROMPT. (absolute path)"),
-    ('SUMMARY_PROMPT', validate_str,
+    ('CONTEXT_FILE_PATH', validate_path,
+     "Enter the path to a file to be summarized using CONTEXT_SUMMARY_PROMPT. (absolute path)"),
+    ('CONTEXT_SUMMARY_PROMPT', validate_str,
      "Provide a prompt for summarizing the 'Special File'. Press enter to skip summarization or if no Special File."),
     ('MAIN_MODEL', validate_int,
      "Enter the model to use for the main prompts. Choose 3 (gpt-3.5-turbo) or 4 (gpt-4)"),

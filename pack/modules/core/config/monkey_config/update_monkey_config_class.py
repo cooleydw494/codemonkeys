@@ -1,7 +1,7 @@
 import os
 
 from definitions import MONKEY_CONFIG_CLASS_PATH, nl
-from pack.modules.core.config_mgmt.yaml_helpers import get_monkey_config_defaults
+from pack.modules.core.config.yaml_helpers import get_monkey_config_defaults
 
 
 def update_monkey_config_class():

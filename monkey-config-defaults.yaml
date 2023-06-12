@@ -16,7 +16,7 @@
 #   PATH values will replace 'ROOT_PATH' with your project's root path
 #
 # - Validation logic is defined in
-#   `pack/modules/core/config_mgmt/monkey_config_validations.py`
+#   `pack/modules/core/config/monkey_config_validations.py`
 
 # General
 WORK_PATH: "ROOT_PATH/stor/usr/default_work_path"
@@ -24,13 +24,22 @@ FILE_TYPES_INCLUDED: ".js,.vue,.php"
 FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"
 FILE_SELECT_MAX_TOKENS: 3000
 MAX_TOKENS: 4000
-SPECIAL_FILE_PATH: "help.py"
 
-# Prompts
+
+# Main Prompts
 MAIN_PROMPT: "Please generate code for the following task..."
-SUMMARY_PROMPT: "Provide a summary of this file..."
 MAIN_PROMPT_ULTIMATUM: "Limit your response to the full contents of a python script, and nothing else."
 OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
+
+# Context / Summary
+# Note: Insert un-summarized context files into PROMPTs with {cop:<filepath>}
+CONTEXT_FILE_PATH: "help.py"
+CONTEXT_SUMMARY_PROMPT: "Provide a summary of this file..."
+
+# Output Checks
+CHECK_OUTPUT: False
+OUTPUT_TRIES_LIMIT: 1
+OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 
 # Output
 OUTPUT_PATH: "ROOT_PATH/stor/usr/default_output_path"
@@ -38,11 +47,6 @@ OUTPUT_EXT: ".py"
 OUTPUT_FILENAME_APPEND: ""
 OUTPUT_REMOVE_STRINGS: "```,```python"
 SKIP_EXISTING_OUTPUT_FILES: True
-
-# Output Checks
-CHECK_OUTPUT: False
-OUTPUT_TRIES_LIMIT: 1
-OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 
 # Models
 MAIN_MODEL: 4

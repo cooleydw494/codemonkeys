@@ -62,7 +62,7 @@ PACK_PATH = os.path.join(ROOT_PATH, "pack")
 MODULES_PATH = os.path.join(PACK_PATH, "modules")
 MODULES_CORE_PATH = os.path.join(MODULES_PATH, "core")
 MODULES_USR_PATH = os.path.join(MODULES_PATH, "usr")
-MODULES_CONFIG_MGMT_PATH = os.path.join(MODULES_CORE_PATH, "config_mgmt")
+MODULES_CONFIG_MGMT_PATH = os.path.join(MODULES_CORE_PATH, "config")
 
 # ENV CLASS
 ENV_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "env", "env_class.py")

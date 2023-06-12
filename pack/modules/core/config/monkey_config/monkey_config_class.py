@@ -4,9 +4,9 @@ import re
 from dataclasses import dataclass
 
 from definitions import MONKEYS_PATH
-from pack.modules.core.config_mgmt.env.env_class import ENV
-from pack.modules.core.config_mgmt.monkey_config.monkey_config_validations import is_path_key, is_prompt_key
-from pack.modules.core.config_mgmt.yaml_helpers import get_monkey_config_defaults
+from pack.modules.core.config.env.env_class import ENV
+from pack.modules.core.config.monkey_config.monkey_config_validations import is_path_key, is_prompt_key
+from pack.modules.core.config.yaml_helpers import get_monkey_config_defaults
 from pack.modules.core.theme.theme_functions import print_t
 
 
@@ -39,10 +39,10 @@ class MonkeyConfig:
     FILEPATH_MATCH_EXCLUDED: Optional[str] = field(default=None)
     MAX_TOKENS: Optional[int] = field(default=None)
     FILE_SELECT_MAX_TOKENS: Optional[int] = field(default=None)
-    SPECIAL_FILE_PATH: Optional[str] = field(default=None)
+    CONTEXT_FILE_PATH: Optional[str] = field(default=None)
     WORK_PATH: Optional[str] = field(default=None)
     MAIN_PROMPT: Optional[str] = field(default=None)
-    SUMMARY_PROMPT: Optional[str] = field(default=None)
+    CONTEXT_SUMMARY_PROMPT: Optional[str] = field(default=None)
     MAIN_PROMPT_ULTIMATUM: Optional[str] = field(default=None)
     CHECK_OUTPUT: Optional[bool] = field(default=None)
     OUTPUT_TRIES_LIMIT: Optional[int] = field(default=None)
@@ -69,15 +69,15 @@ class MonkeyConfig:
         """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
         Set MonkeyConfig props with validations, generated from monkey-config-defaults & monkey_config_validations. """
         # [MONKEY_CONFIG_VALIDATIONS_START]
-        from pack.modules.core.config_mgmt.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path, validate_list_str
+        from pack.modules.core.config.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path, validate_list_str
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
         self.FILEPATH_MATCH_EXCLUDED = validate_str('FILEPATH_MATCH_EXCLUDED', self.FILEPATH_MATCH_EXCLUDED)
         self.MAX_TOKENS = validate_int('MAX_TOKENS', self.MAX_TOKENS)
         self.FILE_SELECT_MAX_TOKENS = validate_int('FILE_SELECT_MAX_TOKENS', self.FILE_SELECT_MAX_TOKENS)
-        self.SPECIAL_FILE_PATH = validate_path('SPECIAL_FILE_PATH', self.SPECIAL_FILE_PATH)
+        self.CONTEXT_FILE_PATH = validate_path('CONTEXT_FILE_PATH', self.CONTEXT_FILE_PATH)
         self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
         self.MAIN_PROMPT = validate_str('MAIN_PROMPT', self.MAIN_PROMPT)
-        self.SUMMARY_PROMPT = validate_str('SUMMARY_PROMPT', self.SUMMARY_PROMPT)
+        self.CONTEXT_SUMMARY_PROMPT = validate_str('CONTEXT_SUMMARY_PROMPT', self.CONTEXT_SUMMARY_PROMPT)
         self.MAIN_PROMPT_ULTIMATUM = validate_str('MAIN_PROMPT_ULTIMATUM', self.MAIN_PROMPT_ULTIMATUM)
         self.CHECK_OUTPUT = validate_bool('CHECK_OUTPUT', self.CHECK_OUTPUT)
         self.OUTPUT_TRIES_LIMIT = validate_int('OUTPUT_TRIES_LIMIT', self.OUTPUT_TRIES_LIMIT)
@@ -102,7 +102,7 @@ class MonkeyConfig:
 
     @classmethod
     def load(cls, monkey_name: str) -> 'MonkeyConfig':
-        from pack.modules.core.config_mgmt.yaml_helpers import read_yaml_file
+        from pack.modules.core.config.yaml_helpers import read_yaml_file
 
         if cls._instance is None:
             monkey_path = os.path.join(MONKEYS_PATH, f"{monkey_name}.yaml")

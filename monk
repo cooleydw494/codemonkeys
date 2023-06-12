@@ -4,8 +4,8 @@ import subprocess
 import sys
 
 from definitions import nl
-from pack.modules.core.config_mgmt.environment_checks import monk_env_checks
-from pack.modules.core.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
+from pack.modules.core.config.environment_checks import monk_env_checks
+from pack.modules.core.config.regen_config_env_defs import regenerate_config_env_defs
 from pack.modules.core.theme.theme_functions import print_t
 from pack.modules.core.utils.find_entity import find_entity
 from pack.modules.core.utils.monk_helpers.handle_alternate_actions import handle_alternate_actions
