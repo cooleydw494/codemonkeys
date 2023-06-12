@@ -28,8 +28,8 @@ def update_env_class():
     required_end_marker_re = re.compile(r'\[\s*DEFINE_FRAMEWORK_ENV_PROPS_LIST_END\s*\]')
     framework_start_marker_re = re.compile(r'\[\s*DEFINE_FRAMEWORK_ENV_PROPS_START\s*\]')
     framework_end_marker_re = re.compile(r'\[\s*DEFINE_FRAMEWORK_ENV_PROPS_END\s*\]')
-    start_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_AND_MONKEY_CONFIG_OVERRIDE_PROPS_START\s*\]')
-    end_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_AND_MONKEY_CONFIG_OVERRIDE_PROPS_END\s*\]')
+    start_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_ENV_PROPS_START\s*\]')
+    end_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_ENV_PROPS_END\s*\]')
 
     required_start_index = required_end_index = framework_start_index = framework_end_index = start_index = end_index\
         = None

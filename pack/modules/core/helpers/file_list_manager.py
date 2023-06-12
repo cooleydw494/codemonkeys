@@ -4,7 +4,7 @@ from typing import List
 
 from definitions import STOR_TEMP_PATH, nl
 from pack.modules.core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from pack.modules.core.gpt.token_counter import TokenCounter
+from pack.modules.core.gpt.gpt_client import GPTClient
 from pack.modules.core.theme.theme_functions import print_t
 
 
@@ -15,7 +15,7 @@ class FileListManager:
         self.include_extensions = self.m.FILE_TYPES_INCLUDED.split(',')
         self.exclude_patterns = self.m.FILEPATH_MATCH_EXCLUDED.split(',')
         self.max_tokens = self.m.FILE_SELECT_MAX_TOKENS
-        self.token_counter = TokenCounter(m.MAIN_MODEL)
+        self.gpt_client = GPTClient(m.MAIN_MODEL)
         self.output_file = os.path.join(STOR_TEMP_PATH, 'files-to-process.txt')
 
     @staticmethod
@@ -42,7 +42,7 @@ class FileListManager:
                 if self.should_include(file):
                     absolute_path = self.resolve_path(os.path.join(root, file))
                     with open(absolute_path, 'r') as f:
-                        num_tokens = self.token_counter.count_tokens(f.read())
+                        num_tokens = self.gpt_client.count_tokens(f.read())
 
                     if num_tokens <= self.max_tokens:
                         filtered_files.append(absolute_path)

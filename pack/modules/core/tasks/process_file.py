@@ -3,7 +3,6 @@ import os
 from definitions import nl, nl2, _or, TOKEN_UNCERTAINTY_BUFFER
 from pack.modules.core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.gpt.gpt_client import GPTClient
-from pack.modules.core.gpt.token_counter import TokenCounter
 from pack.modules.core.tasks.check_output import check_output
 from pack.modules.core.theme.theme_functions import print_t
 
@@ -12,7 +11,6 @@ def process_file(the_file_path, special_file_summary: str = '', m: MonkeyConfig 
     print(f"Processing file: {the_file_path}")
 
     the_file_name = os.path.basename(the_file_path)
-    # the_file_name = os.path.splitext(os.path.basename(the_file_path))[0]
 
     # Prepare output filename
     output_filename = f"{the_file_name}{m.OUTPUT_FILENAME_APPEND}{m.OUTPUT_EXT}"
@@ -40,12 +38,8 @@ def process_file(the_file_path, special_file_summary: str = '', m: MonkeyConfig 
                       f"```<file contents>```{nl2}{ultimatum}{nl2}{output_example}"
     print_t(f"Full prompt:{nl}{full_prompt_log}", 'info')
 
-    token_counter = TokenCounter(m.MAIN_MODEL)
-    full_prompt_tokens = token_counter.count_tokens(full_prompt)
-    remaining_tokens = m.MAX_TOKENS - full_prompt_tokens - TOKEN_UNCERTAINTY_BUFFER
-
     # Prepare GPT client for Main Prompt
-    main_gpt_client = GPTClient(m.MAIN_MODEL, remaining_tokens, m.MAIN_TEMP)
+    main_gpt_client = GPTClient(m.MAIN_MODEL, m.MAIN_TEMP, m.MAX_TOKENS)
 
     # Prepare output directory
     output_dir = os.path.join(m.OUTPUT_PATH)

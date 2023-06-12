@@ -1,4 +1,4 @@
-Use the following summary of the monk cli, theme functions avaiable to writing help scripts, and text themes for those theme functions, to help you write your final help script. Use this knowledge to inform your approach rather than directly referencing it or making it the focus of your script:
+Use the following summary of the monk cli, theme functions available to writing help scripts, and text themes for those theme functions, to help you write your final help script. Use this knowledge to inform your approach rather than directly referencing it or making it the focus of your script:
 
 ```
 CodeMonkeys & Monk CLI description. This is the CLI that will run the commands you're writing help scripts for:

@@ -1,17 +1,13 @@
 import os
-import sys
-
+import tiktoken
+from typing import List
 import openai
 
 from pack.modules.core.config_mgmt.env.env_class import ENV
-from pack.modules.core.theme.theme_functions import print_t
 
 # Set up OpenAI client with API key
 ENV = ENV()
 openai.api_key = ENV.OPENAI_API_KEY
-
-# Singleton instance variable for GPT models
-GPT_MODELS = None
 
 
 def check_api_key():
@@ -20,55 +16,64 @@ def check_api_key():
 
 
 class GPTClient:
-    def __init__(self, version, max_tokens=int(os.getenv("MAX_TOKENS", 4000)), temperature=1.0):
-        self.engine_map = {
-            '3': "gpt-3.5-turbo",
-            '4': "gpt-4"
-        }
-        self.engine = self.engine_map.get(str(version))
+    model_map = {
+        '3': ("gpt-3.5-turbo", 4000),
+        '4': ("gpt-4", 8000),
+    }
 
-        if not self.engine:
-            raise ValueError(f"Unsupported GPT version: {version}")
+    def __init__(self, model_name, temperature=1.0, max_tokens=1000000):
+        model_info = self.model_map.get(str(model_name))
+        if model_info is None:
+            raise ValueError(f"Unsupported GPT version: {model_name}")
 
-        self.max_tokens = max_tokens
+        self.model, self.hard_max_tokens = model_info
+        self.max_tokens = min(max_tokens, self.hard_max_tokens)
         self.temperature = temperature
+        self.encoding = tiktoken.encoding_for_model(self.model)
 
     def generate(self, prompt, temperature=None):
         check_api_key()
+        temperature = temperature or self.temperature
 
-        if temperature is None:
-            temperature = self.temperature
+        max_tokens = self.max_tokens - self.count_tokens(prompt)
 
         response = openai.ChatCompletion.create(
-            model=self.engine,
+            model=self.model,
             messages=[{'role': 'user', 'content': prompt}],
-            max_tokens=self.max_tokens,
+            max_tokens=max_tokens,
             temperature=temperature
         )
 
-        # TODO: implement control of the number of options and selection
         return response.choices[0].message.content.strip()
 
+    def tokenize(self, text: str) -> List[int]:
+        return self.encoding.encode(text)
 
-def instantiate_gpt_models():
-    global GPT_MODELS
+    def detokenize(self, tokens) -> str:
+        if not tokens:
+            return ""
+        elif isinstance(tokens, int):
+            return self.encoding.decode_single_token_bytes(tokens).decode('utf-8')
+        else:
+            return self.encoding.decode(tokens)
 
-    # Instantiate GPT models only if not done already
-    if GPT_MODELS is None:
-        print_t("Instantiating GPT models...", "info")
-        model_versions = {3, 4}
-        GPT_MODELS = {version: GPTClient(version) for version in model_versions}
-        print_t("GPT models instantiated successfully.", "success")
+    def count_tokens(self, text: str) -> int:
+        return len(self.tokenize(text))
 
-    return GPT_MODELS
+    def shorten_to_n_tokens(self, text: str, n: int, end=False) -> str:
+        tokens = self.tokenize(text)
+        if len(tokens) <= n:
+            return text
+        return self.detokenize(tokens[:n] if not end else tokens[-n:])
 
+    def split_into_chunks(self, text: str, chunk_size: int) -> List[str]:
+        tokens = self.tokenize(text)
+        return [self.detokenize(tokens[i:i + chunk_size]) for i in range(0, len(tokens), chunk_size)]
 
-def gpt_client(model_name):
-    # Get the GPT models
-    gpt_models = instantiate_gpt_models()
-    """Get the GPT client based on the model name"""
-    client = gpt_models.get(model_name)
-    if not client:
-        print_t(f"Model '{model_name}' not found.", "error")
-        sys.exit(1)
-    return client
+    def num_tokens_from_messages(self, messages: List[dict]) -> int:
+        tokens_per_message = 4 if self.model == "gpt-3.5-turbo" else 3
+        tokens_per_name = -1 if self.model == "gpt-3.5-turbo" else 1
+
+        return sum(tokens_per_message + sum(self.count_tokens(val) for key, val in msg.items()) + (
+            tokens_per_name if 'name' in msg else 0)
+                   for msg in messages) + 3

@@ -19,23 +19,18 @@
 #   `pack/modules/core/config_mgmt/monkey_config_validations.py`
 
 # General
+WORK_PATH: "ROOT_PATH/stor/usr/default_work_path"
 FILE_TYPES_INCLUDED: ".js,.vue,.php"
 FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"
-MAX_TOKENS: 4000
 FILE_SELECT_MAX_TOKENS: 3000
+MAX_TOKENS: 4000
 SPECIAL_FILE_PATH: "help.py"
-WORK_PATH: "ROOT_PATH/stor/usr/default_work_path"
 
 # Prompts
 MAIN_PROMPT: "Please generate code for the following task..."
 SUMMARY_PROMPT: "Provide a summary of this file..."
 MAIN_PROMPT_ULTIMATUM: "Limit your response to the full contents of a python script, and nothing else."
-
-# Output Checks
-CHECK_OUTPUT: False
-OUTPUT_TRIES_LIMIT: 1
 OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
-OUTPUT_CHECK_PROMPT: "Examine the following output and determine if 1. The output is complete and 2. The output is limited strictly to the contents of a file. Format your response exactly like this: ```is_limited_to_file_contents:[1/0],is_complete:[1/0]```."
 
 # Output
 OUTPUT_PATH: "ROOT_PATH/stor/usr/default_output_path"
@@ -44,12 +39,17 @@ OUTPUT_FILENAME_APPEND: ""
 OUTPUT_REMOVE_STRINGS: "```,```python"
 SKIP_EXISTING_OUTPUT_FILES: True
 
-# Prompt-specific Models
+# Output Checks
+CHECK_OUTPUT: False
+OUTPUT_TRIES_LIMIT: 1
+OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
+
+# Models
 MAIN_MODEL: 4
 SUMMARY_MODEL: 4
 OUTPUT_CHECK_MODEL: 3
 
-# Prompt-specific Temps
+# Temps
 MAIN_TEMP: 1.0
 SUMMARY_TEMP: 1.0
 OUTPUT_CHECK_TEMP: .5

@@ -1,12 +1,11 @@
-"""==================================================================================================================***
-***==  MONKEY MANIFEST  =============================================================================================***
-***                                                                                                                  ***
-***    The Monkey Manifest houses centralized configuration of automation profiles (monkeys).                        ***
-***                                                                                                                  ***
-***    Undefined props will default based on `stor/core/defaults/monkey-config-defaults.yaml`.                ***
-***    Monkey props defined in your .env will override the framework defaults.                                       ***
-***                                                                                                                  ***
-***=================================================================================================================="""
+"""==========================================================================================***
+***==  MONKEY MANIFEST  =====================================================================***
+***
+***    The Monkey Manifest houses centralized configuration of automation profiles (monkeys).
+***
+***    Undefined props will default based on `stor/core/defaults/monkey-config-defaults.yaml`.
+***
+***=========================================================================================="""
 
 import os
 from dataclasses import dataclass
@@ -34,6 +33,6 @@ class ENV:
     """ GENERATED ENV PROPERTIES - DO NOT MODIFY
     Any other properties defined in your .env will be generated and written here on each run of `monk`,
     enabling full, easy IDE support for any custom .env values. """
-    # [DEFINE_CUSTOM_AND_MONKEY_CONFIG_OVERRIDE_PROPS_START]
+    # [DEFINE_CUSTOM_ENV_PROPS_START]
 
-    # [DEFINE_CUSTOM_AND_MONKEY_CONFIG_OVERRIDE_PROPS_END]
+    # [DEFINE_CUSTOM_ENV_PROPS_END]

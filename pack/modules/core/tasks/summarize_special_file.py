@@ -3,7 +3,6 @@ import os
 from definitions import TOKEN_UNCERTAINTY_BUFFER, nl
 from pack.modules.core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.gpt.gpt_client import GPTClient
-from pack.modules.core.gpt.token_counter import TokenCounter
 from pack.modules.core.theme.theme_functions import print_t
 
 
@@ -12,6 +11,8 @@ def summarize_special_file(m: MonkeyConfig):
     special_file = os.path.expanduser(m.SPECIAL_FILE_PATH)
     if not os.path.isfile(special_file):
         raise FileNotFoundError(f"The special file {special_file} does not exist.")
+
+    summary_client = GPTClient(m.SUMMARY_MODEL, m.SUMMARY_TEMP, m.MAX_TOKENS)
 
     special_file_contents = ''
 
@@ -28,8 +29,7 @@ def summarize_special_file(m: MonkeyConfig):
             print_t(f"No Special File", 'quiet')
         return None
     else:
-        token_counter = TokenCounter(m.SUMMARY_MODEL)
-        special_file_contents = token_counter.split_into_chunks(special_file_contents, m.MAX_TOKENS)
+        special_file_contents = summary_client.split_into_chunks(special_file_contents, m.MAX_TOKENS)
 
     special_file_contents = '' if special_file_contents == '' else special_file_contents
 
@@ -41,9 +41,6 @@ def summarize_special_file(m: MonkeyConfig):
 
     # If not chunked (length 1), summarize the special file
     summary_prompt = f'{m.SUMMARY_PROMPT}: ```{special_file_contents[0]}```'
-    summary_prompt_tokens = token_counter.count_tokens(summary_prompt)
-    remaining_tokens = m.MAX_TOKENS - summary_prompt_tokens - TOKEN_UNCERTAINTY_BUFFER
-    summary_client = GPTClient(m.SUMMARY_MODEL, remaining_tokens, m.SUMMARY_TEMP)
     special_file_summary = summary_client.generate(summary_prompt)
 
     # Check if a summary was successfully generated
