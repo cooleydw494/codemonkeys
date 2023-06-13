@@ -1,7 +1,5 @@
 import subprocess
 
-from termcolor import colored  # *DO NOT* import print_t or any other framework modules in this file
-
 """
 This module is imported to definitions.py to set a reliable, globally-available PYTHON_COMMAND and PIP_COMMAND.
 """
@@ -16,8 +14,8 @@ def get_python_command():
     for cmd in python_commands:
         if test_command(cmd):
             return cmd
-    print(colored("No valid python command is available. Please add one of these to your path, "
-                  "or set the PYTHON_COMMAND manually in definitions.py", 'error'))
+    print("No valid python command is available. Please add one of these to your path, "
+          "or set the PYTHON_COMMAND manually in definitions.py")
 
 
 def get_pip_command():
@@ -25,8 +23,8 @@ def get_pip_command():
     for cmd in pip_commands:
         if test_command(cmd):
             return cmd
-    print(colored("No valid pip command is available. Please add one of these to your path, "
-                  "or set the PIP_COMMAND manually in definitions.py", 'error'))
+    print("No valid pip command is available. Please add one of these to your path, "
+          "or set the PIP_COMMAND manually in definitions.py")
 
 
 # noinspection PyBroadException
