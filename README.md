@@ -121,16 +121,6 @@ actually*).
 * `modules`: Python modules for both framework support and customized functionality.
 * `definitions.py`: A root-level file providing absolute path variables for both framework and custom use.
 
-## Tiny Helpers
-
-### Commit Script
-
-Stage, Commit, & Push as nature intended: **all at once in ~0s**. (may result in afterlife punishment)
-
-```bash
-./c "<3 added ./c to README. PS: Te amo Mau <3"
-```
-
 ## Attribution
 
 When forking or creating derivative works from CodeMonkeys, I kindly ask you to:

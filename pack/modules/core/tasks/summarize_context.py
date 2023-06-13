@@ -1,6 +1,6 @@
 import os
 
-from definitions import TOKEN_UNCERTAINTY_BUFFER, nl
+from definitions import nl
 from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.abilities.gpt_client import GPTClient
 from pack.modules.core.theme.theme_functions import print_t
