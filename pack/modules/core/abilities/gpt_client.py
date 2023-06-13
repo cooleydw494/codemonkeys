@@ -3,6 +3,7 @@ import tiktoken
 from typing import List
 import openai
 
+from definitions import TOKEN_UNCERTAINTY_BUFFER
 from pack.modules.core.config.env.env_class import ENV
 
 # Set up OpenAI client with API key
@@ -35,7 +36,7 @@ class GPTClient:
         check_api_key()
         temperature = temperature or self.temperature
 
-        max_tokens = self.max_tokens - self.count_tokens(prompt)
+        max_tokens = self.max_tokens - self.count_tokens(prompt) - TOKEN_UNCERTAINTY_BUFFER
 
         response = openai.ChatCompletion.create(
             model=self.model,
