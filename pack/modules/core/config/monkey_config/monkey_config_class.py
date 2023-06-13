@@ -164,13 +164,6 @@ class MonkeyConfig:
         config_properties = {f.name for f in dataclasses.fields(cls)}
         config_properties.remove('ENV')
 
-        env = ENV()
-
-        for attribute in env.__annotations__:
-            if attribute in config_properties and config_values.get(attribute, '**unset') == '**unset' \
-                    and getattr(env, attribute, None) is not None:
-                config_values[attribute] = getattr(env, attribute)
-
         monkey_config_defaults = get_monkey_config_defaults()
         for attribute in monkey_config_defaults:
             if config_values.get(attribute, '**unset') == '**unset' and monkey_config_defaults[attribute] is not None:

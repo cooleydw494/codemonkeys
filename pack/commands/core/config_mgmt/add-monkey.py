@@ -63,4 +63,4 @@ def main(monk_args: argparse.Namespace):
     print_t("Config complete. The 'monkey-manifest.yaml' file has been updated.", 'done')
     run_generate = input_t("Run `monk generate-monkeys` to complete the config process?", '(y/n)')
     if run_generate.lower() == 'y':
-        run_as_module(os.path.join(COMMANDS_CORE_PATH, 'generate-monkeys.py'), 'main', [])
+        run_as_module(os.path.join(COMMANDS_CORE_PATH, '../../../modules/core/utils/monk_helpers/generate_monkeys.py'), 'main', [])

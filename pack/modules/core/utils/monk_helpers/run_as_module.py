@@ -22,7 +22,7 @@ def run_as_module(module_path, function_name='main', monk_args=None):
 
         # If the function takes no args, just run it. This should work IMO, but framework commands will always define
         # monk_args regardless of need to re-enforce the paradigm (this is inspired by dependency injection)
-        # (ex: generate-monkeys.py@main)
+        # (ex: generate_monkeys.py@main)
         elif args_count == 0:
             return function()
 

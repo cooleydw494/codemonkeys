@@ -1,0 +1,1 @@
+Use context files to inject context into every iteration of your prompt. This can be done with pre-prepared content (very effective), but also there is built-in context file summarization that can be used to generate a summary of a longer file, or any kind of generated output you'd like based on a context file.

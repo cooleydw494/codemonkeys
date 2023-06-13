@@ -19,7 +19,7 @@
 #   `pack/modules/core/config/monkey_config_validations.py`
 
 # General
-WORK_PATH: "ROOT_PATH/stor/usr/default_work_path"
+WORK_PATH: "ROOT_PATH/stor/usr/work_path"
 FILE_TYPES_INCLUDED: ".js,.vue,.php"
 FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"
 FILE_SELECT_MAX_TOKENS: 3000
@@ -33,7 +33,7 @@ OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, 
 
 # Context / Summary
 # Note: Insert un-summarized context files into PROMPTs with {cop:<filepath>}
-CONTEXT_FILE_PATH: "help.py"
+CONTEXT_FILE_PATH: "ROOT_PATH/stor/usr/context_files/example.txt"
 CONTEXT_SUMMARY_PROMPT: "Provide a summary of this file..."
 
 # Output Checks
@@ -42,7 +42,7 @@ OUTPUT_TRIES_LIMIT: 1
 OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 
 # Output
-OUTPUT_PATH: "ROOT_PATH/stor/usr/default_output_path"
+OUTPUT_PATH: "ROOT_PATH/stor/usr/output"
 OUTPUT_EXT: ".py"
 OUTPUT_FILENAME_APPEND: ""
 OUTPUT_REMOVE_STRINGS: "```,```python"

@@ -38,12 +38,12 @@
 default:
 
   # General
-  WORK_PATH: "ROOT_PATH/stor/usr/default_work_path"
+  WORK_PATH: "ROOT_PATH/stor/usr/work_path"
   FILE_TYPES_INCLUDED: ".js,.vue,.php"
   FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"
   FILE_SELECT_MAX_TOKENS: 3000
   MAX_TOKENS: 4000
-  CONTEXT_FILE_PATH: "help.py"
+#  CONTEXT_FILE_PATH: "help.py"
 
   # Prompts
   MAIN_PROMPT: "Please generate code for the following task..."
@@ -52,7 +52,7 @@ default:
   OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
 
   # Output
-  OUTPUT_PATH: "ROOT_PATH/stor/usr/default_output_path"
+  OUTPUT_PATH: "ROOT_PATH/stor/usr/output"
   OUTPUT_EXT: ".py"
   OUTPUT_FILENAME_APPEND: ""
   OUTPUT_REMOVE_STRINGS: "```,```python"
@@ -78,12 +78,12 @@ long-form:
   # A monkey for generating long-form content outside of hard token limits.
 
   # General
-  WORK_PATH: "ROOT_PATH/stor/usr/default_work_path"
+  WORK_PATH: "ROOT_PATH/stor/usr/work_path"
   FILE_TYPES_INCLUDED: ".js,.vue,.php"
   FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"
   FILE_SELECT_MAX_TOKENS: 3000
   MAX_TOKENS: 4000
-  CONTEXT_FILE_PATH: "help.py"
+#  CONTEXT_FILE_PATH: "help.py"
 
   # Prompts
   MAIN_PROMPT: "Please generate code for the following task..."
@@ -92,7 +92,7 @@ long-form:
   OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
 
   # Output
-  OUTPUT_PATH: "ROOT_PATH/stor/usr/default_output_path"
+  OUTPUT_PATH: "ROOT_PATH/stor/usr/output"
   OUTPUT_EXT: ".py"
   OUTPUT_FILENAME_APPEND: ""
   OUTPUT_REMOVE_STRINGS: "```,```python"
@@ -132,7 +132,7 @@ long-form:
 #  Monkeys that exist to work on the CodeMonkeys framework itself.
 
 
-self-extract:
+#self-extract:
   # A monkey for extracting functionality into a new file and implementing usage in the old file.
   # TODO: Implement this monkey
 
@@ -162,7 +162,7 @@ self-help:
   OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 
   # Output
-  #  'OUTPUT_PATH': "ROOT_PATH/stor/usr/default_work_path/output"  # default
+  #  'OUTPUT_PATH': "ROOT_PATH/stor/usr/work_path/output"  # default
   OUTPUT_EXT: '.py'
   OUTPUT_FILENAME_APPEND: "-help"
   OUTPUT_TRIES_LIMIT: 2

@@ -5,10 +5,11 @@ import sys
 
 from definitions import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
 
-print("Initiating the setup process...")
+print("\033[92m" + "Initiating the setup process..." + "\033[0m")
 
 # Install required python modules from requirements.txt
-print("Installing the required Python modules from the requirements.txt file...")
+print("\033[93m" + "Installing the required Python modules from the requirements.txt file..." + "\033[0m")
+
 subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
 from pack.modules.core.config.environment_checks import monk_env_checks
