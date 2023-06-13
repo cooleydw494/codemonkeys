@@ -4,7 +4,7 @@ import sys
 import yaml
 from ruamel.yaml import YAML
 
-from definitions import STOR_DEFAULTS_PATH, MONKEY_CONFIG_DEFAULTS_PATH
+from definitions import MONKEY_CONFIG_DEFAULTS_PATH
 from pack.modules.core.theme.theme_functions import print_t
 
 

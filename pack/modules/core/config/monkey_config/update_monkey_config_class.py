@@ -1,5 +1,3 @@
-import os
-
 from definitions import MONKEY_CONFIG_CLASS_PATH, nl
 from pack.modules.core.config.yaml_helpers import get_monkey_config_defaults
 

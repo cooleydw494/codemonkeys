@@ -1,8 +1,8 @@
 import subprocess
 import sys
 
-from pack.modules.core.theme.theme_functions import print_t
 from pack.commands.core.utils.help import main as run_help
+from pack.modules.core.theme.theme_functions import print_t
 
 
 def handle_alternate_actions(action, script_path):

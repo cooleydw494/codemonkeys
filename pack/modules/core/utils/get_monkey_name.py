@@ -4,7 +4,6 @@ import pathlib
 from typing import List, Tuple
 
 from definitions import MONKEYS_PATH
-from pack.modules.core.config.env.env_class import ENV
 from pack.modules.core.theme.theme_functions import print_t, input_t
 
 

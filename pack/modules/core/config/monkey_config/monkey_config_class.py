@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 from definitions import MONKEYS_PATH
 from pack.modules.core.config.env.env_class import ENV
-from pack.modules.core.config.monkey_config.monkey_config_validations import is_path_key, is_prompt_key
+from pack.modules.core.config.monkey_config.monkey_config_validations import is_prompt_key
 from pack.modules.core.config.yaml_helpers import get_monkey_config_defaults
 from pack.modules.core.theme.theme_functions import print_t
 
@@ -30,7 +30,6 @@ class MonkeyConfig:
     """ MONKEY_CONFIG_PROPS - DO NOT MODIFY
         Definitions of MonkeyConfig props, generated from monkey-config-defaults. """
     # [MONKEY_CONFIG_PROPS_START]
-    from types import NoneType
     from typing import Optional
 
     from ruamel.yaml.scalarfloat import ScalarFloat
@@ -69,7 +68,7 @@ class MonkeyConfig:
         """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
         Set MonkeyConfig props with validations, generated from monkey-config-defaults & monkey_config_validations. """
         # [MONKEY_CONFIG_VALIDATIONS_START]
-        from pack.modules.core.config.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path, validate_list_str
+        from pack.modules.core.config.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path
         self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
         self.FILEPATH_MATCH_EXCLUDED = validate_str('FILEPATH_MATCH_EXCLUDED', self.FILEPATH_MATCH_EXCLUDED)

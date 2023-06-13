@@ -1,8 +1,8 @@
 import os
 
-from definitions import nl, nl2, _or, TOKEN_UNCERTAINTY_BUFFER
-from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
+from definitions import nl, nl2, _or
 from pack.modules.core.abilities.gpt_client import GPTClient
+from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.tasks.check_output import check_output
 from pack.modules.core.theme.theme_functions import print_t
 

@@ -1,7 +1,7 @@
-import os
-import tiktoken
 from typing import List
+
 import openai
+import tiktoken
 
 from definitions import TOKEN_UNCERTAINTY_BUFFER
 from pack.modules.core.config.env.env_class import ENV
