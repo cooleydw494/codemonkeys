@@ -2,7 +2,7 @@ import glob
 import os
 import sys
 
-from definitions import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH
+from defs import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH
 from pack.modules.core.theme.theme_functions import print_t
 
 

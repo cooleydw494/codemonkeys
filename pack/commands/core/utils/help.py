@@ -3,7 +3,7 @@ import json
 import os
 from pathlib import Path
 
-from definitions import STOR_MONK_PATH, nl2, nl
+from defs import STOR_MONK_PATH, nl2, nl
 from pack.modules.core.theme.theme_functions import print_banner, print_table, print_t, apply_t
 
 

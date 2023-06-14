@@ -1,7 +1,7 @@
 import os
 
 from __init__ import __version__
-from definitions import ROOT_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH, nl
+from defs import ROOT_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH, nl
 from pack.modules.core.theme.theme_functions import print_t, print_tree
 from pack.modules.core.utils.monk_helpers.handle_alternate_actions import handle_help
 
@@ -16,7 +16,7 @@ def handle_special_commands(args, action, entity, entity_type):
 
     # Toggle light mode
     elif args.toggle_light_mode:
-        with open(os.path.join(ROOT_PATH, "definitions.py"), "r+") as file:
+        with open(os.path.join(ROOT_PATH, "defs.py"), "r+") as file:
             lines = file.readlines()
             file.seek(0)
             for line in lines:

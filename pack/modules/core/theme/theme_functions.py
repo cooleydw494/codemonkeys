@@ -7,7 +7,7 @@ from math import floor
 from termcolor import colored, COLORS
 
 from __init__ import __version__
-from definitions import LIGHT_MODE_ENABLED, KEYWORDS, MAX_TERMINAL_WIDTH, STOR_MONK_PATH, nl
+from defs import LIGHT_MODE_ENABLED, KEYWORDS, MAX_TERMINAL_WIDTH, STOR_MONK_PATH, nl
 from pack.modules.usr.theme.theme_config import text_themes
 
 

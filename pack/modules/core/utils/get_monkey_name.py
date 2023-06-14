@@ -3,7 +3,7 @@ import os
 import pathlib
 from typing import List, Tuple
 
-from definitions import MONKEYS_PATH
+from defs import MONKEYS_PATH
 from pack.modules.core.theme.theme_functions import print_t, input_t
 
 

@@ -3,7 +3,7 @@ import os
 import re
 from dataclasses import dataclass
 
-from definitions import MONKEYS_PATH
+from defs import MONKEYS_PATH
 from pack.modules.core.config.env.env_class import ENV
 from pack.modules.core.config.monkey_config.monkey_config_validations import is_prompt_key
 from pack.modules.core.config.yaml_helpers import get_monkey_config_defaults

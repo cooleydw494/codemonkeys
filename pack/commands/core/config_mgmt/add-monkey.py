@@ -6,7 +6,7 @@ from io import StringIO
 
 from ruamel.yaml import CommentedMap
 
-from definitions import COMMANDS_CORE_PATH, MONKEY_MANIFEST_PATH, nl
+from defs import COMMANDS_CORE_PATH, MONKEY_MANIFEST_PATH, nl
 from pack.modules.core.config.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
 from pack.modules.core.config.monkey_config.monkey_config_validations import get_user_config_value, \
     validate_monkey_name

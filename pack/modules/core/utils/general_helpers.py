@@ -2,7 +2,7 @@ import os
 
 import Levenshtein
 
-from definitions import STOR_TEMP_PATH
+from defs import STOR_TEMP_PATH
 
 
 def select_next_file():

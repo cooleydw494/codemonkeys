@@ -3,7 +3,7 @@ import os
 import shutil
 import time
 
-from definitions import MONKEYS_PATH, MONKEY_MANIFEST_PATH
+from defs import MONKEYS_PATH, MONKEY_MANIFEST_PATH
 from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.config.yaml_helpers import read_yaml_file, write_yaml_file
 from pack.modules.core.theme.theme_functions import print_t

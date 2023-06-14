@@ -1,6 +1,6 @@
 import os
 
-from definitions import nl, nl2, _or
+from defs import nl, nl2, _or
 from pack.modules.core.abilities.gpt_client import GPTClient
 from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.tasks.check_output import check_output

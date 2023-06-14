@@ -2,7 +2,7 @@ import os
 import sys
 from typing import Generator, List, Tuple
 
-from definitions import nl
+from defs import nl
 from pack.modules.core.theme.theme_functions import print_t, input_t
 from pack.modules.core.utils.find_entity_helpers import get_entity_paths, verify_unique_entity_names
 from pack.modules.core.utils.general_helpers import levenshtein_distance

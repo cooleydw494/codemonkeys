@@ -1,6 +1,6 @@
 import argparse
 
-from definitions import ROOT_PATH
+from defs import ROOT_PATH
 from pack.modules.core.theme.theme_functions import print_tree
 
 

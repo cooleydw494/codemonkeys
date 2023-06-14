@@ -2,7 +2,7 @@ import os
 import time
 from typing import List
 
-from definitions import STOR_TEMP_PATH, nl
+from defs import STOR_TEMP_PATH, nl
 from pack.modules.core.abilities.gpt_client import GPTClient
 from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.theme.theme_functions import print_t

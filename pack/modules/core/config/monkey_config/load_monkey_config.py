@@ -1,6 +1,6 @@
 import os
 
-from definitions import STOR_TEMP_PATH
+from defs import STOR_TEMP_PATH
 from pack.modules.core.config.monkey_config.monkey_config_class import MonkeyConfig
 from pack.modules.core.theme.theme_functions import print_t, input_t, apply_t
 from pack.modules.core.utils.get_monkey_name import get_monkey_name

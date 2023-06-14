@@ -3,7 +3,7 @@ import platform
 import subprocess
 import sys
 
-from definitions import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
+from defs import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
 
 print("\033[92m" + "Initiating the setup process..." + "\033[0m")
 

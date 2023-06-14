@@ -4,7 +4,7 @@ import sys
 import yaml
 from ruamel.yaml import YAML
 
-from definitions import MONKEY_CONFIG_DEFAULTS_PATH
+from defs import MONKEY_CONFIG_DEFAULTS_PATH
 from pack.modules.core.theme.theme_functions import print_t
 
 

@@ -2,7 +2,7 @@ import os
 import re
 from typing import List
 
-from definitions import ROOT_PATH
+from defs import ROOT_PATH
 from pack.modules.core.theme.theme_functions import input_t, print_t
 
 valid_values = {

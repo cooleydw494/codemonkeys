@@ -92,7 +92,7 @@ PIP_COMMAND = get_pip_command()
 
 # KEYWORDS (bold in CLI prints)
 KEYWORDS = (lambda words: sorted(words, key=len, reverse=True))([
-    'pseudo-package', 'entity types', 'definitions.py', 'CodeMonkeys', 'automations', 'action flags', 'entity type',
+    'pseudo-package', 'entity types', 'defs.py', 'CodeMonkeys', 'automations', 'action flags', 'entity type',
     'barrels', 'modules', 'commands', 'monkeys', 'actions', 'barrel', 'module', 'action flag', 'automation', 'command',
     'monkey', 'types', 'pack', 'cli', 'monk'])
 

@@ -3,7 +3,7 @@ import re
 
 from dotenv import dotenv_values
 
-from definitions import ENV_CLASS_PATH, ROOT_PATH, STOR_DEFAULTS_PATH, nl
+from defs import ENV_CLASS_PATH, ROOT_PATH, STOR_DEFAULTS_PATH, nl
 from pack.modules.core.config.env.get_env_prop_type import get_env_prop_type
 
 ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
