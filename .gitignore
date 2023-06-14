@@ -9,7 +9,7 @@ TODO.md
 # Generated Monkey Configs (even pre-packaged) are ignored
 # It is good practice to not add files that are generated.
 # Also monkey configs will almost definitely contain sensitive info, given the inclusion of OPENAI_API_KEY
-monkeys/*
+config/monkeys/*
 
 # Python artifacts
 *.pyc

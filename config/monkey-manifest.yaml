@@ -151,10 +151,10 @@ self-help:
   # Main Prompts
   MAIN_PROMPT: 'Write a python script that prints an appealing summary of the {the-file} scripts and its usage via `monk {the-file}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {the-file}, use the provided monk command context and print_t function to generate a script that prints a help summary for {the-file}.'
   MAIN_PROMPT_ULTIMATUM: 'Return only the contents of script that prints a helpful summary and usage explanation of {the-file}.'
-  OUTPUT_EXAMPLE_PROMPT: "Make your output resemble this example: ```{cop:~/local-git/code-monkeys/self-help-special-file.md}```."
+  OUTPUT_EXAMPLE_PROMPT: "Make your output resemble this example: ```{cop:~/local-git/codemonkeys/self-help-special-file.md}```."
 
   # Context
-  CONTEXT_FILE_PATH: '~/local-git/code-monkeys/self-help-special-file.md'
+  CONTEXT_FILE_PATH: '~/local-git/codemonkeys/self-help-special-file.md'
   CONTEXT_SUMMARY_PROMPT: null  # CONTEXT_FILE is pre-prepared summary
 
   # Output Checks

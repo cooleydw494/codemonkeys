@@ -34,16 +34,17 @@ MONK_PATH = os.path.join(ROOT_PATH, "monk")
 # ENV
 ENV_PATH = os.path.join(ROOT_PATH, "env")
 
+# CONFIG
+CONFIG_PATH = os.path.join(ROOT_PATH, "config")
+
 # MONKEY MANIFEST
-MONKEY_MANIFEST_PATH = os.path.join(ROOT_PATH, "monkey-manifest.yaml")
+MONKEY_MANIFEST_PATH = os.path.join(CONFIG_PATH, "monkey-manifest.yaml")
 
 # MONKEY CONFIG DEFAULTS
-MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(ROOT_PATH, "monkey-config-defaults.yaml")
+MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(CONFIG_PATH, "monkey-config-defaults.yaml")
 
-# MONKEYS (configs)
-MONKEYS_PATH = os.path.join(ROOT_PATH, "monkeys")
-MONKEYS_CORE_PATH = os.path.join(MONKEYS_PATH, "core")
-MONKEYS_USR_PATH = os.path.join(MONKEYS_PATH, "usr")
+# MONKEY CONFIGS
+MONKEYS_PATH = os.path.join(CONFIG_PATH, "monkeys")
 
 # STOR
 STOR_PATH = os.path.join(ROOT_PATH, "stor")
@@ -62,7 +63,7 @@ PACK_PATH = os.path.join(ROOT_PATH, "pack")
 MODULES_PATH = os.path.join(PACK_PATH, "modules")
 MODULES_CORE_PATH = os.path.join(MODULES_PATH, "core")
 MODULES_USR_PATH = os.path.join(MODULES_PATH, "usr")
-MODULES_CONFIG_MGMT_PATH = os.path.join(MODULES_CORE_PATH, "config")
+MODULES_CONFIG_MGMT_PATH = os.path.join(MODULES_CORE_PATH, "")
 
 # ENV CLASS
 ENV_CLASS_PATH = os.path.join(MODULES_CONFIG_MGMT_PATH, "env", "env_class.py")
