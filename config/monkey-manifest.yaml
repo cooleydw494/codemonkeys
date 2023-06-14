@@ -151,10 +151,10 @@ self-help:
   # Main Prompts
   MAIN_PROMPT: 'Write a python script that prints an appealing summary of the {the-file} scripts and its usage via `monk {the-file}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {the-file}, use the provided monk command context and print_t function to generate a script that prints a help summary for {the-file}.'
   MAIN_PROMPT_ULTIMATUM: 'Return only the contents of script that prints a helpful summary and usage explanation of {the-file}.'
-  OUTPUT_EXAMPLE_PROMPT: "Make your output similar to the following, but with as much detail and creativity as necessary to explain the command: ```{cop:~/local-git/codemonkeys/self-help-special-file.md}```."
+  OUTPUT_EXAMPLE_PROMPT: "Make your output similar to the following, but with as much detail and creativity as necessary to explain the command: ```{cop:~/local-git/codemonkeys/stor/context_files/list-processes-help.py}```."
 
   # Context
-  CONTEXT_FILE_PATH: '~/local-git/codemonkeys/self-help-special-file.md'
+  CONTEXT_FILE_PATH: 'ROOT_PATH/self-help-special-file.md'
   CONTEXT_SUMMARY_PROMPT: null  # CONTEXT_FILE is pre-prepared summary
 
   # Output Checks
@@ -162,11 +162,11 @@ self-help:
   OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 
   # Output
-  OUTPUT_PATH: "ROOT_PATH/core/help"
-  OUTPUT_EXT: '.py'
+  OUTPUT_PATH: "ROOT_PATH/core/help/commands"
+  OUTPUT_EXT: ''
   OUTPUT_FILENAME_APPEND: ""
   OUTPUT_TRIES_LIMIT: 2
-  OUTPUT_REMOVE_STRINGS: "```,```python"
+  OUTPUT_REMOVE_STRINGS: "```,```python,python"
   SKIP_EXISTING_OUTPUT_FILES: True
 
   # Models

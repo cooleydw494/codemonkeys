@@ -30,6 +30,7 @@ class MonkeyConfig:
     """ MONKEY_CONFIG_PROPS - DO NOT MODIFY
         Definitions of MonkeyConfig props, generated from monkey-config_mgmt-defaults. """
     # [MONKEY_CONFIG_PROPS_START]
+    from types import NoneType
     from typing import Optional
 
     from ruamel.yaml.scalarfloat import ScalarFloat
@@ -68,7 +69,7 @@ class MonkeyConfig:
         """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
         Set MonkeyConfig props with validations, generated from monkey-config_mgmt-defaults & monkey_config_validations. """
         # [MONKEY_CONFIG_VALIDATIONS_START]
-        from core.config_mgmt.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path
+        from core.config_mgmt.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path, validate_list_str
         self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
         self.FILEPATH_MATCH_EXCLUDED = validate_str('FILEPATH_MATCH_EXCLUDED', self.FILEPATH_MATCH_EXCLUDED)

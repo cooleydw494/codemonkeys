@@ -15,7 +15,7 @@ def process_file(the_file_path, context_file_summary: str = '', m: MonkeyConfig 
     # Prepare output filename
     output_filename = f"{the_file_name}{m.OUTPUT_FILENAME_APPEND}{m.OUTPUT_EXT}"
 
-    if m.SKIP_EXISTING_OUTPUT_FILES and os.path.exists(output_filename):
+    if m.SKIP_EXISTING_OUTPUT_FILES and os.path.exists(the_file_path):
         print_t(f"SKIP_EXISTING_OUTPUT_FILES is True. Skipping: {output_filename}", 'warning')
         return
 
@@ -35,7 +35,7 @@ def process_file(the_file_path, context_file_summary: str = '', m: MonkeyConfig 
                   f"```{file_contents}```{nl}{ultimatum}{nl}{output_example}"
 
     full_prompt_log = f"{main_prompt}{nl2}<special-file-summary-or-content>{nl2}{the_file_name}:{nl}" \
-                      f"```<file contents>```{nl2}{ultimatum}{nl2}{output_example}"
+                      f"```<file contents>```{nl2}{ultimatum}{nl2}<output example>"
     print_t(f"Full prompt:{nl}{full_prompt_log}", 'info')
 
     # Prepare GPT client for Main Prompt
