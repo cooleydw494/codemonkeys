@@ -3,9 +3,9 @@ import time
 from typing import List
 
 from config.defs import STOR_TEMP_PATH, nl
-from modules.abilities.gpt_client import GPTClient
 from core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from core.utils.monk.theme.theme_functions import print_t
+from modules.abilities.gpt_client import GPTClient
 
 
 class FileListManager:

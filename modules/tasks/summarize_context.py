@@ -1,9 +1,9 @@
 import os
 
 from config.defs import nl
-from modules.abilities.gpt_client import GPTClient
 from core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from core.utils.monk.theme.theme_functions import print_t
+from modules.abilities.gpt_client import GPTClient
 
 
 def summarize_context_file(m: MonkeyConfig, allow_unsummarized: bool = False):

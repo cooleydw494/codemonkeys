@@ -1,10 +1,10 @@
 import os
 
 from config.defs import nl, nl2, _or
-from modules.abilities.gpt_client import GPTClient
 from core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from modules.tasks.check_output import check_output
 from core.utils.monk.theme.theme_functions import print_t
+from modules.abilities.gpt_client import GPTClient
+from modules.tasks.check_output import check_output
 
 
 def process_file(the_file_path, context_file_summary: str = '', m: MonkeyConfig = None):

@@ -6,11 +6,10 @@ from io import StringIO
 
 from ruamel.yaml import CommentedMap
 
-from config.defs import ROOT_PATH, COMMANDS_PATH, MONKEY_MANIFEST_PATH
+from config.defs import MONKEY_MANIFEST_PATH
 from core.config_mgmt.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
 from core.config_mgmt.monkey_config.monkey_config_validations import get_user_config_value, validate_monkey_name
 from core.config_mgmt.yaml_helpers import write_yaml_file, read_yaml_file
-from core.utils.monk.run_as_module import run_as_module
 from core.utils.monk.theme.theme_functions import print_t, input_t
 
 

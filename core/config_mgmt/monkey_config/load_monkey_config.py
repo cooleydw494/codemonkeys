@@ -2,8 +2,8 @@ import os
 
 from config.defs import STOR_TEMP_PATH
 from core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from core.utils.monk.theme.theme_functions import print_t, input_t, apply_t
 from core.utils.get_monkey_name import get_monkey_name
+from core.utils.monk.theme.theme_functions import print_t, input_t, apply_t
 
 
 def set_loaded_monkey(given_monkey_name: str) -> None:

@@ -1,7 +1,7 @@
 from config.defs import nl2, nl
-from modules.abilities.gpt_client import GPTClient
 from core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from core.utils.monk.theme.theme_functions import print_t
+from modules.abilities.gpt_client import GPTClient
 
 
 def check_output(updates: str, m: MonkeyConfig) -> bool:

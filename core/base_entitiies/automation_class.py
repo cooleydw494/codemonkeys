@@ -1,10 +1,10 @@
 import argparse
 
-from modules.abilities.file_list_manager import FileListManager
 from core.config_mgmt.environment_checks import automation_env_checks
 from core.config_mgmt.monkey_config.load_monkey_config import load_monkey_config
 from core.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from core.utils.monk.theme.theme_functions import print_t
+from modules.abilities.file_list_manager import FileListManager
 
 
 class Automation:

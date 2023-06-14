@@ -2,8 +2,8 @@ import os
 
 from __init__ import __version__
 from config.defs import ROOT_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH, nl
-from core.utils.monk.theme.theme_functions import print_t, print_tree
 from core.utils.monk.handle_alternate_actions import handle_help
+from core.utils.monk.theme.theme_functions import print_t, print_tree
 
 
 # This function is used to handle special commands that are not actually entities.
