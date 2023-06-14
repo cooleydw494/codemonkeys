@@ -3,7 +3,7 @@ import platform
 import subprocess
 import sys
 
-from defs import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
+from config.defs import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
 
 print("\033[92m" + "Initiating the setup process..." + "\033[0m")
 
@@ -12,8 +12,8 @@ print("\033[93m" + "Installing the required Python modules from the requirements
 
 subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
-from pack.modules.core.config.environment_checks import monk_env_checks
-from pack.modules.core.theme.theme_functions import print_t
+from core.config_mgmt.environment_checks import monk_env_checks
+from core.utils.monk.theme.theme_functions import print_t
 
 
 current_shell_rc = None
@@ -30,7 +30,7 @@ if current_shell.endswith("bash"):
 elif current_shell.endswith("zsh"):
     current_shell_rc = "~/.zshrc"
 elif current_shell.endswith("fish"):
-    current_shell_rc = "~/.config/fish/config.fish"
+    current_shell_rc = "~/.config_mgmt/fish/config_mgmt.fish"
 if current_shell:
     print_t(f"Detected {current_shell} as your current shell...", "info")
 else:
@@ -74,20 +74,11 @@ elif os_type.startswith("win"):  # If OS is Windows
 else:
     print_t("OS not detected. Please add 'monk' to your PATH manually to use the `monk` command.", "warning")
 
-# Use monk to generate the default configs
-if os_type == "linux" or os_type == "darwin":  # If OS is Linux or macOS
-    subprocess.call(f'{PYTHON_COMMAND} ./monk generate-monkeys', shell=True)
-elif os_type == "windows":  # If OS is Windows
-    subprocess.call('python monk.py generate-monkeys', shell=True)
-print_t("Monkey configs are based on the 'monkey-manifest.yaml' file. Individual configs will be "
-        "generated in the 'monkeys' directory.", "info")
-print_t("After making changes, use 'monk generate-monkeys' to apply them.",
-        "tip")
 if current_shell_rc is not None:
-    print_t(f'You still need to source your {current_shell_rc} to use the `monk` command (if initial setup).',
+    print_t(f'To use the `monk` command, you must open a new terminal or source {current_shell_rc} (if initial setup).',
             'super_important')
-    print_t(f"Run `source {current_shell_rc} && monk`", 'tip')
+    print_t(f"`source {current_shell_rc}`", 'tip')
 elif os_type == "darwin" or os_type == "linux":
-    print_t("Shell undetermined. Please source your shell profile to enable the 'monk' command", 'warning')
+    print_t("Shell undetermined. Source your profile or open a new terminal to enable the 'monk' command", 'warning')
 
 print_t('CodeMonkeys setup complete', 'done')

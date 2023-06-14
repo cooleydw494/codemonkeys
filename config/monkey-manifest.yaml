@@ -38,7 +38,7 @@
 default:
 
   # General
-  WORK_PATH: "ROOT_PATH/stor/usr/work_path"
+  WORK_PATH: "ROOT_PATH/stor/work_path"
   FILE_TYPES_INCLUDED: ".js,.vue,.php"
   FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"
   FILE_SELECT_MAX_TOKENS: 3000
@@ -52,7 +52,7 @@ default:
   OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
 
   # Output
-  OUTPUT_PATH: "ROOT_PATH/stor/usr/output"
+  OUTPUT_PATH: "ROOT_PATH/stor/output"
   OUTPUT_EXT: ".py"
   OUTPUT_FILENAME_APPEND: ""
   OUTPUT_REMOVE_STRINGS: "```,```python"
@@ -78,7 +78,7 @@ long-form:
   # A monkey for generating long-form content outside of hard token limits.
 
   # General
-  WORK_PATH: "ROOT_PATH/stor/usr/work_path"
+  WORK_PATH: "ROOT_PATH/stor/work_path"
   FILE_TYPES_INCLUDED: ".js,.vue,.php"
   FILEPATH_MATCH_EXCLUDED: ".config,.md,.git,migrations,vite,webpack,.txt"
   FILE_SELECT_MAX_TOKENS: 3000
@@ -92,7 +92,7 @@ long-form:
   OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
 
   # Output
-  OUTPUT_PATH: "ROOT_PATH/stor/usr/output"
+  OUTPUT_PATH: "ROOT_PATH/stor/output"
   OUTPUT_EXT: ".py"
   OUTPUT_FILENAME_APPEND: ""
   OUTPUT_REMOVE_STRINGS: "```,```python"
@@ -141,7 +141,7 @@ self-help:
   # A monkey for generating help scripts for `monk` entities
 
   # General
-  WORK_PATH: "ROOT_PATH/pack/commands/core"
+  WORK_PATH: "ROOT_PATH/commands/core"
   FILE_TYPES_INCLUDED: ".py"
   FILEPATH_MATCH_EXCLUDED: "help.py,__init__.py"
   FILE_SELECT_MAX_TOKENS: 6000
@@ -151,7 +151,7 @@ self-help:
   # Main Prompts
   MAIN_PROMPT: 'Write a python script that prints an appealing summary of the {the-file} scripts and its usage via `monk {the-file}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {the-file}, use the provided monk command context and print_t function to generate a script that prints a help summary for {the-file}.'
   MAIN_PROMPT_ULTIMATUM: 'Return only the contents of script that prints a helpful summary and usage explanation of {the-file}.'
-  OUTPUT_EXAMPLE_PROMPT: "Make your output resemble this example: ```{cop:~/local-git/codemonkeys/self-help-special-file.md}```."
+  OUTPUT_EXAMPLE_PROMPT: "Make your output similar to the following, but with as much detail and creativity as necessary to explain the command: ```{cop:~/local-git/codemonkeys/self-help-special-file.md}```."
 
   # Context
   CONTEXT_FILE_PATH: '~/local-git/codemonkeys/self-help-special-file.md'
@@ -162,9 +162,9 @@ self-help:
   OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
 
   # Output
-  #  'OUTPUT_PATH': "ROOT_PATH/stor/usr/work_path/output"  # default
+  OUTPUT_PATH: "ROOT_PATH/core/help"
   OUTPUT_EXT: '.py'
-  OUTPUT_FILENAME_APPEND: "-help"
+  OUTPUT_FILENAME_APPEND: ""
   OUTPUT_TRIES_LIMIT: 2
   OUTPUT_REMOVE_STRINGS: "```,```python"
   SKIP_EXISTING_OUTPUT_FILES: True
