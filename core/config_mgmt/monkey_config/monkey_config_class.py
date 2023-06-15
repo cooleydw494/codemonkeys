@@ -172,10 +172,12 @@ class MonkeyConfig:
         return config_values
 
     def replace_prompt_str(self, to_replace, replace_with):
-        for attr in vars(self):
-            value = getattr(self, attr)
+        copy = MonkeyConfig(**self.__dict__)
+        for attr in vars(copy):
+            value = getattr(copy, attr)
             if is_prompt_key(attr) and value is not None:
-                setattr(self, attr, value.replace(to_replace, replace_with))
+                setattr(copy, attr, value.replace(to_replace, replace_with))
+        return copy
 
     def cop_paths(self):
         # for each property containing 'PATH' word-bound (replace _ with ' '), do a replace on any string matching "{

@@ -14,13 +14,15 @@ def process_file(the_file_path, context_file_summary: str = '', m: MonkeyConfig 
 
     # Prepare output filename
     output_filename = f"{the_file_name}{m.OUTPUT_FILENAME_APPEND}{m.OUTPUT_EXT}"
+    output_filepath = os.path.join(m.OUTPUT_PATH, output_filename)
 
-    if m.SKIP_EXISTING_OUTPUT_FILES and os.path.exists(the_file_path):
+    if m.SKIP_EXISTING_OUTPUT_FILES and os.path.exists(output_filepath):
         print_t(f"SKIP_EXISTING_OUTPUT_FILES is True. Skipping: {output_filename}", 'warning')
         return
 
     # Replace {the-file} in any PROMPT monkey config_mgmt props with the filename
-    m.replace_prompt_str('{the-file}', the_file_name)
+    # This returns a copy of the MonkeyConfig so that we don't modify the original
+    m = m.replace_prompt_str('{the-file}', the_file_name)
 
     with open(the_file_path, "r") as f:
         file_contents = f.read()

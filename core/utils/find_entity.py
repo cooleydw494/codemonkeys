@@ -2,7 +2,7 @@ import os
 import sys
 from typing import Generator, List, Tuple
 
-from config.defs import nl, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH
+from config.defs import nl, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH, CORE_PATH
 from core.utils.general_helpers import levenshtein_distance
 from core.utils.monk.theme.theme_functions import print_t, input_t
 
@@ -11,10 +11,11 @@ entity_paths = {
     'automation': AUTOMATIONS_PATH,
     'barrel': BARRELS_PATH,
     'module': MODULES_PATH,
+    'core': CORE_PATH,
 }
 
 
-def select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, str]]) -> str:
+def user_select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, str]]) -> str:
     print_t(f"\n{prompt}{nl}\n{'`' * 40}", 'monkey')
     for i, (name, _, _, entity_type, _) in enumerate(entity_options):
         print_t(f" ({i + 1}) {name} ({entity_type})", 'option')
@@ -28,7 +29,7 @@ def select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, st
         return entity_options[index][4]
 
     print_t("Invalid input. Please try again.", 'error')
-    return select_entity(prompt, entity_options)
+    return user_select_entity(prompt, entity_options)
 
 
 def find_entities(entity_directory: str, entity_name: str, entity_type: str) -> Generator[
@@ -56,20 +57,28 @@ def find_entity(entity_name: str, entity_type: str):
 
         for i, group in enumerate(matches_groups):
             if group:
+                if i == 0 and len(group) == 1:  # Accept exact match if there is only one
+                    return group[0][4]
                 match_type = ['exact', 'substring', 'close'][i]
                 count = 'Multiple' if len(group) > 1 else ''
                 prompt = f"{count} {match_type} matches for '{entity_name}' {entity_type} found. Please choose one..."
 
-                return select_entity(prompt, group)
+                return user_select_entity(prompt, group)
 
     else:
+        # If entity_type is 'module' and no matches found, search in 'core' path
+        if entity_type == 'module':
+            print_t(f"No module matches found for '{entity_name}'. Searching in core...", 'warning')
+            return find_entity(entity_name, 'core')
+
         print_t(f"No matches found for '{entity_name}'.", 'warning')
         all_entities = sorted(find_entities(entity_path, "", entity_type), key=lambda x: (x[1], len(x[0])))
         if all_entities:
-            return select_entity(f"📜 All Available {str.capitalize(entity_type)}s:", all_entities)
+            return user_select_entity(f"📜 All Available {str.capitalize(entity_type)}s:", all_entities)
         print_t("No entities available. You may want to check your setup or use `monk list` command for available "
                 "entities.", 'error')
         sys.exit(1)
+
 
 
 def print_partial_path(path: str):

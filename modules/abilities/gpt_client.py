@@ -5,6 +5,7 @@ import tiktoken
 
 from config.defs import TOKEN_UNCERTAINTY_BUFFER
 from core.config_mgmt.env.env_class import ENV
+from core.utils.monk.theme.theme_functions import print_t
 
 # Set up OpenAI client with API key
 ENV = ENV()
@@ -37,6 +38,8 @@ class GPTClient:
         temperature = temperature or self.temperature
 
         max_tokens = self.max_tokens - self.count_tokens(prompt) - TOKEN_UNCERTAINTY_BUFFER
+
+        print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'special')
 
         response = openai.ChatCompletion.create(
             model=self.model,
