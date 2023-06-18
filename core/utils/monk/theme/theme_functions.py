@@ -52,7 +52,7 @@ def input_t(text, input_options=None, theme='input'):
         text += f' {apply_t(input_options, "magenta")}' if len(input_options) <= 20 \
             else nl + apply_t(input_options, "magenta")
     try:
-        input_ = input(f'{text}:{nl}' + apply_t('>> ', 'light_cyan', False, ['blink']))
+        input_ = input(f'{nl}{text}:{nl}' + apply_t('>> ', 'light_cyan', False, ['blink']))
     except KeyboardInterrupt:
         print_t(f"{nl}KeyboardInterrupt", 'yellow')
         sys.exit(1)
@@ -99,7 +99,7 @@ def print_banner():
     print_t(art.replace('vX.X.X', f'v{__version__}') + nl, 'light_yellow')
 
 
-def print_table(table, title=None, sub_indent='   ', min_col_width=None):
+def print_table(table, title=None, sub_indent='   ', min_col_width=10):
     terminal_width = min(os.get_terminal_size().columns, MAX_TERMINAL_WIDTH)
     terminal_width -= len(sub_indent)
 

@@ -137,6 +137,8 @@ long-form:
   # TODO: Implement this monkey
 
 
+
+
 self-help-command:
   # A monkey for generating help scripts for `monk` entities
 
@@ -148,8 +150,8 @@ self-help-command:
   MAX_TOKENS: 8000
 
   # Main Prompts
-  MAIN_PROMPT: 'Write a python script that prints an appealing summary of the {the-file} scripts and its usage via `monk {the-file}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {the-file}, use the provided monk command context and print_t function to generate a script that prints a help summary for {the-file}. When referring to {the-file} as a command, do not include the extension.'
-  MAIN_PROMPT_ULTIMATUM: 'Return only the contents of script that prints a helpful summary and usage explanation of {the-file}.'
+  MAIN_PROMPT: 'Write a python script that prints an appealing summary of {the-file} and its usage via `monk {the-file}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {the-file}, use the provided monk command context and print_t function to generate a script that prints a help summary for {the-file}. When referring to {the-file} as a command, do not include the extension.'
+  MAIN_PROMPT_ULTIMATUM: 'Return only the contents of a script that prints a helpful summary and usage explanation of {the-file}.'
   OUTPUT_EXAMPLE_PROMPT: "Make your output similar to the following, but with as much detail and creativity as necessary to explain the command: ```{cop:~/local-git/codemonkeys/stor/context_files/list-processes-help.py}```."
 
   # Context
@@ -158,7 +160,7 @@ self-help-command:
 
   # Output Checks
   CHECK_OUTPUT: True
-  OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
+  OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script with a "main" function. Respond with only one word: "True" or "False".'
 
   # Output
   OUTPUT_PATH: "ROOT_PATH/core/help/commands"
@@ -177,6 +179,9 @@ self-help-command:
   MAIN_TEMP: 1.0
   SUMMARY_TEMP: null  # CONTEXT_FILE is pre-prepared summary
   OUTPUT_CHECK_TEMP: .5
+
+
+
 
 
 self-help-module:
@@ -200,7 +205,7 @@ self-help-module:
 
   # Output Checks
   CHECK_OUTPUT: True
-  OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
+  OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script with a "main" function. Respond with only one word: "True" or "False".'
 
   # Output
   OUTPUT_PATH: "ROOT_PATH/core/help/modules"

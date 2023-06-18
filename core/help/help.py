@@ -7,7 +7,7 @@ from config.defs import STOR_MONK_PATH, nl2, nl
 from core.utils.monk.theme.theme_functions import print_banner, print_table, print_t, apply_t
 
 
-def run_help(monk_args: argparse.Namespace = None):
+def run_default_help(monk_args: argparse.Namespace = None):
 
     # CodeMonkeys Banner
     print_banner()

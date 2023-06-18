@@ -1,11 +1,4 @@
-import os
 import subprocess
-import sys
-
-from config.defs import CORE_HELP_PATH
-from core.help.help import run_help
-from core.utils.find_entity import find_entity
-from core.utils.monk.run_as_module import run_as_module
 from core.utils.monk.theme.theme_functions import print_t
 
 
@@ -26,11 +19,3 @@ def handle_alternate_actions(action, script_path):
     else:
         return False
     return True
-
-
-def handle_help(args, action, entity, entity_type):
-    if entity is None or entity == 'help':
-        run_help()
-    else:
-        entity_path = os.path.join(CORE_HELP_PATH, f'{entity_type}s', f'{entity}.py')
-        run_as_module(entity_path.strip(), function_name='main', monk_args=args)

@@ -1,8 +1,10 @@
 import os
 
 from __init__ import __version__
-from config.defs import ROOT_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH, nl
-from core.utils.monk.handle_alternate_actions import handle_help
+from config.defs import ROOT_PATH, COMMANDS_PATH, BARRELS_PATH, AUTOMATIONS_PATH, MODULES_PATH, nl, CORE_HELP_PATH
+from core.help.help import run_default_help
+from core.utils.find_entity import find_entity
+from core.utils.monk.run_as_module import run_as_module
 from core.utils.monk.theme.theme_functions import print_t, print_tree
 
 
@@ -23,7 +25,7 @@ def handle_special_commands(args, action, entity, entity_type):
                 if "LIGHT_MODE_ENABLED" in line:
                     is_light_mode = "True" in line
                     print_t(f"{'Disabling' if is_light_mode else 'Enabling'} Light Mode...", 'monkey')
-                    line = f"LIGHT_MODE_ENABLED = False{nl}" if is_light_mode else f"LIGHT_MODE_ENABLED = True{n}"
+                    line = f"LIGHT_MODE_ENABLED = False{nl}" if is_light_mode else f"LIGHT_MODE_ENABLED = True{nl}"
                 file.write(line)
             file.truncate()
 
@@ -51,3 +53,11 @@ def handle_special_commands(args, action, entity, entity_type):
     else:
         return False
     return True
+
+
+def handle_help(args, action, entity, entity_type):
+    if entity is None or entity == 'help':
+        run_default_help()
+    else:
+        entity_path = find_entity(entity, entity_type, CORE_HELP_PATH)
+        run_as_module(entity_path.strip(), function_name='main', monk_args=args)

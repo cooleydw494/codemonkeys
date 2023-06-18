@@ -22,7 +22,6 @@ def main():
             "Kill Command"
         ],
         "show_headers": True,
-        "row_colors": ["cyan", "yellow"],
         "rows": [
             [
                 "1234",

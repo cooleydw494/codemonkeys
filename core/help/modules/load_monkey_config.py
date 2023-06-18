@@ -1,13 +1,14 @@
 from core.utils.monk.theme.theme_functions import print_t
 
-def help_load_monkey_config():
+
+def main():
     print_t("Load Monkey Config Help", "important")
     print_t("The load_monkey_config module within the CodeMonkeys framework is responsible for "
             "loading and managing the Monkey configuration. This module allows users to set, "
             "get, and load Monkey configurations to streamline and optimize their automated tasks.")
 
     print_t("Functions", "success")
-    
+
     print_t("1. set_loaded_monkey(given_monkey_name: str) -> None:", "info")
     print_t("This function sets the given_monkey_name as the loaded Monkey in the framework and "
             "persists the name in a local storage file.")
@@ -27,5 +28,6 @@ def help_load_monkey_config():
     print_t("from load_monkey_config import load_monkey_config\n"
             "monkey_config = load_monkey_config('MyMonkey')", "file")
 
+
 if __name__ == '__main__':
-    help_load_monkey_config()
+    main()

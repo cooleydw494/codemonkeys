@@ -2,7 +2,7 @@ import os
 import sys
 from typing import Generator, List, Tuple
 
-from config.defs import nl, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH, CORE_PATH
+from config.defs import nl, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MODULES_PATH, CORE_PATH, nl2
 from core.utils.general_helpers import levenshtein_distance
 from core.utils.monk.theme.theme_functions import print_t, input_t
 
@@ -16,7 +16,8 @@ entity_paths = {
 
 
 def user_select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, str]]) -> str:
-    print_t(f"\n{prompt}{nl}\n{'`' * 40}", 'monkey')
+    print_t(f"{nl}{prompt}{nl2}", 'monkey')
+    print('`' * 40)
     for i, (name, _, _, entity_type, _) in enumerate(entity_options):
         print_t(f" ({i + 1}) {name} ({entity_type})", 'option')
     print('.' * 40)
@@ -48,8 +49,8 @@ def find_entities(entity_directory: str, entity_name: str, entity_type: str) -> 
                     yield name, 2, distance, entity_type, full_path
 
 
-def find_entity(entity_name: str, entity_type: str):
-    entity_path = entity_paths[entity_type]
+def find_entity(entity_name: str, entity_type: str, path_override: str = None) -> str:
+    entity_path = path_override or entity_paths[entity_type]
     matches = sorted(find_entities(entity_path, entity_name, entity_type), key=lambda x: (x[1], len(x[0])))
 
     if matches:
@@ -74,11 +75,10 @@ def find_entity(entity_name: str, entity_type: str):
         print_t(f"No matches found for '{entity_name}'.", 'warning')
         all_entities = sorted(find_entities(entity_path, "", entity_type), key=lambda x: (x[1], len(x[0])))
         if all_entities:
-            return user_select_entity(f"📜 All Available {str.capitalize(entity_type)}s:", all_entities)
+            return user_select_entity(f"All Available {str.capitalize(entity_type)}s:", all_entities)
         print_t("No entities available. You may want to check your setup or use `monk list` command for available "
                 "entities.", 'error')
         sys.exit(1)
-
 
 
 def print_partial_path(path: str):
