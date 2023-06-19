@@ -3,7 +3,7 @@ import platform
 import subprocess
 import sys
 
-from config.defs import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
+from defs import PIP_COMMAND, PYTHON_COMMAND, ENV_DEFAULT_PATH, ENV_PATH, nl
 
 print("\033[92m" + "Initiating the setup process..." + "\033[0m")
 
@@ -12,8 +12,8 @@ print("\033[93m" + "Installing the required Python modules from the requirements
 
 subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
-from core.config_mgmt.environment_checks import monk_env_checks
-from core.utils.monk.theme.theme_functions import print_t
+from source.config_mgmt.environment_checks import monk_env_checks
+from source.utils.monk.theme.theme_functions import print_t
 
 
 current_shell_rc = None
@@ -37,7 +37,7 @@ else:
     print_t("Could not detect your current shell. You may need to take some manual steps throughout setup.", "error")
 
 # if the .env doesn't already exist, copy it from stor/.env.default and print some helpful feedback.
-if not os.path.exists('.env'):
+if not os.path.exists('../codemonkeys-template/.env'):
     print_t("No .env file found. Copying .env.default...", "file")
     subprocess.call(F'cp {ENV_DEFAULT_PATH} {ENV_PATH}', shell=True)
 else:

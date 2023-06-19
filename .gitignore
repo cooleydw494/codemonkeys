@@ -1,15 +1,15 @@
 # Environment variables
-.env
+../codemonkeys-template/.env
 .env-backup
 
 # CodeMonkey generated files (some are tracked though, like default generated monkey configs)
-stor/core/temp/*
+../codemonkeys-template/stor/temp/*
 TODO.md
 
 # Generated Monkey Configs (even pre-packaged) are ignored
 # It is good practice to not add files that are generated.
 # Also monkey configs will almost definitely contain sensitive info, given the inclusion of OPENAI_API_KEY
-config/monkeys/*
+../codemonkeys-template/config/monkeys/*
 
 # Python artifacts
 *.pyc

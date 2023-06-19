@@ -4,16 +4,16 @@ import subprocess
 import sys
 import traceback
 
-from config.defs import nl
-from core.config_mgmt.environment_checks import monk_env_checks
-from core.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
-from core.utils.find_entity import find_entity
-from core.utils.monk.handle_alternate_actions import handle_alternate_actions
-from core.utils.monk.handle_special_commands import handle_special_commands
-from core.utils.monk.parse_monk_args import parse_monk_args
-from core.utils.monk.run_as_module import run_as_module
-from core.utils.monk.run_automation import run_automation
-from core.utils.monk.theme.theme_functions import print_t
+from defs import nl
+from source.config_mgmt.environment_checks import monk_env_checks
+from source.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
+from source.utils.find_entity import find_entity
+from source.utils.monk.handle_alternate_actions import handle_alternate_actions
+from source.utils.monk.handle_special_commands import handle_special_commands
+from source.utils.monk.parse_monk_args import parse_monk_args
+from source.utils.monk.run_as_module import run_as_module
+from source.utils.monk.run_automation import run_automation
+from source.utils.monk.theme.theme_functions import print_t
 
 # Some basic environment checks
 monk_env_checks()
