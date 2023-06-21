@@ -14,8 +14,8 @@ def install(project_name: str):
 
     subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
-    from source.config_mgmt.environment_checks import monk_env_checks
-    from source.utils.monk.theme.theme_functions import print_t
+    from codemonkeys.config_mgmt.environment_checks import monk_env_checks
+    from codemonkeys.utils.monk.theme.theme_functions import print_t
 
     current_shell_rc = None
     monk_env_checks()
@@ -78,9 +78,9 @@ def install(project_name: str):
 
     if current_shell_rc is not None:
         print_t(
-            f'To use the `monk` command, you must open a new terminal or source {current_shell_rc} (if initial setup).',
+            f'To use the `monk` command, you must open a new terminal or codemonkeys {current_shell_rc} (if initial setup).',
             'super_important')
-        print_t(f"`source {current_shell_rc}`", 'tip')
+        print_t(f"`codemonkeys {current_shell_rc}`", 'tip')
     elif os_type == "darwin" or os_type == "linux":
         print_t("Shell undetermined. Source your profile or open a new terminal to enable the 'monk' command",
                 'warning')

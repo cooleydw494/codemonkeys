@@ -1,0 +1,61 @@
+#!/usr/bin/env python
+import os
+import subprocess
+import sys
+import traceback
+
+from defs import nl
+from codemonkeys.config_mgmt.environment_checks import monk_env_checks
+from codemonkeys.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
+from codemonkeys.utils.find_entity import find_entity
+from codemonkeys.utils.monk.handle_alternate_actions import handle_alternate_actions
+from codemonkeys.utils.monk.handle_special_commands import handle_special_commands
+from codemonkeys.utils.monk.parse_monk_args import parse_monk_args
+from codemonkeys.utils.monk.run_as_module import run_as_module
+from codemonkeys.utils.monk.run_automation import run_automation
+from codemonkeys.utils.monk.theme.theme_functions import print_t
+
+# Some basic environment checks
+monk_env_checks()
+
+# Regenerate "magic" config_mgmt/env stuff
+regenerate_config_env_defs()
+
+# Setup and Parse Monk Arguments
+monk_args, unknown_args, action, entity, entity_type = parse_monk_args()
+
+# Special Commands that override typical behavior (reasoning in definition)
+if handle_special_commands(monk_args, action, entity, entity_type):
+    sys.exit(0)
+
+# Find Entity (includes interactive selection)
+entity_path = find_entity(entity, entity_type)
+
+# Handle Alternate Actions (edit, print, copy_path, help, etc)
+if handle_alternate_actions(action, entity_path):
+    sys.exit(0)
+
+# Get the extension of the script
+extension = os.path.splitext(entity_path.strip())[1]
+
+# Run the script with the provided arguments
+if extension == ".sh":
+    subprocess.call(['bash', entity_path.strip()] + sys.argv[2:])
+elif extension == ".bat":
+    subprocess.call([entity_path.strip()] + sys.argv[2:])
+elif extension == ".py":
+    try:
+        if entity_type == 'automation':
+            run_automation(entity_path.strip(), monk_args=monk_args)
+        else:
+            run_as_module(entity_path.strip(), function_name='main', monk_args=monk_args)
+    except KeyboardInterrupt:
+        print_t(f"{nl}Exiting due to KeyboardInterrupt from user.", 'quiet')
+        sys.exit(1)
+    except Exception as e:
+        print_t(f"{nl}Error: {e}", 'error')
+        print_t(f"{nl}Error Trace:{nl}{nl.join(traceback.format_exc().splitlines())}")
+        sys.exit(1)
+else:
+    print_t(f"Entity Type not supported: {extension}. find_entity.py should have filtered this out.", 'error')
+    sys.exit(1)
