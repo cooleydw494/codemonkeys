@@ -7,15 +7,22 @@ from math import floor
 from termcolor import colored, COLORS
 
 from __init__ import __version__
-from defs import LIGHT_MODE_ENABLED, KEYWORDS, MAX_TERMINAL_WIDTH, CM_STOR_MONK_PATH, nl
-from config.theme import text_themes
+from defs import import_env_class
+from defs import CM_STOR_MONK_PATH, nl
+
+ENV = import_env_class()
+ENV = ENV()
+text_themes = ENV.text_themes
+light_mode_enabled = ENV.light_mode_enabled
+max_terminal_width = ENV.max_terminal_width
+keywords = ENV.keywords
 
 
 def get_theme(theme):
     theme_values = text_themes.get(theme)
     if theme_values:
         prefix = theme_values['pre']
-        color = theme_values['light_mode'] if LIGHT_MODE_ENABLED else theme_values['color']
+        color = theme_values['light_mode'] if light_mode_enabled else theme_values['color']
         return True, color, prefix
     return False, None, None
 
@@ -40,7 +47,7 @@ def print_t(text, theme=None, incl_prefix=True, attrs=None):
         text = apply_t(text, theme, incl_prefix=incl_prefix)
         _, __, prefix = get_theme(theme)
         sub_indent = ' ' * (len(prefix) + 1)
-    if LIGHT_MODE_ENABLED:
+    if light_mode_enabled:
         attrs = attrs if isinstance(attrs, list) else [attrs]
         attrs.append('dark')
     print_nice(text, sub_indent=sub_indent, attrs=attrs)
@@ -68,7 +75,7 @@ def print_nice(*args, sub_indent='', **kwargs):
     file = kwargs.get("file", None)
     flush = kwargs.get("flush", False)
 
-    terminal_width = min(os.get_terminal_size().columns, MAX_TERMINAL_WIDTH)
+    terminal_width = min(os.get_terminal_size().columns, max_terminal_width)
 
     text = sep.join(str(arg) for arg in args)
 
@@ -86,7 +93,7 @@ def print_nice(*args, sub_indent='', **kwargs):
 
 
 def apply_bold_to_keywords(text):
-    return re.sub(fr"(?i)\b{'|'.join(KEYWORDS)}\b", r'\033[1m\g<0>\033[22m', text)
+    return re.sub(fr"(?i)\b{'|'.join(keywords)}\b", r'\033[1m\g<0>\033[22m', text)
 
 
 def strip_color_and_bold_codes(s):
@@ -100,7 +107,7 @@ def print_banner():
 
 
 def print_table(table, title=None, sub_indent='   ', min_col_width=10):
-    terminal_width = min(os.get_terminal_size().columns, MAX_TERMINAL_WIDTH)
+    terminal_width = min(os.get_terminal_size().columns, max_terminal_width)
     terminal_width -= len(sub_indent)
 
     if title:

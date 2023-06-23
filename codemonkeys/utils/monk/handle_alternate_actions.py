@@ -1,5 +1,5 @@
 import subprocess
-from codemonkeys.utils.monk.theme.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t
 
 
 def handle_alternate_actions(action, script_path):

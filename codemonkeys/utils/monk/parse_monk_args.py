@@ -1,6 +1,6 @@
 import argparse
 
-from codemonkeys.utils.monk.theme.theme_functions import print_t, input_t
+from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
 def parse_monk_args():

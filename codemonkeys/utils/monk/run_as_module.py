@@ -1,7 +1,7 @@
 import importlib
 import inspect
 
-from codemonkeys.utils.monk.theme.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t
 
 
 # This function is important for maintaining the pack "pseudo-package" paradigm.

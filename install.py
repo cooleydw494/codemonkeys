@@ -14,8 +14,8 @@ def install(project_name: str):
 
     subprocess.call(f'{PIP_COMMAND} install -r requirements.txt', shell=True)
 
-    from codemonkeys.config_mgmt.environment_checks import monk_env_checks
-    from codemonkeys.utils.monk.theme.theme_functions import print_t
+    from codemonkeys.utils.env.environment_checks import monk_env_checks
+    from codemonkeys.utils.monk.theme_functions import print_t
 
     current_shell_rc = None
     monk_env_checks()
@@ -31,7 +31,7 @@ def install(project_name: str):
     elif current_shell.endswith("zsh"):
         current_shell_rc = "~/.zshrc"
     elif current_shell.endswith("fish"):
-        current_shell_rc = "~/.config_mgmt/fish/config_mgmt.fish"
+        current_shell_rc = "~/.config/fish/config.fish"
     if current_shell:
         print_t(f"Detected {current_shell} as your current shell...", "info")
     else:

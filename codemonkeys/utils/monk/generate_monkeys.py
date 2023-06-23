@@ -2,13 +2,17 @@ import os
 import shutil
 import time
 
+from defs import import_monkey_config_class
 from defs import MONKEYS_PATH, MONKEY_MANIFEST_PATH
-from codemonkeys.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from codemonkeys.config_mgmt.yaml_helpers import read_yaml_file, write_yaml_file
-from codemonkeys.utils.monk.theme.theme_functions import print_t
+from codemonkeys.config.yaml_helpers import read_yaml_file, write_yaml_file
+from codemonkeys.utils.monk.theme_functions import print_t
+
+MonkeyConfig = import_monkey_config_class()
 
 
 def generate_monkeys():
+
+    os.makedirs(os.path.join(MONKEYS_PATH), exist_ok=True)
 
     try:
         manifest_monkeys = read_yaml_file(MONKEY_MANIFEST_PATH)
@@ -16,11 +20,11 @@ def generate_monkeys():
         print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {MONKEY_MANIFEST_PATH}", 'error')
         return
 
-    # Create the directories and config_mgmt files
+    # Create the directories and config files
     for monkey_name, manifest_config in manifest_monkeys.items():
         merged_config = MonkeyConfig.apply_default_and_validate(manifest_config)
 
-        # Check if new config_mgmt content is different from the existing one
+        # Check if new config content is different from the existing one
         generated_config_path = os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml')
         if os.path.exists(generated_config_path):
             existing_config = read_yaml_file(generated_config_path)

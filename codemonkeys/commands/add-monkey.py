@@ -7,10 +7,10 @@ from io import StringIO
 from ruamel.yaml import CommentedMap
 
 from defs import MONKEY_MANIFEST_PATH
-from codemonkeys.config_mgmt.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
-from codemonkeys.config_mgmt.monkey_config.monkey_config_validations import get_user_config_value, validate_monkey_name
-from codemonkeys.config_mgmt.yaml_helpers import write_yaml_file, read_yaml_file
-from codemonkeys.utils.monk.theme.theme_functions import print_t, input_t
+from codemonkeys.utils.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
+from codemonkeys.utils.monkey_config import get_user_config_value, validate_monkey_name
+from codemonkeys.config.yaml_helpers import write_yaml_file, read_yaml_file
+from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
 def process_input_prompts(data):

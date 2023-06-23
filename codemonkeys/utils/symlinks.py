@@ -2,7 +2,7 @@ import os
 import platform
 import subprocess
 
-from codemonkeys.utils.monk.theme.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t
 
 
 def verify_or_create_symlink(target, symlink_path, output=True):

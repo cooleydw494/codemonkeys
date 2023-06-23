@@ -1,7 +1,9 @@
+from defs import import_monkey_config_class
 from defs import nl2, nl
-from codemonkeys.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from codemonkeys.utils.monk.theme.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.abilities.gpt_client import GPTClient
+
+MonkeyConfig = import_monkey_config_class()
 
 
 def check_output(updates: str, m: MonkeyConfig) -> bool:

@@ -3,7 +3,7 @@ import os
 
 import psutil
 
-from codemonkeys.utils.monk.theme.theme_functions import print_table, print_t, apply_t
+from codemonkeys.utils.monk.theme_functions import print_table, print_t, apply_t
 
 
 def main(monk_args: argparse.Namespace = None):

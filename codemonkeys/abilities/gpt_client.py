@@ -3,9 +3,11 @@ from typing import List
 import openai
 import tiktoken
 
+from defs import import_env_class
 from defs import TOKEN_UNCERTAINTY_BUFFER
-from codemonkeys.config_mgmt.env.env_class import ENV
-from codemonkeys.utils.monk.theme.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t
+
+ENV = import_env_class()
 
 # Set up OpenAI client with API key
 ENV = ENV()

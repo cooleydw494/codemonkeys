@@ -3,8 +3,8 @@ import re
 
 from dotenv import dotenv_values
 
-from defs import ENV_CLASS_PATH, ROOT_PATH, CM_STOR_DEFAULTS_PATH, nl
-from codemonkeys.config_mgmt.env.get_env_prop_type import get_env_prop_type
+from defs import ENV_CLASS_PATH, ROOT_PATH, nl, ENV_DEFAULT_PATH
+from codemonkeys.utils.env.get_env_prop_type import get_env_prop_type
 
 ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
 ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_name}', '{default}')"
@@ -18,7 +18,7 @@ def update_env_class():
     env_vars = dotenv_values(os.path.join(ROOT_PATH, ".env"))
 
     # Get the .env.default file variables (codemonkeys env props)
-    framework_env_vars = dotenv_values(os.path.join(CM_STOR_DEFAULTS_PATH, ".env.default"))
+    framework_env_vars = dotenv_values(ENV_DEFAULT_PATH)
 
     # Read the current contents of the file
     with open(ENV_CLASS_PATH, "r") as f:

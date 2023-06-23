@@ -2,16 +2,15 @@ import os
 import sys
 from typing import Generator, List, Tuple
 
-from defs import nl, CM_COMMANDS_PATH, CM_AUTOMATIONS_PATH, CM_BARRELS_PATH, CM_TASKS_PATH, CORE_PATH, nl2
+from defs import nl, CM_COMMANDS_PATH, CM_AUTOMATIONS_PATH, CM_BARRELS_PATH, CM_TASKS_PATH, nl2
 from codemonkeys.utils.framework_utils import levenshtein_distance
-from codemonkeys.utils.monk.theme.theme_functions import print_t, input_t
+from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 entity_paths = {
     'command': CM_COMMANDS_PATH,
     'automation': CM_AUTOMATIONS_PATH,
     'barrel': CM_BARRELS_PATH,
     'module': CM_TASKS_PATH,
-    'codemonkeys': CORE_PATH,
 }
 
 

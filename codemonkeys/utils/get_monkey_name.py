@@ -4,7 +4,7 @@ import pathlib
 from typing import List, Tuple
 
 from defs import MONKEYS_PATH
-from codemonkeys.utils.monk.theme.theme_functions import print_t, input_t
+from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
 def list_monkeys() -> List[str]:
@@ -15,7 +15,7 @@ def list_monkeys() -> List[str]:
 
 
 def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) -> Tuple[str, str]:
-    """ Retrieve the monkey name and corresponding config_mgmt path.
+    """ Retrieve the monkey name and corresponding config path.
     :param prompt_user: Whether or not to prompt the user
     :param given_monkey_name: A given monkey name
     :return: A tuple consisting of monkey name and its configuration file path """
@@ -32,15 +32,15 @@ def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) ->
         return monkeys[monkey_index]
 
     def monkey_exists(name: str) -> bool:
-        """ Checks if a generated monkey config_mgmt exists.
+        """ Checks if a generated monkey config exists.
         :param name: Monkey name
-        :return: True if a generated config_mgmt exists, False otherwise
+        :return: True if a generated config exists, False otherwise
         """
         return pathlib.Path(os.path.join(MONKEYS_PATH, f'{name}.yaml')).exists()
 
     if given_monkey_name is None:
         if monkey_exists('default') and not prompt_user:
-            print_t(f"No monkey name provided. Loading default monkey config_mgmt...", 'monkey')
+            print_t(f"No monkey name provided. Loading default monkey config...", 'monkey')
             monkey_name = 'default'
         else:
             monkey_name = select_monkey_from_list()

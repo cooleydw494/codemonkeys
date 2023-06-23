@@ -1,10 +1,12 @@
 import os
 
+from defs import import_monkey_config_class
 from defs import nl, nl2, _or
-from codemonkeys.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
-from codemonkeys.utils.monk.theme.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.abilities.gpt_client import GPTClient
 from codemonkeys.tasks.check_output import check_output
+
+MonkeyConfig = import_monkey_config_class()
 
 
 def process_file(the_file_path, context_file_summary: str = '', m: MonkeyConfig = None):
@@ -20,7 +22,7 @@ def process_file(the_file_path, context_file_summary: str = '', m: MonkeyConfig 
         print_t(f"SKIP_EXISTING_OUTPUT_FILES is True. Skipping: {output_filename}", 'warning')
         return
 
-    # Replace {the-file} in any PROMPT monkey config_mgmt props with the filename
+    # Replace {the-file} in any PROMPT monkey config props with the filename
     # This returns a copy of the MonkeyConfig so that we don't modify the original
     m = m.replace_prompt_str('{the-file}', the_file_name)
 

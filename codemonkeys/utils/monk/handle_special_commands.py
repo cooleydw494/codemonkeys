@@ -1,11 +1,12 @@
 import os
 
 from __init__ import __version__
-from defs import ROOT_PATH, CM_COMMANDS_PATH, CM_BARRELS_PATH, CM_AUTOMATIONS_PATH, CM_TASKS_PATH, nl, CM_HELP_PATH
+from defs import ROOT_PATH, CM_COMMANDS_PATH, CM_BARRELS_PATH, CM_AUTOMATIONS_PATH, CM_TASKS_PATH, nl, CM_HELP_PATH, \
+    CONFIG_PATH, THEME_CONFIG_PATH
 from codemonkeys.help.help import run_default_help
 from codemonkeys.utils.find_entity import find_entity
 from codemonkeys.utils.monk.run_as_module import run_as_module
-from codemonkeys.utils.monk.theme.theme_functions import print_t, print_tree
+from codemonkeys.utils.monk.theme_functions import print_t, print_tree
 
 
 # This function is used to handle special commands that are not actually entities.
@@ -18,14 +19,14 @@ def handle_special_commands(args, action, entity, entity_type):
 
     # Toggle light mode
     elif args.toggle_light_mode:
-        with open(os.path.join(ROOT_PATH, "defs.py"), "r+") as file:
+        with open(THEME_CONFIG_PATH, "r+") as file:
             lines = file.readlines()
             file.seek(0)
             for line in lines:
-                if "LIGHT_MODE_ENABLED" in line:
+                if "light_mode_enabled" in line:
                     is_light_mode = "True" in line
                     print_t(f"{'Disabling' if is_light_mode else 'Enabling'} Light Mode...", 'monkey')
-                    line = f"LIGHT_MODE_ENABLED = False{nl}" if is_light_mode else f"LIGHT_MODE_ENABLED = True{nl}"
+                    line = f"light_mode_enabled: bool = False{nl}" if is_light_mode else f"light_mode_enabled: bool = True{nl}"
                 file.write(line)
             file.truncate()
 

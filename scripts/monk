@@ -4,22 +4,28 @@ import subprocess
 import sys
 import traceback
 
+from codemonkeys.utils.env.update_env_class import update_env_class
+from codemonkeys.utils.monkey_config.update_monkey_config_class import update_monkey_config_class
+from codemonkeys.utils.monk.generate_monkeys import generate_monkeys
 from defs import nl
-from codemonkeys.config_mgmt.environment_checks import monk_env_checks
-from codemonkeys.config_mgmt.regen_config_env_defs import regenerate_config_env_defs
+from codemonkeys.utils.env.environment_checks import monk_env_checks
 from codemonkeys.utils.find_entity import find_entity
 from codemonkeys.utils.monk.handle_alternate_actions import handle_alternate_actions
 from codemonkeys.utils.monk.handle_special_commands import handle_special_commands
 from codemonkeys.utils.monk.parse_monk_args import parse_monk_args
 from codemonkeys.utils.monk.run_as_module import run_as_module
 from codemonkeys.utils.monk.run_automation import run_automation
-from codemonkeys.utils.monk.theme.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t
 
 # Some basic environment checks
 monk_env_checks()
 
-# Regenerate "magic" config_mgmt/env stuff
-regenerate_config_env_defs()
+# Regenerate "magic" config/env stuff
+update_env_class()
+update_monkey_config_class()
+
+# Generate monkey config temp files from monkey-manifest.yaml
+generate_monkeys()
 
 # Setup and Parse Monk Arguments
 monk_args, unknown_args, action, entity, entity_type = parse_monk_args()

@@ -1,4 +1,4 @@
-from codemonkeys.config_mgmt.monkey_config.monkey_config_validations import validate_str, validate_path, validate_int, \
+from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_path, validate_int, \
     validate_float, validate_bool
 
 INPUT_PROMPTS = [

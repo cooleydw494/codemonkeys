@@ -1,5 +1,5 @@
 
-from codemonkeys.utils.monk.theme.theme_functions import print_t, print_table
+from codemonkeys.utils.monk.theme_functions import print_t, print_table
 
 
 def main():

@@ -1,9 +1,11 @@
 import os
 
+from defs import import_monkey_config_class
 from defs import CM_STOR_TEMP_PATH
-from codemonkeys.config_mgmt.monkey_config.monkey_config_class import MonkeyConfig
 from codemonkeys.utils.get_monkey_name import get_monkey_name
-from codemonkeys.utils.monk.theme.theme_functions import print_t, input_t, apply_t
+from codemonkeys.utils.monk.theme_functions import print_t, input_t, apply_t
+
+MonkeyConfig = import_monkey_config_class()
 
 
 def set_loaded_monkey(given_monkey_name: str) -> None:
