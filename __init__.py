@@ -2,7 +2,7 @@
 CodeMonkeys: An AI-ready Automation Tool & Extensible Framework
 """
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 __author__ = 'David Wallace Cooley Jr'
 __email__ = 'cooleydw494@gmail.com'
 __description__ = "CodeMonkeys is a highly configurable tool for creating/running strategic AI automations (and " \
