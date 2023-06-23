@@ -1,16 +1,17 @@
 from setuptools import setup, find_packages
 
-from __init__ import __author__, __description__, __email__, __version__
-
 setup(
     name='codemonkeys',
-    version=__version__,
-    description=__description__,
+    version='0.0.4',
+    description="CodeMonkeys is a highly configurable tool for creating/running strategic AI automations (and "
+                "more). Beyond that, its a thoughtful and extensible codemonkeys for creating automation abilities. "
+                "CodeMonkeys' design was heavily influenced by how much it was used in its own development, "
+                "naturally converging to a sublime synergy of the tool and the codemonkeys files.",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/cooleydw494/codemonkeys',
-    author=__author__,
-    author_email=__email__,
+    author='David Wallace Cooley Jr',
+    author_email='cooleydw494@gmail.com',
     license="MIT",
     packages=find_packages(),
     install_requires=[
