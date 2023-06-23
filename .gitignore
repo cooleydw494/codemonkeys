@@ -26,3 +26,6 @@ __pycache__/
 
 # VS Code artifacts
 .vscode/*
+
+# Local package egg-info
+*.egg-info/
