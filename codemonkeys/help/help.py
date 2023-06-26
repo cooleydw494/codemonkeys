@@ -32,17 +32,106 @@ def run_default_help(monk_args: argparse.Namespace = None):
 
     min_col_widths = [23, 25, 13]
 
-    monk_general_file = os.path.join(CM_STOR_MONK_PATH, 'monk-commands-general.json')
-    monk_general_json = json.loads(Path(monk_general_file).read_text())
+    monk_general_json = {
+      "headers": [
+        "Command",
+        "Description",
+        "Note"
+      ],
+      "show_headers": False,
+      "rows": [
+        [
+          "monk help",
+          "Run this help script",
+          ""
+        ],
+        [
+          "monk list",
+          "List existing entities",
+          "-b/a/m, --all"
+        ],
+        [
+          "monk -v",
+          "Print version",
+          "--version"
+        ],
+        [
+          "monk <command>",
+          "Run a command",
+          "default action/entity"
+        ]
+      ]
+    }
     print_table(monk_general_json, apply_t("Monk CLI", 'special'), min_col_width=min_col_widths)
 
-    monk_type_file = os.path.join(CM_STOR_MONK_PATH, 'monk-commands-type.json')
-    monk_type_json = json.loads(Path(monk_type_file).read_text())
-    print_table(monk_type_json, apply_t("Entity Types", 'special'), min_col_width=min_col_widths)
+    monk_types = {
+      "headers": [
+        "Command",
+        "Description",
+        "Note"
+      ],
+      "show_headers": False,
+      "rows": [
+        [
+          "monk -a <automation>",
+          "Run an automation",
+          "--automation"
+        ],
+        [
+          "monk -b <barrel>",
+          "Run a barrel",
+          "--barrel"
+        ],
+        [
+          "monk -m <module>",
+          "Edit a module",
+          "--module"
+        ]
+      ]
+    }
+    print_table(monk_types, apply_t("Entity Types", 'special'), min_col_width=min_col_widths)
 
-    monk_action_file = os.path.join(CM_STOR_MONK_PATH, 'monk-commands-action.json')
-    monk_action_json = json.loads(Path(monk_action_file).read_text())
-    print_table(monk_action_json, apply_t("Actions", 'special'), min_col_width=min_col_widths)
+    monk_actions = {
+      "headers": [
+        "Command",
+        "Description",
+        "Note"
+      ],
+      "show_headers": False,
+      "rows": [
+        [
+          "monk -r <entity>",
+          "Run an entity",
+          "--run"
+        ],
+        [
+          "monk -e <entity>",
+          "Open in vim",
+          "--edit"
+        ],
+        [
+          "monk -p <entity>",
+          "Print file contents",
+          "--print"
+        ],
+        [
+          "monk -cp <entity>",
+          "Copy file abspath",
+          "--copy-path"
+        ],
+        [
+          "monk -cc <entity>",
+          "Copy file contents",
+          "--copy-contents"
+        ],
+        [
+          "monk -h <entity>",
+          "Help for an entity",
+          "--help"
+        ]
+      ]
+    }
+    print_table(monk_actions, apply_t("Actions", 'special'), min_col_width=min_col_widths)
 
     # Wrap up
     print_t("That's it! For more info, run `monk -h <entity>` or view the CodeMonkeys' docs.", 'done')
