@@ -3,8 +3,8 @@ import os
 import shutil
 import sys
 
-from codemonkeys.utils.env.environment_checks import monk_env_checks
-from codemonkeys.utils.monk.theme_functions import print_t
+from termcolor import colored
+
 from cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_MANIFEST_DEFAULT_PATH, CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH,
                     CM_THEME_CONFIG_PATH, CM_ENV_CLASS_PATH, CM_MONKEY_CONFIG_CLASS_PATH, CM_DEFAULT_AUTOMATION_PATH,
                     CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH)
@@ -34,54 +34,59 @@ stor_dirs = [
 try:
     new_project_name = sys.argv[1]
 except IndexError:
-    print_t('Please provide a project name.', 'error')
+    print(colored('Please provide a project name.', 'red'))
     sys.exit(1)
 
-print_t(f"Initializing new CodeMonkeys project '{new_project_name}'...", 'start')
+if os.path.exists(new_project_name):
+    print(colored(f"Directory '{new_project_name}' already exists.", 'red'))
+    sys.exit(1)
 
-monk_env_checks()
+print(colored(f"Initializing new CodeMonkeys project '{new_project_name}'...", 'green'))
 
 # Create the project root directory
-print_t(f"Creating directory: {new_project_name}", 'info')
+print(colored(f"Creating directory: {new_project_name}", 'cyan'))
 os.makedirs(new_project_name, exist_ok=True)
 
+project_path = os.path.join(os.getcwd(), new_project_name)
+
 # Create the default .env file
-print_t("Creating default .env file...", 'info')
-shutil.copyfile(CM_ENV_DEFAULT_PATH, ".env")
+print(colored("Creating default .env file", 'cyan'))
+shutil.copyfile(CM_ENV_DEFAULT_PATH, os.path.join(project_path, ".env"))
 
 # Create the top level directories
 for top_level_dir in top_level_dirs:
-    print_t(f"Creating directory: {top_level_dir}", 'info')
-    os.makedirs(top_level_dir, exist_ok=True)
+    print(colored(f"Creating directory: {top_level_dir}", 'cyan'))
+    os.makedirs(os.path.join(project_path, top_level_dir), exist_ok=True)
 
 # Create the config directories
 for config_dir in config_dirs:
-    print_t(f"Creating directory: config/{config_dir}", 'info')
-    os.makedirs(f'config/{config_dir}', exist_ok=True)
+    print(colored(f"Creating directory: config/{config_dir}", 'cyan'))
+    os.makedirs(os.path.join(project_path, 'config', config_dir), exist_ok=True)
 
 # Create the stor directories
 for stor_dir in stor_dirs:
-    print_t(f"Creating directory: stor/{stor_dir}", 'info')
-    os.makedirs(f'stor/{stor_dir}', exist_ok=True)
+    print(colored(f"Creating directory: stor/{stor_dir}", 'cyan'))
+    os.makedirs(os.path.join(project_path, 'stor', stor_dir), exist_ok=True)
 
 # Create the config files
-print_t("Creating config files...", 'info')
-shutil.copyfile(CM_MONKEY_MANIFEST_DEFAULT_PATH, './config/monkey-manifest.yaml')
-shutil.copyfile(CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, './config/monkey-config-defaults.yaml')
-shutil.copyfile(CM_THEME_CONFIG_PATH, './config/framework/theme.py')
-shutil.copyfile(CM_ENV_CLASS_PATH, './config/framework/env_class.py')
-shutil.copyfile(CM_MONKEY_CONFIG_CLASS_PATH, './config/framework/monkey_config_class.py')
+print(colored("Creating config files...", 'cyan'))
+config_path = os.path.join(project_path, 'config')
+shutil.copyfile(CM_MONKEY_MANIFEST_DEFAULT_PATH, os.path.join(config_path, 'monkey-manifest.yaml'))
+shutil.copyfile(CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, os.path.join(config_path, 'monkey-config-defaults.yaml'))
+shutil.copyfile(CM_THEME_CONFIG_PATH, os.path.join(config_path, 'framework', 'theme.py'))
+shutil.copyfile(CM_ENV_CLASS_PATH, os.path.join(config_path, 'framework', 'env_class.py'))
+shutil.copyfile(CM_MONKEY_CONFIG_CLASS_PATH, os.path.join(config_path, 'framework', 'monkey_config_class.py'))
 
 # Create the default automation
-print_t("Creating default automation...", 'info')
-shutil.copyfile(CM_DEFAULT_AUTOMATION_PATH, './automations/Default.py')
+print(colored("Creating default automation...", 'cyan'))
+shutil.copyfile(CM_DEFAULT_AUTOMATION_PATH, os.path.join(project_path, 'automations', 'Default.py'))
 
 # Create the default gitignore
-print_t("Creating default .gitignore...", 'info')
-shutil.copyfile(CM_GITIGNORE_DEFAULT_PATH, './.gitignore')
+print(colored("Creating default .gitignore...", 'cyan'))
+shutil.copyfile(CM_GITIGNORE_DEFAULT_PATH, os.path.join(project_path, '.gitignore'))
 
 # Create the default README
-print_t("Creating default README...", 'info')
-shutil.copyfile(CM_README_DEFAULT_PATH, './README.md')
+print(colored("Creating default README...", 'cyan'))
+shutil.copyfile(CM_README_DEFAULT_PATH, os.path.join(project_path, 'README.md'))
 
-print_t('CodeMonkeys setup complete', 'done')
+print(colored('CodeMonkeys setup complete', 'green'))
