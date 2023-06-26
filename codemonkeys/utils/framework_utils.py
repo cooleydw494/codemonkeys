@@ -4,6 +4,8 @@ import Levenshtein
 
 import importlib.util
 
+from termcolor import colored
+
 
 def find_project_root():
     """Find the root directory of the project (i.e., the closest parent directory containing a `.env` file)."""
@@ -11,10 +13,16 @@ def find_project_root():
 
     while cwd != os.path.dirname(cwd):  # Stop when we reach the root directory
         if '.env' in os.listdir(cwd):
-            return cwd
+            # check for existence of root/config/monkey-manifest.yaml to verify its a codemonkeys project
+            if os.path.exists(os.path.join(cwd, 'config', 'monkey-manifest.yaml')):
+                return cwd
+            else:
+                print(colored("You must run `monk` within a CodeMonkeys project", 'red'))
+                exit(1)
         cwd = os.path.dirname(cwd)
 
-    raise RuntimeError("Could not find project root")
+    print(colored("Could not find project root", 'red'))
+    exit(1)
 
 
 def import_class_from_path_with_fallback(path, class_name, fallback_class):

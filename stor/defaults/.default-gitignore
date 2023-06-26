@@ -1,0 +1,26 @@
+# Environment variables
+.env
+.env-backup
+
+# CodeMonkey generated files (some are tracked though, like default generated monkey configs)
+/stor/temp/*
+TODO.md
+
+# Generated Monkey Configs are ignored
+/stor/temp/monkeys/*
+
+# Python artifacts
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# pytest artifacts
+.pytest_cache/
+
+# PyCharm artifacts
+/.idea/
+/venv/
+
+# VS Code artifacts
+.vscode/*

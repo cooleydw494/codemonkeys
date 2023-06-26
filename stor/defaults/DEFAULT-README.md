@@ -1,0 +1,1 @@
+This is a template for the CodeMonkeys framework. It is a scaffolded out default version of a CodeMonkeys' project, complete with expected directory structure, configuration files, etc. It is used in the CodeMonkeys install script.

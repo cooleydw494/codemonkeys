@@ -7,8 +7,8 @@ from math import floor
 from termcolor import colored, COLORS
 
 from __init__ import __version__
-from defs import import_env_class
-from defs import CM_STOR_MONK_PATH, nl
+from defs import import_env_class, nl
+from cmdefs import CM_STOR_MONK_PATH
 
 ENV = import_env_class()
 ENV = ENV()

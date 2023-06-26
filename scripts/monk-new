@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+import os
+import shutil
+import sys
+
+from codemonkeys.utils.env.environment_checks import monk_env_checks
+from codemonkeys.utils.monk.theme_functions import print_t
+from cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_MANIFEST_DEFAULT_PATH, CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH,
+                    CM_THEME_CONFIG_PATH, CM_ENV_CLASS_PATH, CM_MONKEY_CONFIG_CLASS_PATH, CM_DEFAULT_AUTOMATION_PATH,
+                    CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH)
+
+top_level_dirs = [
+    'abilities',
+    'automations',
+    'barrels',
+    'commands',
+    'config',
+    'tasks',
+    'stor',
+]
+
+config_dirs = [
+    'framework',
+]
+
+stor_dirs = [
+    'context',
+    'output',
+    'work_path',
+    'temp',
+]
+
+# Get the new project name from the command line arguments
+try:
+    new_project_name = sys.argv[1]
+except IndexError:
+    print_t('Please provide a project name.', 'error')
+    sys.exit(1)
+
+print_t(f"Initializing new CodeMonkeys project '{new_project_name}'...", 'start')
+
+monk_env_checks()
+
+# Create the project root directory
+print_t(f"Creating directory: {new_project_name}", 'info')
+os.makedirs(new_project_name, exist_ok=True)
+
+# Create the default .env file
+print_t("Creating default .env file...", 'info')
+shutil.copyfile(CM_ENV_DEFAULT_PATH, ".env")
+
+# Create the top level directories
+for top_level_dir in top_level_dirs:
+    print_t(f"Creating directory: {top_level_dir}", 'info')
+    os.makedirs(top_level_dir, exist_ok=True)
+
+# Create the config directories
+for config_dir in config_dirs:
+    print_t(f"Creating directory: config/{config_dir}", 'info')
+    os.makedirs(f'config/{config_dir}', exist_ok=True)
+
+# Create the stor directories
+for stor_dir in stor_dirs:
+    print_t(f"Creating directory: stor/{stor_dir}", 'info')
+    os.makedirs(f'stor/{stor_dir}', exist_ok=True)
+
+# Create the config files
+print_t("Creating config files...", 'info')
+shutil.copyfile(CM_MONKEY_MANIFEST_DEFAULT_PATH, './config/monkey-manifest.yaml')
+shutil.copyfile(CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, './config/monkey-config-defaults.yaml')
+shutil.copyfile(CM_THEME_CONFIG_PATH, './config/framework/theme.py')
+shutil.copyfile(CM_ENV_CLASS_PATH, './config/framework/env_class.py')
+shutil.copyfile(CM_MONKEY_CONFIG_CLASS_PATH, './config/framework/monkey_config_class.py')
+
+# Create the default automation
+print_t("Creating default automation...", 'info')
+shutil.copyfile(CM_DEFAULT_AUTOMATION_PATH, './automations/Default.py')
+
+# Create the default gitignore
+print_t("Creating default .gitignore...", 'info')
+shutil.copyfile(CM_GITIGNORE_DEFAULT_PATH, './.gitignore')
+
+# Create the default README
+print_t("Creating default README...", 'info')
+shutil.copyfile(CM_README_DEFAULT_PATH, './README.md')
+
+print_t('CodeMonkeys setup complete', 'done')

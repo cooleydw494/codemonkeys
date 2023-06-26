@@ -34,5 +34,5 @@ setup(
             'codemonkeys=codemonkeys.__main__:main',
         ],
     },
-    scripts=['scripts/monk']
+    scripts=['scripts/monk', 'scripts/monk-new']
 )

@@ -10,6 +10,7 @@ ENV = ENV()
 
 
 def monk_env_checks():
+
     version = sys.version_info[0]
 
     if version < 3:

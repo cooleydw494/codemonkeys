@@ -1,8 +1,8 @@
 import os
 
 from __init__ import __version__
-from defs import ROOT_PATH, CM_COMMANDS_PATH, CM_BARRELS_PATH, CM_AUTOMATIONS_PATH, CM_TASKS_PATH, nl, CM_HELP_PATH, \
-    CONFIG_PATH, THEME_CONFIG_PATH
+from defs import THEME_CONFIG_PATH, nl
+from cmdefs import CM_COMMANDS_PATH, CM_BARRELS_PATH, CM_AUTOMATIONS_PATH, CM_TASKS_PATH, CM_HELP_PATH
 from codemonkeys.help.help import run_default_help
 from codemonkeys.utils.find_entity import find_entity
 from codemonkeys.utils.monk.run_as_module import run_as_module

@@ -3,7 +3,8 @@ import json
 import os
 from pathlib import Path
 
-from defs import CM_STOR_MONK_PATH, nl2, nl
+from cmdefs import CM_STOR_MONK_PATH
+from defs import nl2, nl
 from codemonkeys.utils.monk.theme_functions import print_banner, print_table, print_t, apply_t
 
 

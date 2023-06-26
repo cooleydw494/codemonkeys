@@ -1,7 +1,7 @@
 import os
 
 from codemonkeys.utils.framework_utils import find_project_root, import_class_from_path_with_fallback
-from codemonkeys.utils.monk.get_python_command import get_python_command, get_pip_command
+from codemonkeys.utils.monk.get_python_command import get_python_command
 
 """  PREDEFINED FRAMEWORK INSTANCE PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
@@ -46,44 +46,11 @@ TEMP_PATH = os.path.join(STOR_PATH, "temp")
 # MONKEY TEMP CONFIG FILES
 MONKEYS_PATH = os.path.join(TEMP_PATH, 'monkeys')
 
-"""  CORE PATHS
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
-
-# CORE ROOT PATH
-CM_ROOT_PATH = os.path.dirname(__file__)
-
-# CM PATH (root package)
-CM_PATH = os.path.join(CM_ROOT_PATH, "codemonkeys")
-
-# CM AUTOMATIONS
-CM_AUTOMATIONS_PATH = os.path.join(CM_PATH, "automations")
-# CM BARRELS
-CM_BARRELS_PATH = os.path.join(CM_PATH, "barrels")
-# CM TASKS
-CM_TASKS_PATH = os.path.join(CM_PATH, "tasks")
-# CM ABILITIES
-CM_ABILITIES_PATH = os.path.join(CM_PATH, "abilities")
-# CM COMMANDS
-CM_COMMANDS_PATH = os.path.join(CM_PATH, "commands")
-
-# HELP
-CM_HELP_PATH = os.path.join(CM_PATH, "help")
-
-# STOR CORE
-CM_STOR_PATH = os.path.join(CM_ROOT_PATH, "stor")
-CM_STOR_TEMP_PATH = os.path.join(CM_STOR_PATH, "temp")
-CM_STOR_MONK_PATH = os.path.join(CM_STOR_PATH, "monk")
-CM_STOR_DEFAULTS_PATH = os.path.join(CM_STOR_PATH, "defaults")
-
-# DEFAULTS
-ENV_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, ".env.default")
-
 """  'GLOBAL' HELPERS/VARIABLES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
 
-# GET user's available python and pip commands
+# GET user's available Python command
 PYTHON_COMMAND = get_python_command()
-PIP_COMMAND = get_pip_command()
 
 TOKEN_UNCERTAINTY_BUFFER = 10
 

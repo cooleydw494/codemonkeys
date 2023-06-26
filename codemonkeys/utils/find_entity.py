@@ -2,7 +2,8 @@ import os
 import sys
 from typing import Generator, List, Tuple
 
-from defs import nl, CM_COMMANDS_PATH, CM_AUTOMATIONS_PATH, CM_BARRELS_PATH, CM_TASKS_PATH, nl2
+from defs import nl, nl2
+from cmdefs import CM_COMMANDS_PATH, CM_AUTOMATIONS_PATH, CM_BARRELS_PATH, CM_TASKS_PATH
 from codemonkeys.utils.framework_utils import levenshtein_distance
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
