@@ -41,6 +41,11 @@ if os.path.exists(new_project_name):
     print(colored(f"Directory '{new_project_name}' already exists.", 'red'))
     sys.exit(1)
 
+if not new_project_name.isalpha():
+    print(colored("Project name must only contain letters/underscores to enable relative imports within user modules",
+                  'red'))
+    sys.exit(1)
+
 print(colored(f"Initializing new CodeMonkeys project '{new_project_name}'...", 'green'))
 
 # Create the project root directory
@@ -48,6 +53,9 @@ print(colored(f"Creating directory: {new_project_name}", 'cyan'))
 os.makedirs(new_project_name, exist_ok=True)
 
 project_path = os.path.join(os.getcwd(), new_project_name)
+
+with open(os.path.join(project_path, '__init__.py'), 'w') as f:
+    f.write('')
 
 # Create the default .env file
 print(colored("Creating default .env file", 'cyan'))
@@ -57,16 +65,22 @@ shutil.copyfile(CM_ENV_DEFAULT_PATH, os.path.join(project_path, ".env"))
 for top_level_dir in top_level_dirs:
     print(colored(f"Creating directory: {top_level_dir}", 'cyan'))
     os.makedirs(os.path.join(project_path, top_level_dir), exist_ok=True)
+    with open(os.path.join(project_path, top_level_dir, '__init__.py'), 'w') as f:
+        f.write('')
 
 # Create the config directories
 for config_dir in config_dirs:
     print(colored(f"Creating directory: config/{config_dir}", 'cyan'))
     os.makedirs(os.path.join(project_path, 'config', config_dir), exist_ok=True)
+    with open(os.path.join(project_path, 'config', config_dir, '__init__.py'), 'w') as f:
+        f.write('')
 
 # Create the stor directories
 for stor_dir in stor_dirs:
     print(colored(f"Creating directory: stor/{stor_dir}", 'cyan'))
     os.makedirs(os.path.join(project_path, 'stor', stor_dir), exist_ok=True)
+    with open(os.path.join(project_path, 'stor', stor_dir, '__init__.py'), 'w') as f:
+        f.write('')
 
 # Create the config files
 print(colored("Creating config files...", 'cyan'))
