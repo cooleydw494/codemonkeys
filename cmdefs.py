@@ -25,6 +25,8 @@ CM_CONFIG_PATH = os.path.join(CM_PATH, "config")
 CM_ENV_CLASS_PATH = os.path.join(CM_CONFIG_PATH, "env_class.py")
 # MONKEY CONFIG CLASS
 CM_MONKEY_CONFIG_CLASS_PATH = os.path.join(CM_CONFIG_PATH, "monkey_config_class.py")
+# THEME CONFIG
+CM_THEME_CONFIG_PATH = os.path.join(CM_CONFIG_PATH, 'theme.py')
 
 # HELP
 CM_HELP_PATH = os.path.join(CM_PATH, "help")
@@ -39,7 +41,6 @@ CM_STOR_DEFAULTS_PATH = os.path.join(CM_STOR_PATH, "defaults")
 CM_ENV_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, ".env.default")
 CM_MONKEY_MANIFEST_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "monkey-manifest.yaml")
 CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "monkey-config-defaults.yaml")
-CM_THEME_CONFIG_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'theme.py')
 CM_DEFAULT_AUTOMATION_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'DefaultAutomation.py')
 CM_GITIGNORE_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, '.default-gitignore')
 CM_README_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'DEFAULT-README.md')

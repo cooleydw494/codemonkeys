@@ -43,6 +43,8 @@ def import_class_from_path_with_fallback(path, class_name, fallback_class):
         spec.loader.exec_module(module)
         return getattr(module, class_name)
     except (ImportError, FileNotFoundError, AttributeError):
+        print(colored(f"Could not import {class_name} from {path}", 'red'))
+        print(colored(f"Using fallback class {fallback_class.__name__}", 'yellow'))
         return fallback_class
 
 
