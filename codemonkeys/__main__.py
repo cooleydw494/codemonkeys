@@ -1,19 +1,9 @@
-import argparse
-import sys
-from install import install
+from codemonkeys.utils.monk.theme_functions import print_t
 
 
 def main():
-    parser = argparse.ArgumentParser(prog='codemonkeys')
-    parser.add_argument('command', help='The command to execute.')
-    parser.add_argument('name', help='The name of the new project.')
-
-    args = parser.parse_args()
-
-    if args.command.lower() == 'new':
-        install(args.name)
-    else:
-        print(f"Unknown command {args.command}", file=sys.stderr)
+    print_t('To create a new CodeMonkeys project, run `monk-new <project_name>`.', 'info')
+    print_t('To see the CLI help, run `monk help`.', 'info')
 
 
 if __name__ == '__main__':
