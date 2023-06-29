@@ -6,34 +6,6 @@
 ##    Undefined props will default based on `monkey-config-defaults.yaml`.
 ################################################################################################
 
-#### GENERAL ***
-##  WORK_PATH: The path to the work_path to use. (Absolute path; supports ~ on Mac/Linux)
-##  CONTEXT_FILE_PATH: A file to be summarized using CONTEXT_SUMMARY_PROMPT to give context for the main prompt. (absolute path)
-
-#### PROMPTS ***
-##  MAIN_PROMPT: The main prompt
-##  CONTEXT_SUMMARY_PROMPT: The prompt for summarizing the CONTEXT_FILE_PATH ("" to use verbatim CONTEXT_FILE_PATH contents)
-##  MAIN_PROMPT_ULTIMATUM: A final ultimatum for the main prompt ("" for none)
-
-#### MODELS ***
-##  MODEL props can be set to int 3 or 4 (gpt-3.5-turbo or gpt-4).
-
-#### TEMPS ***
-##  TEMP props can be floats from 0.0-1.0 (conservative-creative)
-
-#### OUTPUT ***
-##  OUTPUT_EXAMPLE_PROMPT: An example of the output you want to see.
-##  OUTPUT_CHECK_PROMPT: A prompt for checking the output.
-##  OUTPUT_PATH: An alternate path (not WORK_PATH) for writing files
-##  OUTPUT_FILENAME_APPEND: Optional string to append to output filenames
-##  OUTPUT_EXT: Override output file extensions ("" for original ext, or ".md", ".txt", etc.)
-
-
-
-###  YOUR MONKEYS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#  Manually define monkey configs here or move GENERATED MONKEYS from below.
-
 
 default:
 
@@ -111,73 +83,6 @@ long-form:
   # Temps
   MAIN_TEMP: 1.0
   SUMMARY_TEMP: 1.0
-  OUTPUT_CHECK_TEMP: .5
-
-
-
-###  GENERATED MONKEYS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#  Generated monkeys will be written here when you run `monk add-monkey <monkey-name>`.
-#  DO NOT ALTER THE START/END TAGS. Instead, move the monkey config to YOUR MONKEYS above.
-#  TODO: Implement this in add-monkey, right now it just writes to the end of this file.
-
-
-# [GENERATED_MONKEYS_START]
-# [GENERATED_MONKEYS_END]
-
-
-
-###  SELF-HELP MONKEYS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#  Monkeys that exist to work on the CodeMonkeys framework itself.
-
-
-#self-extract:
-  # A monkey for extracting functionality into a new file and implementing usage in the old file.
-  # TODO: Implement this monkey
-
-
-
-
-self-help-command:
-  # A monkey for generating help scripts for `monk` entities
-
-  # General
-  WORK_PATH: "ROOT_PATH/commands"
-  FILE_TYPES_INCLUDED: ".py"
-  FILEPATH_MATCH_EXCLUDED: "help.py,__init__.py"
-  FILE_SELECT_MAX_TOKENS: 6000
-  MAX_TOKENS: 8000
-
-  # Main Prompts
-  MAIN_PROMPT: 'Write a python script that prints an appealing summary of {the-file} and its usage via `monk {the-file}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {the-file}, use the provided monk command context and print_t function to generate a script that prints a help summary for {the-file}. When referring to {the-file} as a command, do not include the extension.'
-  MAIN_PROMPT_ULTIMATUM: 'Return only the contents of a script that prints a helpful summary and usage explanation of {the-file}.'
-  OUTPUT_EXAMPLE_PROMPT: "Make your output similar to the following, but with as much detail and creativity as necessary to explain the command: ```{cop:~/local-git/codemonkeys-template/stor/context/self-help-context-file.md}```."
-
-  # Context
-  CONTEXT_FILE_PATH: 'ROOT_PATH/stor/context/self-help-context-file.md'
-  CONTEXT_SUMMARY_PROMPT: null  # CONTEXT_FILE is pre-prepared summary
-
-  # Output Checks
-  CHECK_OUTPUT: True
-  OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script with a "main" function. Respond with only one word: "True" or "False".'
-
-  # Output
-  OUTPUT_PATH: "ROOT_PATH/stor/output"
-  OUTPUT_EXT: ''
-  OUTPUT_FILENAME_APPEND: ""
-  OUTPUT_TRIES_LIMIT: 2
-  OUTPUT_REMOVE_STRINGS: "```,```python,python"
-  SKIP_EXISTING_OUTPUT_FILES: False
-
-  # Models
-  MAIN_MODEL: 4
-  SUMMARY_MODEL: null  # CONTEXT_FILE is pre-prepared summary
-  OUTPUT_CHECK_MODEL: 3
-
-  # Temps
-  MAIN_TEMP: 1.0
-  SUMMARY_TEMP: null  # CONTEXT_FILE is pre-prepared summary
   OUTPUT_CHECK_TEMP: .5
 
 
