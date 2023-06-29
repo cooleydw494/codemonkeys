@@ -1,11 +1,33 @@
 import argparse
+from collections import OrderedDict
+from typing import List, Tuple, Dict
 
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
+def split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[str]]:
+    unknown_named_args = OrderedDict()
+    unknown_unnamed_args = []
+    iterator = iter(unknown_args)
+    for arg in iterator:
+        if arg.startswith('--') or arg.startswith('-'):
+            key = arg
+            try:
+                value = next(iterator)
+                if value.startswith('--') or value.startswith('-'):
+                    unknown_unnamed_args.append(value)
+                    value = True
+            except StopIteration:
+                value = True
+            unknown_named_args[key] = value
+        else:
+            unknown_unnamed_args.append(arg)
+    return unknown_named_args, unknown_unnamed_args
+
+
 def parse_monk_args():
-    default_action = 'run'
-    default_entity_type = 'command'
+    import argparse
+    from collections import OrderedDict
 
     # Create argument parser - use custom help
     parser = argparse.ArgumentParser(add_help=False)
@@ -15,68 +37,43 @@ def parse_monk_args():
 
     # Special flags - flags that override normal behaviors significantly.
     parser.add_argument('-v', '--version', action='store_true')
-    parser.add_argument('--all', action='store_true')
     parser.add_argument('--toggle-light-mode', action='store_true')
 
     # Action flags - mutually exclusive, overrides default of "run"
     action_flags = parser.add_mutually_exclusive_group()
-    action_flags.add_argument('-r', '--run', action='store_true')
     action_flags.add_argument('-e', '--edit', action='store_true')
-    action_flags.add_argument('-p', '--print', action='store_true')
-    action_flags.add_argument('-cp', '--copy-path', action='store_true')
-    action_flags.add_argument('-cc', '--copy-contents', action='store_true')
     action_flags.add_argument('-h', '--help', action='store_true')
 
     # Entity Type flags - mutually exclusive, overrides default of "command"
     entity_type_flags = parser.add_mutually_exclusive_group()
-    entity_type_flags.add_argument('-m', '--module', action='store_true')
     entity_type_flags.add_argument('-a', '--automation', action='store_true')
     entity_type_flags.add_argument('-b', '--barrel', action='store_true')
 
     # Entity is the name of the command or overridden entity_type
-    parser.add_argument('entity', nargs='?')
+    parser.add_argument('entity_name', nargs='?')
 
     # Parse Arguments
-    args, unknown_args = parser.parse_known_args()
+    monk_args, unknown_args = parser.parse_known_args()
+
+    # Split unknown arguments into named and unnamed
+    unknown_named_args, unknown_unnamed_args = split_unknown_args(unknown_args)
 
     # Action
-    action = None
-    if args.edit is True:
+    action = 'run'
+    if monk_args.edit is True:
         action = 'edit'
-    elif args.print is True:
-        action = 'print'
-    elif args.copy_path is True:
-        action = 'copy_path'
-    elif args.copy_contents is True:
-        action = 'copy_contents'
-    elif args.help is True:
+    elif monk_args.help is True:
         action = 'help'
 
     # Entity Type
-    entity_type = None
-    if args.module is True:
-        entity_type = 'module'
-    elif args.automation is True:
+    entity_type = 'command'
+    if monk_args.automation is True:
         entity_type = 'automation'
-    elif args.barrel is True:
+    elif monk_args.barrel is True:
         entity_type = 'barrel'
 
-    if entity_type == 'module':
-        default_action = 'edit'
+    if action == 'run' and entity_type == 'command' and monk_args.entity_name is None:
+        # Simulate `monk help`
+        monk_args.entity_name = 'help'
 
-    if action is None and args.entity is None and entity_type is None:
-        # If all values are default (run <None> command), simulate `monk --help`
-        action = 'help'
-
-    # Apply any relevant defaults
-    action = action or default_action
-    entity_type = entity_type or default_entity_type
-
-    # Warning For "run" action on non-commands
-    if action == 'run' and entity_type == 'module':
-        print_t(
-            f"You are attempting to use the 'run' action a module with. This could work if there is a default behavior "
-            f"for the module (like a main function), but you may want to exercise caution.", 'warning')
-        input_t("Press Enter to continue or Ctrl+C to cancel...")
-
-    return args, unknown_args, action, args.entity, entity_type
+    return monk_args, unknown_named_args, unknown_unnamed_args, action, monk_args.entity_name, entity_type

@@ -1,12 +1,9 @@
-import os
-
 from __init__ import __version__
 from defs import THEME_CONFIG_PATH, nl
-from cmdefs import CM_COMMANDS_PATH, CM_BARRELS_PATH, CM_AUTOMATIONS_PATH, CM_TASKS_PATH, CM_HELP_PATH
+from cmdefs import CM_HELP_PATH
 from codemonkeys.help.help import run_default_help
 from codemonkeys.utils.find_entity import find_entity
-from codemonkeys.utils.monk.run_as_module import run_as_module
-from codemonkeys.utils.monk.theme_functions import print_t, print_tree
+from codemonkeys.utils.monk.theme_functions import print_t
 
 
 # This function is used to handle special commands that are not actually entities.
@@ -34,23 +31,6 @@ def handle_special_commands(args, action, entity, entity_type):
     # so it is a lot easier to detect it outright and run through custom logic, with a central location for help files.
     elif action == 'help' or entity == 'help':
         handle_help(args, action, entity, entity_type)
-    elif entity == 'list':
-        if entity_type == 'command' or args.all:
-            print()
-            print_tree(CM_COMMANDS_PATH, exclude_file_starts=['.', '_'],
-                       title="📁  Commands - Run CLI commands", incl_prefix=False)
-        if entity_type == 'barrel' or args.all:
-            print()
-            print_tree(CM_BARRELS_PATH, exclude_file_starts=['.', '_'],
-                       title="🛢️   Barrels - Combine and orchestrate automations", incl_prefix=False)
-        if entity_type == 'automation' or args.all:
-            print()
-            print_tree(CM_AUTOMATIONS_PATH, exclude_file_starts=['.', '_'],
-                       title="🤖  Automations - Run automations with monkey configs", incl_prefix=False)
-        if entity_type == 'module' or args.all:
-            print()
-            print_tree(CM_TASKS_PATH, exclude_file_starts=['.', '_'],
-                       title="📦  Modules - project modules that can be imported", incl_prefix=False)
     else:
         return False
     return True
@@ -61,4 +41,4 @@ def handle_help(args, action, entity, entity_type):
         run_default_help()
     else:
         entity_path = find_entity(entity, entity_type, CM_HELP_PATH)
-        run_as_module(entity_path.strip(), function_name='main', monk_args=args)
+        # run_as_module(entity_path.strip(), function_name='main', monk_args=args)
