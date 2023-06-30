@@ -1,7 +1,7 @@
 import os
 
 from codemonkeys.utils.framework_utils import find_project_root, import_class_from_path_with_fallback
-from codemonkeys.utils.monk.get_python_command import get_python_command
+from codemonkeys.utils.framework_utils import get_python_command
 
 """  PREDEFINED FRAMEWORK INSTANCE PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """

@@ -39,7 +39,7 @@ def validate_path(key, path: str) -> (str, None):
     return str(absolute_path)
 
 
-def validate_monkey_name(key: str = 'Monkey Name', monkey_name: str = None) -> str:
+def validate_monkey_name(monkey_name: str = None) -> str:
     if not monkey_name.replace('-', '').isalpha():
         raise TypeError(f"Monkey name must contain only letters and hyphens")
     return monkey_name

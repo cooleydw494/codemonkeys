@@ -1,7 +1,11 @@
-"""  CORE PATHS
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
 import os
 
+from __init__ import __version__
+
+VERSION = __version__
+
+"""  CORE PATHS
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
 # CORE ROOT PATH
 CM_ROOT_PATH = os.path.dirname(__file__)
 

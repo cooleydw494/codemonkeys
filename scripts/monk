@@ -4,15 +4,15 @@ import subprocess
 import sys
 import traceback
 
-from codemonkeys.utils.env.update_env_class import update_env_class
-from codemonkeys.utils.monkey_config.update_monkey_config_class import update_monkey_config_class
-from codemonkeys.utils.monk.generate_monkeys import generate_monkeys
-from defs import nl
 from codemonkeys.utils.env.environment_checks import monk_env_checks
-from codemonkeys.utils.find_entity import find_entity
+from codemonkeys.utils.env.update_env_class import update_env_class
+from codemonkeys.utils.monk.find_entity import find_entity
+from codemonkeys.utils.monk.generate_monkeys import generate_monkeys
 from codemonkeys.utils.monk.parse_monk_args import parse_monk_args
 from codemonkeys.utils.monk.run_entities import run_automation, run_command
 from codemonkeys.utils.monk.theme_functions import print_t
+from codemonkeys.utils.monkey_config.update_monkey_config_class import update_monkey_config_class
+from defs import nl, PYTHON_COMMAND
 
 # Some basic environment checks
 monk_env_checks()
@@ -37,12 +37,15 @@ if action == 'edit':
     subprocess.run(['vim', entity_path.strip()])
 
 elif action == 'help':
-    print('help placeholder')
+    subprocess.call([PYTHON_COMMAND, entity_path.strip()])
 
 elif action == 'run':
     try:
+
+        print_t(f'{entity_type}: {entity_name}', 'quiet')
+
+        # Commands
         if entity_type == 'command':
-            print('command')
             extension = os.path.splitext(entity_path.strip())[1]
             if extension == ".py":
                 run_command(entity_path.strip(), entity_name, monk_args, named_args, unnamed_args)
@@ -51,19 +54,31 @@ elif action == 'run':
             elif extension == ".bat":
                 subprocess.call([entity_path.strip()] + sys.argv[2:])
             else:
-                print_t(f"Unsupported entity_type: {extension}. find_entity should have filtered this.", 'error')
+                print_t(f"Unsupported entity_type: {extension}. find_entity should filter this.", 'error')
                 sys.exit(1)
+
+        # Automations
         elif entity_type == 'automation':
             print('automation')
-            run_automation(entity_path.strip(), monk_args=monk_args)
+            run_automation(entity_path.strip(), entity_name, monk_args, named_args, unnamed_args)
+
+        # Barrels
         elif entity_type == 'barrel':
             print('barrel')
+
+        # Unsupported
         else:
             print_t(f'unsupported entity_type: {entity_type}', 'error')
             sys.exit(1)
+
     except KeyboardInterrupt:
         print_t(f"{nl}Exiting due to KeyboardInterrupt from user.", 'quiet')
         sys.exit(1)
+
+    except ValueError as e:
+        print_t(f"{nl}Error: {e}", 'error')
+        sys.exit(1)
+
     except Exception as e:
         print_t(f"{nl}Error: {e}", 'error')
         print_t(f"{nl}Error Trace:{nl}{nl.join(traceback.format_exc().splitlines())}")

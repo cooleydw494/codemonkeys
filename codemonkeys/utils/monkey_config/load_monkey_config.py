@@ -2,7 +2,7 @@ import os
 
 from defs import import_monkey_config_class
 from cmdefs import CM_STOR_TEMP_PATH
-from codemonkeys.utils.get_monkey_name import get_monkey_name
+from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
 from codemonkeys.utils.monk.theme_functions import print_t, input_t, apply_t
 
 MonkeyConfig = import_monkey_config_class()

@@ -2,6 +2,7 @@ import argparse
 from collections import OrderedDict
 from typing import List, Tuple, Dict
 
+from codemonkeys.help.help import run_default_help
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
@@ -67,13 +68,14 @@ def parse_monk_args():
 
     # Entity Type
     entity_type = 'command'
-    if monk_args.automation is True:
+    if action == 'help':
+        entity_type = 'help'
+    elif monk_args.automation is True:
         entity_type = 'automation'
     elif monk_args.barrel is True:
         entity_type = 'barrel'
 
-    if action == 'run' and entity_type == 'command' and monk_args.entity_name is None:
-        # Simulate `monk help`
-        monk_args.entity_name = 'help'
+    if (entity_type == 'help' or entity_type == 'command') and monk_args.entity_name is None:
+        run_default_help()
 
     return monk_args, unknown_named_args, unknown_unnamed_args, action, monk_args.entity_name, entity_type

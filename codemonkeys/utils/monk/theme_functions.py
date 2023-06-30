@@ -6,9 +6,8 @@ from math import floor
 
 from termcolor import colored, COLORS
 
-from __init__ import __version__
 from defs import import_env_class, nl
-from cmdefs import CM_STOR_MONK_PATH
+from cmdefs import CM_STOR_MONK_PATH, VERSION
 
 ENV = import_env_class()
 ENV = ENV()
@@ -103,7 +102,7 @@ def strip_color_and_bold_codes(s):
 def print_banner():
     with open(os.path.join(CM_STOR_MONK_PATH, 'banner.txt'), 'r') as f:
         art = f.read()
-    print_t(art.replace('vX.X.X', f'v{__version__}') + nl, 'light_yellow')
+    print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
 
 
 def print_table(table, title=None, sub_indent='   ', min_col_width=10):

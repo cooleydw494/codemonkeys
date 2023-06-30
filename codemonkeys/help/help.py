@@ -1,9 +1,5 @@
 import argparse
-import json
-import os
-from pathlib import Path
 
-from cmdefs import CM_STOR_MONK_PATH
 from defs import nl2, nl
 from codemonkeys.utils.monk.theme_functions import print_banner, print_table, print_t, apply_t
 
@@ -135,3 +131,4 @@ def run_default_help(monk_args: argparse.Namespace = None):
 
     # Wrap up
     print_t("That's it! For more info, run `monk -h <entity>` or view the CodeMonkeys' docs.", 'done')
+    exit(0)

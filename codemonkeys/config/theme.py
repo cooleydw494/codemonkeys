@@ -27,7 +27,7 @@ text_themes: dict = {
     'important': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '👉 '},
     'special': {'color': 'magenta', 'light_mode': 'magenta', 'pre': ''},
     'loading': {'color': 'yellow', 'light_mode': 'magenta', 'pre': '⏳ '},
-    'monkey': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': ''},
+    'monkey': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '🐒 '},
     # 'config': {'color': 'yellow', 'light_mode': 'magenta', 'pre': '🔧 '},
 
     'file': {'color': 'dark_grey', 'light_mode': 'black', 'pre': ''},
