@@ -18,7 +18,7 @@ class AddMonkey(Command):
     monkey_name = None
     required_arg_keys = ['monkey_name']
 
-    def main(self):
+    def run(self):
         if self.monkey_name is None or not validate_monkey_name(self.monkey_name):
             monkey_name = get_user_config_value("Please enter a name for your new monkey: ",
                                                 validate_monkey_name, "(letters/hyphens only)")

@@ -7,22 +7,28 @@ from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
 def split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[str]]:
+    from collections import OrderedDict
     unknown_named_args = OrderedDict()
     unknown_unnamed_args = []
+
     iterator = iter(unknown_args)
     for arg in iterator:
         if arg.startswith('--') or arg.startswith('-'):
-            key = arg
-            try:
-                value = next(iterator)
-                if value.startswith('--') or value.startswith('-'):
-                    unknown_unnamed_args.append(value)
+            if "=" in arg:
+                key, value = arg.split("=", 1)  # Split on the first "="
+            else:
+                key = arg
+                try:
+                    value = next(iterator)
+                    if value.startswith('--') or value.startswith('-'):
+                        unknown_unnamed_args.append(value)
+                        value = True
+                except StopIteration:
                     value = True
-            except StopIteration:
-                value = True
             unknown_named_args[key] = value
         else:
             unknown_unnamed_args.append(arg)
+
     return unknown_named_args, unknown_unnamed_args
 
 
@@ -57,7 +63,7 @@ def parse_monk_args():
     monk_args, unknown_args = parser.parse_known_args()
 
     # Split unknown arguments into named and unnamed
-    unknown_named_args, unknown_unnamed_args = split_unknown_args(unknown_args)
+    named_args, unnamed_args = split_unknown_args(unknown_args)
 
     # Action
     action = 'run'
@@ -75,7 +81,7 @@ def parse_monk_args():
     elif monk_args.barrel is True:
         entity_type = 'barrel'
 
-    if (entity_type == 'help' or entity_type == 'command') and monk_args.entity_name is None:
+    if entity_type in ['help', 'command'] and monk_args.entity_name in [None, 'help']:
         run_default_help()
 
-    return monk_args, unknown_named_args, unknown_unnamed_args, action, monk_args.entity_name, entity_type
+    return monk_args, named_args, unnamed_args, action, monk_args.entity_name, entity_type

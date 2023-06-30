@@ -5,5 +5,5 @@ from cmdefs import VERSION
 
 class Version(Command):
 
-    def main(self):
+    def run(self):
         print_t(f"CodeMonkeys v{VERSION}", 'monkey')

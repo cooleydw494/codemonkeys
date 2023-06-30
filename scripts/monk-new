@@ -7,7 +7,7 @@ from termcolor import colored
 
 from cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_MANIFEST_DEFAULT_PATH, CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH,
                     CM_THEME_CONFIG_PATH, CM_ENV_CLASS_PATH, CM_MONKEY_CONFIG_CLASS_PATH, CM_DEFAULT_AUTOMATION_PATH,
-                    CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH)
+                    CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH, CM_CONTEXT_FILE_EXAMPLE_PATH)
 
 top_level_dirs = [
     'abilities',
@@ -54,9 +54,6 @@ os.makedirs(new_project_name, exist_ok=True)
 
 project_path = os.path.join(os.getcwd(), new_project_name)
 
-with open(os.path.join(project_path, '__init__.py'), 'w') as f:
-    f.write('')
-
 # Create the default .env file
 print(colored("Creating default .env file", 'cyan'))
 shutil.copyfile(CM_ENV_DEFAULT_PATH, os.path.join(project_path, ".env"))
@@ -65,28 +62,23 @@ shutil.copyfile(CM_ENV_DEFAULT_PATH, os.path.join(project_path, ".env"))
 for top_level_dir in top_level_dirs:
     print(colored(f"Creating directory: {top_level_dir}", 'cyan'))
     os.makedirs(os.path.join(project_path, top_level_dir), exist_ok=True)
-    with open(os.path.join(project_path, top_level_dir, '__init__.py'), 'w') as f:
-        f.write('')
 
 # Create the config directories
 for config_dir in config_dirs:
     print(colored(f"Creating directory: config/{config_dir}", 'cyan'))
     os.makedirs(os.path.join(project_path, 'config', config_dir), exist_ok=True)
-    with open(os.path.join(project_path, 'config', config_dir, '__init__.py'), 'w') as f:
-        f.write('')
 
 # Create the stor directories
 for stor_dir in stor_dirs:
     print(colored(f"Creating directory: stor/{stor_dir}", 'cyan'))
     os.makedirs(os.path.join(project_path, 'stor', stor_dir), exist_ok=True)
-    with open(os.path.join(project_path, 'stor', stor_dir, '__init__.py'), 'w') as f:
-        f.write('')
 
 # Create the config files
-print(colored("Creating config files...", 'cyan'))
+print(colored("Creating config/example files...", 'cyan'))
 config_path = os.path.join(project_path, 'config')
 shutil.copyfile(CM_MONKEY_MANIFEST_DEFAULT_PATH, os.path.join(config_path, 'monkey-manifest.yaml'))
 shutil.copyfile(CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, os.path.join(config_path, 'monkey-config-defaults.yaml'))
+shutil.copyfile(CM_CONTEXT_FILE_EXAMPLE_PATH, os.path.join(project_path, 'stor', 'context', 'context-file.txt'))
 shutil.copyfile(CM_THEME_CONFIG_PATH, os.path.join(config_path, 'framework', 'theme.py'))
 shutil.copyfile(CM_ENV_CLASS_PATH, os.path.join(config_path, 'framework', 'env_class.py'))
 shutil.copyfile(CM_MONKEY_CONFIG_CLASS_PATH, os.path.join(config_path, 'framework', 'monkey_config_class.py'))

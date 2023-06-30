@@ -1,7 +1,8 @@
 import os
+import sys
 
-from codemonkeys.utils.framework_utils import find_project_root, import_class_from_path_with_fallback
-from codemonkeys.utils.framework_utils import get_python_command
+from codemonkeys.utils.cmdefs_utils import find_project_root, import_class_from_path_with_fallback
+from codemonkeys.utils.cmdefs_utils import get_python_command
 
 """  PREDEFINED FRAMEWORK INSTANCE PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
@@ -48,6 +49,8 @@ MONKEYS_PATH = os.path.join(TEMP_PATH, 'monkeys')
 
 """  'GLOBAL' HELPERS/VARIABLES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
+
+ENABLE_RELATIVE_IMPORTS = sys.path.append(ROOT_PATH)
 
 # GET user's available Python command
 PYTHON_COMMAND = get_python_command()

@@ -5,7 +5,7 @@ from defs import THEME_CONFIG_PATH, nl
 
 class ToggleLightMode(Command):
 
-    def main(self):
+    def run(self):
 
         with open(THEME_CONFIG_PATH, "r+") as file:
             lines = file.readlines()

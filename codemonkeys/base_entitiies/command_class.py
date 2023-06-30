@@ -8,3 +8,5 @@ class Command(CliRunnable):
     Run `monk make <name>` to create a new command.
     """
 
+    def run(self):
+        raise NotImplementedError("The main() method must be implemented in a subclass of Automation.")

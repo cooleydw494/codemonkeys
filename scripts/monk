@@ -14,6 +14,7 @@ from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.update_monkey_config_class import update_monkey_config_class
 from defs import nl, PYTHON_COMMAND
 
+
 # Some basic environment checks
 monk_env_checks()
 
@@ -55,7 +56,7 @@ elif action == 'run':
                 subprocess.call([entity_path.strip()] + sys.argv[2:])
             else:
                 print_t(f"Unsupported entity_type: {extension}. find_entity should filter this.", 'error')
-                sys.exit(1)
+                exit(1)
 
         # Automations
         elif entity_type == 'automation':
@@ -69,20 +70,22 @@ elif action == 'run':
         # Unsupported
         else:
             print_t(f'unsupported entity_type: {entity_type}', 'error')
-            sys.exit(1)
+            exit(1)
 
     except KeyboardInterrupt:
         print_t(f"{nl}Exiting due to KeyboardInterrupt from user.", 'quiet')
-        sys.exit(1)
+        exit(1)
 
     except ValueError as e:
         print_t(f"{nl}Error: {e}", 'error')
-        sys.exit(1)
+        exit(1)
 
     except Exception as e:
         print_t(f"{nl}Error: {e}", 'error')
         print_t(f"{nl}Error Trace:{nl}{nl.join(traceback.format_exc().splitlines())}")
-        sys.exit(1)
+        exit(1)
 else:
     print_t(f'unsupported action: {action}', 'error')
-    sys.exit(1)
+    exit(1)
+
+exit(0)

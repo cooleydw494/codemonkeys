@@ -4,7 +4,7 @@ from typing import Generator, List, Tuple
 
 from defs import nl, nl2, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
 from cmdefs import CM_COMMANDS_PATH, CM_HELP_PATH
-from codemonkeys.utils.framework_utils import levenshtein_distance
+from codemonkeys.utils.cmdefs_utils import levenshtein_distance
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 entity_paths = {

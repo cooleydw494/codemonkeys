@@ -8,7 +8,7 @@ class List(Command):
     named_arg_keys = ['all']
     all: bool = False
 
-    def main(self):
+    def run(self):
 
         print_tree(CM_COMMANDS_PATH, exclude_file_starts=['.', '_'],
                    title="📁  Commands - Run CLI commands", incl_prefix=False)

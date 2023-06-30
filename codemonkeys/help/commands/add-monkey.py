@@ -29,3 +29,7 @@ def main():
     }
 
     print_table(USAGE_EXAMPLES_TABLE, "Usage")
+
+
+if __name__ == '__main__':
+    main()

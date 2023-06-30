@@ -6,8 +6,10 @@ import Levenshtein
 from termcolor import colored
 
 """
-This module is imported to cmdefs.py
+This module is imported to defs and/or cmdefs.
 It houses code that can be run without importing other project modules (which would result in circular imports).
+
+NO PROJECT MODULES, CONFIGS, ETC SHOULD BE IMPORTED HERE.
 """
 
 # Lists of python and pip commands to be checked
@@ -17,14 +19,14 @@ python_commands = ["python3", "python3.11", "python3.10", "python3.9", "python3.
 def get_python_command():
     # Loop over the python_commands list and return the first valid command
     for cmd in python_commands:
-        if test_command(cmd):
+        if _test_command(cmd):
             return cmd
     print("No valid python command is available. Please add one of these to your path, "
           "or set the PYTHON_COMMAND manually in defs.py")
 
 
-# noinspection PyBroadException
-def test_command(command):
+def _test_command(command):
+    # noinspection PyBroadException
     try:
         # Use --version flag to check if a command is present
         # It should throw an Exception if it isn't
@@ -69,9 +71,10 @@ def import_class_from_path_with_fallback(path, class_name, fallback_class):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return getattr(module, class_name)
-    except (ImportError, FileNotFoundError, AttributeError):
+    except (ImportError, FileNotFoundError, AttributeError) as e:
         print(colored(f"Could not import {class_name} from {path}", 'red'))
         print(colored(f"Using fallback class {fallback_class.__name__}", 'yellow'))
+        print(colored(f"Error: {e}", 'red'))
         return fallback_class
 
 
