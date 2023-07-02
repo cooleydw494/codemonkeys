@@ -1,4 +1,5 @@
 import argparse
+from typing import Dict, Any, List
 
 from codemonkeys.base_entitiies.automation_class import Automation
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -9,10 +10,10 @@ from codemonkeys.tasks.summarize_context import summarize_context_file
 class Default(Automation):
     required_config_keys = ['WORK_PATH', 'MAIN_PROMPT', 'OUTPUT_EXT']
 
-    def __init__(self, monk_args: argparse.Namespace):
-        super().__init__(monk_args)
+    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
+        super().__init__(monk_args, named_args, unnamed_args)
 
-    def main(self):
+    def run(self):
 
         m = self.monkey_config
 
