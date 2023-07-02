@@ -2,10 +2,10 @@ import os
 import shutil
 import time
 
-from defs import import_monkey_config_class
-from defs import MONKEYS_PATH, MONKEY_MANIFEST_PATH
 from codemonkeys.config.yaml_helpers import read_yaml_file, write_yaml_file
 from codemonkeys.utils.monk.theme_functions import print_t
+from defs import MONKEYS_PATH, MONKEY_MANIFEST_PATH
+from defs import import_monkey_config_class
 
 MonkeyConfig = import_monkey_config_class()
 

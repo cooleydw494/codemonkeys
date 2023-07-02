@@ -1,9 +1,6 @@
-import argparse
-from collections import OrderedDict
 from typing import List, Tuple, Dict
 
 from codemonkeys.help.help import run_default_help
-from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
 def split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[str]]:
@@ -34,7 +31,6 @@ def split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[s
 
 def parse_monk_args():
     import argparse
-    from collections import OrderedDict
 
     # Create argument parser - use custom help
     parser = argparse.ArgumentParser(add_help=False)

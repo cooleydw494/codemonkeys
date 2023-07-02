@@ -8,10 +8,11 @@
 ***=========================================================================================="""
 
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+
+from dotenv import load_dotenv
 
 from .theme import light_mode_enabled, max_terminal_width, keywords, text_themes
-from dotenv import load_dotenv
 
 load_dotenv()
 

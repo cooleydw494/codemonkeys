@@ -3,8 +3,8 @@ import os
 import pathlib
 from typing import List, Tuple
 
-from defs import MONKEYS_PATH
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
+from defs import MONKEYS_PATH
 
 
 def list_monkeys() -> List[str]:

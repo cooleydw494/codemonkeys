@@ -4,8 +4,8 @@ import sys
 import yaml
 from ruamel.yaml import YAML
 
-from defs import MONKEY_CONFIG_DEFAULTS_PATH
 from codemonkeys.utils.monk.theme_functions import print_t
+from defs import MONKEY_CONFIG_DEFAULTS_PATH
 
 
 def read_yaml_file(file_path, ruamel=False):

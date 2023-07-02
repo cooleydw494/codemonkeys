@@ -3,9 +3,9 @@ from typing import List
 import openai
 import tiktoken
 
-from defs import import_env_class
-from defs import TOKEN_UNCERTAINTY_BUFFER
 from codemonkeys.utils.monk.theme_functions import print_t
+from defs import TOKEN_UNCERTAINTY_BUFFER
+from defs import import_env_class
 
 ENV = import_env_class()
 

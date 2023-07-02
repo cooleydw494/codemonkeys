@@ -3,10 +3,10 @@ import os
 import re
 from dataclasses import dataclass
 
-from defs import MONKEYS_PATH
-from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_key
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
 from codemonkeys.utils.monk.theme_functions import print_t
+from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_key
+from defs import MONKEYS_PATH
 from defs import import_env_class
 
 ENV = import_env_class()

@@ -3,9 +3,9 @@ import re
 
 from dotenv import dotenv_values
 
-from defs import ENV_CLASS_PATH, ROOT_PATH, nl
 from cmdefs import CM_ENV_DEFAULT_PATH
 from codemonkeys.utils.env.get_env_prop_type import get_env_prop_type
+from defs import ENV_CLASS_PATH, ROOT_PATH, nl
 
 ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
 ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_name}', '{default}')"

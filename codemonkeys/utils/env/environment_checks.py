@@ -2,8 +2,8 @@ import sys
 
 import openai
 
-from defs import import_env_class
 from codemonkeys.utils.monk.theme_functions import print_t
+from defs import import_env_class
 
 ENV = import_env_class()
 ENV = ENV()

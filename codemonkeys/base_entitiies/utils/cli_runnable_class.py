@@ -1,5 +1,5 @@
 import argparse
-from typing import List, Dict, Any, get_type_hints, Optional
+from typing import List, Dict, Any, get_type_hints
 
 
 class CliRunnable:
