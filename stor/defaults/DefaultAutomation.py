@@ -17,7 +17,13 @@ class Default(Automation):
 
         m = self.monkey_config
 
-        context_file_summary = summarize_context_file(m, allow_unsummarized=True)
+        # context_file_summary = summarize_context_file(m, allow_unsummarized=True)
+
+        context_file_summary = ContextSummarizer\
+            .allow_unsummarized()\
+            .set_prompt(m.SUMMARY_PROMPT)\
+            .context_file(m.CONTEXT_FILE_2)\
+            .summarize()
 
         self.flm.write_files_to_process()
 
