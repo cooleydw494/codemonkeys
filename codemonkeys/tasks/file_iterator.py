@@ -26,8 +26,8 @@ class FileIterator:
         self.include_extensions = file_types_included.split(',')
         return self
 
-    def set_filepath_match_excluded(self, filepath_match_excluded: str) -> 'FileIterator':
-        self.exclude_patterns = filepath_match_excluded.split(',')
+    def set_filepath_match_exclude(self, filepath_match_exclude: str) -> 'FileIterator':
+        self.exclude_patterns = filepath_match_exclude.split(',')
         return self
 
     def set_token_count_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':

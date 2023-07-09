@@ -1,13 +1,13 @@
 import argparse
 from typing import Dict, Any, List
 
-from codemonkeys.abilities.file_list_manager import FileIterator
+from codemonkeys.composables.file_iterator import FileIterator
 from codemonkeys.base_entitiies.automation_class import Automation
-from codemonkeys.tasks.output_checker import OutputChecker
-from codemonkeys.tasks.output_path_resolver import OutputPathResolver
+from codemonkeys.composables.output_checker import OutputChecker
+from codemonkeys.composables.output_path_resolver import OutputPathResolver
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.tasks.file_handler import FileHandler
-from codemonkeys.tasks.context_summarizer import ContextHandler
+from codemonkeys.composables.file_handler import FileHandler
+from codemonkeys.composables.context_summarizer import ContextHandler
 
 
 class Default(Automation):
@@ -48,7 +48,7 @@ class Default(Automation):
         file_iterator = (FileIterator()
                          .set_token_count_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
                          .set_file_types_included(mc.FILE_TYPES_INCLUDED)
-                         .set_filepath_match_excluded(mc.FILEPATH_MATCH_EXCLUDED)
+                         .set_filepath_match_exclude(mc.FILEPATH_MATCH_EXCLUDE)
                          .set_work_path(mc.WORK_PATH)
                          .filter_files())
 

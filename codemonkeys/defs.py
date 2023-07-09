@@ -7,44 +7,27 @@ from codemonkeys.utils.defs_utils import get_python_command
 """  PREDEFINED FRAMEWORK INSTANCE PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
 
-# ROOT_PATH
 ROOT_PATH = find_project_root()
 
-# AUTOMATIONS
 AUTOMATIONS_PATH = os.path.join(ROOT_PATH, "automations")
-# BARRELS
 BARRELS_PATH = os.path.join(ROOT_PATH, "barrels")
-# TASKS
-TASKS_PATH = os.path.join(ROOT_PATH, "tasks")
-# ABILITIES
+COMPOSABLES_PATH = os.path.join(ROOT_PATH, "composables")
 ABILITIES_PATH = os.path.join(ROOT_PATH, "abilities")
-# COMMANDS
 COMMANDS_PATH = os.path.join(ROOT_PATH, "commands")
 
-# ENV
 ENV_PATH = os.path.join(ROOT_PATH, ".env")
-# CONFIG
 CONFIG_PATH = os.path.join(ROOT_PATH, "config")
-# MONKEY MANIFEST
 MONKEY_MANIFEST_PATH = os.path.join(CONFIG_PATH, 'monkey-manifest.yaml')
-# MONKEY CONFIG DEFAULTS
 MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(CONFIG_PATH, 'monkey-config-defaults.yaml')
 
-# FRAMEWORK CONFIG
 FRAMEWORK_CONFIG_PATH = os.path.join(CONFIG_PATH, 'framework')
-# THEME CONFIG
 THEME_CONFIG_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, 'theme.py')
-# ENV CLASS
 ENV_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "env_class.py")
-# MONKEY CONFIG CLASS
 MONKEY_CONFIG_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "monkey_config_class.py")
 
-# STOR
 STOR_PATH = os.path.join(ROOT_PATH, "stor")
-# TEMP
 TEMP_PATH = os.path.join(STOR_PATH, "temp")
 
-# MONKEY TEMP CONFIG FILES
 MONKEYS_PATH = os.path.join(TEMP_PATH, 'monkeys')
 
 """  'GLOBAL' HELPERS/VARIABLES

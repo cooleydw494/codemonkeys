@@ -38,7 +38,7 @@ class MonkeyConfig:
     from dataclasses import field
     WORK_PATH: Optional[str] = field(default=None)
     FILE_TYPES_INCLUDED: Optional[str] = field(default=None)
-    FILEPATH_MATCH_EXCLUDED: Optional[str] = field(default=None)
+    FILEPATH_MATCH_EXCLUDE: Optional[str] = field(default=None)
     FILE_SELECT_MAX_TOKENS: Optional[int] = field(default=None)
     MAX_TOKENS: Optional[int] = field(default=None)
     MAIN_PROMPT: Optional[str] = field(default=None)
@@ -72,7 +72,7 @@ class MonkeyConfig:
         from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path
         self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
-        self.FILEPATH_MATCH_EXCLUDED = validate_str('FILEPATH_MATCH_EXCLUDED', self.FILEPATH_MATCH_EXCLUDED)
+        self.FILEPATH_MATCH_EXCLUDE = validate_str('FILEPATH_MATCH_EXCLUDE', self.FILEPATH_MATCH_EXCLUDE)
         self.FILE_SELECT_MAX_TOKENS = validate_int('FILE_SELECT_MAX_TOKENS', self.FILE_SELECT_MAX_TOKENS)
         self.MAX_TOKENS = validate_int('MAX_TOKENS', self.MAX_TOKENS)
         self.MAIN_PROMPT = validate_str('MAIN_PROMPT', self.MAIN_PROMPT)

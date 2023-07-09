@@ -18,7 +18,7 @@ self-help-command:
   # General
   WORK_PATH: "ROOT_PATH/commands"
   FILE_TYPES_INCLUDED: ".py"
-  FILEPATH_MATCH_EXCLUDED: "help.py,__init__.py"
+  FILEPATH_MATCH_EXCLUDE: "help.py,__init__.py"
   FILE_SELECT_MAX_TOKENS: 6000
   MAX_TOKENS: 8000
 

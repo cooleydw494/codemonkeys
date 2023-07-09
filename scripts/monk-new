@@ -16,7 +16,7 @@ top_level_dirs = [
     'barrels',
     'commands',
     'config',
-    'tasks',
+    'composables',
     'stor',
 ]
 

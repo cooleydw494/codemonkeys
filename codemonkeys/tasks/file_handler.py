@@ -1,8 +1,8 @@
 import os
 
 from codemonkeys.abilities.gpt_client import GPTClient
-from codemonkeys.tasks.output_checker import OutputChecker
-from codemonkeys.tasks.output_path_resolver import OutputPathResolver
+from codemonkeys.composables.output_checker import OutputChecker
+from codemonkeys.composables.output_path_resolver import OutputPathResolver
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import nl, nl2, _or
 
