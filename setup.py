@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='codemonkeys',
-    version='0.0.5',
+    version='0.0.6',
     description="CodeMonkeys is a highly configurable tool for creating/running strategic AI automations (and "
                 "more). Beyond that, its a thoughtful and extensible codemonkeys for creating automation abilities. "
                 "CodeMonkeys' design was heavily influenced by how much it was used in its own development, "
