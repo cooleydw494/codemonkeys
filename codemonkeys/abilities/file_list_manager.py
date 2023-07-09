@@ -16,23 +16,23 @@ class FileListManager:
         self.work_path = None
         self.filtered_files = []
 
-    def set_file_types_included(self, file_types_included: str):
+    def file_types_included(self, file_types_included: str) -> 'FileListManager':
         self.include_extensions = file_types_included.split(',')
         return self
 
-    def set_filepath_match_excluded(self, filepath_match_excluded: str):
+    def filepath_match_excluded(self, filepath_match_excluded: str) -> 'FileListManager':
         self.exclude_patterns = filepath_match_excluded.split(',')
         return self
 
-    def set_filter_max_tokens(self, filter_max_tokens: int):
+    def filter_max_tokens(self, filter_max_tokens: int) -> 'FileListManager':
         self.max_tokens = filter_max_tokens
         return self
 
-    def set_token_count_model(self, model: str):
+    def token_count_model(self, model: str) -> 'FileListManager':
         self.gpt_client = GPTClient(model)
         return self
 
-    def set_work_path(self, work_path: str):
+    def work_path(self, work_path: str) -> 'FileListManager':
         self.work_path = work_path
         return self
 
@@ -40,7 +40,7 @@ class FileListManager:
     def resolve_path(path: str) -> str:
         return os.path.abspath(os.path.expandvars(os.path.expanduser(path)))
 
-    def should_include(self, file_path: str) -> bool:
+    def _should_include(self, file_path: str) -> bool:
         return (
                 any(file_path.endswith(ext) for ext in self.include_extensions) and
                 not any(pattern.strip() in file_path for pattern in self.exclude_patterns)
@@ -56,7 +56,7 @@ class FileListManager:
                 print(".", end='', flush=True)
                 time.sleep(0.001)
 
-                if self.should_include(file):
+                if self._should_include(file):
                     absolute_path = self.resolve_path(os.path.join(root, file))
                     with open(absolute_path, 'r') as f:
                         num_tokens = self.gpt_client.count_tokens(f.read())

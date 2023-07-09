@@ -5,7 +5,7 @@ from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import nl
 
 
-class ContextSummarizer:
+class ContextHandler:
 
     def __init__(self):
         self.context_file_path = None
@@ -15,17 +15,13 @@ class ContextSummarizer:
         self.max_tokens = None
         self.allow_summarized = False
 
-    def set_model(self, model, temp, max_tokens):
+    def model(self, model, temp, max_tokens):
         self.summary_model = model
         self.summary_temp = temp
         self.max_tokens = max_tokens
         return self
 
-    def allow_unsummarized(self):
-        self.allow_summarized = True
-        return self
-
-    def set_prompt(self, prompt):
+    def prompt(self, prompt):
         self.context_summary_prompt = prompt
         return self
 
@@ -33,28 +29,22 @@ class ContextSummarizer:
         self.context_file_path = os.path.expanduser(file_path)
         return self
 
-    def summarize(self):
-        if not self.allow_summarized and self.context_summary_prompt is None:
-            raise ValueError("CONTEXT_SUMMARY_PROMPT is None, but allow_unsummarized is False.")
-
+    def get_unsummarized_context(self) -> str:
         if not os.path.isfile(self.context_file_path):
             raise FileNotFoundError(f"The context file {self.context_file_path} does not exist.")
 
         with open(self.context_file_path, "r") as f:
             context_file_contents = f.read()
 
+        return context_file_contents
+
+    def summarize(self) -> str:
+
+        context_file_contents = self.get_unsummarized_context()
+
         summary_client = GPTClient(self.summary_model, self.summary_temp, self.max_tokens)
 
-        if not self.context_summary_prompt:
-            print_t('No summary prompt was provided. Skipping summarization.', 'quiet')
-            if context_file_contents != '':
-                print_t(f"Un-summarized Special File:{nl}{context_file_contents}", 'file')
-                return context_file_contents
-            else:
-                print_t(f"No Special File", 'quiet')
-            return None
-        else:
-            context_file_contents = summary_client.split_into_chunks(context_file_contents, self.max_tokens)
+        context_file_contents = summary_client.split_into_chunks(context_file_contents, self.max_tokens)
 
         context_file_contents = '' if context_file_contents == '' else context_file_contents
 

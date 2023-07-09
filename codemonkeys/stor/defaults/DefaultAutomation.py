@@ -3,9 +3,10 @@ from typing import Dict, Any, List
 
 from codemonkeys.abilities.file_list_manager import FileListManager
 from codemonkeys.base_entitiies.automation_class import Automation
+from codemonkeys.tasks.output_checker import OutputChecker
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.tasks.process_file import process_file
-from codemonkeys.tasks.context_summarizer import ContextSummarizer
+from codemonkeys.tasks.file_handler import FileHandler
+from codemonkeys.tasks.context_summarizer import ContextHandler
 
 
 class Default(Automation):
@@ -14,32 +15,56 @@ class Default(Automation):
     def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
         super().__init__(monk_args, named_args, unnamed_args)
 
-        self.file_list_manager = FileListManager()
-
     def run(self):
 
-        m = self.monkey_config
+        mc = self.monkey_config
 
-        context_file_summary = (ContextSummarizer()
-                                .allow_unsummarized()
-                                .set_prompt(m.SUMMARY_PROMPT)
-                                .context_file(m.CONTEXT_FILE_PATH)
-                                .set_model(m.SUMMARY_MODEL, m.SUMMARY_TEMP, m.MAX_TOKENS)
-                                .summarize())
+        # Prepare summarized or unsummarized context
+        context = None
+        if mc.CONTEXT_FILE_PATH is not None:
+            context_handler = ContextHandler().context_file(mc.CONTEXT_FILE_PATH)
+            if mc.SUMMARY_PROMPT:
+                context = (context_handler
+                           .set_model(mc.SUMMARY_MODEL, mc.SUMMARY_TEMP, mc.MAX_TOKENS)
+                           .set_prompt(mc.SUMMARY_PROMPT)
+                           .summarize())
+            else:
+                context = context_handler.get_unsummarized_context()
 
+        # Prepare Output Checker
+        output_checker = None
+        if mc.OUTPUT_CHECK_PROMPT is not None:
+            output_checker = (OutputChecker()
+                              .set_model(mc.OUTPUT_CHECK_MODEL, mc.OUTPUT_CHECK_TEMP, mc.MAX_TOKENS)
+                              .prompt(mc.OUTPUT_CHECK_PROMPT))
+
+        # Prepare FileListManager and filter files
         file_list_manager = (FileListManager()
-                             .set_file_types_included(m.FILE_TYPES_INCLUDED)
-                             .set_filepath_match_excluded(m.FILEPATH_MATCH_EXCLUDED)
-                             .set_filter_max_tokens(m.FILE_SELECT_MAX_TOKENS)
-                             .set_token_count_model(m.MAIN_MODEL)
-                             .set_work_path(m.WORK_PATH)
-                             .set_output_file('files-to-process.txt'))
+                             .file_types_included(mc.FILE_TYPES_INCLUDED)
+                             .filepath_match_excluded(mc.FILEPATH_MATCH_EXCLUDED)
+                             .filter_max_tokens(mc.FILE_SELECT_MAX_TOKENS)
+                             .token_count_model(mc.MAIN_MODEL)
+                             .work_path(mc.WORK_PATH)
+                             .filter_files())
 
+        # Iterate through filtered files
         while True:
-            selected_file = file_list_manager.pop_file()
+            current_file = file_list_manager.pop_file()
 
-            if selected_file is None:
-                print_t("All files have been processed.", 'done')
+            if current_file is None:
+                print_t("All Files Handled.", 'done')
                 break
 
-            process_file(selected_file, context_file_summary, m)
+            # Handle current file,
+            (FileHandler()
+             .set_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
+             .file_path(current_file)
+             .set_main_prompt(mc.MAIN_PROMPT)
+             .set_context(context)
+             .set_output_example_prompt(mc.OUTPUT_EXAMPLE_PROMPT)
+             .set_ultimatum_prompt(mc.MAIN_PROMPT_ULTIMATUM)
+             .set_output_filename_append(mc.OUTPUT_FILENAME_APPEND)
+             .set_output_ext(mc.OUTPUT_EXT)
+             .set_skip_existing(mc.SKIP_EXISTING_OUTPUT_FILES)
+             .set_output_checker(output_checker)
+             .handle())
