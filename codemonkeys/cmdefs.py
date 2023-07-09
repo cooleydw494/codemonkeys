@@ -2,7 +2,7 @@ import os
 
 from pkg_resources import resource_filename
 
-VERSION = '0.0.5'
+VERSION = '0.1.0'
 
 """  CORE PATHS
 
