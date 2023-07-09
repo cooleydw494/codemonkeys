@@ -24,7 +24,7 @@ def run_entity(entity_path: str, entity_name: str, monk_args: Any, named_args: D
 
     # Instantiate class and run
     instance = class_(monk_args, named_args, unnamed_args)
-    instance.main()
+    instance.run()
 
 
 def run_automation(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any],

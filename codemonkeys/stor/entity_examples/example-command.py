@@ -22,7 +22,7 @@ class ExampleCommand(Command):
     unnamed_arg_one: str = 'default_value'
     unnamed_arg_two: Union[int | None] = None
 
-    def main(self):
+    def run(self):
         # Implement the command functionality here, utilizing args as needed
         print(f"named_arg_one: {self.named_arg_one}")
         print(f"Monk Args: {self.monk_args}")

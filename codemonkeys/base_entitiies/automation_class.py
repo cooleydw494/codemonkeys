@@ -37,4 +37,4 @@ class Automation(CliRunnable):
             raise ValueError(f"Missing required config keys: {', '.join(missing_keys)}")
 
     def run(self):
-        raise NotImplementedError("The main() method must be implemented in a subclass of Automation.")
+        raise NotImplementedError("The run() method must be implemented in a subclass of Automation.")

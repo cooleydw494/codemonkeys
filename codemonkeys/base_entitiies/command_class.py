@@ -9,4 +9,4 @@ class Command(CliRunnable):
     """
 
     def run(self):
-        raise NotImplementedError("The main() method must be implemented in a subclass of Command.")
+        raise NotImplementedError("The run() method must be implemented in a subclass of Command.")
