@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 from dotenv import load_dotenv
 
-from .theme import light_mode_enabled, max_terminal_width, keywords, text_themes
+from codemonkeys.config.theme import light_mode_enabled, max_terminal_width, keywords, text_themes
 
 load_dotenv()
 

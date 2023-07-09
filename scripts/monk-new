@@ -111,4 +111,13 @@ shutil.copyfile(CM_DEFAULT_REQUIREMENTS_PATH, os.path.join(project_path, 'requir
 print(colored("Creating default README...", 'cyan'))
 shutil.copyfile(CM_README_DEFAULT_PATH, os.path.join(project_path, 'README.md'))
 
+# Create an __init__.py file in the project root and all subdirectories
+print(colored("Creating __init__.py files...", 'cyan'))
+with open(os.path.join(project_path, '__init__.py'), 'w') as f:
+    pass
+for root, dirs, files in os.walk(project_path):
+    for current_dir in dirs:
+        with open(os.path.join(root, current_dir, '__init__.py'), 'w') as f:
+            pass
+
 print(colored('CodeMonkeys setup complete', 'green'))
