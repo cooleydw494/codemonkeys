@@ -2,7 +2,7 @@ import argparse
 from typing import Dict, Any, List
 
 from codemonkeys.composables.file_iterator import FileIterator
-from codemonkeys.base_entitiies.automation_class import Automation
+from codemonkeys.base_entities.automation_class import Automation
 from codemonkeys.composables.output_checker import OutputChecker
 from codemonkeys.composables.output_path_resolver import OutputPathResolver
 from codemonkeys.utils.monk.theme_functions import print_t

@@ -5,7 +5,7 @@ def run():
     print_t("List Processes Help", "important")
     print_t("The `list-processes` command provides an overview of all ongoing Monk processes, their process IDs (PIDs),"
             "and commands to kill the respective processes. This is useful for managing and controlling Monk-related"
-            "tasks and ensuring the smooth operation of the framework.")
+            "composables and ensuring the smooth operation of the framework.")
 
     print_t("monk list-processes", "input")
 

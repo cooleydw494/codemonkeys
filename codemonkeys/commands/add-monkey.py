@@ -5,7 +5,7 @@ from io import StringIO
 
 from ruamel.yaml import CommentedMap
 
-from codemonkeys.base_entitiies.command_class import Command
+from codemonkeys.base_entities.command_class import Command
 from codemonkeys.config.yaml_helpers import read_yaml_file, write_yaml_file
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 from codemonkeys.utils.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
