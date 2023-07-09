@@ -13,7 +13,7 @@ ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_
 
 def update_env_class():
     """
-    Updates the env_class.py file to include all environment variables as attributes of the ENV class.
+    Updates the env_class.py file to include all environment variables as attributes of the Env class.
     """
     # Get the .env file variables
     env_vars = dotenv_values(os.path.join(ROOT_PATH, ".env"))

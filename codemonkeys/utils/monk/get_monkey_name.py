@@ -1,6 +1,5 @@
 import glob
 import os
-import pathlib
 from typing import List, Tuple
 
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
@@ -36,7 +35,7 @@ def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) ->
         :param name: Monkey name
         :return: True if a generated config exists, False otherwise
         """
-        return pathlib.Path(os.path.join(MONKEYS_PATH, f'{name}.yaml')).exists()
+        return os.path.exists(os.path.join(MONKEYS_PATH, f'{name}.yaml'))
 
     if given_monkey_name is None:
         if monkey_exists('default') and not prompt_user:

@@ -7,8 +7,8 @@ class CliRunnable:
     unnamed_arg_keys = []
     required_arg_keys = []
 
-    def __init__(self, nerd_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
-        self.nerd_args = nerd_args
+    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
+        self.monk_args = monk_args
 
         # Named args: mapped by key and checked for required ones
         # Now support keys with '-' or '--' prefix

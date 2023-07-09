@@ -1,24 +1,40 @@
 import os
 import time
-from typing import List
 
-from codemonkeys.cmdefs import CM_STOR_TEMP_PATH
 from codemonkeys.abilities.gpt_client import GPTClient
+from codemonkeys.defs import nl
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.defs import import_monkey_config_class, nl
-
-MonkeyConfig = import_monkey_config_class()
 
 
 class FileListManager:
 
-    def __init__(self, m: MonkeyConfig):
-        self.m = m
-        self.include_extensions = self.m.FILE_TYPES_INCLUDED.split(',')
-        self.exclude_patterns = self.m.FILEPATH_MATCH_EXCLUDED.split(',')
-        self.max_tokens = self.m.FILE_SELECT_MAX_TOKENS
-        self.gpt_client = GPTClient(m.MAIN_MODEL)
-        self.output_file = os.path.join(CM_STOR_TEMP_PATH, 'files-to-process.txt')
+    def __init__(self):
+        self.include_extensions = []
+        self.exclude_patterns = []
+        self.max_tokens = None
+        self.gpt_client = None
+        self.work_path = None
+        self.filtered_files = []
+
+    def set_file_types_included(self, file_types_included: str):
+        self.include_extensions = file_types_included.split(',')
+        return self
+
+    def set_filepath_match_excluded(self, filepath_match_excluded: str):
+        self.exclude_patterns = filepath_match_excluded.split(',')
+        return self
+
+    def set_filter_max_tokens(self, filter_max_tokens: int):
+        self.max_tokens = filter_max_tokens
+        return self
+
+    def set_token_count_model(self, model: str):
+        self.gpt_client = GPTClient(model)
+        return self
+
+    def set_work_path(self, work_path: str):
+        self.work_path = work_path
+        return self
 
     @staticmethod
     def resolve_path(path: str) -> str:
@@ -30,13 +46,12 @@ class FileListManager:
                 not any(pattern.strip() in file_path for pattern in self.exclude_patterns)
         )
 
-    def get_filtered_files(self):
-        """Filters files by token count and returns a list of valid files."""
-        filtered_files = []
+    def filter_files(self):
+        self.filtered_files = []
         print_t("Filtering files...", 'loading')
-        print_t(f'WORK_PATH: {self.m.WORK_PATH}', 'info')
+        print_t(f'WORK_PATH: {self.work_path}', 'info')
 
-        for root, _, files in os.walk(self.m.WORK_PATH):
+        for root, _, files in os.walk(self.work_path):
             for file in files:
                 print(".", end='', flush=True)
                 time.sleep(0.001)
@@ -47,37 +62,19 @@ class FileListManager:
                         num_tokens = self.gpt_client.count_tokens(f.read())
 
                     if num_tokens <= self.max_tokens:
-                        filtered_files.append(absolute_path)
+                        self.filtered_files.append(absolute_path)
 
-        print_t("Filtering completed!", 'success')
+        print_t("File filtering complete.", 'quiet')
 
-        return filtered_files
-
-    def write_files_to_process(self, filtered_files: List = None) -> 'FileListManager':
-        if filtered_files is None:
-            filtered_files = self.get_filtered_files()
-        with open(self.output_file, "w") as f:
-            for idx, file_path in enumerate(filtered_files, start=1):
-                f.write(f"{file_path}{nl}")
-
-        print_t(f"File list saved to {self.output_file}. Enjoy your 🐒 !", 'done')
         return self
 
-    def select_and_remove_file(self):
-        with open(self.output_file, "r") as f:
-            lines = f.readlines()
-
-        if len(lines) == 0:
+    def pop_file(self):
+        if len(self.filtered_files) == 0:
             return None
-        selected_file = lines.pop(0)
-
-        with open(self.output_file, "w") as f:
-            f.writelines(lines)
-
-        selected_file = selected_file.strip()
+        selected_file = self.filtered_files.pop(0)
 
         # Skip files that are not readable
         if os.access(selected_file, os.R_OK) is not True:
-            print_t(f"Unable to read the file:{nl}{selected_file}{nl}Skipped.", 'warning')
+            print_t(f"Unable to read file:{nl}{selected_file}{nl}Skipped.", 'warning')
 
         return selected_file

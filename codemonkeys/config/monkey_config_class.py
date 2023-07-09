@@ -9,7 +9,7 @@ from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_
 from codemonkeys.defs import MONKEYS_PATH
 from codemonkeys.defs import import_env_class
 
-ENV = import_env_class()
+Env = import_env_class()
 
 
 def insert_cop_file_contents(value: str) -> str:
@@ -62,7 +62,7 @@ class MonkeyConfig:
     OUTPUT_CHECK_TEMP: Optional[ScalarFloat] = field(default=None)
     # [MONKEY_CONFIG_PROPS_END]
 
-    ENV: Optional[ENV] = field(default=None)
+    Env: Optional[Env] = field(default=None)
 
     def __post_init__(self):
         # print_t(f"Loaded MonkeyConfig: {self.__dict__}", 'info')
@@ -97,7 +97,7 @@ class MonkeyConfig:
         self.OUTPUT_CHECK_TEMP = validate_float('OUTPUT_CHECK_TEMP', self.OUTPUT_CHECK_TEMP)
         # [MONKEY_CONFIG_VALIDATIONS_END]
 
-        self.ENV = ENV()
+        self.env = Env.get()
 
         self.cop_paths()
 
@@ -136,7 +136,7 @@ class MonkeyConfig:
             exit()
 
         data = validated_config.__dict__
-        data.pop('ENV', None)
+        data.pop('env', None)
 
         return data
 
@@ -144,7 +144,7 @@ class MonkeyConfig:
     def filter_config_values(cls, config_values: dict) -> dict:
         # Get dictionary of MonkeyConfig properties
         config_properties = {f.name for f in dataclasses.fields(cls)}
-        config_properties.remove('ENV')
+        config_properties.remove('env')
 
         # Remove any keys from data that aren't properties of the MonkeyConfig class
         config_values = {k: v for k, v in config_values.items() if k in config_properties}
@@ -163,7 +163,7 @@ class MonkeyConfig:
 
         # Get dictionary of MonkeyConfig properties so we don't default to env vars that aren't properties
         config_properties = {f.name for f in dataclasses.fields(cls)}
-        config_properties.remove('ENV')
+        config_properties.remove('env')
 
         monkey_config_defaults = get_monkey_config_defaults()
         for attribute in monkey_config_defaults:

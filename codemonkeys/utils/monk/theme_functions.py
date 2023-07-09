@@ -7,17 +7,18 @@ from math import floor
 
 from termcolor import colored, COLORS
 
-from codemonkeys.cmdefs import CM_STOR_MONK_PATH, VERSION, CM_STOR_SNIPPETS_PATH
+from codemonkeys.cmdefs import VERSION, CM_STOR_SNIPPETS_PATH
 from codemonkeys.defs import import_env_class, nl
 
-ENV = import_env_class()
-ENV = ENV()
-text_themes = ENV.text_themes
-light_mode_enabled = ENV.light_mode_enabled
-max_terminal_width = ENV.max_terminal_width
-keywords = ENV.keywords
+Env = import_env_class()
+env = Env.get()
+text_themes = env.text_themes
+light_mode_enabled = env.light_mode_enabled
+max_terminal_width = env.max_terminal_width
+keywords = env.keywords
 
 print_lock = threading.Lock()
+terminal_width = min(os.get_terminal_size().columns, max_terminal_width)
 
 
 def get_theme(theme):
@@ -43,7 +44,7 @@ def apply_t(text, theme, incl_prefix=False, attrs=None):
     return text
 
 
-def print_t(text, theme=None, incl_prefix=True, attrs=None):
+def print_t(text, theme=None, incl_prefix=True, attrs=None, verbose=False):
     sub_indent = ''
     if theme:
         text = apply_t(text, theme, incl_prefix=incl_prefix)
@@ -77,8 +78,6 @@ def print_nice(*args, sub_indent='', **kwargs):
     file = kwargs.get("file", None)
     flush = kwargs.get("flush", False)
 
-    terminal_width = min(os.get_terminal_size().columns, max_terminal_width)
-
     text = sep.join(str(arg) for arg in args)
 
     if len(strip_color_and_bold_codes(text)) > terminal_width:
@@ -110,8 +109,7 @@ def print_banner():
 
 
 def print_table(table, title=None, sub_indent='   ', min_col_width=10):
-    terminal_width = min(os.get_terminal_size().columns, max_terminal_width)
-    terminal_width -= len(sub_indent)
+    t_width = terminal_width - len(sub_indent)
 
     if title:
         print_t(title, 'special')
@@ -122,7 +120,7 @@ def print_table(table, title=None, sub_indent='   ', min_col_width=10):
     raw_col_widths = [max(len(str(x)) for x in col) for col in zip(*table["rows"])]
     raw_col_widths = [max(width, min_width) for width, min_width in zip(raw_col_widths, min_col_width)]
 
-    col_widths = [min(width + 2, floor((terminal_width - len(table["headers"]) + 1) / len(table["headers"]))) for width
+    col_widths = [min(width + 2, floor((t_width - len(table["headers"]) + 1) / len(table["headers"]))) for width
                   in raw_col_widths]
     col_widths = [min(width, raw_width + 2) for width, raw_width in zip(col_widths, raw_col_widths)]
 

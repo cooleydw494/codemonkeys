@@ -3,6 +3,8 @@ import sys
 
 from codemonkeys.utils.cmdefs_utils import find_project_root, import_class_from_path_with_fallback
 from codemonkeys.utils.cmdefs_utils import get_python_command
+from codemonkeys.config.monkey_config_class import MonkeyConfig
+from codemonkeys.config.env_class import Env
 
 """  PREDEFINED FRAMEWORK INSTANCE PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
@@ -70,11 +72,9 @@ def _or(obj_or_class_prop, default=''):
         return default
 
 
-def import_monkey_config_class():
-    from codemonkeys.config.monkey_config_class import MonkeyConfig as DefaultMonkeyConfigClass
-    return import_class_from_path_with_fallback(MONKEY_CONFIG_CLASS_PATH, 'MonkeyConfig', DefaultMonkeyConfigClass)
+def import_monkey_config_class() -> MonkeyConfig:
+    return import_class_from_path_with_fallback(MONKEY_CONFIG_CLASS_PATH, 'MonkeyConfig', MonkeyConfig)
 
 
-def import_env_class():
-    from codemonkeys.config.env_class import ENV as DEFAULT_ENV_CLASS
-    return import_class_from_path_with_fallback(ENV_CLASS_PATH, 'ENV', DEFAULT_ENV_CLASS)
+def import_env_class() -> Env:
+    return import_class_from_path_with_fallback(ENV_CLASS_PATH, 'Env', Env)

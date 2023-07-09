@@ -25,9 +25,11 @@ required_env_props = []
 # [DEFINE_FRAMEWORK_ENV_PROPS_LIST_END]
 
 @dataclass
-class ENV:
+class Env:
+    _instance = None
+
     """ FRAMEWORK_ENV_PROPS - DO NOT MODIFY
-    Definitions of the source's env props. These are used to generate the ENV class. """
+    Definitions of the source's env props. These are used to generate the Env class. """
     # [DEFINE_FRAMEWORK_ENV_PROPS_START]
 
     # [DEFINE_FRAMEWORK_ENV_PROPS_END]
@@ -47,3 +49,9 @@ class ENV:
     keywords = (lambda words: sorted(words, key=len, reverse=True))(keywords)
     text_themes = text_themes
 
+    @classmethod
+    def get(cls):
+        if Env._instance is None:
+            Env._instance = Env()
+
+        return Env._instance
