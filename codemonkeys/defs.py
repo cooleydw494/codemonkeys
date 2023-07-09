@@ -1,8 +1,8 @@
 import os
 import sys
 
-from codemonkeys.utils.cmdefs_utils import find_project_root, import_class_from_path_with_fallback
-from codemonkeys.utils.cmdefs_utils import get_python_command
+from codemonkeys.utils.defs_utils import find_project_root, import_class_from_path_with_fallback
+from codemonkeys.utils.defs_utils import get_python_command
 from codemonkeys.config.monkey_config_class import MonkeyConfig
 from codemonkeys.config.env_class import Env
 

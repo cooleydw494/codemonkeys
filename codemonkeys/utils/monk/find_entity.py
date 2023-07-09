@@ -3,7 +3,7 @@ import sys
 from typing import Generator, List, Tuple
 
 from codemonkeys.cmdefs import CM_COMMANDS_PATH, CM_HELP_PATH
-from codemonkeys.utils.cmdefs_utils import levenshtein_distance
+from codemonkeys.utils.defs_utils import levenshtein_distance
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 from codemonkeys.defs import nl, nl2, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
 

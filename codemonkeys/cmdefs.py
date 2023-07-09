@@ -10,28 +10,26 @@ This is a framework-level PATH definitions file.
 It is separate from defs.py for usage in monk-new, when there is no project ROOT_PATH.
 It is also used anywhere else a framework-level path is needed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
-# CORE ROOT PATH
+
+# MC PATH (root package)
 CM_ROOT_PATH = os.path.dirname(__file__)
 
-# CM PATH (root package)
-CM_PATH = os.path.join(CM_ROOT_PATH, "")
-
 # CM AUTOMATIONS
-CM_AUTOMATIONS_PATH = resource_filename('codemonkeys', "automations")
+# CM_AUTOMATIONS_PATH = resource_filename('codemonkeys', "automations")
 # CM BARRELS
-CM_BARRELS_PATH = resource_filename('codemonkeys', "barrels")
+# CM_BARRELS_PATH = resource_filename('codemonkeys', "barrels")
 # CM TASKS
-CM_TASKS_PATH = resource_filename('codemonkeys', "tasks")
+CM_TASKS_PATH = os.path.join(CM_ROOT_PATH, "tasks")
 # CM ABILITIES
-CM_ABILITIES_PATH = resource_filename('codemonkeys', "abilities")
+CM_ABILITIES_PATH = os.path.join(CM_ROOT_PATH, "abilities")
 # CM COMMANDS
-CM_COMMANDS_PATH = resource_filename('codemonkeys', "commands")
+CM_COMMANDS_PATH = os.path.join(CM_ROOT_PATH, "commands")
 # CM CONFIG
-CM_CONFIG_PATH = resource_filename('codemonkeys', "config")
+CM_CONFIG_PATH = os.path.join(CM_ROOT_PATH, "config")
 # HELP
-CM_HELP_PATH = resource_filename('codemonkeys', "help")
+CM_HELP_PATH = os.path.join(CM_ROOT_PATH, "help")
 # STOR
-CM_STOR_PATH = resource_filename('codemonkeys', "stor")
+CM_STOR_PATH = os.path.join(CM_ROOT_PATH, "stor")
 
 # ENV CLASS
 CM_ENV_CLASS_PATH = os.path.join(CM_CONFIG_PATH, "env_class.py")
