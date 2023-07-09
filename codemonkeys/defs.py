@@ -77,4 +77,4 @@ def import_monkey_config_class():
 
 def import_env_class():
     from codemonkeys.config.env_class import Env as DefaultEnvClass
-    return import_class_from_path_with_fallback(ENV_CLASS_PATH, 'ENV', DefaultEnvClass)
+    return import_class_from_path_with_fallback(ENV_CLASS_PATH, 'Env', DefaultEnvClass)
