@@ -5,9 +5,10 @@ import sys
 
 from termcolor import colored
 
-from cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_MANIFEST_DEFAULT_PATH, CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH,
-                    CM_THEME_CONFIG_PATH, CM_ENV_CLASS_PATH, CM_MONKEY_CONFIG_CLASS_PATH, CM_DEFAULT_AUTOMATION_PATH,
-                    CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH, CM_CONTEXT_FILE_EXAMPLE_PATH)
+from codemonkeys.cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_MANIFEST_DEFAULT_PATH, CM_ENV_CLASS_PATH,
+                                CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH,CM_THEME_CONFIG_PATH, CM_DEFAULT_AUTOMATION_PATH,
+                                CM_MONKEY_CONFIG_CLASS_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
+                                CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH)
 
 top_level_dirs = [
     'abilities',
@@ -90,6 +91,10 @@ shutil.copyfile(CM_DEFAULT_AUTOMATION_PATH, os.path.join(project_path, 'automati
 # Create the default gitignore
 print(colored("Creating default .gitignore...", 'cyan'))
 shutil.copyfile(CM_GITIGNORE_DEFAULT_PATH, os.path.join(project_path, '.gitignore'))
+
+# Create the default requirements
+print(colored("Creating default requirements...", 'cyan'))
+shutil.copyfile(CM_DEFAULT_REQUIREMENTS_PATH, os.path.join(project_path, 'requirements.txt'))
 
 # Create the default README
 print(colored("Creating default README...", 'cyan'))

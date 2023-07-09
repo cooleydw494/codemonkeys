@@ -1,8 +1,8 @@
 import os
 
-from __init__ import __version__
+from pkg_resources import resource_filename
 
-VERSION = __version__
+VERSION = '0.0.5'
 
 """  CORE PATHS
 
@@ -14,20 +14,24 @@ It is also used anywhere else a framework-level path is needed.
 CM_ROOT_PATH = os.path.dirname(__file__)
 
 # CM PATH (root package)
-CM_PATH = os.path.join(CM_ROOT_PATH, "codemonkeys")
+CM_PATH = os.path.join(CM_ROOT_PATH, "")
 
 # CM AUTOMATIONS
-CM_AUTOMATIONS_PATH = os.path.join(CM_PATH, "automations")
+CM_AUTOMATIONS_PATH = resource_filename('codemonkeys', "automations")
 # CM BARRELS
-CM_BARRELS_PATH = os.path.join(CM_PATH, "barrels")
+CM_BARRELS_PATH = resource_filename('codemonkeys', "barrels")
 # CM TASKS
-CM_TASKS_PATH = os.path.join(CM_PATH, "tasks")
+CM_TASKS_PATH = resource_filename('codemonkeys', "tasks")
 # CM ABILITIES
-CM_ABILITIES_PATH = os.path.join(CM_PATH, "abilities")
+CM_ABILITIES_PATH = resource_filename('codemonkeys', "abilities")
 # CM COMMANDS
-CM_COMMANDS_PATH = os.path.join(CM_PATH, "commands")
+CM_COMMANDS_PATH = resource_filename('codemonkeys', "commands")
 # CM CONFIG
-CM_CONFIG_PATH = os.path.join(CM_PATH, "config")
+CM_CONFIG_PATH = resource_filename('codemonkeys', "config")
+# HELP
+CM_HELP_PATH = resource_filename('codemonkeys', "help")
+# STOR
+CM_STOR_PATH = resource_filename('codemonkeys', "stor")
 
 # ENV CLASS
 CM_ENV_CLASS_PATH = os.path.join(CM_CONFIG_PATH, "env_class.py")
@@ -36,14 +40,11 @@ CM_MONKEY_CONFIG_CLASS_PATH = os.path.join(CM_CONFIG_PATH, "monkey_config_class.
 # THEME CONFIG
 CM_THEME_CONFIG_PATH = os.path.join(CM_CONFIG_PATH, 'theme.py')
 
-# HELP
-CM_HELP_PATH = os.path.join(CM_PATH, "help")
 
-# STOR CORE
-CM_STOR_PATH = os.path.join(CM_ROOT_PATH, "stor")
 CM_STOR_TEMP_PATH = os.path.join(CM_STOR_PATH, "temp")
 CM_STOR_MONK_PATH = os.path.join(CM_STOR_PATH, "monk")
 CM_STOR_DEFAULTS_PATH = os.path.join(CM_STOR_PATH, "defaults")
+CM_STOR_SNIPPETS_PATH = os.path.join(CM_STOR_PATH, "snippets")
 
 # DEFAULTS
 CM_ENV_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, ".env.default")
@@ -52,6 +53,7 @@ CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "mo
 CM_CONTEXT_FILE_EXAMPLE_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'context-file.txt')
 CM_DEFAULT_AUTOMATION_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'DefaultAutomation.py')
 CM_GITIGNORE_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, '.default-gitignore')
+CM_DEFAULT_REQUIREMENTS_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'default-requirements.txt')
 CM_README_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'DEFAULT-README.md')
 
 # ENTITY EXAMPLES

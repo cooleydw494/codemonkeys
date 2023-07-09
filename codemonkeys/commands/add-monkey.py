@@ -10,7 +10,7 @@ from codemonkeys.config.yaml_helpers import read_yaml_file, write_yaml_file
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 from codemonkeys.utils.monkey_config.add_monkey_input_prompts import INPUT_PROMPTS
 from codemonkeys.utils.monkey_config.monkey_config_validations import validate_monkey_name, get_user_config_value
-from defs import MONKEY_MANIFEST_PATH
+from codemonkeys.defs import MONKEY_MANIFEST_PATH
 
 
 class AddMonkey(Command):

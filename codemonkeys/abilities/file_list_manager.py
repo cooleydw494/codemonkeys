@@ -2,10 +2,10 @@ import os
 import time
 from typing import List
 
-from cmdefs import CM_STOR_TEMP_PATH
+from codemonkeys.cmdefs import CM_STOR_TEMP_PATH
 from codemonkeys.abilities.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
-from defs import import_monkey_config_class, nl
+from codemonkeys.defs import import_monkey_config_class, nl
 
 MonkeyConfig = import_monkey_config_class()
 

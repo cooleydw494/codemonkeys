@@ -1,7 +1,7 @@
 from codemonkeys.abilities.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
-from defs import import_monkey_config_class
-from defs import nl2, nl
+from codemonkeys.defs import import_monkey_config_class
+from codemonkeys.defs import nl2, nl
 
 MonkeyConfig = import_monkey_config_class()
 

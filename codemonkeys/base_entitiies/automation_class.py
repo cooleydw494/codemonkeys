@@ -6,7 +6,7 @@ from codemonkeys.base_entitiies.utils.cli_runnable_class import CliRunnable
 from codemonkeys.utils.env.environment_checks import automation_env_checks
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
-from defs import import_monkey_config_class
+from codemonkeys.defs import import_monkey_config_class
 
 MonkeyConfig = import_monkey_config_class()
 

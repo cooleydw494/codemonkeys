@@ -7,8 +7,8 @@ class CliRunnable:
     unnamed_arg_keys = []
     required_arg_keys = []
 
-    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
-        self.monk_args = monk_args
+    def __init__(self, nerd_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
+        self.nerd_args = nerd_args
 
         # Named args: mapped by key and checked for required ones
         # Now support keys with '-' or '--' prefix
@@ -47,6 +47,16 @@ class CliRunnable:
             else:
                 allow_none = False
 
+            # if expected type is bool, convert 0/1 true/false to bool
+            if expected_type is bool:
+                true = value in [1, "1", "true", "True", True]
+                false = value in [0, "0", "false", "False", False]
+                value_is_bool = true or false
+                if value_is_bool:
+                    value = true
+                else:
+                    raise TypeError(f"Argument {key} should be of type bool, but got {type(value).__name__}")
+
             # Check the type of the value
             if not isinstance(value, expected_type) and not (allow_none and value is None):
                 raise TypeError(
@@ -57,6 +67,6 @@ class CliRunnable:
 
     def run(self):
         """
-        The main logic of the CliRunnable (e.g. Command, Automation, Barrel).
+        The main logic of the CliRunnable (e.g. Command, Deployment).
         """
         raise NotImplementedError("Subclasses must implement this method")

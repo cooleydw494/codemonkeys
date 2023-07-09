@@ -2,12 +2,13 @@ import os
 import re
 import sys
 import textwrap
+import threading
 from math import floor
 
 from termcolor import colored, COLORS
 
-from cmdefs import CM_STOR_MONK_PATH, VERSION
-from defs import import_env_class, nl
+from codemonkeys.cmdefs import CM_STOR_MONK_PATH, VERSION, CM_STOR_SNIPPETS_PATH
+from codemonkeys.defs import import_env_class, nl
 
 ENV = import_env_class()
 ENV = ENV()
@@ -15,6 +16,8 @@ text_themes = ENV.text_themes
 light_mode_enabled = ENV.light_mode_enabled
 max_terminal_width = ENV.max_terminal_width
 keywords = ENV.keywords
+
+print_lock = threading.Lock()
 
 
 def get_theme(theme):
@@ -88,7 +91,8 @@ def print_nice(*args, sub_indent='', **kwargs):
 
     text = color_pattern.sub(lambda m: m.group(1) + apply_bold_to_keywords(m.group(2)) + m.group(3), text)
 
-    print(text, end=end, file=file, flush=flush)
+    with print_lock:
+        print(text, end=end, file=file, flush=flush)
 
 
 def apply_bold_to_keywords(text):
@@ -100,7 +104,7 @@ def strip_color_and_bold_codes(s):
 
 
 def print_banner():
-    with open(os.path.join(CM_STOR_MONK_PATH, 'banner.txt'), 'r') as f:
+    with open(os.path.join(CM_STOR_SNIPPETS_PATH, 'banner.txt'), 'r') as f:
         art = f.read()
     print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
 
@@ -131,7 +135,7 @@ def print_table(table, title=None, sub_indent='   ', min_col_width=10):
         colored_row = [apply_t(str(val).ljust(width), 'cyan' if i == 0 else 'green' if i == 1 else 'dark_grey')
                        for i, (val, width) in enumerate(zip(row, col_widths))]
         print_t(sub_indent + ''.join(colored_row))
-    print()
+    print_nice()
 
 
 def print_tree(start_dir: str, exclude_dirs=None, exclude_file_starts=None, title: str = None, show_exts=False,
@@ -171,7 +175,7 @@ def print_tree(start_dir: str, exclude_dirs=None, exclude_file_starts=None, titl
                 dir_color = 'white'
             elif base_root == 'usr':
                 dir_color = 'light_cyan'
-            print('{}{}'.format(' ' * 2 * level, apply_t(f'{base_root}:', dir_color)))
+            print_nice('{}{}'.format(' ' * 2 * level, apply_t(f'{base_root}:', dir_color)))
 
         sub_indent = ' ' * 2 * (level + 1)
         for f in files:
@@ -191,6 +195,4 @@ def print_tree(start_dir: str, exclude_dirs=None, exclude_file_starts=None, titl
                 else:
                     file_theme = 'cyan'
 
-                print('{}{}'.format(sub_indent, apply_t(filename, file_theme)))
-
-
+                print_nice('{}{}'.format(sub_indent, apply_t(filename, file_theme)))

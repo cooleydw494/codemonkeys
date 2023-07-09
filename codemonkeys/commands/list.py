@@ -1,7 +1,7 @@
-from cmdefs import CM_COMMANDS_PATH, CM_BARRELS_PATH, CM_AUTOMATIONS_PATH
+from codemonkeys.cmdefs import CM_COMMANDS_PATH, CM_BARRELS_PATH, CM_AUTOMATIONS_PATH
 from codemonkeys.base_entitiies.command_class import Command
 from codemonkeys.utils.monk.theme_functions import print_tree
-from defs import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
+from codemonkeys.defs import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
 
 
 class List(Command):

@@ -1,6 +1,6 @@
 from codemonkeys.base_entitiies.command_class import Command
 from codemonkeys.utils.monk.theme_functions import print_t
-from defs import THEME_CONFIG_PATH, nl
+from codemonkeys.defs import THEME_CONFIG_PATH, nl
 
 
 class ToggleLightMode(Command):

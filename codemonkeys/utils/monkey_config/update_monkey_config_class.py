@@ -1,5 +1,5 @@
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
-from defs import MONKEY_CONFIG_CLASS_PATH, nl
+from codemonkeys.defs import MONKEY_CONFIG_CLASS_PATH, nl
 
 
 def update_monkey_config_class():

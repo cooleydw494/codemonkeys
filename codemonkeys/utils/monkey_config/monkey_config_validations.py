@@ -3,7 +3,7 @@ import re
 from typing import List
 
 from codemonkeys.utils.monk.theme_functions import input_t, print_t
-from defs import ROOT_PATH
+from codemonkeys.defs import ROOT_PATH
 
 valid_values = {
     'temp': [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],

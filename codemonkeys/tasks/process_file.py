@@ -3,8 +3,8 @@ import os
 from codemonkeys.abilities.gpt_client import GPTClient
 from codemonkeys.tasks.check_output import check_output
 from codemonkeys.utils.monk.theme_functions import print_t
-from defs import import_monkey_config_class
-from defs import nl, nl2, _or
+from codemonkeys.defs import import_monkey_config_class
+from codemonkeys.defs import nl, nl2, _or
 
 MonkeyConfig = import_monkey_config_class()
 
