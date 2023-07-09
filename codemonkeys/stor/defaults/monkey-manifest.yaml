@@ -1,9 +1,10 @@
 ################################################################################################
 ####  MONKEY MANIFEST  #########################################################################
 ###
-##    The Monkey Manifest houses centralized configuration of automation profiles (monkeys).
+##    The Monkey Manifest houses centralized configuration of Automation profiles (monkeys).
 ##
 ##    Undefined props will default based on `monkey-config-defaults.yaml`.
+##    To unset a prop, set it to null.
 ################################################################################################
 
 
