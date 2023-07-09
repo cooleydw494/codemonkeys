@@ -11,7 +11,7 @@ from codemonkeys.composables.context_summarizer import ContextHandler
 
 
 class Default(Automation):
-    required_config_keys = ['WORK_PATH', 'MAIN_PROMPT', 'OUTPUT_EXT']
+    required_config_keys = ['MAIN_PROMPT']
 
     required_config_keys_if = {
         'OUTPUT_CHECK_PROMPT': ['OUTPUT_TRIES'],

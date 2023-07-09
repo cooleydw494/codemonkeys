@@ -97,7 +97,7 @@ shutil.copyfile(CM_MONKEY_CONFIG_CLASS_PATH, os.path.join(config_path, 'framewor
 
 # Create the default automation
 print(colored("Creating default automation...", 'cyan'))
-shutil.copyfile(CM_DEFAULT_AUTOMATION_PATH, os.path.join(project_path, 'automations', 'Default.py'))
+shutil.copyfile(CM_DEFAULT_AUTOMATION_PATH, os.path.join(project_path, 'automations', 'default.py'))
 
 # Create the default gitignore
 print(colored("Creating default .gitignore...", 'cyan'))
