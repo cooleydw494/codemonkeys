@@ -15,9 +15,9 @@ It is also used anywhere else a framework-level path is needed.
 CM_ROOT_PATH = os.path.dirname(__file__)
 
 # CM AUTOMATIONS
-# CM_AUTOMATIONS_PATH = resource_filename('codemonkeys', "automations")
+CM_AUTOMATIONS_PATH = os.path.join(CM_ROOT_PATH, "automations")
 # CM BARRELS
-# CM_BARRELS_PATH = resource_filename('codemonkeys', "barrels")
+CM_BARRELS_PATH = os.path.join(CM_ROOT_PATH, "barrels")
 # CM TASKS
 CM_TASKS_PATH = os.path.join(CM_ROOT_PATH, "tasks")
 # CM ABILITIES
