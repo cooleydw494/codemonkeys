@@ -36,7 +36,7 @@ def load_monkey_config(given_monkey_name=None) -> MonkeyConfig:
         monkey_name = given_monkey_name
     else:
         print_t("No monkey name or currently loaded monkey.", "quiet")
-        monkey_name = get_monkey_name(prompt_user=True)
+        monkey_name, _ = get_monkey_name(prompt_user=True)
 
     set_loaded_monkey(monkey_name)
     return MonkeyConfig.load(monkey_name=monkey_name)

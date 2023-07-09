@@ -35,13 +35,6 @@ def parse_monk_args():
     # Create argument parser - use custom help
     parser = argparse.ArgumentParser(add_help=False)
 
-    # Unique args
-    parser.add_argument("-monkey", "--monkey", type=str)
-
-    # Special flags - flags that override normal behaviors significantly.
-    parser.add_argument('-v', '--version', action='store_true')
-    parser.add_argument('--toggle-light-mode', action='store_true')
-
     # Action flags - mutually exclusive, overrides default of "run"
     action_flags = parser.add_mutually_exclusive_group()
     action_flags.add_argument('-e', '--edit', action='store_true')

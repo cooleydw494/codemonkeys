@@ -27,7 +27,7 @@ class FileIterator:
         return self
 
     def set_filepath_match_exclude(self, filepath_match_exclude: str) -> 'FileIterator':
-        self.exclude_patterns = filepath_match_exclude.split(',')
+        self.exclude_patterns = filepath_match_exclude.split(',') if filepath_match_exclude is not None else []
         return self
 
     def set_token_count_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':
