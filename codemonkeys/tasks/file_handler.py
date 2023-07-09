@@ -2,6 +2,7 @@ import os
 
 from codemonkeys.abilities.gpt_client import GPTClient
 from codemonkeys.tasks.output_checker import OutputChecker
+from codemonkeys.tasks.output_path_resolver import OutputPathResolver
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import nl, nl2, _or
 
@@ -9,7 +10,8 @@ from codemonkeys.defs import nl, nl2, _or
 class FileHandler:
 
     def __init__(self):
-        self.main_gpt_client = None
+        self.output_path_resolver = None
+        self.gpt_client = None
         self.model = ''
         self.temp = ''
         self.max_tokens = None
@@ -75,9 +77,13 @@ class FileHandler:
         self.output_checker = output_checker
         return self
 
+    def set_output_path_resolver(self, output_path_resolver: OutputPathResolver) -> 'FileHandler':
+        self.output_path_resolver = output_path_resolver
+        return self
+
     def get_output(self, full_prompt):
 
-        output = self.main_gpt_client.generate(full_prompt)
+        output = self.gpt_client.generate(full_prompt)
 
         if self.output_remove_strings is not None:
             for remove_str in self.output_remove_strings:
@@ -90,15 +96,12 @@ class FileHandler:
     def handle(self):
         print(f"Processing file: {self.file_path}")
 
-        the_file_name = os.path.basename(self.file_path)
-
-        # Prepare output filename
-        output_file_name = f"{the_file_name}{self.output_filename_append}{self.output_ext}"
-        output_file_path = os.path.join(self.output_path, output_file_name)
-
-        if self.skip_existing_output_files and os.path.exists(output_file_path):
-            print_t(f"SKIP_EXISTING_OUTPUT_FILES is True. Skipping: {output_file_name}", 'quiet')
+        if self.skip_existing_output_files and self.output_path_resolver.output_file_exists(self.file_path):
+            print_t(f"{self.file_path} exists and was skipped.", 'quiet')
             return
+
+        the_file_name = os.path.basename(self.file_path)
+        output_file_path = self.output_path_resolver.get_output_path(self.file_path)
 
         with open(self.file_path, "r") as f:
             file_contents = f.read()
@@ -110,12 +113,13 @@ class FileHandler:
         full_prompt = f"{main_prompt}{nl}{self.context}{nl}{the_file_name}:{nl}" \
                       f"```{file_contents}```{nl}{ultimatum}{nl}{output_example}"
 
-        full_prompt_log = f"{main_prompt}{nl2}<special-file-summary-or-content>{nl2}{the_file_name}:{nl}" \
-                          f"```<file contents>```{nl2}{ultimatum}{nl2}<output example>"
-        print_t(f"Full prompt:{nl}{full_prompt_log}", 'info')
+        # Print full prompt with placeholders
+        print_t(f"{main_prompt}{nl2}<context>{nl2}{the_file_name}:{nl}"
+                f"```<file contents>```{nl2}{ultimatum}{nl2}<output example>",
+                'info')
 
         # Prepare GPT client for Main Prompt
-        self.main_gpt_client = GPTClient(self.model, self.temp, self.max_tokens)
+        self.gpt_client = GPTClient(self.model, self.temp, self.max_tokens)
 
         # Prepare output directory
         output_dir = os.path.join(self.output_path)

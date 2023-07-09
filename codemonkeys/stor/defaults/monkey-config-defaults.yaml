@@ -37,9 +37,8 @@ CONTEXT_FILE_PATH: "ROOT_PATH/stor/context/context-file.txt"
 CONTEXT_SUMMARY_PROMPT: "Provide a summary of this file..."
 
 # Output Checks
-CHECK_OUTPUT: False
-OUTPUT_TRIES_LIMIT: 1
 OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
+OUTPUT_TRIES: 1
 
 # Output
 OUTPUT_PATH: "ROOT_PATH/stor/output"

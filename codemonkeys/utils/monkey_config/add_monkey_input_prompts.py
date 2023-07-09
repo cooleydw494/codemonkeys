@@ -24,8 +24,6 @@ INPUT_PROMPTS = [
     ('OUTPUT_EXAMPLE_PROMPT', validate_str,
      "A direct example of how the new or updated file should be formatted, (inserted in prompt). Ex: Limit your "
      "output strictly to the contents of the translated file, like: ```<translated-poem>```"),
-    ('CHECK_OUTPUT', validate_bool,
-     "Use another GPT call to check that the output matched the example? Ex: true"),
     ('OUTPUT_CHECK_MODEL', validate_int,
      "Enter the model to use for the usage prompts. Choose 3 (gpt-3.5-turbo) or 4 (gpt-4)"),
     ('OUTPUT_CHECK_TEMP', validate_float,

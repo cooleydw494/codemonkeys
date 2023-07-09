@@ -32,14 +32,14 @@ self-help-command:
   CONTEXT_SUMMARY_PROMPT: null  # CONTEXT_FILE is pre-prepared summary
 
   # Output Checks
-  CHECK_OUTPUT: True
   OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script with a "main" function. Respond with only one word: "True" or "False".'
+  OUTPUT_TRIES: 1
 
   # Output
   OUTPUT_PATH: "ROOT_PATH/stor/output"
   OUTPUT_EXT: ''
   OUTPUT_FILENAME_APPEND: ""
-  OUTPUT_TRIES_LIMIT: 2
+  OUTPUT_TRIES: 2
   OUTPUT_REMOVE_STRINGS: "```,```python,python"
   SKIP_EXISTING_OUTPUT_FILES: False
 

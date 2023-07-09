@@ -6,9 +6,11 @@ from codemonkeys.defs import nl
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
-class FileListManager:
+class FileIterator:
 
     def __init__(self):
+        self.temp = None
+        self.model = None
         self.include_extensions = []
         self.exclude_patterns = []
         self.max_tokens = None
@@ -16,24 +18,23 @@ class FileListManager:
         self.work_path = None
         self.filtered_files = []
 
-    def file_types_included(self, file_types_included: str) -> 'FileListManager':
+    def set_work_path(self, work_path: str) -> 'FileIterator':
+        self.work_path = work_path
+        return self
+
+    def set_file_types_included(self, file_types_included: str) -> 'FileIterator':
         self.include_extensions = file_types_included.split(',')
         return self
 
-    def filepath_match_excluded(self, filepath_match_excluded: str) -> 'FileListManager':
+    def set_filepath_match_excluded(self, filepath_match_excluded: str) -> 'FileIterator':
         self.exclude_patterns = filepath_match_excluded.split(',')
         return self
 
-    def filter_max_tokens(self, filter_max_tokens: int) -> 'FileListManager':
-        self.max_tokens = filter_max_tokens
-        return self
-
-    def token_count_model(self, model: str) -> 'FileListManager':
+    def set_token_count_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':
+        self.model = model
+        self.temp = temp
+        self.max_tokens = max_tokens
         self.gpt_client = GPTClient(model)
-        return self
-
-    def work_path(self, work_path: str) -> 'FileListManager':
-        self.work_path = work_path
         return self
 
     @staticmethod

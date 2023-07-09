@@ -1,9 +1,10 @@
 import argparse
 from typing import Dict, Any, List
 
-from codemonkeys.abilities.file_list_manager import FileListManager
+from codemonkeys.abilities.file_list_manager import FileIterator
 from codemonkeys.base_entitiies.automation_class import Automation
 from codemonkeys.tasks.output_checker import OutputChecker
+from codemonkeys.tasks.output_path_resolver import OutputPathResolver
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.tasks.file_handler import FileHandler
 from codemonkeys.tasks.context_summarizer import ContextHandler
@@ -12,16 +13,20 @@ from codemonkeys.tasks.context_summarizer import ContextHandler
 class Default(Automation):
     required_config_keys = ['WORK_PATH', 'MAIN_PROMPT', 'OUTPUT_EXT']
 
+    required_config_keys_if = {
+        'OUTPUT_CHECK_PROMPT': ['OUTPUT_TRIES'],
+    }
+
     def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
         super().__init__(monk_args, named_args, unnamed_args)
 
     def run(self):
-
         mc = self.monkey_config
 
         # Prepare summarized or unsummarized context
-        context = None
-        if mc.CONTEXT_FILE_PATH is not None:
+        if mc.CONTEXT_FILE_PATH is None:
+            context = None
+        else:
             context_handler = ContextHandler().context_file(mc.CONTEXT_FILE_PATH)
             if mc.SUMMARY_PROMPT:
                 context = (context_handler
@@ -36,20 +41,25 @@ class Default(Automation):
         if mc.OUTPUT_CHECK_PROMPT is not None:
             output_checker = (OutputChecker()
                               .set_model(mc.OUTPUT_CHECK_MODEL, mc.OUTPUT_CHECK_TEMP, mc.MAX_TOKENS)
-                              .prompt(mc.OUTPUT_CHECK_PROMPT))
+                              .set_tries(mc.OUTPUT_TRIES)
+                              .set_prompt(mc.OUTPUT_CHECK_PROMPT))
 
-        # Prepare FileListManager and filter files
-        file_list_manager = (FileListManager()
-                             .file_types_included(mc.FILE_TYPES_INCLUDED)
-                             .filepath_match_excluded(mc.FILEPATH_MATCH_EXCLUDED)
-                             .filter_max_tokens(mc.FILE_SELECT_MAX_TOKENS)
-                             .token_count_model(mc.MAIN_MODEL)
-                             .work_path(mc.WORK_PATH)
-                             .filter_files())
+        # Prepare FileIterator and filter files
+        file_iterator = (FileIterator()
+                         .set_token_count_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
+                         .set_file_types_included(mc.FILE_TYPES_INCLUDED)
+                         .set_filepath_match_excluded(mc.FILEPATH_MATCH_EXCLUDED)
+                         .set_work_path(mc.WORK_PATH)
+                         .filter_files())
+
+        output_path_resolver = (OutputPathResolver()
+                                .set_output_path(mc.OUTPUT_PATH)
+                                .set_output_filename_append(mc.OUTPUT_FILENAME_APPEND)
+                                .set_output_ext(mc.OUTPUT_EXT))
 
         # Iterate through filtered files
         while True:
-            current_file = file_list_manager.pop_file()
+            current_file = file_iterator.pop_file()
 
             if current_file is None:
                 print_t("All Files Handled.", 'done')
@@ -63,8 +73,7 @@ class Default(Automation):
              .set_context(context)
              .set_output_example_prompt(mc.OUTPUT_EXAMPLE_PROMPT)
              .set_ultimatum_prompt(mc.MAIN_PROMPT_ULTIMATUM)
-             .set_output_filename_append(mc.OUTPUT_FILENAME_APPEND)
-             .set_output_ext(mc.OUTPUT_EXT)
              .set_skip_existing(mc.SKIP_EXISTING_OUTPUT_FILES)
              .set_output_checker(output_checker)
+             .set_output_path_resolver(output_path_resolver)
              .handle())
