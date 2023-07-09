@@ -1,21 +1,20 @@
 import os
 
-from codemonkeys.cmdefs import CM_STOR_TEMP_PATH
 from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
 from codemonkeys.utils.monk.theme_functions import print_t, input_t, apply_t
-from codemonkeys.defs import import_monkey_config_class
+from codemonkeys.defs import import_monkey_config_class, TEMP_PATH
 
 MonkeyConfig = import_monkey_config_class()
 
 
 def set_loaded_monkey(given_monkey_name: str) -> None:
-    monkey_path = os.path.join(CM_STOR_TEMP_PATH, "loaded-monkey-name.txt")
+    monkey_path = os.path.join(TEMP_PATH, "loaded-monkey-name.txt")
     with open(monkey_path, 'w') as file:
         file.write(given_monkey_name)
 
 
 def get_loaded_monkey() -> str or None:
-    loaded_monkey_name_path = os.path.join(CM_STOR_TEMP_PATH, "loaded-monkey-name.txt")
+    loaded_monkey_name_path = os.path.join(TEMP_PATH, "loaded-monkey-name.txt")
     if not os.path.exists(loaded_monkey_name_path):
         return None
     with open(loaded_monkey_name_path, 'r') as file:

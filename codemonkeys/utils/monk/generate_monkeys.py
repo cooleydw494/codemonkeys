@@ -49,4 +49,3 @@ def generate_monkeys():
                 removed_monkey_path = os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml')
                 shutil.move(removed_monkey_path,
                             os.path.join(MONKEYS_PATH, '.history', monkey_name, f'{timestamp}.yaml'))
-                os.remove(os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml'))
