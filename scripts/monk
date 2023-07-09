@@ -4,6 +4,9 @@ import subprocess
 import sys
 import traceback
 
+from codemonkeys.utils.defs_utils import find_project_root
+
+sys.path.append(find_project_root())
 from codemonkeys.utils.env.environment_checks import monk_env_checks
 from codemonkeys.utils.env.update_env_class import update_env_class
 from codemonkeys.utils.monk.find_entity import find_entity

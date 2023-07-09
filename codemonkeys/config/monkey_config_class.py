@@ -62,7 +62,7 @@ class MonkeyConfig:
     OUTPUT_CHECK_TEMP: Optional[ScalarFloat] = field(default=None)
     # [MONKEY_CONFIG_PROPS_END]
 
-    Env: Optional[Env] = field(default=None)
+    env: Optional[Env] = field(default=None)
 
     def __post_init__(self):
         # print_t(f"Loaded MonkeyConfig: {self.__dict__}", 'info')
