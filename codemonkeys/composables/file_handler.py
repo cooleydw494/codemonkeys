@@ -122,14 +122,14 @@ class FileHandler:
         self.gpt_client = GPTClient(self.model, self.temp, self.max_tokens)
 
         # Prepare output directory
-        output_dir = os.path.join(self.output_path)
+        output_dir = os.path.dirname(output_file_path)
         os.makedirs(output_dir, exist_ok=True)
 
         output = None
 
         oc = self.output_checker
         if oc is not None:
-            oc.set_current_try(0)
+            oc.set_current_try(1)
 
             while oc.has_tries() and output is None:
                 print_t(f"Attempt {oc.current_try}/{oc.tries} for {the_file_name}...", 'loading')
@@ -140,6 +140,10 @@ class FileHandler:
 
         else:
             output = self.get_output(full_prompt)
+
+        if output is None:
+            print_t(f"Failed to generate output for {the_file_name} after {oc.tries} tries.", 'error')
+            return
 
         with open(output_file_path, "w") as f:
             f.write(output)

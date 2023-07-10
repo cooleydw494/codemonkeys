@@ -26,7 +26,7 @@ class Automation(CliRunnable):
 
         self._check_required_config_keys()
 
-        print_t("Automation initialized. Monkey Time!", "start")
+        print_t("Automation initialized.", "start")
 
     def load_config(self) -> MonkeyConfig:
         return load_monkey_config(self.monkey)

@@ -5,9 +5,6 @@ import openai
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import import_env_class
 
-Env = import_env_class()
-env = Env.get()
-
 
 def monk_env_checks():
 
@@ -20,6 +17,8 @@ def monk_env_checks():
 
 def automation_env_checks():
     try:
+        Env = import_env_class()
+        env = Env.get()
         openai.api_key = env.OPENAI_API_KEY
         if openai.api_key is None:
             raise ValueError("OPENAI_API_KEY is not set.")

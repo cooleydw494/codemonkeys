@@ -13,8 +13,9 @@ from dataclasses import dataclass
 from dotenv import load_dotenv
 
 from codemonkeys.config.theme import light_mode_enabled, max_terminal_width, keywords, text_themes
+from codemonkeys.defs import ROOT_PATH
 
-load_dotenv()
+load_dotenv(os.path.join(ROOT_PATH, '.env'))
 
 """ FRAMEWORK_ENV_PROPS_LIST - DO NOT MODIFY
 A List tracking the source's env props. This is currently unused, but could be useful. """
