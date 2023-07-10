@@ -68,7 +68,7 @@ class Default(Automation):
             # Handle current file,
             (FileHandler()
              .set_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
-             .file_path(current_file)
+             .set_path(current_file)
              .set_main_prompt(mc.MAIN_PROMPT)
              .set_context(context)
              .set_output_example_prompt(mc.OUTPUT_EXAMPLE_PROMPT)
