@@ -7,7 +7,7 @@ from codemonkeys.composables.output_checker import OutputChecker
 from codemonkeys.composables.output_path_resolver import OutputPathResolver
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.composables.file_handler import FileHandler
-from codemonkeys.composables.context_summarizer import ContextHandler
+from codemonkeys.composables.summarizer import Summarizer
 
 
 class Default(Automation):
@@ -23,11 +23,11 @@ class Default(Automation):
     def run(self):
         mc = self.monkey_config
 
-        # Prepare summarized or unsummarized context
+        # Prepare summarized or unsummarized context_string
         if mc.CONTEXT_FILE_PATH is None:
             context = None
         else:
-            context_handler = ContextHandler().context_file(mc.CONTEXT_FILE_PATH)
+            context_handler = Summarizer().set_context_via_file(mc.CONTEXT_FILE_PATH)
             if mc.SUMMARY_PROMPT:
                 context = (context_handler
                            .set_model(mc.SUMMARY_MODEL, mc.SUMMARY_TEMP, mc.MAX_TOKENS)
