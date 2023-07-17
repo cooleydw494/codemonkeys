@@ -14,7 +14,7 @@ Env = import_env_class()
 env = Env.get()
 text_themes = env.text_themes
 light_mode_enabled = env.light_mode_enabled
-verbose_logs = env.verbose_logs
+verbose_logs = env.verbose_logs_enabled
 max_terminal_width = env.max_terminal_width
 keywords = env.keywords
 
