@@ -1,4 +1,5 @@
 import argparse
+import os
 from typing import Dict, Any, List
 
 from codemonkeys.composables.committer import Committer
@@ -25,6 +26,8 @@ class Default(Automation):
 
     def run(self):
         mc = self.monkey_config
+        # replace cop-syntax file contents references
+        mc.cop_paths()
 
         # Prepare summarized or unsummarized context
         if mc.CONTEXT_FILE_PATH is None:
@@ -83,14 +86,18 @@ class Default(Automation):
             print(f"Processing file: {file_path}")
             old_content = get_file_contents(file_path)
 
+            # Create a copy for file-specific prompt replacements
+            file_name = os.path.basename(file_path)
+            _mc = mc.replace_prompt_str('{the-file}', file_name)
+
             # Setup a FilePrompter for the current file
             file_prompter = (FilePrompter()
                              .set_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
                              .set_path(file_path)
-                             .set_main_prompt(mc.MAIN_PROMPT)
+                             .set_main_prompt(_mc.MAIN_PROMPT)
                              .set_context(context)
-                             .set_output_example_prompt(mc.OUTPUT_EXAMPLE_PROMPT)
-                             .set_ultimatum_prompt(mc.MAIN_PROMPT_ULTIMATUM))
+                             .set_output_example_prompt(_mc.OUTPUT_EXAMPLE_PROMPT)
+                             .set_ultimatum_prompt(_mc.MAIN_PROMPT_ULTIMATUM))
 
             # Generate output, checking it if an OutputChecker is configured
             new_content = None

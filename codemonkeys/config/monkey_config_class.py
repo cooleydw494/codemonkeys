@@ -106,8 +106,6 @@ class MonkeyConfig:
 
         self.env = Env.get()
 
-        self.cop_paths()
-
     @classmethod
     def load(cls, monkey_name: str) -> 'MonkeyConfig':
         from codemonkeys.config.yaml_helpers import read_yaml_file

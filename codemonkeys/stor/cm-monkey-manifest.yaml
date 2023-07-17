@@ -39,7 +39,6 @@ self-help-command:
   OUTPUT_PATH: "ROOT_PATH/stor/output"
   OUTPUT_EXT: ''
   OUTPUT_FILENAME_APPEND: ""
-  OUTPUT_TRIES: 2
   OUTPUT_REMOVE_STRINGS: "```,```python,python"
   SKIP_EXISTING_OUTPUT_FILES: False
 
