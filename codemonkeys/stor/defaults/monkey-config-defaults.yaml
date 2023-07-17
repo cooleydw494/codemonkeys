@@ -38,7 +38,7 @@ CONTEXT_FILE_PATH: "ROOT_PATH/stor/context_string/context_string-file.txt"
 CONTEXT_SUMMARY_PROMPT: "Provide a summary of this file..."
 
 # Output Checks
-OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
+OUTPUT_CHECK_PROMPT: null
 OUTPUT_TRIES: 1
 
 # Output
@@ -47,6 +47,19 @@ OUTPUT_EXT: ".py"
 OUTPUT_FILENAME_APPEND: ""
 OUTPUT_REMOVE_STRINGS: "```,```python"
 SKIP_EXISTING_OUTPUT_FILES: True
+
+# Editor
+# Editor
+EDITOR_PROMPT: null
+EDITOR_PROMPT_ULTIMATUM: null
+
+# Output Splitting
+OUTPUT_SPLIT_PATH: null
+OUTPUT_SPLIT_TAG: '[SPLIT]'
+
+# Git Commit
+COMMIT_STYLE: null # null, 'gpt', 'static'
+STATIC_COMMIT_MESSAGE: 'File updated with CodeMonkeys'
 
 # Models
 MAIN_MODEL: 4

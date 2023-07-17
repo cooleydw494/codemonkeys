@@ -14,6 +14,7 @@ Env = import_env_class()
 env = Env.get()
 text_themes = env.text_themes
 light_mode_enabled = env.light_mode_enabled
+verbose_logs = env.verbose_logs
 max_terminal_width = env.max_terminal_width
 keywords = env.keywords
 
@@ -45,6 +46,8 @@ def apply_t(text, theme, incl_prefix=False, attrs=None):
 
 
 def print_t(text, theme=None, incl_prefix=True, attrs=None, verbose=False):
+    if verbose and not verbose_logs:
+        return
     sub_indent = ''
     if theme:
         text = apply_t(text, theme, incl_prefix=incl_prefix)

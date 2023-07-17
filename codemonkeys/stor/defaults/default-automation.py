@@ -1,18 +1,21 @@
 import argparse
 from typing import Dict, Any, List
 
+from codemonkeys.composables.committer import Committer
 from codemonkeys.composables.file_iterator import FileIterator
 from codemonkeys.base_entities.automation_class import Automation
 from codemonkeys.composables.output_checker import OutputChecker
 from codemonkeys.composables.output_path_resolver import OutputPathResolver
+from codemonkeys.utils.file_ops import get_file_contents, file_exists, write_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.composables.file_handler import FileHandler
+from codemonkeys.composables.file_prompter import FilePrompter
 from codemonkeys.composables.summarizer import Summarizer
 
 
 class Default(Automation):
     required_config_keys = ['MAIN_PROMPT']
 
+    # TODO: implement this in base class
     required_config_keys_if = {
         'OUTPUT_CHECK_PROMPT': ['OUTPUT_TRIES'],
     }
@@ -23,18 +26,17 @@ class Default(Automation):
     def run(self):
         mc = self.monkey_config
 
-        # Prepare summarized or unsummarized context_string
+        # Prepare summarized or unsummarized context
         if mc.CONTEXT_FILE_PATH is None:
-            context = None
+            context = ''
+        elif mc.SUMMARY_PROMPT is not None:
+            context = (Summarizer()
+                       .set_context_via_file(mc.CONTEXT_FILE_PATH)
+                       .set_model(mc.SUMMARY_MODEL, mc.SUMMARY_TEMP, mc.MAX_TOKENS)
+                       .set_prompt(mc.SUMMARY_PROMPT)
+                       .summarize())
         else:
-            context_handler = Summarizer().set_context_via_file(mc.CONTEXT_FILE_PATH)
-            if mc.SUMMARY_PROMPT:
-                context = (context_handler
-                           .set_model(mc.SUMMARY_MODEL, mc.SUMMARY_TEMP, mc.MAX_TOKENS)
-                           .set_prompt(mc.SUMMARY_PROMPT)
-                           .summarize())
-            else:
-                context = context_handler.get_unsummarized_context()
+            context = get_file_contents(mc.CONTEXT_FILE_PATH)
 
         # Prepare Output Checker
         output_checker = None
@@ -52,28 +54,69 @@ class Default(Automation):
                          .set_work_path(mc.WORK_PATH)
                          .filter_files())
 
+        # Prepare OutputPathResolver, configuring how to create output paths using each file's path
         output_path_resolver = (OutputPathResolver()
                                 .set_output_path(mc.OUTPUT_PATH)
                                 .set_output_filename_append(mc.OUTPUT_FILENAME_APPEND)
                                 .set_output_ext(mc.OUTPUT_EXT))
 
+        # Prepare Committer to handle git commits
+        committer = None
+        if mc.COMMIT_STYLE == 'gpt':
+            committer = Committer(mc.OUTPUT_PATH).set_model('3', 0.75, mc.MAX_TOKENS)
+        elif mc.COMMIT_STYLE == 'static':
+            committer = Committer(mc.OUTPUT_PATH).set_message(mc.STATIC_COMMIT)
+
         # Iterate through filtered files
         while True:
-            current_file = file_iterator.pop_file()
 
-            if current_file is None:
+            file_path = file_iterator.pop_file()
+            output_file_path = output_path_resolver.get_output_path(file_path)
+            if file_path is None:
                 print_t("All Files Handled.", 'done')
                 break
 
-            # Handle current file,
-            (FileHandler()
-             .set_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
-             .set_path(current_file)
-             .set_main_prompt(mc.MAIN_PROMPT)
-             .set_context(context)
-             .set_output_example_prompt(mc.OUTPUT_EXAMPLE_PROMPT)
-             .set_ultimatum_prompt(mc.MAIN_PROMPT_ULTIMATUM)
-             .set_skip_existing(mc.SKIP_EXISTING_OUTPUT_FILES)
-             .set_output_checker(output_checker)
-             .set_output_path_resolver(output_path_resolver)
-             .handle())
+            if mc.SKIP_EXISTING_OUTPUT_FILES and file_exists(output_file_path):
+                print_t(f"Skipping file, output exists at: {output_file_path}", 'quiet')
+                continue
+
+            print(f"Processing file: {file_path}")
+            old_content = get_file_contents(file_path)
+
+            # Setup a FilePrompter for the current file
+            file_prompter = (FilePrompter()
+                             .set_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
+                             .set_path(file_path)
+                             .set_main_prompt(mc.MAIN_PROMPT)
+                             .set_context(context)
+                             .set_output_example_prompt(mc.OUTPUT_EXAMPLE_PROMPT)
+                             .set_ultimatum_prompt(mc.MAIN_PROMPT_ULTIMATUM))
+
+            # Generate output, checking it if an OutputChecker is configured
+            new_content = None
+            if output_checker is not None:
+                output_checker.set_current_try(1)
+                while output_checker.has_tries():
+                    output = file_prompter.get_output()
+                    output_valid = output_checker.check_output(output)
+                    if output_valid:
+                        new_content = output
+                        break
+            else:
+                new_content = file_prompter.get_output()
+
+            if new_content is None:
+                print_t(f"Valid output could not be generated for: {file_path}", 'error')
+                continue
+
+            # Write output to file
+            write_file_contents(output_file_path, new_content)
+            print(f"Output saved to: {output_file_path}", 'success')
+
+            # Commit changes if a Committer is configured
+            if committer is not None:
+                if mc.COMMIT_STYLE == 'gpt':
+                    committer.set_message_via_content(old_content, new_content)
+                committer.commit()
+                message = committer.get_message()
+                print_t(f"Changes committed to git with message: {message}.", 'success')

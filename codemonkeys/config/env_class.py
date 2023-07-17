@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 from dotenv import load_dotenv
 
-from codemonkeys.config.theme import light_mode_enabled, max_terminal_width, keywords, text_themes
+from codemonkeys.config.theme import light_mode_enabled, max_terminal_width, verbose_logs_enabled, keywords, text_themes
 from codemonkeys.defs import ROOT_PATH
 
 load_dotenv(os.path.join(ROOT_PATH, '.env'))
@@ -44,9 +44,10 @@ class Env:
     # [DEFINE_CUSTOM_ENV_PROPS_END]
 
     """ THEME - DO NOT MODIFY
-    This will pull from the theme module in the same directory, whether coming from user or  """
+     This should eventually work another way, but for now it's convenient to have it here. """
     light_mode_enabled = light_mode_enabled
     max_terminal_width = max_terminal_width
+    verbose_logs_enabled = verbose_logs_enabled
     keywords = (lambda words: sorted(words, key=len, reverse=True))(keywords)
     text_themes = text_themes
 

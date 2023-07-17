@@ -36,23 +36,18 @@ class Summarizer:
 
     def summarize(self) -> str:
 
+        if not self.context:
+            raise RuntimeError("No context provided to summarize.")
+
         client = GPTClient(self.model, self.temp, self.max_tokens)
+        context_tokens = client.count_tokens(self.context)
 
-        chunked_context = client.split_into_chunks(self.context, self.max_tokens)
+        if context_tokens > self.max_tokens:
+            summary = self._summarize_chunked(client)
+        else:
+            full_prompt = f'{self.prompt}: ```{self.context}```'
+            summary = client.generate(full_prompt)
 
-        chunked_context = '' if chunked_context == '' else chunked_context
-
-        if len(chunked_context) > 1:
-            print_t(f"Split context into {len(chunked_context)} chunks.", 'info')
-            print_t('Summarizing each chunk... [see TODO in summarizer.py]', 'loading')
-            # TODO: implement summarization of chunked context_string files
-            exit()
-
-        # If not chunked (length 1), summarize the context_string file
-        full_prompt = f'{self.prompt}: ```{chunked_context[0]}```'
-        summary = client.generate(full_prompt)
-
-        # Check if a summary was successfully generated
         if not summary:
             raise RuntimeError(f"Failed to generate a summary for the context.")
 
@@ -60,3 +55,11 @@ class Summarizer:
         print_t(f"Summary:{nl}{summary}", 'quiet')
 
         return summary
+
+    def _summarize_chunked(self, client: GPTClient) -> str:
+
+        chunked_context = client.split_into_chunks(self.context, self.max_tokens)
+        print_t(f"Split context into {len(chunked_context)} chunks.", 'info')
+        print_t('Summarizing each chunk... is not implemented [see TODO in summarizer.py]', 'loading')
+        # TODO: implement summarization of chunked context
+        exit()
