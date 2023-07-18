@@ -71,8 +71,8 @@ class FilePrompter:
             for remove_str in self.output_remove_strings:
                 output = output.replace(remove_str, '')
 
-        print_t("Output returned.", 'quiet')
-        print_t(f"{output}", 'file')
+        print_t("Output returned.", 'info')
+        print_t(f"{output}", 'quiet')
         return output
 
     def get_full_prompt(self) -> (str, str):
