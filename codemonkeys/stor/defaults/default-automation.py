@@ -61,7 +61,9 @@ class Default(Automation):
         output_path_resolver = (OutputPathResolver()
                                 .set_output_path(mc.OUTPUT_PATH)
                                 .set_output_filename_append(mc.OUTPUT_FILENAME_APPEND)
-                                .set_output_ext(mc.OUTPUT_EXT))
+                                .set_output_ext(mc.OUTPUT_EXT)
+                                .set_work_path(mc.WORK_PATH)
+                                .set_use_work_path_relative_location(True))
 
         # Prepare Committer to handle git commits
         committer = None
