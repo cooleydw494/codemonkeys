@@ -32,11 +32,11 @@ class Default(Automation):
         # Prepare summarized or unsummarized context
         if mc.CONTEXT_FILE_PATH is None:
             context = ''
-        elif mc.SUMMARY_PROMPT is not None:
+        elif mc.CONTEXT_SUMMARY_PROMPT is not None:
             context = (Summarizer()
                        .set_context_via_file(mc.CONTEXT_FILE_PATH)
                        .set_model(mc.SUMMARY_MODEL, mc.SUMMARY_TEMP, mc.MAX_TOKENS)
-                       .set_prompt(mc.SUMMARY_PROMPT)
+                       .set_prompt(mc.CONTEXT_SUMMARY_PROMPT)
                        .summarize())
         else:
             context = get_file_contents(mc.CONTEXT_FILE_PATH)
@@ -120,7 +120,7 @@ class Default(Automation):
 
             # Write output to file
             write_file_contents(output_file_path, new_content)
-            print(f"Output saved to: {output_file_path}", 'success')
+            print(f"Output saved to: {output_file_path}", 'info')
 
             # Commit changes if a Committer is configured
             if committer is not None:
@@ -128,4 +128,4 @@ class Default(Automation):
                     committer.set_message_via_content(old_content, new_content)
                 committer.commit()
                 message = committer.get_message()
-                print_t(f"Changes committed to git with message: {message}.", 'success')
+                print_t(f"Changes committed to git with message: {message}.", 'info')

@@ -51,7 +51,7 @@ class Summarizer:
         if not summary:
             raise RuntimeError(f"Failed to generate a summary for the context.")
 
-        print_t("Context summarized.", 'success')
+        print_t("Context summarized.", 'info')
         print_t(f"Summary:{nl}{summary}", 'quiet')
 
         return summary
