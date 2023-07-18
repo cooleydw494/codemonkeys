@@ -46,7 +46,7 @@ class OutputChecker:
             print_t(f"Output Check Passed. {check_result}", 'special')
             output_valid = True
         else:
-            print_t("Output Check Failed.", 'warning')
+            print_t(f"Output Check Failed. Result: {check_result}", 'warning')
             output_valid = False
 
         self.current_try += 1
