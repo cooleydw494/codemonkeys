@@ -76,11 +76,11 @@ class Default(Automation):
         while True:
 
             file_path = file_iterator.pop_file()
-            output_file_path = output_path_resolver.get_output_path(file_path)
             if file_path is None:
                 print_t("All Files Handled.", 'done')
                 break
 
+            output_file_path = output_path_resolver.get_output_path(file_path)
             if mc.SKIP_EXISTING_OUTPUT_FILES and file_exists(output_file_path):
                 print_t(f"Skipping file, output exists at: {output_file_path}", 'quiet')
                 continue
@@ -92,14 +92,15 @@ class Default(Automation):
             file_name = os.path.basename(file_path)
             _mc = mc.replace_prompt_str('{the-file}', file_name)
 
-            # Setup a FilePrompter for the current file
+            # Set up a FilePrompter for the current file
             file_prompter = (FilePrompter()
                              .set_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
                              .set_path(file_path)
                              .set_main_prompt(_mc.MAIN_PROMPT)
                              .set_context(context)
                              .set_output_example_prompt(_mc.OUTPUT_EXAMPLE_PROMPT)
-                             .set_ultimatum_prompt(_mc.MAIN_PROMPT_ULTIMATUM))
+                             .set_ultimatum_prompt(_mc.MAIN_PROMPT_ULTIMATUM)
+                             .set_output_remove_strings(_mc.OUTPUT_REMOVE_STRINGS))
 
             # Generate output, checking it if an OutputChecker is configured
             new_content = None
