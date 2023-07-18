@@ -35,7 +35,7 @@ OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, 
 # Context / Summary
 # Note: Insert un-summarized context files into PROMPTs with {cop:<filepath>}
 CONTEXT_FILE_PATH: "ROOT_PATH/stor/context/context-file.txt"
-CONTEXT_SUMMARY_PROMPT: "Provide a summary of this file..."
+CONTEXT_SUMMARY_PROMPT: null
 
 # Output Checks
 OUTPUT_CHECK_PROMPT: null
