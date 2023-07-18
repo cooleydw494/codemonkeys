@@ -48,4 +48,4 @@ class Committer:
         return self.message
 
     def commit(self):
-        self.gitter.commit(self.message)
+        self.gitter.commit(self.message, add_all=True)
