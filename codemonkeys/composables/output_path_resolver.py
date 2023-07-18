@@ -47,7 +47,7 @@ class OutputPathResolver:
 
         if self.use_work_path_relative_location:
             relative_path = os.path.relpath(file_path, self.work_path)
-            output_file_path = os.path.join(self.output_path, relative_path, output_file_name)
+            output_file_path = os.path.join(self.output_path, relative_path).replace(the_file_name, output_file_name)
         else:
             output_file_path = os.path.join(self.output_path, output_file_name)
 
