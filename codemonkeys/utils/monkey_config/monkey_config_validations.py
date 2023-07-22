@@ -2,12 +2,18 @@ import os
 import re
 from typing import List
 
+from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import input_t, print_t
 from codemonkeys.defs import ROOT_PATH
 
+try:
+    gpt_model_names = get_gpt_model_names()
+except Exception as e:
+    gpt_model_names = ['gpt-3.5-turbo', 'gpt-4']
+
 valid_values = {
     'temp': [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-    'model': [3, 4]
+    'model': gpt_model_names,
 }
 
 

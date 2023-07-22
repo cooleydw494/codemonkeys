@@ -3,6 +3,7 @@ from typing import List
 import openai
 import tiktoken
 
+from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
 
@@ -23,17 +24,15 @@ def check_api_key():
 
 
 class GPTClient:
-    model_map = {
-        '3': ("gpt-3.5-turbo", 4000),
-        '4': ("gpt-4", 8000),
-    }
 
-    def __init__(self, model_name, temperature=1.0, max_tokens=1000000):
-        model_info = self.model_map.get(str(model_name))
-        if model_info is None:
-            raise ValueError(f"Unsupported GPT version: {model_name}")
+    _model_names = get_gpt_model_names()
 
-        self.model, self.hard_max_tokens = model_info
+    def __init__(self, model_name, temperature=1.0, max_tokens=16000):
+        if model_name not in self._model_names:
+            raise ValueError(f"Invalid GPT model name: {model_name}. Try `monk gpt-models-info --update`.")
+
+        self.model = model_name
+        self.hard_max_tokens = 16000
         self.max_tokens = min(max_tokens, self.hard_max_tokens)
         self.temperature = temperature
         self.encoding = tiktoken.encoding_for_model(self.model)
@@ -78,11 +77,3 @@ class GPTClient:
     def split_into_chunks(self, text: str, chunk_size: int) -> List[str]:
         tokens = self.tokenize(text)
         return [self.detokenize(tokens[i:i + chunk_size]) for i in range(0, len(tokens), chunk_size)]
-
-    def num_tokens_from_messages(self, messages: List[dict]) -> int:
-        tokens_per_message = 4 if self.model == "gpt-3.5-turbo" else 3
-        tokens_per_name = -1 if self.model == "gpt-3.5-turbo" else 1
-
-        return sum(tokens_per_message + sum(self.count_tokens(val) for key, val in msg.items()) + (
-            tokens_per_name if 'name' in msg else 0)
-                   for msg in messages) + 3
