@@ -3,9 +3,14 @@ import os
 from codemonkeys.abilities.gpt_client import GPTClient
 from codemonkeys.utils.file_ops import get_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.defs import nl, nl2, _or, import_env_class
+from codemonkeys.defs import nl, nl2, _or
 
-Env = import_env_class()
+try:
+    from config.framework.env_class import Env
+except ImportError:
+    print_t('Could not import user Env class from config.framework.env_class. Using default Env class.', 'warning')
+    from codemonkeys.config.env_class import Env
+
 env = Env.get()
 
 

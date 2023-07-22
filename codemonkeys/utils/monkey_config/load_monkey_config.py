@@ -1,10 +1,15 @@
 import os
 
+from codemonkeys.defs import TEMP_PATH
 from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
 from codemonkeys.utils.monk.theme_functions import print_t, input_t, apply_t
-from codemonkeys.defs import import_monkey_config_class, TEMP_PATH
 
-MonkeyConfig = import_monkey_config_class()
+try:
+    from config.framework.monkey_config_class import MonkeyConfig
+except ImportError:
+    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config_class. Using default '
+            'MonkeyConfig class. load_monkey_config', 'warning')
+    from codemonkeys.config.monkey_config_class import MonkeyConfig
 
 
 def set_loaded_monkey(given_monkey_name: str) -> None:

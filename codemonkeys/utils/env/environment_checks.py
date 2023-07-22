@@ -3,7 +3,13 @@ import sys
 import openai
 
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.defs import import_env_class
+
+
+try:
+    from config.framework.env_class import Env
+except ImportError:
+    print_t('Could not import user Env class from config.framework.env_class. Using default Env class.', 'warning')
+    from codemonkeys.config.env_class import Env
 
 
 def monk_env_checks():
@@ -17,7 +23,6 @@ def monk_env_checks():
 
 def automation_env_checks():
     try:
-        Env = import_env_class()
         env = Env.get()
         openai.api_key = env.OPENAI_API_KEY
         if openai.api_key is None:

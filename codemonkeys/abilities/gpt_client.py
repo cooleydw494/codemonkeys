@@ -5,9 +5,12 @@ import tiktoken
 
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
-from codemonkeys.defs import import_env_class
 
-Env = import_env_class()
+try:
+    from config.framework.env_class import Env
+except ImportError:
+    print_t('Could not import user Env class from config.framework.env_class. Using default Env class.', 'warning')
+    from codemonkeys.config.env_class import Env
 
 # Set up OpenAI client with API key
 env = Env.get()

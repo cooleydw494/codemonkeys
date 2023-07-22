@@ -5,9 +5,13 @@ from codemonkeys.base_entities.utils.cli_runnable_class import CliRunnable
 from codemonkeys.utils.env.environment_checks import automation_env_checks
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
-from codemonkeys.defs import import_monkey_config_class
 
-MonkeyConfig = import_monkey_config_class()
+try:
+    from config.framework.monkey_config_class import MonkeyConfig
+except ImportError:
+    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config_class. Using default '
+            'MonkeyConfig class. automation_class', 'warning')
+    from codemonkeys.config.monkey_config_class import MonkeyConfig
 
 
 class Automation(CliRunnable):

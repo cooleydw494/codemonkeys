@@ -8,9 +8,14 @@ from math import floor
 from termcolor import colored, COLORS
 
 from codemonkeys.cmdefs import VERSION, CM_STOR_SNIPPETS_PATH
-from codemonkeys.defs import import_env_class, nl
+from codemonkeys.defs import nl
 
-Env = import_env_class()
+try:
+    from config.framework.env_class import Env
+except ImportError:
+    print('Could not import user Env class from config.framework.env_class. Using default Env class.')
+    from codemonkeys.config.env_class import Env
+
 env = Env.get()
 text_themes = env.text_themes
 light_mode_enabled = env.light_mode_enabled
