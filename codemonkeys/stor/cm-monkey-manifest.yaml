@@ -20,7 +20,6 @@ self-help-command:
   FILE_TYPES_INCLUDED: ".py"
   FILEPATH_MATCH_EXCLUDE: "help.py,__init__.py"
   FILE_SELECT_MAX_TOKENS: 6000
-  MAX_TOKENS: 8000
 
   # Main Prompts
   MAIN_PROMPT: 'Write a python script that prints an appealing summary of {the-file} and its usage via `monk {the-file}`, in the style of documentation for a CLI command. Rather than writing a script using similar functionality as {the-file}, use the provided monk command context and print_t function to generate a script that prints a help summary for {the-file}. When referring to {the-file} as a command, do not include the extension.'

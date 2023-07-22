@@ -16,7 +16,6 @@ default:
   FILEPATH_MATCH_INCLUDE: null
   FILEPATH_MATCH_EXCLUDE: ".config,.md,.git,migrations,vite,webpack,.txt"
   FILE_SELECT_MAX_TOKENS: 3000
-  MAX_TOKENS: 4000
 #  CONTEXT_FILE_PATH: "help.py"
 
   # Prompts
@@ -55,7 +54,6 @@ long-form:
   FILE_TYPES_INCLUDED: ".js,.vue,.php"
   FILEPATH_MATCH_EXCLUDE: ".config,.md,.git,migrations,vite,webpack,.txt"
   FILE_SELECT_MAX_TOKENS: 3000
-  MAX_TOKENS: 4000
 #  CONTEXT_FILE_PATH: "help.py"
 
   # Prompts
@@ -93,7 +91,6 @@ finish-files:
   FILE_TYPES_INCLUDED: ".py"
   FILEPATH_MATCH_EXCLUDE: "help.py,__init__.py"
   FILE_SELECT_MAX_TOKENS: 6000
-  MAX_TOKENS: 8000
 
   # Main Prompts
   MAIN_PROMPT: 'Read the contents of {the-file} and write a fully implemented version of whatever is described.'

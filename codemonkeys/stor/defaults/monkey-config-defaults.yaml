@@ -24,8 +24,6 @@ FILE_TYPES_INCLUDED: ".js,.vue,.php"
 FILEPATH_MATCH_INCLUDE: null
 FILEPATH_MATCH_EXCLUDE: ".config,.md,.git,migrations,vite,webpack,.txt"
 FILE_SELECT_MAX_TOKENS: 7000
-MAX_TOKENS: 8000
-
 
 # Main Prompts
 MAIN_PROMPT: "Please generate code for the following task..."
@@ -62,11 +60,16 @@ COMMIT_STYLE: null # null, 'gpt', 'static'
 STATIC_COMMIT_MESSAGE: 'File updated with CodeMonkeys'
 
 # Models
-MAIN_MODEL: 4
-SUMMARY_MODEL: 4
-OUTPUT_CHECK_MODEL: 3
+MAIN_MODEL: 'gpt-4'
+SUMMARY_MODEL: 'gpt-4'
+OUTPUT_CHECK_MODEL: 'gpt-3.5-turbo'
 
 # Temps
 MAIN_TEMP: 1.0
 SUMMARY_TEMP: 1.0
 OUTPUT_CHECK_TEMP: .5
+
+# Max Tokens
+MAIN_MAX_TOKENS: 8000
+SUMMARY_MAX_TOKENS: 8000
+OUTPUT_CHECK_MAX_TOKENS: 8000
