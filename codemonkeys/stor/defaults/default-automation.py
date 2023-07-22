@@ -35,7 +35,7 @@ class Default(Automation):
         elif mc.CONTEXT_SUMMARY_PROMPT is not None:
             context = (Summarizer()
                        .set_context_via_file(mc.CONTEXT_FILE_PATH)
-                       .set_model(mc.SUMMARY_MODEL, mc.SUMMARY_TEMP, mc.MAX_TOKENS)
+                       .set_model(mc.SUMMARY_MODEL, mc.SUMMARY_TEMP, mc.SUMMARY_MAX_TOKENS)
                        .set_prompt(mc.CONTEXT_SUMMARY_PROMPT)
                        .summarize())
         else:
@@ -45,13 +45,13 @@ class Default(Automation):
         output_checker = None
         if mc.OUTPUT_CHECK_PROMPT is not None:
             output_checker = (OutputChecker()
-                              .set_model(mc.OUTPUT_CHECK_MODEL, mc.OUTPUT_CHECK_TEMP, mc.MAX_TOKENS)
+                              .set_model(mc.OUTPUT_CHECK_MODEL, mc.OUTPUT_CHECK_TEMP, mc.OUTPUT_CHECK_MAX_TOKENS)
                               .set_tries(mc.OUTPUT_TRIES)
                               .set_prompt(mc.OUTPUT_CHECK_PROMPT))
 
         # Prepare FileIterator and filter files
         file_iterator = (FileIterator()
-                         .set_token_count_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
+                         .set_token_count_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.FILE_SELECT_MAX_TOKENS)
                          .set_file_types_included(mc.FILE_TYPES_INCLUDED)
                          .set_filepath_match_exclude(mc.FILEPATH_MATCH_EXCLUDE)
                          .set_work_path(mc.WORK_PATH)
@@ -68,7 +68,7 @@ class Default(Automation):
         # Prepare Committer to handle git commits
         committer = None
         if mc.COMMIT_STYLE == 'gpt':
-            committer = Committer(mc.OUTPUT_PATH).set_model('3', 0.75, mc.MAX_TOKENS)
+            committer = Committer(mc.OUTPUT_PATH).set_model('3', 0.75, mc.SUMMARY_MAX_TOKENS)
         elif mc.COMMIT_STYLE == 'static':
             committer = Committer(mc.OUTPUT_PATH).set_message(mc.STATIC_COMMIT_MESSAGE)
 
@@ -94,7 +94,7 @@ class Default(Automation):
 
             # Set up a FilePrompter for the current file
             file_prompter = (FilePrompter()
-                             .set_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAX_TOKENS)
+                             .set_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAIN_MAX_TOKENS)
                              .set_path(file_path)
                              .set_main_prompt(_mc.MAIN_PROMPT)
                              .set_context(context)

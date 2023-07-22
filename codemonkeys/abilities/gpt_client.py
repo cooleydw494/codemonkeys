@@ -20,19 +20,19 @@ openai.api_key = env.OPENAI_API_KEY
 
 def check_api_key():
     if not openai.api_key:
-        raise Exception("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+        raise Exception("OPENAI_API_KEY not set in `.env` file.")
 
 
 class GPTClient:
 
     _model_names = get_gpt_model_names()
 
-    def __init__(self, model_name, temperature=1.0, max_tokens=16000):
+    def __init__(self, model_name, temperature=1.0, max_tokens=8000):
         if model_name not in self._model_names:
             raise ValueError(f"Invalid GPT model name: {model_name}. Try `monk gpt-models-info --update`.")
 
         self.model = model_name
-        self.hard_max_tokens = 16000
+        self.hard_max_tokens = 16000  # TODO: use model-specific token limits
         self.max_tokens = min(max_tokens, self.hard_max_tokens)
         self.temperature = temperature
         self.encoding = tiktoken.encoding_for_model(self.model)
