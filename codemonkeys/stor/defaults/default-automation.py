@@ -70,7 +70,7 @@ class Default(Automation):
         if mc.COMMIT_STYLE == 'gpt':
             committer = Committer(mc.OUTPUT_PATH).set_model('3', 0.75, mc.MAX_TOKENS)
         elif mc.COMMIT_STYLE == 'static':
-            committer = Committer(mc.OUTPUT_PATH).set_message(mc.STATIC_COMMIT)
+            committer = Committer(mc.OUTPUT_PATH).set_message(mc.STATIC_COMMIT_MESSAGE)
 
         # Iterate through filtered files
         while True:
