@@ -40,7 +40,17 @@ A CodeMonkeys project is meant to be open-ended, but the base structure is desig
 
 CodeMonkeys' CLI interface is used via the `monk` command which handles running Automations, Barrels, Commands, and built-in framework Commands. The `monk` command can be run anywhere in a CodeMonkeys project, and will always run in the context of the project root.
 
-# The Default Automation
+## Configuration Management 📝
+CodeMonkeys has built-in configuration management, including an Env class and a MonkeyConfig class which are automatically rewritten to include any custom `.env` or `config/monkey-config-defaults` values you add. These are rewritten on every run of `monk` and allow IDE intelligence for you env/config properties.
+_Note: You should never modify the MonkeyConfig or Env class within `config/framework`. These exist to allow automatic rewrites that include full support for user-defined properties._
+
+### MonkeyConfig 
+The MonkeyConfig class is a wrapper for individual monkey configs, as defined in `monkeys/monkey-manifest.yaml`. It provides a simple interface for accessing monkey config properties via dot notation, and includes some built-in validation logic. There is some other advanced functionality available, as of now undocumented.
+
+### Env
+The Env class is a wrapper for the `.env` file, and provides a simple interface for accessing env properties via dot notation. Like the MonkeyConfig, it includes some built-in validation logic and will be automatically rewritten to support any user-defined properties.
+
+## The Default Automation
 
 The default automation, `automations/default.py`, is a generic but complete template for running automations on files in your `WORK_PATH`. It works well out of the box, and allows you to run GPT-powered mass file operations by simply using monkey configs (`monkey-manifest.yaml`). The default Automation is also a great example of the various capabilities custom automations can have. It includes optional examples of all standard monkey config properties, and serves as a good example of how to use the framework-packaged composables. Whether your custom automations require far less, far more, or more specific functionality, you can copy/paste a pretty good starting point from `automations/default.py`.
 
