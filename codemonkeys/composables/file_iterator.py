@@ -1,7 +1,7 @@
 import os
 import time
 
-from codemonkeys.abilities.gpt_client import GPTClient
+from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.defs import nl
 from codemonkeys.utils.monk.theme_functions import print_t
 

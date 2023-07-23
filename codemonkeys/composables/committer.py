@@ -1,6 +1,6 @@
 import difflib
 
-from codemonkeys.abilities.gpt_client import GPTClient
+from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.defs import nl, nl2
 from codemonkeys.utils.git.gitter import Gitter
 
