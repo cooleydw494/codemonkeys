@@ -6,7 +6,7 @@ A framework for automating GPT-powered tasks, from simple to complex.
 
 CodeMonkeys gives developers of varying skill levels control over their automated GPT logic, providing a more intentional alternative to tools like AutoGPT. The primary goal is to help you build GPT-powered automations that are reliable, predictable, and tailored to your needs, only involving AI at crucial areas of strength. The framework combines built-in utilities, composable classes for running GPT-powered tasks, and a robust configuration management system. CodeMonkeys includes a default automation to handle a wide array of mass file operations via simple configuration, but is meant to be extensible enough to enable *your* use-case.
 
-## Current Status
+### Alpha Status
 CodeMonkeys is inspired by >100 hrs of using AutoGPT, and seeks to provide more control for similar use cases. Currently it is lacking a lot of advanced functionality you'd find in AutoGPT, but some things you may struggle to get AutoGPT to do correctly are simple to compose. A lot of care has been put into a solid starting point for the vision, but a lot of work remains, including: testing, expanded modular functionality such as web browsing, content chunking, memory management, alternative LLMs (including local), and much more. An early emphasis on mass file operations using GPT has led to a capable alpha framework, and helped shape something ready for much more. CodeMonkeys is designed for growth and expansion, and to become a powerful tool for creating incredible things.
 
 ## Getting Started 🚀
