@@ -25,7 +25,7 @@ monk-new [project_name]
 This will scaffold a new project with the given name. _Note: CodeMonkeys treats your project as a package, so your project name should respect package name requirements (snake_case)._
 
 ## Project Structure Overview 📁
-A CodeMonkeys project is meant to be open-ended, but the base structure is designed to hold your hand and allow you to build/configure/run your automations in a simple, powerful way. Get creative with what you do in your Automation/Command/Barrel `run()` methods, add custom props to the `.env` or MonkeyConfig, add a directory of helper functions, do whatever you want. Just remember that the Monk CLI and configuration management system is there to help you. Don't fight it unless you're prepared to replace it.
+CodeMonkeys' project structure aims to allow you to build/configure/run your automations in a simple, powerful way. You're encouraged to get creative with your Automation/Command/Barrel `run()` methods, custom config properties, and utilize any additional modules/classes/dirs you create. However, the base project scaffolding is assumed by the Monk CLI and built-in config management. Don't fight these paradigms unless you're prepared to replace them.
 
 * `monk`: CLI command exposed by core package, run from within a CodeMonkeys project.
 * `commands`: Command instances, runnable via `monk <command>`. Also handles bash/bat scripts.
