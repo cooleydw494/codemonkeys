@@ -52,10 +52,10 @@ The MonkeyConfig class is a wrapper for a single monkey config, as defined in `m
 ```
 from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
 
-# loads a specific config
+# load a config
 mc = load_monkey_config('comment-monkey')
 
-# prompt user to confirm loaded config, or choose a config to load
+# prompt user to confirm loaded config or choose a config to load
 mc = load_monkey_config()
 
 # access a property via dot notation
@@ -78,25 +78,9 @@ openai_api_key = env.OPENAI_API_KEY
 The default automation, `automations/default.py`, is a generic but complete template for running automations on files in your `WORK_PATH`. It works well out of the box, and allows you to run GPT-powered mass file operations by simply using monkey configs (`monkey-manifest.yaml`). The default Automation is also a great example of the various capabilities custom automations can have. It includes optional examples of all standard monkey config properties, and serves as a good example of how to use the framework-packaged composables. Whether your custom automations require far less, far more, or more specific functionality, you can copy/paste a pretty good starting point from `automations/default.py`.
 
 ## Attribution
-
-When forking or creating derivative works from CodeMonkeys, I kindly ask you to:
-
-1. Clearly acknowledge the CodeMonkeys project and provide a hyperlink to the CodeMonkeys repository in the first
-   section of your README.md file.
-2. Prominently display an acknowledgement of the usage of CodeMonkeys in any application, framework, or derivative work
-   which is built on top of the CodeMonkeys framework and is distributed through an application store, website, social
-   media, or any other distribution method.
-3. Although I expect no acknowledgement when CodeMonkeys is used as a tool to accomplish things, any mention of its
-   usefulness is greatly appreciated.
-
+All forms of attribution will be appreciated, especially when linking directly to the repo.
 
 # Things To Include
-psuedo-package
-core/usr
-monkey-config class
-env class
 monkey-config-defaults
-add-monkey
-auto-generation of monkeyconfig and env and .env.default
 replace_prompt_str
 cop_paths

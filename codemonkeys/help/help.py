@@ -10,21 +10,20 @@ def run_default_help(monk_args: argparse.Namespace = None):
     print_banner()
 
     # Overview
-    print_t("Welcome to CodeMonkeys, an AI-ready automations codemonkeys! The Monk CLI aims to prioritize simplicity, "
-            "power, and extensibility. It provides hard-coded codemonkeys utility and transforms the commands directory "
-            "into readily usable CLI commands. Additionally, its flags make it an essential tool for both direct use "
-            f"and extension of the codemonkeys-codemonkeys.{nl}", 'white')
+    print_t(f"Welcome to CodeMonkeys, an AI-ready automations framework! The Monk CLI includes built-in framework "
+            f"Commands and transforms the user Commands directory into readily usable CLI commands. It is also used "
+            f"to run Automations and Barrels.{nl}", 'white')
 
     # Recursive Name-Matching Logic
-    print_t("`monk` employs recursive name-matching logic to locate codemonkeys/usr entities. This requires unique "
-            "filenames within each entity directory. While this is limiting, it also keeps things simple, "
-            f"customizable, and powerful.{nl}", 'important')
+    print_t("`monk` uses recursive name-matching logic to locate runnable entities. This requires unique filenames "
+            "for each runnable entity type (Commands, Automations, Barrels). While limiting, this keeps things simple "
+            "and powerful.{nl}", 'important')
 
     # Handling of Barrels, Automations, and Modules
-    print_t("Entity Type flags allow you to target barrels (-b), automations (-a), and modules (-m).", 'info')
+    print_t("Entity Type flags target Automations and Barrels.", 'info')
 
     # Action Flags
-    print_t(f"Action flags allow you to perform a variety of operations on any targetable entity.{nl2}", 'info')
+    print_t(f"Action flags perform alternate operations on targetable entities.{nl2}", 'info')
 
     min_col_widths = [23, 25, 13]
 
@@ -78,12 +77,7 @@ def run_default_help(monk_args: argparse.Namespace = None):
           "Run a barrel",
           "--barrel"
         ],
-        [
-          "monk -m <module>",
-          "Edit a module",
-          "--module"
-        ]
-      ]
+      ],
     }
     print_table(monk_types, apply_t("Entity Types", 'special'), min_col_width=min_col_widths)
 
@@ -96,36 +90,16 @@ def run_default_help(monk_args: argparse.Namespace = None):
       "show_headers": False,
       "rows": [
         [
-          "monk -r <entity>",
-          "Run an entity",
-          "--run"
-        ],
-        [
           "monk -e <entity>",
           "Open in vim",
           "--edit"
         ],
         [
-          "monk -p <entity>",
-          "Print file contents",
-          "--print"
-        ],
-        [
-          "monk -cp <entity>",
-          "Copy file abspath",
-          "--copy-path"
-        ],
-        [
-          "monk -cc <entity>",
-          "Copy file contents",
-          "--copy-contents"
-        ],
-        [
           "monk -h <entity>",
           "Help for an entity",
           "--help"
-        ]
-      ]
+        ],
+      ],
     }
     print_table(monk_actions, apply_t("Actions", 'special'), min_col_width=min_col_widths)
 
