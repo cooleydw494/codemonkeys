@@ -10,14 +10,14 @@ def run_default_help(monk_args: argparse.Namespace = None):
     print_banner()
 
     # Overview
-    print_t(f"Welcome to CodeMonkeys, an AI-ready automations framework! The Monk CLI includes built-in framework "
-            f"Commands and transforms the user Commands directory into readily usable CLI commands. It is also used "
+    print_t("Welcome to CodeMonkeys, an AI-ready automations framework! The Monk CLI includes built-in framework "
+            "Commands and transforms the user Commands directory into readily usable CLI commands. It is also used "
             f"to run Automations and Barrels.{nl}", 'white')
 
     # Recursive Name-Matching Logic
     print_t("`monk` uses recursive name-matching logic to locate runnable entities. This requires unique filenames "
             "for each runnable entity type (Commands, Automations, Barrels). While limiting, this keeps things simple "
-            "and powerful.{nl}", 'important')
+            f"and powerful.{nl}", 'important')
 
     # Handling of Barrels, Automations, and Modules
     print_t("Entity Type flags target Automations and Barrels.", 'info')
