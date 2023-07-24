@@ -19,7 +19,7 @@ def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) ->
     :param given_monkey_name: A given monkey name
     :return: A tuple consisting of monkey name and its configuration file path """
 
-    def select_monkey_from_list() -> str:
+    def _select_monkey_from_list() -> str:
         """ Lists all monkeys and lets user select one.
         :return: Selected monkey name """
 
@@ -30,7 +30,7 @@ def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) ->
         monkey_index = int(input_t("Enter the number of the monkey")) - 1
         return monkeys[monkey_index]
 
-    def monkey_exists(name: str) -> bool:
+    def _monkey_exists(name: str) -> bool:
         """ Checks if a generated monkey config exists.
         :param name: Monkey name
         :return: True if a generated config exists, False otherwise
@@ -38,15 +38,15 @@ def get_monkey_name(given_monkey_name: str = None, prompt_user: bool = False) ->
         return os.path.exists(os.path.join(MONKEYS_PATH, f'{name}.yaml'))
 
     if given_monkey_name is None:
-        if monkey_exists('default') and not prompt_user:
+        if _monkey_exists('default') and not prompt_user:
             print_t(f"No monkey name provided. Loading default monkey config...", 'monkey')
             monkey_name = 'default'
         else:
-            monkey_name = select_monkey_from_list()
-    elif not monkey_exists(given_monkey_name):
+            monkey_name = _select_monkey_from_list()
+    elif not _monkey_exists(given_monkey_name):
         print_t("Provided monkey name does not correspond to an existing configuration. Please select an existing "
                 "monkey:", 'important')
-        monkey_name = select_monkey_from_list()
+        monkey_name = _select_monkey_from_list()
     else:
         monkey_name = given_monkey_name
 

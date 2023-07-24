@@ -63,7 +63,7 @@ class FilePrompter:
         return self
 
     def get_output(self):
-        full_prompt, stubbed_prompt = self.get_full_prompt()
+        full_prompt, stubbed_prompt = self._get_full_prompt()
         if env.verbose_logs_enabled:
             print_t(f'Prompt: {full_prompt}', 'quiet')
         else:
@@ -80,7 +80,7 @@ class FilePrompter:
         print_t(f"{output}", 'quiet')
         return output
 
-    def get_full_prompt(self) -> (str, str):
+    def _get_full_prompt(self) -> (str, str):
         main_prompt = _or(self.main_prompt)
         ultimatum = _or(self.ultimatum_prompt)
         output_example = _or(self.output_example_prompt)

@@ -125,8 +125,8 @@ class MonkeyConfig:
                 raise FileNotFoundError(f"Monkey configuration file {monkey_path} not found.")
 
             monkey_dict = read_yaml_file(monkey_path, ruamel=True)
-            monkey_dict = cls.filter_config_values(monkey_dict)
-            monkey_dict = cls.apply_defaults(monkey_dict)
+            monkey_dict = cls._filter_config_values(monkey_dict)
+            monkey_dict = cls._apply_defaults(monkey_dict)
 
             cls._instance = MonkeyConfig(**monkey_dict)
 
@@ -138,8 +138,8 @@ class MonkeyConfig:
         Validate the provided dictionary with MonkeyConfig and return it.
         """
 
-        data = cls.filter_config_values(data)
-        data = cls.apply_defaults(data)
+        data = cls._filter_config_values(data)
+        data = cls._apply_defaults(data)
 
         # Create an instance of MonkeyConfig to perform validation
         try:
@@ -154,7 +154,7 @@ class MonkeyConfig:
         return data
 
     @classmethod
-    def filter_config_values(cls, config_values: dict) -> dict:
+    def _filter_config_values(cls, config_values: dict) -> dict:
         # Get dictionary of MonkeyConfig properties
         config_properties = {f.name for f in dataclasses.fields(cls)}
         config_properties.remove('env')
@@ -165,7 +165,7 @@ class MonkeyConfig:
         return config_values
 
     @classmethod
-    def apply_defaults(cls, config_values: dict) -> dict:
+    def _apply_defaults(cls, config_values: dict) -> dict:
         """
         Apply default values to the provided dictionary with MonkeyConfig and return it.
         If a value is set to None, it will be maintained as None.

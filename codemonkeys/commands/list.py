@@ -23,4 +23,3 @@ class List(Command):
             print_tree(CM_BARRELS_PATH, exclude_file_starts=['.', '_'],
                        title="🛢️   Barrels - Combine and orchestrate automations", incl_prefix=False)
             print_tree(BARRELS_PATH, exclude_file_starts=['.', '_'], incl_prefix=False)
-

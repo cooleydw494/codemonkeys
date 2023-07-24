@@ -12,25 +12,8 @@ except ImportError:
     from codemonkeys.config.monkey_config_class import MonkeyConfig
 
 
-def set_loaded_monkey(given_monkey_name: str) -> None:
-    monkey_path = os.path.join(TEMP_PATH, "loaded-monkey-name.txt")
-    with open(monkey_path, 'w') as file:
-        file.write(given_monkey_name)
-
-
-def get_loaded_monkey() -> str or None:
-    loaded_monkey_name_path = os.path.join(TEMP_PATH, "loaded-monkey-name.txt")
-    if not os.path.exists(loaded_monkey_name_path):
-        return None
-    with open(loaded_monkey_name_path, 'r') as file:
-        monkey_name = file.read()
-    if monkey_name == '':
-        return None
-    return monkey_name
-
-
 def load_monkey_config(given_monkey_name=None) -> MonkeyConfig:
-    loaded_monkey_name = get_loaded_monkey()
+    loaded_monkey_name = _get_loaded_monkey()
     if loaded_monkey_name is not None and given_monkey_name is None:
         use_current = input_t(f"Continue with loaded monkey: {apply_t(loaded_monkey_name, 'important')}?", '(y/n)')
         if use_current == 'y':
@@ -43,5 +26,22 @@ def load_monkey_config(given_monkey_name=None) -> MonkeyConfig:
         print_t("No monkey name or currently loaded monkey.", "quiet")
         monkey_name, _ = get_monkey_name(prompt_user=True)
 
-    set_loaded_monkey(monkey_name)
+    _set_loaded_monkey(monkey_name)
     return MonkeyConfig.load(monkey_name=monkey_name)
+
+
+def _get_loaded_monkey() -> str or None:
+    loaded_monkey_name_path = os.path.join(TEMP_PATH, "loaded-monkey-name.txt")
+    if not os.path.exists(loaded_monkey_name_path):
+        return None
+    with open(loaded_monkey_name_path, 'r') as file:
+        monkey_name = file.read()
+    if monkey_name == '':
+        return None
+    return monkey_name
+
+
+def _set_loaded_monkey(given_monkey_name: str) -> None:
+    monkey_path = os.path.join(TEMP_PATH, "loaded-monkey-name.txt")
+    with open(monkey_path, 'w') as file:
+        file.write(given_monkey_name)

@@ -7,9 +7,10 @@ from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import MONKEYS_PATH, MONKEY_MANIFEST_PATH
 try:
     from config.framework.monkey_config_class import MonkeyConfig
-except ImportError:
+except ImportError as e:
     print_t('Could not import user MonkeyConfig class from config.framework.monkey_config_class. Using default '
             'MonkeyConfig class. generate_monkeys', 'warning')
+    print_t(e)
     from codemonkeys.config.monkey_config_class import MonkeyConfig
 
 

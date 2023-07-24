@@ -3,7 +3,7 @@ from typing import List, Tuple, Dict
 from codemonkeys.help.help import run_default_help
 
 
-def split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[str]]:
+def _split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[str]]:
     from collections import OrderedDict
     unknown_named_args = OrderedDict()
     unknown_unnamed_args = []
@@ -52,7 +52,7 @@ def parse_monk_args():
     monk_args, unknown_args = parser.parse_known_args()
 
     # Split unknown arguments into named and unnamed
-    named_args, unnamed_args = split_unknown_args(unknown_args)
+    named_args, unnamed_args = _split_unknown_args(unknown_args)
 
     # Action
     action = 'run'

@@ -5,7 +5,7 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class GptModelsInfo(Command):
-
+    
     named_arg_keys = ['update']
     update: bool = False
 

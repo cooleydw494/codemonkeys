@@ -4,7 +4,6 @@ import openai
 
 from codemonkeys.utils.monk.theme_functions import print_t
 
-
 try:
     from config.framework.env_class import Env
 except ImportError:

@@ -32,21 +32,6 @@ def user_select_entity(prompt: str, entity_options: List[Tuple[str, int, int, st
     return user_select_entity(prompt, entity_options)
 
 
-def find_entities(entity_directory: str, entity_name: str, entity_type: str) -> Generator[Tuple[str, int, int, str, str], None, None]:
-    for root, _, files in os.walk(entity_directory):
-        for file in files:
-            if file.endswith(('.sh', '.py')) and not file.startswith(('.', '_')):
-                name, _ = os.path.splitext(os.path.basename(file))
-                distance = levenshtein_distance(name, entity_name or "")
-                full_path = os.path.join(root, file)
-                if name == entity_name:
-                    yield name, 0, 0, entity_type, full_path
-                elif entity_name in name:
-                    yield name, 1, distance, entity_type, full_path
-                elif distance <= 3:
-                    yield name, 2, distance, entity_type, full_path
-
-
 def find_entity(entity_name: str, entity_type: str) -> str:
     entity_paths_ = entity_paths[entity_type]
     matches = []
@@ -55,7 +40,7 @@ def find_entity(entity_name: str, entity_type: str) -> str:
         matches = []
     else:
         for entity_path in entity_paths_:
-            matches.extend(sorted(find_entities(entity_path, entity_name, entity_type), key=lambda x: (x[1], len(x[0]))))
+            matches.extend(sorted(_find_entities(entity_path, entity_name, entity_type), key=lambda x: (x[1], len(x[0]))))
 
     if matches:
         matches_groups = [[m for m in matches if m[1] == i] for i in range(3)]
@@ -73,9 +58,24 @@ def find_entity(entity_name: str, entity_type: str) -> str:
         print_t(f"No matches found for '{entity_name}'.", 'warning')
         all_entities = []
         for entity_path in entity_paths_:
-            all_entities.extend(sorted(find_entities(entity_path, "", entity_type), key=lambda x: (x[1], len(x[0]))))
+            all_entities.extend(sorted(_find_entities(entity_path, "", entity_type), key=lambda x: (x[1], len(x[0]))))
         if all_entities:
             return user_select_entity(f"All Available {str.capitalize(entity_type)}s:", all_entities)
         print_t("No entities available. You may want to check your setup or use `monk list` command for available "
                 "entities.", 'error')
         sys.exit(1)
+
+
+def _find_entities(entity_directory: str, entity_name: str, entity_type: str) -> Generator[Tuple[str, int, int, str, str], None, None]:
+    for root, _, files in os.walk(entity_directory):
+        for file in files:
+            if file.endswith(('.sh', '.py')) and not file.startswith(('.', '_')):
+                name, _ = os.path.splitext(os.path.basename(file))
+                distance = levenshtein_distance(name, entity_name or "")
+                full_path = os.path.join(root, file)
+                if name == entity_name:
+                    yield name, 0, 0, entity_type, full_path
+                elif entity_name in name:
+                    yield name, 1, distance, entity_type, full_path
+                elif distance <= 3:
+                    yield name, 2, distance, entity_type, full_path

@@ -8,19 +8,6 @@ class Gitter:
     def __init__(self, repo_path):
         self.repo_path = repo_path
 
-    def _run_git_command(self, command):
-        try:
-            result = subprocess.run(
-                ["git"] + command,
-                cwd=self.repo_path,
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            return result.stdout
-        except subprocess.CalledProcessError as e:
-            raise GitterError(command, e.returncode, e.stdout, e.stderr)
-
     def clone(self, repo_url):
         return self._run_git_command(["clone", repo_url])
 
@@ -43,3 +30,16 @@ class Gitter:
 
     def create_branch(self, branch_name):
         return self._run_git_command(["branch", branch_name])
+
+    def _run_git_command(self, command):
+        try:
+            result = subprocess.run(
+                ["git"] + command,
+                cwd=self.repo_path,
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            return result.stdout
+        except subprocess.CalledProcessError as e:
+            raise GitterError(command, e.returncode, e.stdout, e.stderr)

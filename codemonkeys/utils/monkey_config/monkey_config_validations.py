@@ -17,6 +17,26 @@ valid_values = {
 }
 
 
+def _has_word(key: str, word: str) -> bool:
+    return re.search(rf'\b{word}\b', str(key).lower().replace('_', ' ')) is not None
+
+
+def _is_path_key(key: str) -> bool:
+    return _has_word(key, 'path')
+
+
+def _is_model_key(key: str) -> bool:
+    return _has_word(key, 'model')
+
+
+def _is_temp_key(key: str) -> bool:
+    return _has_word(key, 'temp')
+
+
+def is_prompt_key(key: str) -> bool:
+    return _has_word(key, 'prompt')
+
+
 def get_user_config_value(key: str, validate_func, hint=""):
     while True:
         user_provided_value = input_t(key, hint)
@@ -78,13 +98,13 @@ def validate_type(key, value, expected_type: type):
 
 
 def validate_int(key, value):
-    if is_model_key(key):
+    if _is_model_key(key):
         return validate_type('model', value, int)
     return validate_type(key, value, int)
 
 
 def validate_float(key, value):
-    if is_temp_key(key):
+    if _is_temp_key(key):
         return validate_type('temp', value, float)
     return validate_type(key, value, float)
 
@@ -93,7 +113,7 @@ def validate_str(key, value):
     if type(value) in [int, float, bool]:
         raise TypeError(f"{key} must be a string, not {type(value).__name__}")
     string_value = validate_type(key, value, str)
-    if string_value == str and is_path_key(key):
+    if string_value == str and _is_path_key(key):
         return validate_path(key, value)
     return string_value
 
@@ -103,23 +123,3 @@ def validate_list_str(key, value: List[str]) -> (List[str], None):
     if not all(isinstance(item, str) for item in value):
         raise TypeError(f"{key} must be a list of strings")
     return value
-
-
-def has_word(key: str, word: str) -> bool:
-    return re.search(rf'\b{word}\b', str(key).lower().replace('_', ' ')) is not None
-
-
-def is_path_key(key: str) -> bool:
-    return has_word(key, 'path')
-
-
-def is_prompt_key(key: str) -> bool:
-    return has_word(key, 'prompt')
-
-
-def is_model_key(key: str) -> bool:
-    return has_word(key, 'model')
-
-
-def is_temp_key(key: str) -> bool:
-    return has_word(key, 'temp')
