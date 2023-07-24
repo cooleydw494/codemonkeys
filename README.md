@@ -11,8 +11,6 @@ A lot of care has been put into a solid starting point for the vision, but a lot
 
 ## Getting Started 🚀
 
-### Installation
-
 First, install the framework with pip:
 ```
 pip3 install codemonkeys
