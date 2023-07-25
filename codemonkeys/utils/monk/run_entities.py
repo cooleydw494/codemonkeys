@@ -13,7 +13,8 @@ except ImportError:
     from codemonkeys.config.monkey_config_class import MonkeyConfig
 
 
-def run_command(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any], unnamed_args: List[str]):
+def run_command(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any],
+                unnamed_args: List[str]):
     _run_entity(entity_path, entity_name, monk_args, named_args, unnamed_args)
 
 
@@ -22,8 +23,12 @@ def run_automation(entity_path: str, entity_name: str, monk_args: Any, named_arg
     _run_entity(entity_path, entity_name, monk_args, named_args, unnamed_args, monkey_config)
 
 
-def _run_entity(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any], unnamed_args: List[str], monkey_config: MonkeyConfig | None = None):
+def run_barrel(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any], unnamed_args: List[str]):
+    _run_entity(entity_path, entity_name, monk_args, named_args, unnamed_args)
 
+
+def _run_entity(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any], unnamed_args: List[str],
+                monkey_config: MonkeyConfig | None = None):
     # Convert the entity_name from kebab-case to CamelCase
     entity_name_camel_case = ''.join(word.capitalize() for word in entity_name.split('-'))
 

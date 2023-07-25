@@ -34,7 +34,7 @@ class OutputChecker:
         return self
 
     def has_tries(self) -> bool:
-        return self.current_try < self.tries
+        return self.current_try <= self.tries
 
     def check_output(self, output: str) -> bool:
 

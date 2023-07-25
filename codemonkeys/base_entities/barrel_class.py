@@ -29,9 +29,9 @@ class Barrel(CliRunnable):
         return self
 
     def run_automation(self, automation_name: str) -> 'Barrel':
-        automation = find_entity(automation_name, 'automation', exact_match_only=True)
+        automation_path = find_entity(automation_name, 'automation', exact_match_only=True)
         run_automation(
-            automation,
+            automation_path,
             automation_name,
             self.monk_args,
             self.named_args,

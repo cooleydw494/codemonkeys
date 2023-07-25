@@ -68,7 +68,7 @@ elif action == 'run':
 
         # Barrels
         elif entity_type == 'barrel':
-            print('barrel')
+            run_barrel(entity_path.strip(), entity_name, monk_args, named_args, unnamed_args)
 
         # Unsupported
         else:
