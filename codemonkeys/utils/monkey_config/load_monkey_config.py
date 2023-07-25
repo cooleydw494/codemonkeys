@@ -12,7 +12,7 @@ except ImportError:
     from codemonkeys.config.monkey_config_class import MonkeyConfig
 
 
-def load_monkey_config(given_monkey_name=None) -> MonkeyConfig:
+def load_monkey_config(given_monkey_name: str | None = None) -> MonkeyConfig:
     loaded_monkey_name = _get_loaded_monkey()
     if loaded_monkey_name is not None and given_monkey_name is None:
         use_current = input_t(f"Continue with loaded monkey: {apply_t(loaded_monkey_name, 'important')}?", '(y/n)')

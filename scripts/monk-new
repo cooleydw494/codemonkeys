@@ -11,7 +11,6 @@ from codemonkeys.cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_MANIFEST_DEFAULT_
                                 CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH)
 
 top_level_dirs = [
-    'abilities',
     'automations',
     'barrels',
     'commands',

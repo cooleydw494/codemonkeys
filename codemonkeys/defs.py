@@ -12,7 +12,6 @@ ROOT_PATH = find_project_root()
 AUTOMATIONS_PATH = os.path.join(ROOT_PATH, "automations")
 BARRELS_PATH = os.path.join(ROOT_PATH, "barrels")
 COMPOSABLES_PATH = os.path.join(ROOT_PATH, "composables")
-ABILITIES_PATH = os.path.join(ROOT_PATH, "abilities")
 COMMANDS_PATH = os.path.join(ROOT_PATH, "commands")
 
 ENV_PATH = os.path.join(ROOT_PATH, ".env")
