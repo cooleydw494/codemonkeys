@@ -3,12 +3,18 @@ from typing import List, Dict, Any, get_type_hints
 
 
 class CliRunnable:
+    monk_args: argparse.Namespace | None = None
+    named_args: Dict[str, Any] | None = None
+    unnamed_args: List[str] | None = None
+
     named_arg_keys = []
     unnamed_arg_keys = []
     required_arg_keys = []
 
     def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
         self.monk_args = monk_args
+        self.named_args = named_args
+        self.unnamed_args = unnamed_args
 
         # Named args: mapped by key and checked for required ones
         # Now support keys with '-' or '--' prefix

@@ -32,7 +32,7 @@ def user_select_entity(prompt: str, entity_options: List[Tuple[str, int, int, st
     return user_select_entity(prompt, entity_options)
 
 
-def find_entity(entity_name: str, entity_type: str) -> str:
+def find_entity(entity_name: str, entity_type: str, exact_match_only: bool = False) -> str:
     entity_paths_ = entity_paths[entity_type]
     matches = []
 
@@ -48,6 +48,8 @@ def find_entity(entity_name: str, entity_type: str) -> str:
             if group:
                 if i == 0 and len(group) == 1:  # Accept exact match if there is only one
                     return group[0][4]
+                if exact_match_only:
+                    raise ValueError(f"Exact match not found for '{entity_name}' in {entity_type}s.")
                 match_type = ['exact', 'substring', 'close'][i]
                 count = 'Multiple' if len(group) > 1 else ''
                 prompt = f"{count} {match_type} matches for '{entity_name}' {entity_type} found. Please choose one..."

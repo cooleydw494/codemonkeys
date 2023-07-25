@@ -17,16 +17,20 @@ except ImportError:
 class Automation(CliRunnable):
     named_arg_keys = ['monkey']
     monkey: str = None
+    monkey_config: MonkeyConfig | None = None
 
     required_config_keys = []
 
-    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
+    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str], monkey_config: MonkeyConfig | None = None):
 
         super().__init__(monk_args, named_args, unnamed_args)
 
         automation_env_checks()
 
-        self.monkey_config: MonkeyConfig = self.load_config()
+        if monkey_config is None:
+            self.monkey_config: MonkeyConfig = self.load_config()
+        else:
+            self.monkey_config = monkey_config
 
         self._check_required_config_keys()
 

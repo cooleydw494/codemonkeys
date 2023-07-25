@@ -3,6 +3,7 @@ from typing import Dict, Any, List
 
 from codemonkeys.base_entities.utils.cli_runnable_class import CliRunnable
 from codemonkeys.utils.monk.find_entity import find_entity
+from codemonkeys.utils.monk.run_entities import run_automation
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
 
@@ -23,11 +24,21 @@ class Barrel(CliRunnable):
 
         print_t("Barrel initialized.", "start")
 
-    def with_monkey(self, monkey_name: str | None = None):
+    def with_monkey(self, monkey_name: str | None = None) -> 'Barrel':
         self.monkey_config = load_monkey_config(monkey_name)
+        return self
 
-    def run_automation(self, automation_name: str):
-        automation = find_entity(automation_name)
+    def run_automation(self, automation_name: str) -> 'Barrel':
+        automation = find_entity(automation_name, 'automation', exact_match_only=True)
+        run_automation(
+            automation,
+            automation_name,
+            self.monk_args,
+            self.named_args,
+            self.unnamed_args,
+            self.monkey_config
+        )
+        return self
 
     def run(self):
         raise NotImplementedError("The run() method must be implemented in a subclass of Barrel.")
