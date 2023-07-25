@@ -12,7 +12,7 @@ from codemonkeys.utils.env.update_env_class import update_env_class
 from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.generate_monkeys import generate_monkeys
 from codemonkeys.utils.monk.parse_monk_args import parse_monk_args
-from codemonkeys.utils.monk.run_entities import run_automation, run_command
+from codemonkeys.utils.monk.run_entities import run_automation, run_command, run_barrel
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.update_monkey_config_class import update_monkey_config_class
 from codemonkeys.defs import nl, PYTHON_COMMAND
