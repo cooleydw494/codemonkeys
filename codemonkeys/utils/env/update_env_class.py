@@ -33,7 +33,7 @@ def update_env_class() -> None:
     start_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_ENV_PROPS_START\s*\]')
     end_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_ENV_PROPS_END\s*\]')
 
-    required_start_index = required_end_index = framework_start_index = framework_end_index = start_index = end_index\
+    required_start_index = required_end_index = framework_start_index = framework_end_index = start_index = end_index \
         = None
 
     for i, line in enumerate(content_lines):
@@ -73,9 +73,9 @@ def update_env_class() -> None:
 
     # Replace placeholder in class definition with generated definitions
     new_content_lines = content_lines[:required_start_index] + [required_env_props_def, nl] + \
-                            content_lines[required_end_index:framework_start_index] + [
+                        content_lines[required_end_index:framework_start_index] + [
                             line + nl for line in framework_env_definitions] + [nl] + \
-                            content_lines[framework_end_index:start_index] + [
+                        content_lines[framework_end_index:start_index] + [
                             line + nl for line in env_definitions] + [nl] + content_lines[end_index:]
 
     # Write updated contents

@@ -14,7 +14,6 @@ keywords: list = [
     'barrels', 'modules', 'commands', 'monkeys', 'actions', 'barrel', 'module', 'action flag', 'automation', 'command',
     'monkey', 'types', 'cli', 'monk']
 
-
 """  CLI TEXT THEMES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
 

@@ -47,4 +47,3 @@ def get_ruamel_yaml() -> YAML:
 def get_monkey_config_defaults():
     monkey_config_defaults_file = os.path.join(MONKEY_CONFIG_DEFAULTS_PATH)
     return read_yaml_file(monkey_config_defaults_file, ruamel=True)
-

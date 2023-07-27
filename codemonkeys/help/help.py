@@ -5,7 +5,6 @@ from codemonkeys.utils.monk.theme_functions import print_banner, print_table, pr
 
 
 def run_default_help(monk_args: argparse.Namespace = None):
-
     # CodeMonkeys Banner
     print_banner()
 
@@ -28,78 +27,78 @@ def run_default_help(monk_args: argparse.Namespace = None):
     min_col_widths = [23, 25, 13]
 
     monk_general_json = {
-      "headers": [
-        "Command",
-        "Description",
-        "Note"
-      ],
-      "show_headers": False,
-      "rows": [
-        [
-          "monk help",
-          "Run this help script",
-          ""
+        "headers": [
+            "Command",
+            "Description",
+            "Note"
         ],
-        [
-          "monk list",
-          "List existing entities",
-          "-b/a/m, --all"
-        ],
-        [
-          "monk -v",
-          "Print version",
-          "--version"
-        ],
-        [
-          "monk <command>",
-          "Run a command",
-          "default action/entity"
+        "show_headers": False,
+        "rows": [
+            [
+                "monk help",
+                "Run this help script",
+                ""
+            ],
+            [
+                "monk list",
+                "List existing entities",
+                "-b/a/m, --all"
+            ],
+            [
+                "monk -v",
+                "Print version",
+                "--version"
+            ],
+            [
+                "monk <command>",
+                "Run a command",
+                "default action/entity"
+            ]
         ]
-      ]
     }
     print_table(monk_general_json, apply_t("Monk CLI", 'special'), min_col_width=min_col_widths)
 
     monk_types = {
-      "headers": [
-        "Command",
-        "Description",
-        "Note"
-      ],
-      "show_headers": False,
-      "rows": [
-        [
-          "monk -a <automation>",
-          "Run an automation",
-          "--automation"
+        "headers": [
+            "Command",
+            "Description",
+            "Note"
         ],
-        [
-          "monk -b <barrel>",
-          "Run a barrel",
-          "--barrel"
+        "show_headers": False,
+        "rows": [
+            [
+                "monk -a <automation>",
+                "Run an automation",
+                "--automation"
+            ],
+            [
+                "monk -b <barrel>",
+                "Run a barrel",
+                "--barrel"
+            ],
         ],
-      ],
     }
     print_table(monk_types, apply_t("Entity Types", 'special'), min_col_width=min_col_widths)
 
     monk_actions = {
-      "headers": [
-        "Command",
-        "Description",
-        "Note"
-      ],
-      "show_headers": False,
-      "rows": [
-        [
-          "monk -e <entity>",
-          "Open in vim",
-          "--edit"
+        "headers": [
+            "Command",
+            "Description",
+            "Note"
         ],
-        [
-          "monk -h <entity>",
-          "Help for an entity",
-          "--help"
+        "show_headers": False,
+        "rows": [
+            [
+                "monk -e <entity>",
+                "Open in vim",
+                "--edit"
+            ],
+            [
+                "monk -h <entity>",
+                "Help for an entity",
+                "--help"
+            ],
         ],
-      ],
     }
     print_table(monk_actions, apply_t("Actions", 'special'), min_col_width=min_col_widths)
 

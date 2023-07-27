@@ -16,7 +16,6 @@ except ImportError as e:
 
 
 def generate_monkeys() -> None:
-
     os.makedirs(os.path.join(MONKEYS_PATH), exist_ok=True)
 
     try:
@@ -38,7 +37,8 @@ def generate_monkeys() -> None:
             else:
                 os.makedirs(os.path.join(MONKEYS_PATH, '.history', monkey_name), exist_ok=True)
                 timestamp = time.strftime("%Y-%m-%d_%H:%M:%S")
-                shutil.move(generated_config_path, os.path.join(MONKEYS_PATH, '.history', monkey_name, f'{timestamp}.yaml'))
+                shutil.move(generated_config_path,
+                            os.path.join(MONKEYS_PATH, '.history', monkey_name, f'{timestamp}.yaml'))
                 # Write to the file
                 write_yaml_file(generated_config_path, merged_config, ruamel=True)
         else:

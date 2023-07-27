@@ -118,7 +118,8 @@ def print_banner() -> None:
     print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
 
 
-def print_table(table: dict, title: str = None, sub_indent: str = '   ', min_col_width: Union[int, List[int]] = 10) -> None:
+def print_table(table: dict, title: str = None, sub_indent: str = '   ',
+                min_col_width: Union[int, List[int]] = 10) -> None:
     t_width = terminal_width - len(sub_indent)
 
     if title:
@@ -147,7 +148,7 @@ def print_table(table: dict, title: str = None, sub_indent: str = '   ', min_col
 
 
 def print_tree(start_dir: str, exclude_dirs: List[str] = None, exclude_file_starts:
-               List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
+List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
     if exclude_file_starts is None:
         exclude_file_starts = ['.', '_']
     if exclude_dirs is None:

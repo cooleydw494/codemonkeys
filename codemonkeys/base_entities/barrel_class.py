@@ -16,7 +16,6 @@ except ImportError:
 
 
 class Barrel(CliRunnable):
-
     monkey_config: MonkeyConfig | None = None
 
     def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):

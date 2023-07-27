@@ -16,7 +16,7 @@ default:
   FILEPATH_MATCH_INCLUDE: null
   FILEPATH_MATCH_EXCLUDE: ".config,.md,.git,migrations,vite,webpack,.txt"
   FILE_SELECT_MAX_TOKENS: 3000
-#  CONTEXT_FILE_PATH: "help.py"
+  #  CONTEXT_FILE_PATH: "help.py"
 
   # Prompts
   MAIN_PROMPT: "Please generate code for the following task..."
@@ -54,7 +54,7 @@ long-form:
   FILE_TYPES_INCLUDED: ".js,.vue,.php"
   FILEPATH_MATCH_EXCLUDE: ".config,.md,.git,migrations,vite,webpack,.txt"
   FILE_SELECT_MAX_TOKENS: 3000
-#  CONTEXT_FILE_PATH: "help.py"
+  #  CONTEXT_FILE_PATH: "help.py"
 
   # Prompts
   MAIN_PROMPT: "Please generate code for the following task..."
@@ -87,7 +87,7 @@ long-form:
 finish-files:
 
   # General
-#    WORK_PATH: "ROOT_PATH/commands"
+  #    WORK_PATH: "ROOT_PATH/commands"
   FILE_TYPES_INCLUDED: ".py"
   FILEPATH_MATCH_EXCLUDE: "help.py,__init__.py"
   FILE_SELECT_MAX_TOKENS: 6000
@@ -106,7 +106,7 @@ finish-files:
   OUTPUT_TRIES: 1
 
   # Output
-#    OUTPUT_PATH: "ROOT_PATH/stor/output"
+  #    OUTPUT_PATH: "ROOT_PATH/stor/output"
   OUTPUT_EXT: ''
   OUTPUT_FILENAME_APPEND: ""
   OUTPUT_TRIES: 2

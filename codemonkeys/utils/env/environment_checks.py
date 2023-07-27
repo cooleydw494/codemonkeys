@@ -12,7 +12,6 @@ except ImportError:
 
 
 def monk_env_checks() -> None:
-
     version = sys.version_info[0]
 
     if version < 3:

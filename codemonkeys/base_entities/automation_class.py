@@ -21,7 +21,8 @@ class Automation(CliRunnable):
 
     required_config_keys = []
 
-    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str], monkey_config: MonkeyConfig | None = None):
+    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str],
+                 monkey_config: MonkeyConfig | None = None):
 
         super().__init__(monk_args, named_args, unnamed_args)
 

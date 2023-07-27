@@ -24,7 +24,6 @@ def check_api_key():
 
 
 class GPTClient:
-
     _model_names = get_gpt_model_names()
 
     def __init__(self, model_name: str, temperature: float = 1.0, max_tokens: int = 8000):

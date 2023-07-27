@@ -83,7 +83,8 @@ class MonkeyConfig:
         """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
         Set MonkeyConfig props with validations, generated from monkey-config-defaults & monkey_config_validations. """
         # [MONKEY_CONFIG_VALIDATIONS_START]
-        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path
+        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, \
+            validate_float, validate_path
         self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
         self.FILEPATH_MATCH_EXCLUDE = validate_str('FILEPATH_MATCH_EXCLUDE', self.FILEPATH_MATCH_EXCLUDE)

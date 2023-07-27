@@ -8,8 +8,8 @@
 
 
 #self-extract:
-  # A monkey for extracting functionality into a new file and implementing usage in the old file.
-  # TODO: Implement this monkey
+# A monkey for extracting functionality into a new file and implementing usage in the old file.
+# TODO: Implement this monkey
 
 
 self-help-command:
