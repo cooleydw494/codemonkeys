@@ -1,5 +1,5 @@
 from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_path, validate_int, \
-    validate_float, validate_bool
+    validate_float
 
 INPUT_PROMPTS = [
     ('MAIN_PROMPT', validate_str,

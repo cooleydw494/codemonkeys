@@ -3,8 +3,9 @@ import shutil
 import time
 
 from codemonkeys.config.yaml_helpers import read_yaml_file, write_yaml_file
-from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import MONKEYS_PATH, MONKEY_MANIFEST_PATH
+from codemonkeys.utils.monk.theme_functions import print_t
+
 try:
     from config.framework.monkey_config_class import MonkeyConfig
 except ImportError as e:

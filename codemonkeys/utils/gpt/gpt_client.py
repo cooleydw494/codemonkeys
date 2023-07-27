@@ -3,9 +3,9 @@ from typing import List
 import openai
 import tiktoken
 
+from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
 
 try:
     from config.framework.env_class import Env

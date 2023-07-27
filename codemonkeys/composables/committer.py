@@ -1,8 +1,8 @@
 import difflib
 
-from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.defs import nl, nl2
 from codemonkeys.utils.git.gitter import Gitter
+from codemonkeys.utils.gpt.gpt_client import GPTClient
 
 
 def diff_content(old_content: str, new_content: str) -> str:

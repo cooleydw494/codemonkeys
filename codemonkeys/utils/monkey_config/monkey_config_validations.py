@@ -2,9 +2,9 @@ import os
 import re
 from typing import List, Union
 
+from codemonkeys.defs import ROOT_PATH
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import input_t, print_t
-from codemonkeys.defs import ROOT_PATH
 
 try:
     gpt_model_names = get_gpt_model_names()

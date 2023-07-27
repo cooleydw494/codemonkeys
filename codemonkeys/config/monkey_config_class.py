@@ -4,9 +4,9 @@ import re
 from dataclasses import dataclass
 
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
+from codemonkeys.defs import MONKEYS_PATH
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_key
-from codemonkeys.defs import MONKEYS_PATH
 
 try:
     from config.framework.env_class import Env
@@ -83,7 +83,7 @@ class MonkeyConfig:
         """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
         Set MonkeyConfig props with validations, generated from monkey-config-defaults & monkey_config_validations. """
         # [MONKEY_CONFIG_VALIDATIONS_START]
-        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path, validate_list_str
+        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path
         self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
         self.FILEPATH_MATCH_EXCLUDE = validate_str('FILEPATH_MATCH_EXCLUDE', self.FILEPATH_MATCH_EXCLUDE)

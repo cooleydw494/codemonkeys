@@ -1,7 +1,7 @@
 import argparse
 
-from codemonkeys.utils.monk.theme_functions import print_banner, print_table, print_t, apply_t
 from codemonkeys.defs import nl2, nl
+from codemonkeys.utils.monk.theme_functions import print_banner, print_table, print_t, apply_t
 
 
 def run_default_help(monk_args: argparse.Namespace = None):

@@ -2,8 +2,8 @@ import glob
 import os
 from typing import List, Tuple
 
-from codemonkeys.utils.monk.theme_functions import print_t, input_t
 from codemonkeys.defs import MONKEYS_PATH
+from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
 def list_monkeys() -> List[str]:

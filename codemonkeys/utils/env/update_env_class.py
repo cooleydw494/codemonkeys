@@ -5,8 +5,8 @@ from typing import List
 from dotenv import dotenv_values
 
 from codemonkeys.cmdefs import CM_ENV_DEFAULT_PATH
-from codemonkeys.utils.env.get_env_prop_type import get_env_prop_type
 from codemonkeys.defs import ENV_CLASS_PATH, ROOT_PATH, nl
+from codemonkeys.utils.env.get_env_prop_type import get_env_prop_type
 
 ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
 ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_name}', '{default}')"
