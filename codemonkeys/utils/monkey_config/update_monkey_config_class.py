@@ -2,7 +2,7 @@ from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
 from codemonkeys.defs import MONKEY_CONFIG_CLASS_PATH, nl
 
 
-def update_monkey_config_class():
+def update_monkey_config_class() -> None:
     config = get_monkey_config_defaults()
 
     formatted_properties = [

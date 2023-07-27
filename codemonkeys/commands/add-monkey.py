@@ -2,6 +2,7 @@ import os
 import sys
 import tempfile
 from io import StringIO
+from typing import List, Tuple, Any, Optional
 
 from ruamel.yaml import CommentedMap
 
@@ -15,10 +16,10 @@ from codemonkeys.defs import MONKEY_MANIFEST_PATH
 
 class AddMonkey(Command):
     unnamed_arg_keys = ['monkey_name']
-    monkey_name = None
+    monkey_name: Optional[str] = None
     required_arg_keys = ['monkey_name']
 
-    def run(self):
+    def run(self) -> None:
         if self.monkey_name is None or not validate_monkey_name(self.monkey_name):
             monkey_name = get_user_config_value("Please enter a name for your new monkey: ",
                                                 validate_monkey_name, "(letters/hyphens only)")
@@ -61,7 +62,7 @@ class AddMonkey(Command):
         print_t("Config complete. The 'monkey-manifest.yaml' file has been updated.", 'done')
 
 
-def _process_input_prompts(data):
+def _process_input_prompts(data: List[Tuple[str, Any, str]]) -> dict:
     monkey_data = {}
     for key, validate_function, hint in data:
         user_value = get_user_config_value(key, validate_function, hint)

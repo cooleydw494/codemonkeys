@@ -5,7 +5,7 @@ from codemonkeys.defs import nl, nl2
 from codemonkeys.utils.git.gitter import Gitter
 
 
-def diff_content(old_content, new_content):
+def diff_content(old_content: str, new_content: str) -> str:
     return nl.join(list(difflib.unified_diff(old_content, new_content)))
 
 
@@ -22,18 +22,18 @@ class Committer:
         self.gitter = Gitter(repo_path)
         self.gpt_client = GPTClient(self.model, self.temp, self.max_tokens)
 
-    def set_model(self, model, temp: float = None, max_tokens: int = None):
+    def set_model(self, model: str, temp: float = None, max_tokens: int = None) -> 'Committer':
         self.model = model
         self.temp = temp
         self.max_tokens = max_tokens
         self.gpt_client = GPTClient(self.model, self.temp, self.max_tokens)
         return self
 
-    def set_prompt(self, prompt: str):
+    def set_prompt(self, prompt: str) -> 'Committer':
         self.prompt = prompt
         return self
 
-    def set_message(self, commit_message: str):
+    def set_message(self, commit_message: str) -> 'Committer':
         self.message = commit_message
         return self
 
@@ -47,5 +47,5 @@ class Committer:
     def get_message(self) -> str | None:
         return self.message
 
-    def commit(self):
+    def commit(self) -> None:
         self.gitter.commit(self.message, add_all=True)

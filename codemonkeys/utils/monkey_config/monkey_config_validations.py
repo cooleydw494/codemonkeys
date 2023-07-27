@@ -1,6 +1,6 @@
 import os
 import re
-from typing import List
+from typing import List, Union
 
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import input_t, print_t
@@ -37,7 +37,7 @@ def is_prompt_key(key: str) -> bool:
     return _has_word(key, 'prompt')
 
 
-def get_user_config_value(key: str, validate_func, hint=""):
+def get_user_config_value(key: str, validate_func, hint="") -> Union[str, None]:
     while True:
         user_provided_value = input_t(key, hint)
         # if user_value is an empty string, return None
@@ -48,11 +48,11 @@ def get_user_config_value(key: str, validate_func, hint=""):
             return 'null'
         try:
             return validate_func(key, user_provided_value)
-        except (TypeError, ValueError) as e:
-            print_t(str(e), 'error')
+        except (TypeError, ValueError) as exception:
+            print_t(str(exception), 'error')
 
 
-def validate_path(key, path: str) -> (str, None):
+def validate_path(key: str, path: str) -> Union[str, None]:
     if path is None:
         return None
     if path.startswith('ROOT_PATH/'):
@@ -71,7 +71,7 @@ def validate_monkey_name(monkey_name: str = None) -> str:
     return monkey_name
 
 
-def validate_bool(key, value: bool) -> (bool, None):
+def validate_bool(key: str, value: bool) -> Union[bool, None]:
     if value is None:
         return None
     if isinstance(value, bool):
@@ -83,7 +83,7 @@ def validate_bool(key, value: bool) -> (bool, None):
     raise TypeError(f"{key} must be a boolean, not {type(value).__name__}")
 
 
-def validate_type(key, value, expected_type: type):
+def validate_type(key: str, value, expected_type: type):
     if value is None:
         return None
     try:
@@ -97,19 +97,19 @@ def validate_type(key, value, expected_type: type):
     return value
 
 
-def validate_int(key, value):
+def validate_int(key: str, value: str) -> int:
     if _is_model_key(key):
         return validate_type('model', value, int)
     return validate_type(key, value, int)
 
 
-def validate_float(key, value):
+def validate_float(key: str, value: str) -> float:
     if _is_temp_key(key):
         return validate_type('temp', value, float)
     return validate_type(key, value, float)
 
 
-def validate_str(key, value):
+def validate_str(key: str, value: str) -> str:
     if type(value) in [int, float, bool]:
         raise TypeError(f"{key} must be a string, not {type(value).__name__}")
     string_value = validate_type(key, value, str)
@@ -118,7 +118,7 @@ def validate_str(key, value):
     return string_value
 
 
-def validate_list_str(key, value: List[str]) -> (List[str], None):
+def validate_list_str(key: str, value: List[str]) -> Union[List[str], None]:
     value = validate_type(key, value, list)
     if not all(isinstance(item, str) for item in value):
         raise TypeError(f"{key} must be a list of strings")

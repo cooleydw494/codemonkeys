@@ -5,5 +5,5 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 class Version(Command):
 
-    def run(self):
+    def run(self) -> None:
         print_t(f"CodeMonkeys v{VERSION}", 'monkey')

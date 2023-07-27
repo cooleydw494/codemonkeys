@@ -11,7 +11,7 @@ class ExampleBarrel(Barrel):
     # Barrels are extended from CliRunnable, so you can define/pass/default/require CLI args if you wish.
     # Check out the CliRunnable class or look at Command implementations to get a feel for this.
 
-    def run(self):
+    def run(self) -> None:
         (self
 
          # Load a monkey config (omit name to prompt user)

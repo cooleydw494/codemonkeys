@@ -9,7 +9,7 @@ class GptModelsInfo(Command):
     named_arg_keys = ['update']
     update: bool = False
 
-    def run(self):
+    def run(self) -> None:
 
         if self.update:
             print_t(f'Updating GPT Model Info Cache{nl}', 'loading')

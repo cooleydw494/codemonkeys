@@ -1,37 +1,38 @@
 import subprocess
+from typing import List
 
 from codemonkeys.utils.git.gitter_error import GitterError
 
 
 class Gitter:
 
-    def __init__(self, repo_path):
+    def __init__(self, repo_path: str):
         self.repo_path = repo_path
 
-    def clone(self, repo_url):
+    def clone(self, repo_url: str) -> str:
         return self._run_git_command(["clone", repo_url])
 
-    def pull(self, remote="origin", branch="master"):
+    def pull(self, remote: str = "origin", branch: str = "master") -> str:
         return self._run_git_command(["pull", remote, branch])
 
-    def push(self, remote="origin", branch="master"):
+    def push(self, remote: str = "origin", branch: str = "master") -> str:
         return self._run_git_command(["push", remote, branch])
 
-    def commit(self, message, add_all=False):
+    def commit(self, message: str, add_all: bool = False) -> str:
         if add_all:
             self._run_git_command(["add", "-A"])
         return self._run_git_command(["commit", "-m", message])
 
-    def status(self):
+    def status(self) -> str:
         return self._run_git_command(["status"])
 
-    def checkout(self, branch_name):
+    def checkout(self, branch_name: str) -> str:
         return self._run_git_command(["checkout", branch_name])
 
-    def create_branch(self, branch_name):
+    def create_branch(self, branch_name: str) -> str:
         return self._run_git_command(["branch", branch_name])
 
-    def _run_git_command(self, command):
+    def _run_git_command(self, command: List[str]) -> str:
         try:
             result = subprocess.run(
                 ["git"] + command,

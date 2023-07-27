@@ -16,7 +16,7 @@ NO PROJECT MODULES, CONFIGS, ETC SHOULD BE IMPORTED HERE.
 python_commands = ["python3", "python3.11", "python3.10", "python3.9", "python3.8", "python3.7", "python3.6", "python"]
 
 
-def get_python_command():
+def get_python_command() -> str:
     # Loop over the python_commands list and return the first valid command
     for cmd in python_commands:
         if _test_command(cmd):
@@ -25,7 +25,7 @@ def get_python_command():
           "or set the PYTHON_COMMAND manually in defs.py")
 
 
-def _test_command(command):
+def _test_command(command: str) -> bool:
     # noinspection PyBroadException
     try:
         # Use --version flag to check if a command is present
@@ -36,7 +36,7 @@ def _test_command(command):
         return False
 
 
-def find_project_root():
+def find_project_root() -> str:
     """Find the root directory of the project (i.e., the closest parent directory containing a `.env` file)."""
     cwd = os.getcwd()
 
@@ -54,7 +54,7 @@ def find_project_root():
     exit(1)
 
 
-def import_class_from_path_with_fallback(path, class_name, fallback_class):
+def import_class_from_path_with_fallback(path: str, class_name: str, fallback_class: type) -> type:
     """
     Try to import a class from a Python file at a given path. If the import fails, return a fallback class.
 
@@ -78,7 +78,7 @@ def import_class_from_path_with_fallback(path, class_name, fallback_class):
         return fallback_class
 
 
-def levenshtein_distance(str1, str2):
+def levenshtein_distance(str1: str, str2: str) -> int:
     # determine if string1 or string2 fully contains the other and if so print(0) to emulate a match
     if str1 in str2 or str2 in str1:
         return 0

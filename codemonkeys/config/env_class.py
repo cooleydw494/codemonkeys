@@ -1,5 +1,7 @@
+
 import os
 from dataclasses import dataclass
+from typing import List
 
 from dotenv import load_dotenv
 
@@ -11,7 +13,7 @@ load_dotenv(os.path.join(ROOT_PATH, '.env'))
 """ FRAMEWORK_ENV_PROPS_LIST - DO NOT MODIFY
 A List tracking the source's env props. This is currently unused, but could be useful. """
 # [DEFINE_FRAMEWORK_ENV_PROPS_LIST_START]
-required_env_props = []
+required_env_props: List = []
 
 
 # [DEFINE_FRAMEWORK_ENV_PROPS_LIST_END]
@@ -43,7 +45,7 @@ class Env:
     text_themes = text_themes
 
     @classmethod
-    def get(cls):
+    def get(cls) -> 'Env':
         if Env._instance is None:
             Env._instance = Env()
 

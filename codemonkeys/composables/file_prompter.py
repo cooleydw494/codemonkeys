@@ -62,7 +62,7 @@ class FilePrompter:
         self.output_remove_strings = output_remove_strings.split(',')
         return self
 
-    def get_output(self):
+    def get_output(self) -> str:
         full_prompt, stubbed_prompt = self._get_full_prompt()
         if env.verbose_logs_enabled:
             print_t(f'Prompt: {full_prompt}', 'quiet')

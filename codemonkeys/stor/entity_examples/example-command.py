@@ -20,9 +20,9 @@ class ExampleCommand(Command):
     named_arg_one: str = None
     named_arg_two: bool = True
     unnamed_arg_one: str = 'default_value'
-    unnamed_arg_two: Union[int | None] = None
+    unnamed_arg_two: Union[int, None] = None
 
-    def run(self):
+    def run(self) -> None:
         # Implement the command functionality here, utilizing args as needed
         print(f"named_arg_one: {self.named_arg_one}")
         print(f"Monk Args: {self.monk_args}")

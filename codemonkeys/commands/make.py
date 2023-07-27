@@ -24,7 +24,7 @@ class Make(Command):
         'barrel': (BARRELS_PATH, CM_EXAMPLE_BARREL_PATH, 'ExampleBarrel')
     }
 
-    def run(self):
+    def run(self) -> None:
 
         if not self.entity_name.replace('-', '').isalpha():
             raise ValueError(f"Invalid name: {self.entity_name}. Please specify in kebab-case (e.g. entity-name).")

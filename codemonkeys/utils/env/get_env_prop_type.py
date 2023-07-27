@@ -1,4 +1,4 @@
-def get_env_prop_type(env_value):
+def get_env_prop_type(env_value: str) -> str:
     """
     Returns the appropriate Python type for the given environment variable.
     """

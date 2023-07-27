@@ -4,6 +4,7 @@ import sys
 import textwrap
 import threading
 from math import floor
+from typing import List, Tuple, Union
 
 from termcolor import colored, COLORS
 
@@ -27,7 +28,7 @@ print_lock = threading.Lock()
 terminal_width = min(os.get_terminal_size().columns, max_terminal_width)
 
 
-def get_theme(theme):
+def get_theme(theme: str) -> Tuple[bool, Union[None, str], Union[None, str]]:
     theme_values = text_themes.get(theme)
     if theme_values:
         prefix = theme_values['pre']
@@ -36,7 +37,7 @@ def get_theme(theme):
     return False, None, None
 
 
-def apply_t(text, theme, incl_prefix=False, attrs=None):
+def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Union[None, List[str]] = None) -> str:
     has_theme, color, prefix = get_theme(theme)
     if has_theme:
         if theme == 'super_important':
@@ -50,7 +51,8 @@ def apply_t(text, theme, incl_prefix=False, attrs=None):
     return text
 
 
-def print_t(text, theme=None, incl_prefix=True, attrs=None, verbose=False):
+def print_t(text: str, theme: str = None, incl_prefix: bool = True, attrs: Union[None, List[str]] = None,
+            verbose: bool = False) -> None:
     if verbose and not verbose_logs:
         return
     sub_indent = ''
@@ -64,7 +66,7 @@ def print_t(text, theme=None, incl_prefix=True, attrs=None, verbose=False):
     _print_nice(text, sub_indent=sub_indent, attrs=attrs)
 
 
-def input_t(text, input_options=None, theme='input'):
+def input_t(text: str, input_options: str = None, theme: str = 'input') -> str:
     text = apply_t(text, theme, incl_prefix=True)
     if input_options:
         text += f' {apply_t(input_options, "magenta")}' if len(input_options) <= 20 \
@@ -80,7 +82,7 @@ def input_t(text, input_options=None, theme='input'):
     return input_
 
 
-def _print_nice(*args, sub_indent='', **kwargs):
+def _print_nice(*args, sub_indent: str = '', **kwargs) -> None:
     sep = kwargs.get("sep", " ")
     end = kwargs.get("end", nl)
     file = kwargs.get("file", None)
@@ -102,21 +104,21 @@ def _print_nice(*args, sub_indent='', **kwargs):
         print(text, end=end, file=file, flush=flush)
 
 
-def _apply_bold_to_keywords(text):
+def _apply_bold_to_keywords(text: str) -> str:
     return re.sub(fr"(?i)\b{'|'.join(keywords)}\b", r'\033[1m\g<0>\033[22m', text)
 
 
-def _strip_color_and_bold_codes(s):
+def _strip_color_and_bold_codes(s: str) -> str:
     return re.sub(r'\x1b\[[0-9;]*m', '', s)
 
 
-def print_banner():
+def print_banner() -> None:
     with open(os.path.join(CM_STOR_SNIPPETS_PATH, 'banner.txt'), 'r') as f:
         art = f.read()
     print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
 
 
-def print_table(table, title=None, sub_indent='   ', min_col_width=10):
+def print_table(table: dict, title: str = None, sub_indent: str = '   ', min_col_width: Union[int, List[int]] = 10) -> None:
     t_width = terminal_width - len(sub_indent)
 
     if title:
@@ -144,8 +146,8 @@ def print_table(table, title=None, sub_indent='   ', min_col_width=10):
     _print_nice()
 
 
-def print_tree(start_dir: str, exclude_dirs=None, exclude_file_starts=None, title: str = None, show_exts=False,
-               incl_prefix=True):
+def print_tree(start_dir: str, exclude_dirs: List[str] = None, exclude_file_starts:
+               List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
     if exclude_file_starts is None:
         exclude_file_starts = ['.', '_']
     if exclude_dirs is None:

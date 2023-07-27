@@ -1,13 +1,15 @@
 import os
 
+from typing import Optional
+
 
 class OutputPathResolver:
 
     def __init__(self):
-        self.work_path = None
-        self.output_path: str | None = None
-        self.output_ext: str | None = None
-        self.output_filename_append: str | None = None
+        self.work_path: Optional[str] = None
+        self.output_path: Optional[str] = None
+        self.output_ext: Optional[str] = None
+        self.output_filename_append: Optional[str] = None
         self.use_work_path_relative_location: bool = False
 
     def set_output_path(self, output_path: str) -> 'OutputPathResolver':
@@ -26,7 +28,7 @@ class OutputPathResolver:
         self.work_path = work_path
         return self
 
-    def set_use_work_path_relative_location(self, should_use: bool):
+    def set_use_work_path_relative_location(self, should_use: bool) -> 'OutputPathResolver':
         if self.work_path is None:
             raise Exception('You must set the work path before setting use_work_path_relative_location')
         self.use_work_path_relative_location = should_use
@@ -35,7 +37,7 @@ class OutputPathResolver:
     def output_file_exists(self, file_path: str) -> bool:
         return os.path.exists(self.get_output_path(file_path))
 
-    def get_output_path(self, file_path: str, basename: str | None = None) -> str:
+    def get_output_path(self, file_path: str, basename: Optional[str] = None) -> str:
         the_file_name = os.path.basename(file_path)
 
         the_file_ext = os.path.splitext(the_file_name)[1]

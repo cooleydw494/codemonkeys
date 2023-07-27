@@ -11,7 +11,7 @@ except ImportError:
     from codemonkeys.config.env_class import Env
 
 
-def monk_env_checks():
+def monk_env_checks() -> None:
 
     version = sys.version_info[0]
 
@@ -20,7 +20,7 @@ def monk_env_checks():
         sys.exit(1)
 
 
-def automation_env_checks():
+def automation_env_checks() -> None:
     try:
         env = Env.get()
         openai.api_key = env.OPENAI_API_KEY

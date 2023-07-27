@@ -14,7 +14,7 @@ except ImportError as e:
     from codemonkeys.config.monkey_config_class import MonkeyConfig
 
 
-def generate_monkeys():
+def generate_monkeys() -> None:
 
     os.makedirs(os.path.join(MONKEYS_PATH), exist_ok=True)
 

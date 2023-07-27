@@ -13,7 +13,7 @@ except ImportError:
 _model_cache_file_path = TEMP_PATH + '/model_info_cache.json'
 
 
-def get_gpt_model_info():
+def get_gpt_model_info() -> dict | None:
     try:
         with open(_model_cache_file_path, 'r') as f:
             return json.load(f)
@@ -30,7 +30,7 @@ def get_gpt_model_names() -> list[str] | None:
     return [model_name for model_name in model_info.keys()]
 
 
-def update_gpt_model_cache():
+def update_gpt_model_cache() -> None:
     model_info = _query_model_info()
 
     if model_info is not None:
@@ -42,7 +42,7 @@ def update_gpt_model_cache():
             print(f"An error occurred updating gpt model info cache: {e}")
 
 
-def _query_model_info():
+def _query_model_info() -> dict | None:
     try:
         env = Env.get()
         openai.api_key = env.OPENAI_API_KEY

@@ -24,7 +24,7 @@ class Default(Automation):
     def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
         super().__init__(monk_args, named_args, unnamed_args)
 
-    def run(self):
+    def run(self) -> None:
         mc = self.monkey_config
         # replace cop-syntax file contents references
         mc.cop_paths()

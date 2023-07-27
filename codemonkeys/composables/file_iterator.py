@@ -47,7 +47,7 @@ class FileIterator:
                 not any(pattern.strip() in file_path for pattern in self.exclude_patterns)
         )
 
-    def filter_files(self):
+    def filter_files(self) -> 'FileIterator':
         self.filtered_files = []
         print_t("Filtering files...", 'loading')
         print_t(f'WORK_PATH: {self.work_path}', 'info')
@@ -69,7 +69,7 @@ class FileIterator:
 
         return self
 
-    def pop_file(self):
+    def pop_file(self) -> str | None:
         if len(self.filtered_files) == 0:
             return None
         selected_file = self.filtered_files.pop(0)

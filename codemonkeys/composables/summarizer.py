@@ -14,21 +14,21 @@ class Summarizer:
         self.temp = None
         self.prompt = None
 
-    def set_model(self, model, temp, max_tokens):
+    def set_model(self, model: str, temp: float, max_tokens: int) -> 'Summarizer':
         self.model = model
         self.temp = temp
         self.max_tokens = max_tokens
         return self
 
-    def set_prompt(self, prompt):
+    def set_prompt(self, prompt: str) -> 'Summarizer':
         self.prompt = prompt
         return self
 
-    def set_context(self, context_string):
+    def set_context(self, context_string: str) -> 'Summarizer':
         self.context = context_string
         return self
 
-    def set_context_via_file(self, path):
+    def set_context_via_file(self, path: str) -> 'Summarizer':
         self.context = get_file_contents(path)
         return self
 

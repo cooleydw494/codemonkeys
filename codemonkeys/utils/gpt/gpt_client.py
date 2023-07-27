@@ -27,7 +27,7 @@ class GPTClient:
 
     _model_names = get_gpt_model_names()
 
-    def __init__(self, model_name, temperature=1.0, max_tokens=8000):
+    def __init__(self, model_name: str, temperature: float = 1.0, max_tokens: int = 8000):
         if model_name not in self._model_names:
             raise ValueError(f"Invalid GPT model name: {model_name}. Try `monk gpt-models-info --update`.")
 
@@ -37,7 +37,7 @@ class GPTClient:
         self.temperature = temperature
         self.encoding = tiktoken.encoding_for_model(self.model)
 
-    def generate(self, prompt, temperature=None):
+    def generate(self, prompt: str, temperature: float = None) -> str:
         check_api_key()
         temperature = temperature or self.temperature
 
@@ -57,7 +57,7 @@ class GPTClient:
     def tokenize(self, text: str) -> List[int]:
         return self.encoding.encode(text)
 
-    def detokenize(self, tokens) -> str:
+    def detokenize(self, tokens: List[int]) -> str:
         if not tokens:
             return ""
         elif isinstance(tokens, int):
@@ -68,7 +68,7 @@ class GPTClient:
     def count_tokens(self, text: str) -> int:
         return len(self.tokenize(text))
 
-    def shorten_to_n_tokens(self, text: str, n: int, end=False) -> str:
+    def shorten_to_n_tokens(self, text: str, n: int, end: bool = False) -> str:
         tokens = self.tokenize(text)
         if len(tokens) <= n:
             return text

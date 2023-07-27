@@ -1,6 +1,7 @@
 from codemonkeys.utils.monk.theme_functions import print_t, print_table
 
-def run():
+
+def run() -> None:
     print_t("List Processes Help", "important")
     print_t("The `list-processes` command provides an overview of all ongoing Monk processes, their process IDs (PIDs),"
             "and commands to kill the respective processes. This is useful for managing and controlling Monk-related"
@@ -37,4 +38,5 @@ def run():
 
     print_table(USAGE_EXAMPLES_TABLE, "Usage")
 
-    print_t("Important: Always exercise caution when terminating processes to avoid disrupting your workspace.", "warning")
+    print_t("Important: Always exercise caution when terminating processes to avoid disrupting your workspace.",
+            "warning")

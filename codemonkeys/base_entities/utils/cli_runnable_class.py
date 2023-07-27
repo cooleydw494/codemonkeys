@@ -71,7 +71,7 @@ class CliRunnable:
         # If no error was raised, or there was no type hint, set the attribute
         setattr(self, key, value)
 
-    def run(self):
+    def run(self) -> None:
         """
         The main logic of the CliRunnable (e.g. Command, Deployment).
         """

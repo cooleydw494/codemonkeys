@@ -7,7 +7,7 @@ from codemonkeys.utils.monk.theme_functions import print_table, print_t, apply_t
 
 
 class ListProcesses(Command):
-    def run(self):
+    def run(self) -> None:
         monk_processes = []
         for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
             try:

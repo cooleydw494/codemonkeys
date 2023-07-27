@@ -1,7 +1,7 @@
 from codemonkeys.utils.monk.theme_functions import print_t, print_table
 
 
-def run():
+def run() -> None:
     print_t("Add-Monkey Help", "important")
     print_t("This script allows you to create a new monkey configuration and add it to the 'monkey-manifest.yaml' "
             "file. The 'monk add-monkey' command will guide you through a series of prompts for entering your "

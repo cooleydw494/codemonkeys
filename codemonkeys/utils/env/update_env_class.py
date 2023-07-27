@@ -1,5 +1,6 @@
 import os
 import re
+from typing import List
 
 from dotenv import dotenv_values
 
@@ -11,7 +12,7 @@ ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
 ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_name}', '{default}')"
 
 
-def update_env_class():
+def update_env_class() -> None:
     """
     Updates the env_class.py file to include all environment variables as attributes of the Env class.
     """
@@ -54,13 +55,13 @@ def update_env_class():
         raise Exception("Couldn't find all markers in the class file.")
 
     # Get all environment variables and generate corresponding class definitions
-    env_definitions = []
+    env_definitions: List[str] = []
     for key, value in env_vars.items():
         if key not in framework_env_vars.keys():
             env_definitions.append(ENV_DEFINITION_TEMPLATE.format(var_name=key, var_type=get_env_prop_type(value)))
 
     # Get codemonkeys environment variables and generate corresponding class definitions
-    framework_env_definitions = []
+    framework_env_definitions: List[str] = []
     for key, value in framework_env_vars.items():
         var_type = get_env_prop_type(value)
         framework_env_definitions.append(
