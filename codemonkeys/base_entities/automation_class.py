@@ -28,14 +28,10 @@ class Automation(CliRunnable):
         """
         Initializes the `Automation` class.
 
-        :param monk_args: Core Monk CLI args. Usually not relevant to subclasses.
-        :type monk_args: argparse.Namespace
-        :param named_args: Dict of named args and values (e.g. `--key value`)
-        :type named_args: Dict[str, Any]
-        :param unnamed_args: List of unnamed args (e.g. `value`)
-        :type unnamed_args: List[str]
-        :param monkey_config: Optional MonkeyConfig to use for Automation; otherwise, user is prompted. Defaults to None.
-        :type monkey_config: MonkeyConfig | None, optional
+        :param argparse.Namespace monk_args: Core Monk CLI args. Usually not relevant to subclasses.
+        :param Dict[str, Any] named_args: Dict of named args and values (e.g. `--key value`)
+        :param List[str] unnamed_args: List of unnamed args (e.g. `value`)
+        :param MonkeyConfig | None monkey_config: Optional MonkeyConfig for Automation; otherwise, user is prompted.
         """
         super().__init__(monk_args, named_args, unnamed_args)
 
@@ -55,7 +51,6 @@ class Automation(CliRunnable):
         Loads the MonkeyConfig instance for the specified monkey (or prompts user if None)
 
         :return: Instantiated MonkeyConfig.
-        :rtype: MonkeyConfig
         """
         return load_monkey_config(self.monkey)
 

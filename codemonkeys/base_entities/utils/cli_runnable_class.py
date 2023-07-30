@@ -17,12 +17,9 @@ class CliRunnable:
         """
         Initializes the `CliRunnable` instance.
         
-        :param monk_args: Core Monk CLI args. Usually not relevant to subclasses.
-        :type monk_args: argparse.Namespace
-        :param named_args: Dict of named args and values (e.g. `--key value`)
-        :type named_args: Dict[str, Any]
-        :param unnamed_args: List of unnamed args (e.g. `value`)
-        :type unnamed_args: List[str]
+        :param argparse.Namespace monk_args: Core Monk CLI args. Usually not relevant to subclasses.
+        :param Dict[str, Any] named_args: Dict of named args and values (e.g. `--key value`)
+        :param List[str] unnamed_args: List of unnamed args (e.g. `value`)
         """
         self.monk_args = monk_args
         self.named_args = named_args
@@ -53,10 +50,8 @@ class CliRunnable:
         """
         Sets an argument's value, with type checking if a type hint is specified.
         
-        :param key: The key of the argument to set.
-        :type key: str
-        :param value: The value of the argument to set.
-        :type value: Any
+        :param str key: The key of the argument to set.
+        :param Any value: The value of the argument to set.
         """
 
         # Get the expected type from the type hint, if any
