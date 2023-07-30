@@ -4,6 +4,11 @@ from codemonkeys.base_entities.command_class import Command
 
 
 class ExampleCommand(Command):
+    """
+    Use this class to define CLI arguments, requirements, etc (look at Command and CliRunnable for more info).
+    Of course, use the run() method to implement the Command functionality.
+    """
+
     # Specify args that are required (must be initialized as None)
     required_arg_keys = ['named_arg_one']
 
@@ -23,6 +28,8 @@ class ExampleCommand(Command):
     unnamed_arg_two: Union[int, None] = None
 
     def run(self) -> None:
-        # Implement the command functionality here, utilizing args as needed
+        """
+        Execute your Command logic here,, utilizing args as needed.
+        """
         print(f"named_arg_one: {self.named_arg_one}")
         print(f"Monk Args: {self.monk_args}")
