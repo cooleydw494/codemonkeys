@@ -4,8 +4,16 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class ToggleLightMode(Command):
+    """
+    ToggleLightMode is a subclass of the Command class. Its primary function is
+    to allow for toggling of Light Mode in the application's user interface.
+    """
 
     def run(self) -> None:
+        """
+        Handles the reading of the theme configuration file, defines whether the 
+        Light Mode is currently enabled or not, and then toggles its state.
+        """
 
         with open(THEME_CONFIG_PATH, "r+") as file:
             lines = file.readlines()

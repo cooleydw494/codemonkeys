@@ -5,11 +5,20 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class GptModelsInfo(Command):
+    """
+    A Command Class representing a command to retrieve and display
+    information about various GPT Models.
+
+    :param bool update: Flag indicating if the GPT Model Info Cache needs to be updated.
+    """
     named_arg_keys = ['update']
     update: bool = False
 
     def run(self) -> None:
-
+        """
+        Updates the GPT Model Info Cache if required and prints the
+        information about available GPT Models.
+        """
         if self.update:
             print_t(f'Updating GPT Model Info Cache{nl}', 'loading')
             update_gpt_model_cache()

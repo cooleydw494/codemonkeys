@@ -7,14 +7,15 @@ from codemonkeys.defs import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
 
 
 class Make(Command):
-    # Specify args that are required (must be initialized as None)
+    """
+    The Make Class is a command that copies an example entity in a specified path and renames it accordingly.
+    
+    :param str entity_type: The type of the entity to be created, e.g., command, automation, barrel.
+    :param str entity_name: The name of the entity to be created.
+    """
     required_arg_keys = ['entity_type', 'entity_name']
-
-    # Specify unnamed args (passed without --name) (define in passing order)
     unnamed_arg_keys = ['entity_type', 'entity_name']
 
-    # Define and set defaults for all args (incl required)
-    # Setting type-hints will provide validation in CliRunnable base class.
     entity_type: str = None
     entity_name: str = None
 
@@ -25,6 +26,11 @@ class Make(Command):
     }
 
     def run(self) -> None:
+        """
+        The main execution method for the Make command.
+        
+        :raises ValueError: If the entity_name isn't in a valid format (kebab-case)
+        """
         if not self.entity_name.replace('-', '').isalpha():
             raise ValueError(f"Invalid name: {self.entity_name}. Please specify in kebab-case (e.g. entity-name).")
 

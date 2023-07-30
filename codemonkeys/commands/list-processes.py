@@ -7,7 +7,18 @@ from codemonkeys.utils.monk.theme_functions import print_table, print_t, apply_t
 
 
 class ListProcesses(Command):
+    """
+    The ListProcesses class is a subclass of Command. 
+    It is used to display all the running processes 
+    that contain 'monk' in their name or command 
+    line options.
+    """
+
     def run(self) -> None:
+        """
+        Prints out a table of ongoing 'monk' processes displaying their 
+        ID, command, and equivalent command to kill the process.
+        """
         monk_processes = []
         for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
             try:

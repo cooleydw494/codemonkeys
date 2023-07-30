@@ -1,3 +1,4 @@
+
 import os
 import sys
 import tempfile
@@ -15,11 +16,18 @@ from codemonkeys.utils.monkey_config.monkey_config_validations import validate_m
 
 
 class AddMonkey(Command):
+    """Class representing the 'add-monkey' command. 
+
+    This class inherits from the Command class and allows a user to add a new 'monkey' 
+    configuration to the monkey manifest.
+    """
+
     unnamed_arg_keys = ['monkey_name']
     monkey_name: Optional[str] = None
     required_arg_keys = ['monkey_name']
 
     def run(self) -> None:
+        """Executes the command and adds a new 'monkey' configuration to the monkey manifest."""
         if self.monkey_name is None or not validate_monkey_name(self.monkey_name):
             monkey_name = get_user_config_value("Please enter a name for your new monkey: ",
                                                 validate_monkey_name, "(letters/hyphens only)")
@@ -63,6 +71,12 @@ class AddMonkey(Command):
 
 
 def _process_input_prompts(data: List[Tuple[str, Any, str]]) -> dict:
+    """Prompts the user for input and processes the responses. 
+
+    :param List[Tuple[str, Any, str]] data: The input prompts.
+    :return: A dictionary of the processed inputs.
+    :rtype: dict
+    """
     monkey_data = {}
     for key, validate_function, hint in data:
         user_value = get_user_config_value(key, validate_function, hint)
