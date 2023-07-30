@@ -1,4 +1,5 @@
 import difflib
+from typing import Sequence
 
 from codemonkeys.defs import nl, nl2
 from codemonkeys.utils.git.gitter import Gitter
@@ -6,16 +7,13 @@ from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
-def diff_content(old_content: str, new_content: str) -> str:
+def diff_content(old_content: Sequence[str], new_content: Sequence[str]) -> str:
     """
     Generates a unified diff between old_content and new_content.
 
-    :param old_content: The original content.
-    :type old_content: str
-    :param new_content: The updated content.
-    :type new_content: str
+    :param Sequence[str] old_content: The original content.
+    :param Sequence[str] new_content: The updated content.
     :return: The unified diff as a string.
-    :rtype: str
     """
     return nl.join(list(difflib.unified_diff(old_content, new_content)))
 
@@ -35,8 +33,7 @@ class Committer:
         """
         Initializes the `Committer` class.
 
-        :param repo_path: Path to the Git repository.
-        :type repo_path: str
+        :param str repo_path: Path to the Git repository.
         """
         self.gitter = Gitter(repo_path)
         self.gpt_client = GPTClient(self.model, self.temp, self.max_tokens)
@@ -45,18 +42,17 @@ class Committer:
         """
         Sets the GPT model, temperature, and maximum tokens for the Committer.
 
-        :param model: GPT model to use.
-        :type model: str
-        :param temp: Temperature for the GPT model. Defaults to None.
-        :type temp: float, optional
-        :param max_tokens: Maximum number of tokens for the GPT model. Defaults to None.
-        :type max_tokens: int, optional
+        :param str model: GPT model to use.
+        :param float temp: Temperature for the GPT model.
+        :param int max_tokens: Maximum number of tokens for the GPT model.
         :return: The updated Committer instance.
-        :rtype: Committer
         """
-        self.model = model
-        self.temp = temp
-        self.max_tokens = max_tokens
+        if model is not None:
+            self.model = model
+        if temp is not None:
+            self.temp = temp
+        if max_tokens is not None:
+            self.max_tokens = max_tokens
         self.gpt_client = GPTClient(self.model, self.temp, self.max_tokens)
         return self
 
@@ -64,10 +60,8 @@ class Committer:
         """
         Sets the GPT prompt for the Committer
 
-        :param prompt: The GPT prompt.
-        :type prompt: str
+        :param str prompt: The GPT prompt.
         :return: The updated Committer instance.
-        :rtype: Committer
         """
         self.prompt = prompt
         return self
@@ -76,10 +70,8 @@ class Committer:
         """
         Sets the commit message manually for the Committer.
 
-        :param commit_message: Commit message.
-        :type commit_message: str
+        :param str commit_message: Commit message.
         :return: The updated Committer instance.
-        :rtype: Committer
         """
         self.message = commit_message
         return self
@@ -88,12 +80,9 @@ class Committer:
         """
         Generates a commit message based on the diff of old_content and new_content.
 
-        :param old_content: Original content.
-        :type old_content: str
-        :param new_content: Updated content.
-        :type new_content: str
+        :param str old_content: Original content.
+        :param str new_content: Updated content.
         :return: The generated commit message.
-        :rtype: str
         """
         diff = diff_content(old_content.splitlines(), new_content.splitlines())
         prompt = f"{self.prompt or 'Write a commit message for the following changes:'}{nl2}{nl}{diff}{nl}{nl2}"
@@ -109,7 +98,6 @@ class Committer:
         Gets the current commit message.
 
         :return: The current commit message, or None if not set.
-        :rtype: str | None
         """
         return self.message
 
