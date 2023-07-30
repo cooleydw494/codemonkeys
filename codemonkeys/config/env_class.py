@@ -19,6 +19,10 @@ required_env_props: List = []
 
 @dataclass
 class Env:
+    """
+    The Env class provides easy dot notation access to .env vars.
+    """
+
     _instance = None
 
     """ FRAMEWORK_ENV_PROPS - DO NOT MODIFY
@@ -45,6 +49,11 @@ class Env:
 
     @classmethod
     def get(cls) -> 'Env':
+        """
+        Get the instance of the Env class, or create one if it doesn't exist.
+
+        :return: Singleton instance of the Env class
+        """
         if Env._instance is None:
             Env._instance = Env()
 

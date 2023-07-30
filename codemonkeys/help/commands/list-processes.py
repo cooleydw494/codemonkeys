@@ -2,6 +2,8 @@ from codemonkeys.utils.monk.theme_functions import print_t, print_table
 
 
 def run() -> None:
+    """Prints help instructions for the `list-processes` command."""
+
     print_t("List Processes Help", "important")
     print_t("The `list-processes` command provides an overview of all ongoing Monk processes, their process IDs (PIDs),"
             "and commands to kill the respective processes. This is useful for managing and controlling Monk-related"
