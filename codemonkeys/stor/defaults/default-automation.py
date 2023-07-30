@@ -2,15 +2,15 @@ import argparse
 import os
 from typing import Dict, Any, List
 
-from codemonkeys.base_entities.automation_class import Automation
 from codemonkeys.composables.committer import Committer
 from codemonkeys.composables.file_iterator import FileIterator
-from codemonkeys.composables.file_prompter import FilePrompter
+from codemonkeys.base_entities.automation_class import Automation
 from codemonkeys.composables.output_checker import OutputChecker
 from codemonkeys.composables.output_path_resolver import OutputPathResolver
-from codemonkeys.composables.summarizer import Summarizer
 from codemonkeys.utils.file_ops import get_file_contents, file_exists, write_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
+from codemonkeys.composables.file_prompter import FilePrompter
+from codemonkeys.composables.summarizer import Summarizer
 
 
 class Default(Automation):
@@ -53,6 +53,7 @@ class Default(Automation):
         file_iterator = (FileIterator()
                          .set_token_count_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.FILE_SELECT_MAX_TOKENS)
                          .set_file_types_included(mc.FILE_TYPES_INCLUDED)
+                         .set_filepath_match_include(mc.FILEPATH_MATCH_INCLUDE)
                          .set_filepath_match_exclude(mc.FILEPATH_MATCH_EXCLUDE)
                          .set_work_path(mc.WORK_PATH)
                          .filter_files())
@@ -74,6 +75,9 @@ class Default(Automation):
 
         # Iterate through filtered files
         while True:
+
+            files_remaining = file_iterator.get_filtered_files_count()
+            print_t(f"Files remaining: {files_remaining}", 'info')
 
             file_path = file_iterator.pop_file()
             if file_path is None:
@@ -108,6 +112,10 @@ class Default(Automation):
                 output_checker.set_current_try(1)
                 while output_checker.has_tries():
                     output = file_prompter.get_output()
+                    if output is None:
+                        print_t(f"Valid output could not be generated for: {file_path}", 'error')
+                        print_t("Output Check not run because no output was generated.", 'info')
+                        break
                     output_valid = output_checker.check_output(output)
                     if output_valid:
                         new_content = output
