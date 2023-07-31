@@ -4,6 +4,12 @@ from codemonkeys.help.help import run_default_help
 
 
 def _split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[str]]:
+    """
+    Splits unknown args into named/unnamed args.
+    
+    :param List[str] unknown_args: Unknown args.
+    :return: Tuple containing dictionary of named args and list of unnamed args.
+    """
     from collections import OrderedDict
     unknown_named_args = OrderedDict()
     unknown_unnamed_args = []
@@ -30,6 +36,13 @@ def _split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[
 
 
 def parse_monk_args():
+    """
+    Parses the args supplied to the monk command.
+
+    :return: Tuple representing monk_args (argparse.Namespace), named_args (dict),
+             unnamed_args (list), action (str), entity_name (str),
+             and entity_type (str).
+    """
     import argparse
 
     # Create argument parser - use custom help
@@ -51,7 +64,7 @@ def parse_monk_args():
     # Parse Arguments
     monk_args, unknown_args = parser.parse_known_args()
 
-    # Split unknown arguments into named and unnamed
+    # Split unknown args into named/unnamed
     named_args, unnamed_args = _split_unknown_args(unknown_args)
 
     # Action

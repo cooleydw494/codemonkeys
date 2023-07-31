@@ -16,6 +16,14 @@ entity_paths = {
 
 
 def user_select_entity(prompt: str, entity_options: List[Tuple[str, int, int, str, str]]) -> str:
+    """
+    Process user input for selecting an entity from a list of available options.
+
+    :param str prompt: Text displayed to user before options listing.
+    :param list entity_options: A list of tuples each indicating an available entity option.
+        Each tuple is of the form (entity name, match level, distance, entity type, entity path)
+    :return str: Path of the selected entity.
+    """
     print_t(f"{nl}{prompt}{nl2}", 'monkey')
     print('`' * 40)
     for i, (name, _, _, entity_type, _) in enumerate(entity_options):
@@ -33,6 +41,14 @@ def user_select_entity(prompt: str, entity_options: List[Tuple[str, int, int, st
 
 
 def find_entity(entity_name: str, entity_type: str, exact_match_only: bool = False) -> str:
+    """
+    Search for an entity of a certain type.
+
+    :param str entity_name: Name of entity.
+    :param str entity_type: Type of entity (command/automation/barrel/help).
+    :param bool exact_match_only: Boolean flag to only accept exact matches.
+    :return str: The absolute path of the found entity.
+    """
     entity_paths_ = entity_paths[entity_type]
     matches = []
 
@@ -69,8 +85,16 @@ def find_entity(entity_name: str, entity_type: str, exact_match_only: bool = Fal
         sys.exit(1)
 
 
-def _find_entities(entity_directory: str, entity_name: str, entity_type: str) -> Generator[
-    Tuple[str, int, int, str, str], None, None]:
+def _find_entities(entity_directory: str, entity_name: str, entity_type: str) -> Generator[Tuple[str, int, int, str, str], None, None]:
+    """
+    Generate all entities in a certain directory that match a name.
+
+    :param str entity_directory: Directory to search for entities.
+    :param str entity_name: Name of the entity to search for.
+    :param str entity_type: Type of the entity(command/automation/barrel/help).
+    :return Generator: A generator yielding tuples for each entity that matches the search criteria.
+        Each tuple is of the form (entity name, match level, distance, entity type, entity path)
+    """
     for root, _, files in os.walk(entity_directory):
         for file in files:
             if file.endswith(('.sh', '.py')) and not file.startswith(('.', '_')):

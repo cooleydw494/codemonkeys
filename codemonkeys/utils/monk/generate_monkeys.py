@@ -16,6 +16,14 @@ except ImportError as e:
 
 
 def generate_monkeys() -> None:
+    """
+    Generates/updates monkey config cache files from the Monkey Manifest, applying defaults and validating the config.
+    
+    Timestamped config history is stored in the '.history' directory.
+
+    :raises FileNotFoundError: If the monkey-manifest.yaml file is not found.
+    """
+
     os.makedirs(os.path.join(MONKEYS_PATH), exist_ok=True)
 
     try:
@@ -24,7 +32,6 @@ def generate_monkeys() -> None:
         print_t(f"Could not find monkey-manifest.yaml file. File expected to exist at {MONKEY_MANIFEST_PATH}", 'error')
         return
 
-    # Create the directories and config files
     for monkey_name, manifest_config in manifest_monkeys.items():
         merged_config = MonkeyConfig.apply_default_and_validate(manifest_config)
 
@@ -39,7 +46,6 @@ def generate_monkeys() -> None:
                 timestamp = time.strftime("%Y-%m-%d_%H:%M:%S")
                 shutil.move(generated_config_path,
                             os.path.join(MONKEYS_PATH, '.history', monkey_name, f'{timestamp}.yaml'))
-                # Write to the file
                 write_yaml_file(generated_config_path, merged_config, ruamel=True)
         else:
             write_yaml_file(generated_config_path, merged_config, ruamel=True)
