@@ -15,6 +15,12 @@ _model_cache_file_path = TEMP_PATH + '/model_info_cache.json'
 
 
 def get_gpt_model_info() -> dict | None:
+    """
+    Retrieves cached info on GPT models.
+
+    :return: A dictionary containing GPT model information, or None if the information could not be retrieved.
+    :rtype: dict | None
+    """
     try:
         with open(_model_cache_file_path, 'r') as f:
             return json.load(f)
@@ -25,6 +31,12 @@ def get_gpt_model_info() -> dict | None:
 
 
 def get_gpt_model_names() -> list[str] | None:
+    """
+    Retrieves the names of all GPT models from the cached model info.
+
+    :return: A list of model names, or None if the model info could not be retrieved.
+    :rtype: list[str] | None
+    """
     model_info = get_gpt_model_info()
     if model_info is None:
         return None
@@ -32,6 +44,11 @@ def get_gpt_model_names() -> list[str] | None:
 
 
 def update_gpt_model_cache() -> None:
+    """
+    Updates the GPT model info cache by querying the openai API.
+
+    :return: None
+    """
     model_info = _query_model_info()
 
     if model_info is not None:
@@ -44,6 +61,12 @@ def update_gpt_model_cache() -> None:
 
 
 def _query_model_info() -> dict | None:
+    """
+    Queries the OpenAI API for a list of models.
+
+    :return: A dictionary mapping model ids to models, or None if the API call failed.
+    :rtype: dict | None
+    """
     try:
         env = Env.get()
         openai.api_key = env.OPENAI_API_KEY
