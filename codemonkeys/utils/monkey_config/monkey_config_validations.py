@@ -1,6 +1,6 @@
 import os
 import re
-from typing import List, Union
+from typing import List, Union, Any
 
 from codemonkeys.defs import ROOT_PATH
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
@@ -18,41 +18,64 @@ valid_values = {
 
 
 def _has_word(key: str, word: str) -> bool:
+    """
+    Checks if a word is present in the given string (using word boundaries).
+
+    :param str key: The config key to check.
+    :param str word: The word to search for.
+    :return: True if key contains word, else False.
+    """
     return re.search(rf'\b{word}\b', str(key).lower().replace('_', ' ')) is not None
 
 
 def _is_path_key(key: str) -> bool:
+    """
+    Checks if the given key is a PATH key.
+
+    :param str key: The config key to check.
+    :return True if key is a PATH key, else False.
+    """
     return _has_word(key, 'path')
 
 
 def _is_model_key(key: str) -> bool:
+    """
+    Checks if the given key is a MODEL key.
+
+    :param str key: The config key to check.
+    :return True if key is a MODEL key, else False.
+    """
     return _has_word(key, 'model')
 
 
 def _is_temp_key(key: str) -> bool:
+    """
+    Checks if the given key is a TEMP key.
+
+    :param str key: The config key to check.
+    :return True if key is a TEMP key, else False.
+    """
     return _has_word(key, 'temp')
 
 
 def is_prompt_key(key: str) -> bool:
+    """
+    Checks if the given key is a PROMPT key.
+
+    :param str key: The config key to check.
+    :return True if key is a PROMPT key, else False.
+    """
     return _has_word(key, 'prompt')
 
 
-def get_user_config_value(key: str, validate_func, hint="") -> Union[str, None]:
-    while True:
-        user_provided_value = input_t(key, hint)
-        # if user_value is an empty string, return None
-        if user_provided_value == "":
-            return None
-        # if user_value is "null", return None
-        elif user_provided_value.lower() == "null":
-            return 'null'
-        try:
-            return validate_func(key, user_provided_value)
-        except (TypeError, ValueError) as exception:
-            print_t(str(exception), 'error')
-
-
 def validate_path(key: str, path: str) -> Union[str, None]:
+    """
+    Validate PATH by checking its existence and whether it is file or directory.
+
+    :param str key: The config key to validate.
+    :param str path: The PATH value to validate.
+    :return: Validated PATH str or None.
+    """
     if path is None:
         return None
     if path.startswith('ROOT_PATH/'):
@@ -65,13 +88,14 @@ def validate_path(key: str, path: str) -> Union[str, None]:
     return str(absolute_path)
 
 
-def validate_monkey_name(monkey_name: str = None) -> str:
-    if not monkey_name.replace('-', '').isalpha():
-        raise TypeError(f"Monkey name must contain only letters and hyphens")
-    return monkey_name
-
-
 def validate_bool(key: str, value: bool) -> Union[bool, None]:
+    """
+    Validate a boolean value. Accepts 'true', 'false', '1', '0', 'yes', and 'no'. Case insensitive.
+
+    :param str key: The config key to validate.
+    :param bool value: Value to be validated.
+    :return: True, False, or None.
+    """
     if value is None:
         return None
     if isinstance(value, bool):
@@ -83,7 +107,15 @@ def validate_bool(key: str, value: bool) -> Union[bool, None]:
     raise TypeError(f"{key} must be a boolean, not {type(value).__name__}")
 
 
-def validate_type(key: str, value, expected_type: type):
+def validate_type(key: str, value: Any, expected_type: type) -> Any:
+    """
+    Validate the type of a value, optionally checking against a list of valid values.
+
+    :param str key: The config key to validate.
+    :param Any value: The value to validate.
+    :param type expected_type: The expected type of the value.
+    :return: Validated value or None.
+    """
     if value is None:
         return None
     try:
@@ -97,19 +129,40 @@ def validate_type(key: str, value, expected_type: type):
     return value
 
 
-def validate_int(key: str, value: str) -> int:
+def validate_int(key: str, value: Any) -> int | None:
+    """
+    Validate an integer value.
+
+    :param str key: The config key to validate.
+    :param Any value: Value to be validated.
+    :return: Validated int or None.
+    """
     if _is_model_key(key):
         return validate_type('model', value, int)
     return validate_type(key, value, int)
 
 
-def validate_float(key: str, value: str) -> float:
+def validate_float(key: str, value: Any) -> float | None:
+    """
+    Validate a float value.
+
+    :param str key: The config key to validate.
+    :param Any value: Value to be validated.
+    :return: Validated float or None.
+    """
     if _is_temp_key(key):
         return validate_type('temp', value, float)
     return validate_type(key, value, float)
 
 
-def validate_str(key: str, value: str) -> str:
+def validate_str(key: str, value: Any) -> str | None:
+    """
+    Validate a string value.
+
+    :param str key: Key associated to the configured value.
+    :param Any value: Value to be validated.
+    :return: Validated string or None.
+    """
     if type(value) in [int, float, bool]:
         raise TypeError(f"{key} must be a string, not {type(value).__name__}")
     string_value = validate_type(key, value, str)
@@ -118,7 +171,14 @@ def validate_str(key: str, value: str) -> str:
     return string_value
 
 
-def validate_list_str(key: str, value: List[str]) -> Union[List[str], None]:
+def validate_list_str(key: str, value: List[str]) -> List[str] | None:
+    """
+    Validate a List of strings
+
+    :param str key: The config key to validate.
+    :param List[str] value: The List of string values to validate.
+    :return: Validated List or None.
+    """
     value = validate_type(key, value, list)
     if not all(isinstance(item, str) for item in value):
         raise TypeError(f"{key} must be a list of strings")
