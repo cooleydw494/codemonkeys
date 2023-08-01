@@ -67,7 +67,7 @@ def is_prompt_key(key: str) -> bool:
     return _has_word(key, 'prompt')
 
 
-def validate_path(key: str, path: str) -> Union[str, None]:
+def validate_path(key: str, path: str | None) -> Union[str, None]:
     """
     Validate PATH by checking its existence and whether it is file or directory.
 
