@@ -27,7 +27,7 @@ def _has_word(key: str, word: str) -> bool:
     return re.search(rf'\b{word}\b', str(key).lower().replace('_', ' ')) is not None
 
 
-def _is_path_key(key: str) -> bool:
+def is_path_key(key: str) -> bool:
     """
     Checks if the given key is a PATH key.
 
@@ -75,6 +75,7 @@ def validate_path(key: str, path: str | None) -> Union[str, None]:
     :param str path: The PATH value to validate.
     :return: Validated PATH str or None.
     """
+    print(f"Validating {key} value {path}")
     if path is None:
         return None
     if path.startswith('ROOT_PATH/'):

@@ -1,5 +1,6 @@
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
 from codemonkeys.defs import MONKEY_CONFIG_CLASS_PATH, nl
+from codemonkeys.utils.monkey_config.monkey_config_validations import is_path_key
 
 
 def update_monkey_config_class() -> None:
@@ -24,12 +25,10 @@ def update_monkey_config_class() -> None:
             formatted_validations.append(f"        self.{key} = validate_int('{key}', self.{key})")
         elif isinstance(value, float):
             formatted_validations.append(f"        self.{key} = validate_float('{key}', self.{key})")
+        elif is_path_key(key):
+            formatted_validations.append(f"        self.{key} = validate_path('{key}', self.{key})")
         elif isinstance(value, str):
-            import re
-            if re.search(r'\bpath\b', str(key).lower().replace('_', ' ')):
-                formatted_validations.append(f"        self.{key} = validate_path('{key}', self.{key})")
-            else:
-                formatted_validations.append(f"        self.{key} = validate_str('{key}', self.{key})")
+            formatted_validations.append(f"        self.{key} = validate_str('{key}', self.{key})")
         elif isinstance(value, list):
             if all(isinstance(item, str) for item in value):
                 formatted_validations.append(f"        self.{key} = validate_list_str('{key}', self.{key})")
