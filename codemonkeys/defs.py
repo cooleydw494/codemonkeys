@@ -2,7 +2,6 @@ import os
 import sys
 
 from codemonkeys.utils.defs_utils import find_project_root
-from codemonkeys.utils.defs_utils import get_python_command
 
 """  PREDEFINED FRAMEWORK INSTANCE PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
@@ -34,14 +33,12 @@ MONKEYS_PATH = os.path.join(TEMP_PATH, 'monkeys')
 
 ENABLE_RELATIVE_IMPORTS = sys.path.append(ROOT_PATH)
 
-# GET user's available Python command
-PYTHON_COMMAND = get_python_command()
-
 TOKEN_UNCERTAINTY_BUFFER = 10
 
 # OS-agnostic newline characters
 nl = os.linesep
 nl2 = nl * 2
+content_sep = '```'
 
 
 # prop or empty string helper
