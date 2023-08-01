@@ -75,7 +75,6 @@ def validate_path(key: str, path: str | None) -> Union[str, None]:
     :param str path: The PATH value to validate.
     :return: Validated PATH str or None.
     """
-    print(f"Validating {key} value {path}")
     if path is None:
         return None
     if path.startswith('ROOT_PATH/'):
