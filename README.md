@@ -53,7 +53,7 @@ from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_confi
 # load a config
 mc = load_monkey_config('comment-monkey')
 
-# prompt user to confirm loaded config or choose a config to load
+# prompt user to choose a config to load
 mc = load_monkey_config()
 
 # access a property via dot notation
