@@ -73,7 +73,7 @@ class GPTClient:
             print_t(f"Rate limit error, trying again in {rate_limit_delay}s: {e}", 'warning')
             import time
             time.sleep(rate_limit_delay)
-            return self.generate(prompt, temperature, rate_limit_delay*2)
+            return self.generate(prompt, temperature, rate_limit_delay * 2)
         # except openai.error.Timeout as e:
         #     print_t(f"Timeout error, trying again in {rate_limit_delay}s: {e}", 'warning')
         #     import time

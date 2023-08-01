@@ -85,7 +85,8 @@ def find_entity(entity_name: str, entity_type: str, exact_match_only: bool = Fal
         sys.exit(1)
 
 
-def _find_entities(entity_directory: str, entity_name: str, entity_type: str) -> Generator[Tuple[str, int, int, str, str], None, None]:
+def _find_entities(entity_directory: str, entity_name: str, entity_type: str) -> Generator[
+    Tuple[str, int, int, str, str], None, None]:
     """
     Generate all entities in a certain directory that match a name.
 

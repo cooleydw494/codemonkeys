@@ -4,7 +4,6 @@ from typing import List, Union, Any
 
 from codemonkeys.defs import ROOT_PATH
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
-from codemonkeys.utils.monk.theme_functions import input_t, print_t
 
 try:
     gpt_model_names = get_gpt_model_names()

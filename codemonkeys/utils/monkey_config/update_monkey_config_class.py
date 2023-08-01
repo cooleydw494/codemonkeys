@@ -1,4 +1,3 @@
-
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
 from codemonkeys.defs import MONKEY_CONFIG_CLASS_PATH, nl
 

@@ -51,7 +51,7 @@ def update_env_class() -> None:
 
     :return: None
     """
-    
+
     # Get the .env file variables
     env_vars = dotenv_values(os.path.join(ROOT_PATH, ".env"))
 

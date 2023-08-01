@@ -186,7 +186,7 @@ def print_table(table: dict, title: str = None, sub_indent: str = '   ',
 
 
 def print_tree(start_dir: str, exclude_dirs: List[str] = None, exclude_file_starts:
-               List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
+List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
     """
     Prints the file structure starting from start_dir in a nicely formatted tree-like style.
     directories and files that should be excluded can be specified as well as a title for the tree.
