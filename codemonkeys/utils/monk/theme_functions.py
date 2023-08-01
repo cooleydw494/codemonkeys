@@ -1,3 +1,8 @@
+"""
+This module contains various functions that provide themes and print styles for terminal.
+This includes applying colors and themes to text, handling text input and output with respect to themes,
+printing stylized tables and trees, and ensuring that the written output fits nicely into the terminal.
+"""
 import os
 import re
 import sys
@@ -29,6 +34,10 @@ terminal_width = min(os.get_terminal_size().columns, max_terminal_width)
 
 
 def get_theme(theme: str) -> Tuple[bool, Union[None, str], Union[None, str]]:
+    """
+    Retrieves the color code and prefix for the specified theme,
+    or None if the theme does not exist.
+    """
     theme_values = text_themes.get(theme)
     if theme_values:
         prefix = theme_values['pre']
@@ -38,6 +47,9 @@ def get_theme(theme: str) -> Tuple[bool, Union[None, str], Union[None, str]]:
 
 
 def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Union[None, List[str]] = None) -> str:
+    """
+    Applies the specified theme to the given text and returns the themed text.
+    """
     has_theme, color, prefix = get_theme(theme)
     if has_theme:
         if theme == 'super_important':
@@ -53,6 +65,10 @@ def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Union[None,
 
 def print_t(text: str, theme: str = None, incl_prefix: bool = True, attrs: Union[None, List[str]] = None,
             verbose: bool = False) -> None:
+    """
+    Prints the given text with the specified theme applied and optional attributes.
+    Can be set to only print whenever verbose logging is enabled.
+    """
     if verbose and not verbose_logs:
         return
     sub_indent = ''
@@ -67,6 +83,10 @@ def print_t(text: str, theme: str = None, incl_prefix: bool = True, attrs: Union
 
 
 def input_t(text: str, input_options: str = None, theme: str = 'input') -> str:
+    """
+    Prompts for user input with the given question and options,
+    both of which will be presented with the current theme applied.
+    """
     text = apply_t(text, theme, incl_prefix=True)
     if input_options:
         text += f' {apply_t(input_options, "magenta")}' if len(input_options) <= 20 \
@@ -83,6 +103,10 @@ def input_t(text: str, input_options: str = None, theme: str = 'input') -> str:
 
 
 def _print_nice(*args, sub_indent: str = '', **kwargs) -> None:
+    """
+    Internal function to print the given texts (args) with improved indentation and line wrapping.
+    Subsequent lines will be indented according to the sub_indent parameter.
+    """
     sep = kwargs.get("sep", " ")
     end = kwargs.get("end", nl)
     file = kwargs.get("file", None)
@@ -105,14 +129,24 @@ def _print_nice(*args, sub_indent: str = '', **kwargs) -> None:
 
 
 def _apply_bold_to_keywords(text: str) -> str:
+    """
+    Internal function that applies the bold ANSI escape code to all occurrences of 
+    the defined keywords within the text.
+    """
     return re.sub(fr"(?i)\b{'|'.join(keywords)}\b", r'\033[1m\g<0>\033[22m', text)
 
 
 def _strip_color_and_bold_codes(s: str) -> str:
+    """
+    Internal function that removes all ANSI escape codes for colors and bold from the string.
+    """
     return re.sub(r'\x1b\[[0-9;]*m', '', s)
 
 
 def print_banner() -> None:
+    """
+    Prints "banner.txt", the banner of this project.
+    """
     with open(os.path.join(CM_STOR_SNIPPETS_PATH, 'banner.txt'), 'r') as f:
         art = f.read()
     print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
@@ -120,6 +154,10 @@ def print_banner() -> None:
 
 def print_table(table: dict, title: str = None, sub_indent: str = '   ',
                 min_col_width: Union[int, List[int]] = 10) -> None:
+    """
+    Prints the given table in a nicely formatted manner within the terminal,
+    with the specified title and minimum column widths.
+    """
     t_width = terminal_width - len(sub_indent)
 
     if title:
@@ -148,7 +186,11 @@ def print_table(table: dict, title: str = None, sub_indent: str = '   ',
 
 
 def print_tree(start_dir: str, exclude_dirs: List[str] = None, exclude_file_starts:
-List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
+               List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
+    """
+    Prints the file structure starting from start_dir in a nicely formatted tree-like style.
+    directories and files that should be excluded can be specified as well as a title for the tree.
+    """
     if exclude_file_starts is None:
         exclude_file_starts = ['.', '_']
     if exclude_dirs is None:
