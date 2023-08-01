@@ -2,7 +2,6 @@ import argparse
 from typing import Dict, Any, List
 
 from codemonkeys.base_entities.utils.cli_runnable_class import CliRunnable
-from codemonkeys.utils.env.environment_checks import automation_env_checks
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
 
@@ -34,8 +33,6 @@ class Automation(CliRunnable):
         :param MonkeyConfig | None monkey_config: Optional MonkeyConfig for Automation; otherwise, user is prompted.
         """
         super().__init__(monk_args, named_args, unnamed_args)
-
-        automation_env_checks()
 
         if monkey_config is None:
             self.monkey_config: MonkeyConfig = self.load_config()
