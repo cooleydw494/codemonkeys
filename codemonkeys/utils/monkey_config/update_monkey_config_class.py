@@ -1,8 +1,16 @@
+
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
 from codemonkeys.defs import MONKEY_CONFIG_CLASS_PATH, nl
 
 
 def update_monkey_config_class() -> None:
+    """
+    This function dynamically updates the published MonkeyConfig declarations/validations to be up-to-date with
+    monkey-config-defaults.yaml.
+
+    :raises Exception: If any required markers are not found in the class file.
+    :raises ValueError: If the config contains a List with non-string items.
+    """
     config = get_monkey_config_defaults()
 
     formatted_properties = [
