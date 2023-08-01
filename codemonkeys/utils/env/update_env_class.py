@@ -6,16 +6,52 @@ from dotenv import dotenv_values
 
 from codemonkeys.cmdefs import CM_ENV_DEFAULT_PATH
 from codemonkeys.defs import ENV_CLASS_PATH, ROOT_PATH, nl
-from codemonkeys.utils.env.get_env_prop_type import get_env_prop_type
 
 ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
 ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_name}', '{default}')"
 
 
+def get_env_prop_type(env_value: str) -> str:
+    """
+    Determines the appropriate Python type for the given env variable.
+    Types handled: 'bool', 'List[str]', 'int', 'float', and 'str'.
+
+    :param str env_value: The value of the env variable.
+    :return: The type as a str.
+    """
+
+    # Check for boolean
+    if env_value.lower() in ('true', 'false'):
+        return 'bool'
+
+    # Check for list, comma separated values
+    elif ',' in env_value:
+        return 'List[str]'
+
+    # Check for integer
+    if env_value.isdigit():
+        return 'int'
+
+    # Check for float
+    if '.' in env_value and env_value.replace('.', '', 1).isdigit():
+        try:
+            float(env_value)
+            return 'float'
+        except ValueError:
+            pass
+
+    # Default to str
+    return 'str'
+
+
 def update_env_class() -> None:
     """
-    Updates the env_class.py file to include all environment variables as attributes of the Env class.
+    Update the env_class.py file to include all environment variables as attributes of the Env class.
+    This allows for type hinting and IDE auto-complete.
+
+    :return: None
     """
+    
     # Get the .env file variables
     env_vars = dotenv_values(os.path.join(ROOT_PATH, ".env"))
 
@@ -64,8 +100,8 @@ def update_env_class() -> None:
     framework_env_definitions: List[str] = []
     for key, value in framework_env_vars.items():
         var_type = get_env_prop_type(value)
-        framework_env_definitions.append(
-            ENV_DEFINITION_TEMPLATE_DEFAULT.format(var_name=key, var_type=var_type, default=value))
+        definition = ENV_DEFINITION_TEMPLATE_DEFAULT.format(var_name=key, var_type=var_type, default=value)
+        framework_env_definitions.append(definition)
 
     # Generate the required env props list
     required_env_props_list = ', '.join(['"' + key + '"' for key in framework_env_vars.keys()])
