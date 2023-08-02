@@ -2,6 +2,7 @@ from typing import List
 
 import openai
 import tiktoken
+from tiktoken import Encoding
 
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
@@ -27,7 +28,11 @@ def check_api_key():
 class GPTClient:
     """A helper class to interact with GPT based models."""
 
-    _model_names = get_gpt_model_names()
+    model: str = None
+    hard_max_tokens: int = None
+    max_tokens: int = None
+    temperature: float = None
+    encoding: Encoding = None
 
     def __init__(self, model_name: str, temperature: float = 1.0, max_tokens: int = 8000):
         """
@@ -37,7 +42,7 @@ class GPTClient:
         :param float temperature: The generation temperature. Defaults to 1.0.
         :param int max_tokens: Maximum tokens limit. Defaults to 8000.
         """
-        if model_name not in self._model_names:
+        if model_name not in get_gpt_model_names():
             raise ValueError(f"Invalid GPT model name: {model_name}. Try `monk gpt-models-info --update`.")
 
         self.model = model_name

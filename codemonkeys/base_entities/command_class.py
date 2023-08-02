@@ -1,4 +1,4 @@
-from codemonkeys.base_entities.utils.cli_runnable_class import CliRunnable
+from codemonkeys.base_entities.cli_runnable_class import CliRunnable
 
 
 class Command(CliRunnable):

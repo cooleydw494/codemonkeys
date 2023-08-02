@@ -1,7 +1,7 @@
 import argparse
 from typing import Dict, Any, List
 
-from codemonkeys.base_entities.utils.cli_runnable_class import CliRunnable
+from codemonkeys.base_entities.cli_runnable_class import CliRunnable
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
 

@@ -1,4 +1,5 @@
 import json
+import os
 
 import openai
 
@@ -11,8 +12,6 @@ except ImportError:
     print_t('Could not import user Env class from config.framework.env_class. Using default Env class.', 'warning')
     from codemonkeys.config.env_class import Env
 
-_model_cache_file_path = TEMP_PATH + '/model_info_cache.json'
-
 
 def get_gpt_model_info() -> dict | None:
     """
@@ -22,7 +21,7 @@ def get_gpt_model_info() -> dict | None:
     :rtype: dict | None
     """
     try:
-        with open(_model_cache_file_path, 'r') as f:
+        with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'r') as f:
             return json.load(f)
 
     except Exception as e:
@@ -53,7 +52,7 @@ def update_gpt_model_cache() -> None:
 
     if model_info is not None:
         try:
-            with open(_model_cache_file_path, 'w') as f:
+            with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'w') as f:
                 json.dump(model_info, f)
 
         except Exception as e:

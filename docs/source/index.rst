@@ -1,13 +1,14 @@
 .. codemonkeys documentation master file, created by
    sphinx-quickstart on Mon Jul 31 23:52:29 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
 CodeMonkeys Docs
 =======================================
 
-.. automodule:: codemonkeys.utils.gpt.gpt_client
-   :members:
+.. autoclass:: codemonkeys.base_entities.cli_runnable_class
+
+
+.. autoclass:: codemonkeys.utils.gpt.gpt_client
+    :members:
 
 
 .. toctree::
