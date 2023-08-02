@@ -1,6 +1,6 @@
 import importlib.util
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from codemonkeys.utils.monk.theme_functions import print_t
 
@@ -27,7 +27,7 @@ def run_command(entity_path: str, entity_name: str, monk_args: Any, named_args: 
 
 
 def run_automation(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any],
-                   unnamed_args: List[str], monkey_config: MonkeyConfig | None = None):
+                   unnamed_args: List[str], monkey_config: Optional[MonkeyConfig] = None):
     """
     Locates `Automation` using path/name, instantiates it, and runs it.
 
@@ -55,7 +55,7 @@ def run_barrel(entity_path: str, entity_name: str, monk_args: Any, named_args: D
 
 
 def _run_entity(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any], unnamed_args: List[str],
-                monkey_config: MonkeyConfig | None = None):
+                monkey_config: Optional[MonkeyConfig] = None):
     """
     Locates Entity class using path/name, instantiates it, and runs it.
 

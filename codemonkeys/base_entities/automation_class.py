@@ -1,5 +1,5 @@
 import argparse
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from codemonkeys.base_entities.cli_runnable_class import CliRunnable
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -17,13 +17,13 @@ class Automation(CliRunnable):
     """A base class for framework and user-created Automations."""
 
     named_arg_keys = ['monkey']
-    monkey: str = None
-    monkey_config: MonkeyConfig | None = None
+    monkey: str | None = None
+    monkey_config: Optional[MonkeyConfig] = None
 
     required_config_keys = []
 
     def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str],
-                 monkey_config: MonkeyConfig | None = None):
+                 monkey_config: Optional[MonkeyConfig] = None):
         """
         Initializes the `Automation` class.
 

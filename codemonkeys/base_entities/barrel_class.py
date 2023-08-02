@@ -1,5 +1,5 @@
 import argparse
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from codemonkeys.base_entities.cli_runnable_class import CliRunnable
 from codemonkeys.utils.monk.find_entity import find_entity
@@ -18,7 +18,7 @@ except ImportError:
 class Barrel(CliRunnable):
     """A Barrel class that initializes and runs multiple automations."""
 
-    monkey_config: MonkeyConfig | None = None
+    monkey_config: Optional[MonkeyConfig] = None
 
     def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
         """
