@@ -2,11 +2,11 @@ from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
 from codemonkeys.utils.monk.theme_functions import print_t
 
 try:
-    from config.framework.monkey_config_class import MonkeyConfig
+    from config.framework.monkey_config import MonkeyConfig
 except ImportError:
-    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config_class. Using default '
+    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
             'MonkeyConfig class. load_monkey_config', 'warning')
-    from codemonkeys.config.monkey_config_class import MonkeyConfig
+    from codemonkeys.config.monkey_config import MonkeyConfig
 
 
 def load_monkey_config(monkey_name: str | None = None) -> MonkeyConfig:

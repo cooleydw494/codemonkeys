@@ -20,8 +20,8 @@ MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(CONFIG_PATH, 'monkey-config-defaults.
 
 FRAMEWORK_CONFIG_PATH = os.path.join(CONFIG_PATH, 'framework')
 THEME_CONFIG_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, 'theme.py')
-ENV_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "env_class.py")
-MONKEY_CONFIG_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "monkey_config_class.py")
+ENV_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "env.py")
+MONKEY_CONFIG_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "monkey_config.py")
 
 STOR_PATH = os.path.join(ROOT_PATH, "stor")
 TEMP_PATH = os.path.join(STOR_PATH, "temp")

@@ -9,10 +9,10 @@ from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import print_t
 
 try:
-    from config.framework.env_class import Env
+    from config.framework.env import Env
 except ImportError:
-    print_t('Could not import user Env class from config.framework.env_class. Using default Env class.', 'warning')
-    from codemonkeys.config.env_class import Env
+    print_t('Could not import user Env class from config.framework.env. Using default Env class.', 'warning')
+    from codemonkeys.config.env import Env
 
 # Set up OpenAI client with API key
 env = Env.get()

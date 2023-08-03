@@ -17,10 +17,10 @@ from codemonkeys.cmdefs import VERSION, CM_STOR_SNIPPETS_PATH
 from codemonkeys.defs import nl
 
 try:
-    from config.framework.env_class import Env
+    from config.framework.env import Env
 except ImportError:
-    print('Could not import user Env class from config.framework.env_class. Using default Env class.')
-    from codemonkeys.config.env_class import Env
+    print('Could not import user Env class from config.framework.env. Using default Env class.')
+    from codemonkeys.config.env import Env
 
 env = Env.get()
 print_lock = threading.Lock()

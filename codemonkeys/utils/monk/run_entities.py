@@ -5,11 +5,11 @@ from typing import Any, Dict, List, Optional
 from codemonkeys.utils.monk.theme_functions import print_t
 
 try:
-    from config.framework.monkey_config_class import MonkeyConfig
+    from config.framework.monkey_config import MonkeyConfig
 except ImportError:
-    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config_class. Using default '
-            'MonkeyConfig class. automation_class', 'warning')
-    from codemonkeys.config.monkey_config_class import MonkeyConfig
+    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
+            'MonkeyConfig class. automation', 'warning')
+    from codemonkeys.config.monkey_config import MonkeyConfig
 
 
 def run_command(entity_path: str, entity_name: str, monk_args: Any, named_args: Dict[str, Any],

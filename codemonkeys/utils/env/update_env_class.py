@@ -46,7 +46,7 @@ def get_env_prop_type(env_value: str) -> str:
 
 def update_env_class() -> None:
     """
-    Update the env_class.py file to include all environment variables as attributes of the Env class.
+    Update the env.py file to include all environment variables as attributes of the Env class.
     This allows for type hinting and IDE auto-complete.
 
     :return: None
