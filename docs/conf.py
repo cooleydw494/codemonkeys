@@ -13,7 +13,7 @@ copyright = '2023, David Cooley'
 author = 'David Cooley'
 release = '0.3.0'
 
-sys.path.insert(0, os.path.abspath('../../codemonkeys'))
+sys.path.insert(0, os.path.abspath('../codemonkeys'))
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
