@@ -4,29 +4,14 @@
 CodeMonkeys Docs
 =======================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+.. autosummary::
+   :toctree: _autosummary
+   :recursive:
 
-
-.. automodule:: codemonkeys.entities.automation
-    :members:
-
-.. automodule:: codemonkeys.entities.barrel
-    :members:
-
-.. automodule:: codemonkeys.entities.command
-    :members:
-
-.. automodule:: codemonkeys.entities.cli_runnable
-    :members:
-
-
-
-
-.. automodule:: codemonkeys.utils.gpt.gpt_client
-    :members:
-
+   entities
+   composables
+   config
+   utils
 
 Indices and tables
 ==================

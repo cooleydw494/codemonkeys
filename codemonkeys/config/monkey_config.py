@@ -16,6 +16,12 @@ except ImportError:
 
 
 def insert_cop_file_contents(value: str) -> str:
+    """
+    Replaces any {cop:file_path} placeholders with the contents of the file at file_path.
+
+    :param str value: The value to check for {cop:file_path} placeholders.
+    :return: The value with the placeholders replaced with the file contents.
+    """
     matches = re.findall(r'{cop:(.*?)}', value)
     for match in matches:
         expanded_path = os.path.expanduser(match)

@@ -1,6 +1,3 @@
-"""  PREFERENCES
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
-
 # Improved readability for psychopaths
 light_mode_enabled: bool = False
 # Looks 👌 with very lil space, but you do you, boo-boo
@@ -13,9 +10,6 @@ keywords: list = [
     'entity types', 'defs.py', 'CodeMonkeys', 'automations', 'action flags', 'entity type',
     'barrels', 'modules', 'commands', 'monkeys', 'actions', 'barrel', 'module', 'action flag', 'automation', 'command',
     'monkey', 'types', 'cli', 'monk']
-
-"""  CLI TEXT THEMES
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
 
 text_themes: dict = {
     'start': {'color': 'light_green', 'light_mode': 'green', 'pre': '🚀 '},

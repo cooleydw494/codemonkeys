@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from codemonkeys.config.theme import light_mode_enabled, max_terminal_width, verbose_logs_enabled, keywords, text_themes
 from codemonkeys.defs import ROOT_PATH
 
-load_dotenv(os.path.join(ROOT_PATH, '.env'))
+load_dotenv(os.path.join(ROOT_PATH or '.', '.env'))
 
 """ FRAMEWORK_ENV_PROPS_LIST - DO NOT MODIFY
 A List tracking the source's env props. This is currently unused, but could be useful. """
