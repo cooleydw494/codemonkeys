@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from codemonkeys.base_entities.command_class import Command
+from codemonkeys.entities.command import Command
 from codemonkeys.cmdefs import CM_EXAMPLE_COMMAND_PATH, CM_EXAMPLE_AUTOMATION_PATH, CM_EXAMPLE_BARREL_PATH
 from codemonkeys.defs import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
 

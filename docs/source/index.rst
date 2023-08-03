@@ -4,21 +4,21 @@
 CodeMonkeys Docs
 =======================================
 
-
 .. toctree::
    :maxdepth: 2
-   :caption: Entities:
+   :caption: Contents:
 
-.. automodule:: codemonkeys.base_entities.automation_class
+
+.. automodule:: codemonkeys.entities.automation
     :members:
 
-.. automodule:: codemonkeys.base_entities.barrel_class
+.. automodule:: codemonkeys.entities.barrel
     :members:
 
-.. automodule:: codemonkeys.base_entities.command_class
+.. automodule:: codemonkeys.entities.command
     :members:
 
-.. automodule:: codemonkeys.base_entities.cli_runnable_class
+.. automodule:: codemonkeys.entities.cli_runnable
     :members:
 
 
@@ -27,10 +27,6 @@ CodeMonkeys Docs
 .. automodule:: codemonkeys.utils.gpt.gpt_client
     :members:
 
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
 
 Indices and tables
 ==================

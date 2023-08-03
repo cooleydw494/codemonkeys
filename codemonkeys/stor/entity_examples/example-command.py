@@ -1,6 +1,6 @@
 from typing import Union
 
-from codemonkeys.base_entities.command_class import Command
+from codemonkeys.entities.command import Command
 
 
 class ExampleCommand(Command):

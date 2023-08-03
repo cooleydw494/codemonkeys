@@ -2,7 +2,7 @@ import argparse
 import os
 from typing import Dict, Any, List
 
-from codemonkeys.base_entities.automation_class import Automation
+from codemonkeys.entities.automation import Automation
 from codemonkeys.composables.committer import Committer
 from codemonkeys.composables.file_iterator import FileIterator
 from codemonkeys.composables.file_prompter import FilePrompter

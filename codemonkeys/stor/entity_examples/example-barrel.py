@@ -1,4 +1,4 @@
-from codemonkeys.base_entities.barrel_class import Barrel
+from codemonkeys.entities.barrel import Barrel
 
 """
 Barrels are intended to orchestrate multiple automations / monkey configs.
