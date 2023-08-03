@@ -1,5 +1,5 @@
 openai==0.27.8
-pyyaml~=6.0
+pyyaml==6.0.1
 python-dotenv~=1.0.0
 python-Levenshtein==0.21.1
 termcolor~=2.3.0
@@ -7,3 +7,4 @@ tiktoken~=0.4.0
 Levenshtein==0.21.1
 psutil
 ruamel.yaml==0.17.32
+sphinx_rtd_theme
