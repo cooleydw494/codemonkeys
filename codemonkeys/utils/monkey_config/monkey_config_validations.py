@@ -5,15 +5,26 @@ from typing import List, Union, Any
 from codemonkeys.defs import ROOT_PATH
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 
-try:
-    gpt_model_names = get_gpt_model_names()
-except Exception as e:
-    gpt_model_names = ['gpt-3.5-turbo', 'gpt-4']
 
-valid_values = {
-    'temp': [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-    'model': gpt_model_names,
-}
+def get_valid_values(key: str) -> List[Any]:
+    """
+    Gets the valid values for the given key.
+
+    :param str key: The config key to check.
+    :return: List of valid values for the given key.
+    """
+    try:
+        gpt_model_names = get_gpt_model_names()
+    except Exception as e:
+        gpt_model_names = ['gpt-3.5-turbo', 'gpt-4']
+
+    valid_values = {
+        'temp': [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        'model': gpt_model_names,
+    }
+    if key in valid_values:
+        return valid_values[key]
+    return []
 
 
 def _has_word(key: str, word: str) -> bool:
@@ -165,7 +176,7 @@ def validate_str(key: str, value: Any) -> str | None:
     if type(value) in [int, float, bool]:
         raise TypeError(f"{key} must be a string, not {type(value).__name__}")
     string_value = validate_type(key, value, str)
-    if string_value == str and _is_path_key(key):
+    if string_value == str and is_path_key(key):
         return validate_path(key, value)
     return string_value
 

@@ -16,7 +16,7 @@ except ImportError:
 
 
 class Barrel(CliRunnable):
-    """A Barrel class that initializes and runs multiple automations."""
+    """A base class that initializes and runs multiple automations."""
 
     monkey_config: Optional[MonkeyConfig] = None
 
