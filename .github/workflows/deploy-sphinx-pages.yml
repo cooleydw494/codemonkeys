@@ -21,9 +21,6 @@ jobs:
       id-token: write
 
     steps:
-      - name: Print entire directory structure
-        run: |
-          ls -R /home/runner/work
 
       - id: deployment
         uses: sphinx-notes/pages@v3
