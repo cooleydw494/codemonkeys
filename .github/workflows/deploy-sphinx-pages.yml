@@ -21,6 +21,9 @@ jobs:
       id-token: write
 
     steps:
+      - name: Add codemonkeys to PYTHONPATH
+        run: echo "PYTHONPATH=$PYTHONPATH:$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
 
       - id: deployment
         uses: sphinx-notes/pages@v3
