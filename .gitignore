@@ -3,6 +3,7 @@ TODO.md
 
 # ignore sphinx build files
 docs/build/*
+docs/_autosummary/*
 
 # Python artifacts
 *.pyc
