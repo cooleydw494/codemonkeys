@@ -21,9 +21,10 @@ jobs:
       id-token: write
 
     steps:
-      - name: Print directory structure
+      - name: Print entire directory structure
         run: |
-          ls -R $GITHUB_WORKSPACE
+          ls -R /home/runner/work
+      
 
       - name: Install dependencies
         run: |
