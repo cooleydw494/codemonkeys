@@ -21,6 +21,10 @@ jobs:
       id-token: write
 
     steps:
+      - name: Print directory structure
+        run: |
+          ls -R $GITHUB_WORKSPACE
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
