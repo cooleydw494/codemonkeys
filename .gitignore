@@ -1,15 +1,9 @@
-# Environment variables
-../codemonkeys-template/.env
-.env-backup
-
-# CodeMonkey generated files (some are tracked though, like default generated monkey configs)
-../codemonkeys-template/stor/temp/*
+# ignore local maintainer files
 TODO.md
 
-# Generated Monkey Configs (even pre-packaged) are ignored
-# It is good practice to not add files that are generated.
-# Also monkey configs will almost definitely contain sensitive info, given the inclusion of OPENAI_API_KEY
-../codemonkeys-template/config/monkeys/*
+# ignore sphinx build files
+docs/build/*
+docs/_autosummary/*
 
 # Python artifacts
 *.pyc
@@ -21,8 +15,8 @@ __pycache__/
 .pytest_cache/
 
 # PyCharm artifacts
-/.idea/
-/venv/
+/.idea/*
+/venv/*
 
 # VS Code artifacts
 .vscode/*
