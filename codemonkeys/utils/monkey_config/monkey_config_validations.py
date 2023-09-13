@@ -133,7 +133,7 @@ def validate_type(key: str, value: Any, expected_type: type) -> Any:
     except TypeError:
         raise TypeError(f"{key} must be a {expected_type.__name__}")
 
-    valid_type_values = valid_values.get(key)
+    valid_type_values = get_valid_values(str(expected_type))
     if valid_type_values and value not in valid_type_values:
         raise TypeError(f"{key} value {value} is not in valid values {valid_type_values}")
     return value
