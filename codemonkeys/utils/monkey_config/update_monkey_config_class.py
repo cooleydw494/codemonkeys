@@ -1,6 +1,28 @@
+import importlib
+
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
 from codemonkeys.defs import MONKEY_CONFIG_CLASS_PATH, nl
+from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.monkey_config_validations import is_path_key
+
+try:
+    # import this in a non-standard way to allow force-reloading the module
+    import config.framework.monkey_config
+    MonkeyConfig = config.framework.monkey_config.MonkeyConfig
+except ImportError as e:
+    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
+            'MonkeyConfig class.', 'warning')
+    print_t(str(e))
+    from codemonkeys.config.monkey_config import MonkeyConfig
+
+
+def force_reload_monkey_config_class() -> None:
+    """ Force re-import MonkeyConfig because it may have been rewritten after initial import. """
+    try:
+        importlib.reload(config.framework.monkey_config)
+    except ImportError:
+        print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
+                'MonkeyConfig class. generate_monkeys', 'warning')
 
 
 def update_monkey_config_class() -> None:
@@ -91,3 +113,5 @@ def update_monkey_config_class() -> None:
     # Write the updated MonkeyConfig class
     with open(MONKEY_CONFIG_CLASS_PATH, 'w') as class_file:
         class_file.write(''.join(new_class_lines))  # join the lines without adding extra newlines
+
+    force_reload_monkey_config_class()

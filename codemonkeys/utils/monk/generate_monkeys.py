@@ -8,12 +8,10 @@ from codemonkeys.defs import MONKEYS_PATH, MONKEY_MANIFEST_PATH
 from codemonkeys.utils.monk.theme_functions import print_t
 
 try:
-    # import this in a non-standard way to allow force-reloading the module in generate_monkeys
-    import config.framework.monkey_config
-    MonkeyConfig = config.framework.monkey_config.MonkeyConfig
+    from config.framework.monkey_config import MonkeyConfig
 except ImportError as e:
     print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
-            'MonkeyConfig class. generate_monkeys', 'warning')
+            'MonkeyConfig class.', 'warning')
     print_t(str(e))
     from codemonkeys.config.monkey_config import MonkeyConfig
 
@@ -26,14 +24,6 @@ def generate_monkeys() -> None:
 
     :raises FileNotFoundError: If the monkey-manifest.yaml file is not found.
     """
-
-    """ Force re-import MonkeyConfig because it may have been rewritten after initial import (like in monk script) """
-    try:
-        importlib.reload(config.framework.monkey_config)
-        MonkeyConfig = config.framework.monkey_config.MonkeyConfig
-    except ImportError:
-        print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
-                'MonkeyConfig class. generate_monkeys', 'warning')
 
     os.makedirs(os.path.join(MONKEYS_PATH), exist_ok=True)
 

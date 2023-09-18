@@ -1,14 +1,33 @@
+import importlib
 import os
 import re
 from typing import List
 
 from dotenv import dotenv_values
 
-from codemonkeys.cmdefs import CM_ENV_DEFAULT_PATH
 from codemonkeys.defs import ENV_CLASS_PATH, ROOT_PATH, nl
+from codemonkeys.utils.monk.theme_functions import print_t
+
+try:
+    # import this in a non-standard way to allow force-reloading the module
+    import config.framework.env
+    Env = config.framework.env.Env
+except ImportError as e:
+    print_t('Could not import user Env class from config.framework.env. Using default Env class.', 'warning')
+    print_t(str(e))
+    from codemonkeys.config.env import Env
 
 ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
 ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_name}', '{default}')"
+
+
+def force_reload_env_class() -> None:
+    """ Force re-import Env because it may have been rewritten after initial import. """
+    try:
+        importlib.reload(config.framework.env)
+    except ImportError:
+        print_t('Could not import user Env class from config.framework.env. Using default Env class. generate_monkeys',
+                'warning')
 
 
 def get_env_prop_type(env_value: str) -> str:
@@ -55,64 +74,35 @@ def update_env_class() -> None:
     # Get the .env file variables
     env_vars = dotenv_values(os.path.join(ROOT_PATH, ".env"))
 
-    # Get the .env.default file variables (codemonkeys env props)
-    framework_env_vars = dotenv_values(CM_ENV_DEFAULT_PATH)
-
     # Read the current contents of the file
     with open(ENV_CLASS_PATH, "r") as f:
         content_lines = f.readlines()
 
-    required_start_marker_re = re.compile(r'\[\s*DEFINE_FRAMEWORK_ENV_PROPS_LIST_START\s*\]')
-    required_end_marker_re = re.compile(r'\[\s*DEFINE_FRAMEWORK_ENV_PROPS_LIST_END\s*\]')
-    framework_start_marker_re = re.compile(r'\[\s*DEFINE_FRAMEWORK_ENV_PROPS_START\s*\]')
-    framework_end_marker_re = re.compile(r'\[\s*DEFINE_FRAMEWORK_ENV_PROPS_END\s*\]')
-    start_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_ENV_PROPS_START\s*\]')
-    end_marker_re = re.compile(r'\[\s*DEFINE_CUSTOM_ENV_PROPS_END\s*\]')
+    start_marker_re = re.compile(r'\[\s*DEFINE_ENV_PROPS_START\s*\]')
+    end_marker_re = re.compile(r'\[\s*DEFINE_ENV_PROPS_END\s*\]')
 
-    required_start_index = required_end_index = framework_start_index = framework_end_index = start_index = end_index \
-        = None
+    start_index = end_index = None
 
     for i, line in enumerate(content_lines):
-        if required_start_marker_re.search(line):
-            required_start_index = i + 1
-        elif required_end_marker_re.search(line):
-            required_end_index = i
-        elif framework_start_marker_re.search(line):
-            framework_start_index = i + 1
-        elif framework_end_marker_re.search(line):
-            framework_end_index = i
-        elif start_marker_re.search(line):
+        if start_marker_re.search(line):
             start_index = i + 1
         elif end_marker_re.search(line):
             end_index = i
 
-    if None in [required_start_index, required_end_index, framework_start_index, framework_end_index, start_index,
-                end_index]:
-        raise Exception("Couldn't find all markers in the class file.")
+    if None in [start_index, end_index]:
+        raise Exception("Couldn't find env prop start/stop markers in the Env class.")
 
     # Get all environment variables and generate corresponding class definitions
     env_definitions: List[str] = []
     for key, value in env_vars.items():
-        if key not in framework_env_vars.keys():
-            env_definitions.append(ENV_DEFINITION_TEMPLATE.format(var_name=key, var_type=get_env_prop_type(value)))
-
-    # Get codemonkeys environment variables and generate corresponding class definitions
-    framework_env_definitions: List[str] = []
-    for key, value in framework_env_vars.items():
-        var_type = get_env_prop_type(value)
-        definition = ENV_DEFINITION_TEMPLATE_DEFAULT.format(var_name=key, var_type=var_type, default=value)
-        framework_env_definitions.append(definition)
-
-    # Generate the required env props list
-    required_env_props_list = ', '.join(['"' + key + '"' for key in framework_env_vars.keys()])
-    required_env_props_def = f"required_env_props = [{required_env_props_list}]"
+        env_definitions.append(ENV_DEFINITION_TEMPLATE.format(var_name=key, var_type=get_env_prop_type(value)))
 
     # Replace placeholder in class definition with generated definitions
-    new_content_lines = content_lines[:required_start_index] + [required_env_props_def, nl] + \
-                        content_lines[required_end_index:framework_start_index] + [
-                            line + nl for line in framework_env_definitions] + [nl] + \
-                        content_lines[framework_end_index:start_index] + [
-                            line + nl for line in env_definitions] + [nl] + content_lines[end_index:]
+    new_content_lines = (
+            content_lines[:start_index]
+            + [line + nl for line in env_definitions]
+            + content_lines[end_index:]
+    )
 
     # Write updated contents
     with open(ENV_CLASS_PATH, "w") as f:
