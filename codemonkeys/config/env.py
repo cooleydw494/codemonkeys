@@ -4,7 +4,6 @@ from typing import List
 
 from dotenv import load_dotenv
 
-from codemonkeys.config.theme import light_mode_enabled, max_terminal_width, verbose_logs_enabled, keywords, text_themes
 from codemonkeys.defs import ROOT_PATH
 
 load_dotenv(os.path.join(ROOT_PATH or '.', '.env'))
@@ -38,14 +37,6 @@ class Env:
     OPENAI_API_KEY: str = os.getenv('OPENAI_API_KEY')
 
     # [DEFINE_CUSTOM_ENV_PROPS_END]
-
-    """ THEME - DO NOT MODIFY
-     This should eventually work another way, but for now it's convenient to have it here. """
-    light_mode_enabled = light_mode_enabled
-    max_terminal_width = max_terminal_width
-    verbose_logs_enabled = verbose_logs_enabled
-    keywords = (lambda words: sorted(words, key=len, reverse=True))(keywords)
-    text_themes = text_themes
 
     @classmethod
     def get(cls) -> 'Env':

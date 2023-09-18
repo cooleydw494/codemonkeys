@@ -17,12 +17,11 @@ from codemonkeys.cmdefs import VERSION, CM_STOR_SNIPPETS_PATH
 from codemonkeys.defs import nl
 
 try:
-    from config.framework.env import Env
+    from config.framework.theme import Theme
 except ImportError:
-    print('Could not import user Env class from config.framework.env. Using default Env class.')
-    from codemonkeys.config.env import Env
+    print('Could not import user Theme class from config.framework.theme. Using default Theme class.')
+    from codemonkeys.config.theme import Theme
 
-env = Env.get()
 print_lock = threading.Lock()
 
 
@@ -31,11 +30,11 @@ def get_theme(theme: str) -> Tuple[bool, Union[None, str], Union[None, str]]:
     Retrieves the color code and prefix for the specified theme,
     or None if the theme does not exist.
     """
-    text_themes = env.text_themes
+    text_themes = Theme.text_themes
     theme_values = text_themes.get(theme)
     if theme_values:
         prefix = theme_values['pre']
-        color = theme_values['light_mode'] if env.light_mode_enabled else theme_values['color']
+        color = theme_values['light_mode'] if Theme.light_mode_enabled else theme_values['color']
         return True, color, prefix
     return False, None, None
 
@@ -63,14 +62,14 @@ def print_t(text: str, theme: str = None, incl_prefix: bool = True, attrs: Union
     Prints the given text with the specified theme applied and optional attributes.
     Can be set to only print whenever verbose logging is enabled.
     """
-    if verbose and not env.verbose_logs_enabled:
+    if verbose and not Theme.verbose_logs_enabled:
         return
     sub_indent = ''
     if theme:
         text = apply_t(text, theme, incl_prefix=incl_prefix)
         _, __, prefix = get_theme(theme)
         sub_indent = ' ' * (len(prefix) + 1)
-    if env.light_mode_enabled:
+    if Theme.light_mode_enabled:
         attrs = attrs if isinstance(attrs, list) else [attrs]
         attrs.append('dark')
     _print_nice(text, sub_indent=sub_indent, attrs=attrs)
@@ -108,7 +107,7 @@ def _print_nice(*args, sub_indent: str = '', **kwargs) -> None:
 
     text = sep.join(str(arg) for arg in args)
 
-    terminal_width = min(os.get_terminal_size().columns, env.max_terminal_width)
+    terminal_width = min(os.get_terminal_size().columns, Theme.max_terminal_width)
     if len(_strip_color_and_bold_codes(text)) > terminal_width:
         text = nl.join(
             textwrap.fill(line, terminal_width, subsequent_indent=sub_indent)
@@ -128,7 +127,7 @@ def _apply_bold_to_keywords(text: str) -> str:
     Internal function that applies the bold ANSI escape code to all occurrences of 
     the defined keywords within the text.
     """
-    return re.sub(fr"(?i)\b{'|'.join(env.keywords)}\b", r'\033[1m\g<0>\033[22m', text)
+    return re.sub(fr"(?i)\b{'|'.join(Theme.keywords)}\b", r'\033[1m\g<0>\033[22m', text)
 
 
 def _strip_color_and_bold_codes(s: str) -> str:
@@ -153,7 +152,7 @@ def print_table(table: dict, title: str = None, sub_indent: str = '   ',
     Prints the given table in a nicely formatted manner within the terminal,
     with the specified title and minimum column widths.
     """
-    terminal_width = min(os.get_terminal_size().columns, env.max_terminal_width)
+    terminal_width = min(os.get_terminal_size().columns, Theme.max_terminal_width)
     t_width = terminal_width - len(sub_indent)
 
     if title:
