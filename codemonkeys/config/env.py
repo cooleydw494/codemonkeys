@@ -12,11 +12,13 @@ load_dotenv(os.path.join(ROOT_PATH or '.', '.env'))
 class Env:
     """
     The Env class provides easy dot notation access to .env vars.
+
+    DO NOT MODIFY the section between [DEFINE_ENV_PROPS_START] and [DEFINE_ENV_PROPS_END].
+    This section is automatically re-generated each time you run a `monk` command.
     """
 
     _instance = None
 
-    # GENERATED ENV PROPERTIES - DO NOT MODIFY
     # [DEFINE_ENV_PROPS_START]
     OPENAI_API_KEY: str = os.getenv('OPENAI_API_KEY')
     # [DEFINE_ENV_PROPS_END]
