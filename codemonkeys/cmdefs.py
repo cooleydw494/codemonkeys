@@ -43,7 +43,7 @@ CM_DEFAULT_REQUIREMENTS_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'default-requ
 CM_README_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'DEFAULT-README.md')
 
 # Define example entity file paths in CM_STOR_PATH
-CM_ENTITY_EXAMPLES_PATH = os.path.join(CM_STOR_PATH, "entity_examples")
-CM_EXAMPLE_COMMAND_PATH = os.path.join(CM_ENTITY_EXAMPLES_PATH, "example-command.py")
-CM_EXAMPLE_AUTOMATION_PATH = os.path.join(CM_ENTITY_EXAMPLES_PATH, "example-automation.py")
-CM_EXAMPLE_BARREL_PATH = os.path.join(CM_ENTITY_EXAMPLES_PATH, "example-barrel.py")
+CM_ENTITY_EXAMPLES_PATH = os.path.join(CM_STOR_PATH, "examples")
+CM_EXAMPLE_COMMAND_PATH = os.path.join(CM_ENTITY_EXAMPLES_PATH, "command.py")
+CM_EXAMPLE_AUTOMATION_PATH = os.path.join(CM_ENTITY_EXAMPLES_PATH, "automation.py")
+CM_EXAMPLE_BARREL_PATH = os.path.join(CM_ENTITY_EXAMPLES_PATH, "barrel.py")
