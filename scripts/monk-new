@@ -5,10 +5,10 @@ import sys
 
 from termcolor import colored
 
-from codemonkeys.cmdefs import (CM_ENV_DEFAULT_PATH, CM_ENV_CLASS_PATH,
+from codemonkeys.cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_CONFIG_CLASS_DEFAULT_PATH,
                                 CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, CM_THEME_CONFIG_PATH,
                                 CM_DEFAULT_AUTOMATION_PATH,
-                                CM_MONKEY_CONFIG_CLASS_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
+                                CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
                                 CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH, CM_MONKEYS_DIR_DEFAULT_PATH)
 
 top_level_dirs = [
@@ -84,7 +84,7 @@ shutil.copyfile(CM_THEME_CONFIG_PATH, os.path.join(config_path, 'framework', 'th
 
 # Create Env class
 env_class_path = os.path.join(config_path, 'framework', 'env.py')
-shutil.copyfile(CM_ENV_CLASS_PATH, env_class_path)
+shutil.copyfile(CM_ENV_CLASS_DEFAULT_PATH, env_class_path)
 # Fix theme import for project config files
 with open(env_class_path, 'r') as f:
     lines = f.readlines()
@@ -93,7 +93,7 @@ with open(env_class_path, 'w') as f:
         f.write(line.replace('from codemonkeys.config.theme', 'from config.framework.theme'))
 
 # Create the MonkeyConfig class
-shutil.copyfile(CM_MONKEY_CONFIG_CLASS_PATH, os.path.join(config_path, 'framework', 'monkey_config.py'))
+shutil.copyfile(CM_MONKEY_CONFIG_CLASS_DEFAULT_PATH, os.path.join(config_path, 'framework', 'monkey_config.py'))
 
 # Create the default automation
 print(colored("Creating default automation...", 'cyan'))

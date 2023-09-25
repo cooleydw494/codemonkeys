@@ -1,12 +1,7 @@
-import dataclasses
-import os
-import re
 from dataclasses import dataclass
 
-from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
-from codemonkeys.defs import MONKEYS_PATH
-from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_key
+from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
+from codemonkeys.config.monkey_config import MonkeyConfig as CMMonkeyConfig
 
 try:
     from config.framework.env import Env
@@ -16,7 +11,7 @@ except ImportError:
 
 
 @dataclass
-class MonkeyConfig:
+class MonkeyConfig(CMMonkeyConfig):
     _instance = None
 
     """ MONKEY_CONFIG_PROPS - DO NOT MODIFY
@@ -32,11 +27,10 @@ class MonkeyConfig:
     FILEPATH_MATCH_INCLUDE: Optional[NoneType] = field(default=None)
     FILEPATH_MATCH_EXCLUDE: Optional[str] = field(default=None)
     FILE_SELECT_MAX_TOKENS: Optional[int] = field(default=None)
-    MAX_TOKENS: Optional[int] = field(default=None)
     MAIN_PROMPT: Optional[str] = field(default=None)
     MAIN_PROMPT_ULTIMATUM: Optional[str] = field(default=None)
     OUTPUT_EXAMPLE_PROMPT: Optional[str] = field(default=None)
-    CONTEXT_FILE_PATH: Optional[str] = field(default=None)
+    CONTEXT_FILE_PATH: Optional[NoneType] = field(default=None)
     CONTEXT_SUMMARY_PROMPT: Optional[NoneType] = field(default=None)
     OUTPUT_CHECK_PROMPT: Optional[NoneType] = field(default=None)
     OUTPUT_TRIES: Optional[int] = field(default=None)
@@ -65,18 +59,18 @@ class MonkeyConfig:
     env: Optional[Env] = field(default=None)
 
     def __post_init__(self):
-        # print_t(f"Loaded MonkeyConfig: {self.__dict__}", 'info')
+
+        if verbose_logs_enabled():
+            print_t(f"Loaded MonkeyConfig: {self.__dict__}", 'info')
 
         """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
         Set MonkeyConfig props with validations, generated from monkey-config-defaults & monkey_config_validations. """
         # [MONKEY_CONFIG_VALIDATIONS_START]
-        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, \
-            validate_float, validate_path
+        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path, validate_list_str
         self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
         self.FILEPATH_MATCH_EXCLUDE = validate_str('FILEPATH_MATCH_EXCLUDE', self.FILEPATH_MATCH_EXCLUDE)
         self.FILE_SELECT_MAX_TOKENS = validate_int('FILE_SELECT_MAX_TOKENS', self.FILE_SELECT_MAX_TOKENS)
-        self.MAX_TOKENS = validate_int('MAX_TOKENS', self.MAX_TOKENS)
         self.MAIN_PROMPT = validate_str('MAIN_PROMPT', self.MAIN_PROMPT)
         self.MAIN_PROMPT_ULTIMATUM = validate_str('MAIN_PROMPT_ULTIMATUM', self.MAIN_PROMPT_ULTIMATUM)
         self.OUTPUT_EXAMPLE_PROMPT = validate_str('OUTPUT_EXAMPLE_PROMPT', self.OUTPUT_EXAMPLE_PROMPT)
@@ -87,6 +81,7 @@ class MonkeyConfig:
         self.OUTPUT_FILENAME_APPEND = validate_str('OUTPUT_FILENAME_APPEND', self.OUTPUT_FILENAME_APPEND)
         self.OUTPUT_REMOVE_STRINGS = validate_str('OUTPUT_REMOVE_STRINGS', self.OUTPUT_REMOVE_STRINGS)
         self.SKIP_EXISTING_OUTPUT_FILES = validate_bool('SKIP_EXISTING_OUTPUT_FILES', self.SKIP_EXISTING_OUTPUT_FILES)
+        self.OUTPUT_SPLIT_PATH = validate_path('OUTPUT_SPLIT_PATH', self.OUTPUT_SPLIT_PATH)
         self.OUTPUT_SPLIT_TAG = validate_str('OUTPUT_SPLIT_TAG', self.OUTPUT_SPLIT_TAG)
         self.STATIC_COMMIT_MESSAGE = validate_str('STATIC_COMMIT_MESSAGE', self.STATIC_COMMIT_MESSAGE)
         self.MAIN_MODEL = validate_str('MAIN_MODEL', self.MAIN_MODEL)
@@ -101,94 +96,3 @@ class MonkeyConfig:
         # [MONKEY_CONFIG_VALIDATIONS_END]
 
         self.env = Env.get()
-
-    @classmethod
-    def load(cls, monkey_name: str) -> 'MonkeyConfig':
-        from codemonkeys.config.yaml_helpers import read_yaml_file
-
-        if cls._instance is None:
-            monkey_path = os.path.join(MONKEYS_PATH, f"{monkey_name}.yaml")
-
-            if not os.path.exists(monkey_path):
-                raise FileNotFoundError(f"Monkey configuration file {monkey_path} not found.")
-
-            monkey_dict = read_yaml_file(monkey_path, ruamel=True)
-            monkey_dict = cls._filter_config_values(monkey_dict)
-            monkey_dict = cls._apply_defaults(monkey_dict)
-
-            cls._instance = MonkeyConfig(**monkey_dict)
-
-        return cls._instance
-
-    @classmethod
-    def _filter_config_values(cls, config_values: dict) -> dict:
-        # Get dictionary of MonkeyConfig properties
-        config_properties = {f.name for f in dataclasses.fields(cls)}
-        config_properties.remove('env')
-
-        # Remove any keys from data that aren't properties of the MonkeyConfig class
-        config_values = {k: v for k, v in config_values.items() if k in config_properties}
-
-        return config_values
-
-    @classmethod
-    def _apply_defaults(cls, config_values: dict) -> dict:
-        """
-        Apply default values to the provided dictionary with MonkeyConfig and return it.
-        If a value is set to None, it will be maintained as None.
-        If a value isn't present, it will be set to the default value.
-        :param config_values: dict
-        :return: dict
-        """
-
-        # Get dictionary of MonkeyConfig properties so we don't default to env vars that aren't properties
-        config_properties = {f.name for f in dataclasses.fields(cls)}
-        config_properties.remove('env')
-
-        monkey_config_defaults = get_monkey_config_defaults()
-        for attribute in monkey_config_defaults:
-            if config_values.get(attribute, '**unset') == '**unset' and monkey_config_defaults[attribute] is not None:
-                config_values[attribute] = monkey_config_defaults[attribute]
-
-        return config_values
-
-    def replace_prompt_str(self, to_replace, replace_with):
-        copy = MonkeyConfig(**self.__dict__)
-        for attr in vars(copy):
-            value = getattr(copy, attr)
-            if is_prompt_key(attr) and value is not None:
-                setattr(copy, attr, value.replace(to_replace, replace_with))
-        return copy
-
-    def cop_paths(self):
-        # for each property containing 'PATH' word-bound (replace _ with ' '), do a replace on any string matching "{
-        # cop:<a-file-path>}" with the read content of the file at <a-file-path>. Throw a clear error if the file
-        # doesn't exist.
-        for attr in vars(self):
-            value = getattr(self, attr)
-            if is_prompt_key(attr) and value is not None and re.search(r'{cop:.*?}', value):
-                try:
-                    new_value = self.insert_cop_file_contents(value)
-                except FileNotFoundError as e:
-                    print_t(f"{e}", 'error')
-                    exit()
-                setattr(self, attr, new_value)
-
-    @classmethod
-    def insert_cop_file_contents(cls, value: str) -> str:
-        """
-        Replaces any {cop:file_path} placeholders with the contents of the file at file_path.
-
-        :param str value: The value to check for {cop:file_path} placeholders.
-        :return: The value with the placeholders replaced with the file contents.
-        """
-        matches = re.findall(r'{cop:(.*?)}', value)
-        for match in matches:
-            expanded_path = os.path.expanduser(match)
-            if os.path.isfile(expanded_path):
-                with open(expanded_path, "r") as file:
-                    file_content = file.read()
-                value = value.replace(f'{{cop:{match}}}', file_content)
-            else:
-                raise FileNotFoundError(f"Could not find the file specified in the 'cop' placeholder: {expanded_path}")
-        return value
