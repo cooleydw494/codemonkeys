@@ -1,5 +1,5 @@
-from codemonkeys.entities.command import Command
 from codemonkeys.defs import nl
+from codemonkeys.entities.command import Command
 from codemonkeys.utils.gpt.model_info import update_gpt_model_cache, get_gpt_model_info
 from codemonkeys.utils.monk.theme_functions import print_t
 

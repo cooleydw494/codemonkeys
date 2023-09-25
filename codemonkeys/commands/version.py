@@ -1,5 +1,5 @@
-from codemonkeys.entities.command import Command
 from codemonkeys.cmdefs import VERSION
+from codemonkeys.entities.command import Command
 from codemonkeys.utils.monk.theme_functions import print_t
 
 

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
 from codemonkeys.config.monkey_config import MonkeyConfig as CMMonkeyConfig
+from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
 
 try:
     from config.framework.env import Env

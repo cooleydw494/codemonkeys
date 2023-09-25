@@ -1,5 +1,5 @@
-from codemonkeys.entities.command import Command
 from codemonkeys.defs import THEME_CONFIG_PATH, nl
+from codemonkeys.entities.command import Command
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
