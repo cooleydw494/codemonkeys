@@ -16,7 +16,7 @@ def list_monkeys() -> List[str]:
     return [os.path.splitext(os.path.basename(file))[0] for file in file_paths]
 
 
-def get_monkey_name(given_monkey_name: str = None) -> Tuple[str, str]:
+def get_monkey_name(given_monkey_name: str = None) -> str:
     """
     Retrieves the monkey name and corresponding config path.
 
@@ -55,5 +55,4 @@ def get_monkey_name(given_monkey_name: str = None) -> Tuple[str, str]:
     else:
         monkey_name = given_monkey_name
 
-    monkey_config_file = os.path.join(MONKEYS_PATH, f'{monkey_name}.yaml')
-    return monkey_name, monkey_config_file
+    return monkey_name

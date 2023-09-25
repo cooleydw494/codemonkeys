@@ -3,7 +3,6 @@ from typing import Dict, Any, List, Optional
 
 from codemonkeys.entities.cli_runnable import CliRunnable
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
 
 try:
     from config.framework.monkey_config import MonkeyConfig
@@ -49,7 +48,7 @@ class Automation(CliRunnable):
 
         :return: Instantiated MonkeyConfig.
         """
-        return load_monkey_config(self.monkey)
+        return MonkeyConfig.load(self.monkey)
 
     def _check_required_config_keys(self):
         """

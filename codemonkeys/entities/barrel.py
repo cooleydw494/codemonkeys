@@ -5,7 +5,6 @@ from codemonkeys.entities.cli_runnable import CliRunnable
 from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.run_entities import run_automation
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
 
 try:
     from config.framework.monkey_config import MonkeyConfig
@@ -38,7 +37,7 @@ class Barrel(CliRunnable):
         :param str | None monkey_name: Name of the monkey configuration.
         :return: The current Barrel instance.
         """
-        self.monkey_config = load_monkey_config(monkey_name)
+        self.monkey_config = MonkeyConfig.load(monkey_name)
         return self
 
     def run_automation(self, automation_name: str) -> 'Barrel':

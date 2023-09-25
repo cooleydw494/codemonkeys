@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
 from codemonkeys.defs import MONKEYS_PATH
+from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_key
 
@@ -18,6 +19,8 @@ except ImportError:
 @dataclass
 class MonkeyConfig:
     _instance = None
+
+    _current_monkey = None
 
     """ MONKEY_CONFIG_PROPS - DO NOT MODIFY
         Definitions of MonkeyConfig props, generated from monkey-config-defaults. """
@@ -103,10 +106,12 @@ class MonkeyConfig:
         self.env = Env.get()
 
     @classmethod
-    def load(cls, monkey_name: str) -> 'MonkeyConfig':
+    def load(cls, monkey_name: str | None = None) -> 'MonkeyConfig':
         from codemonkeys.config.yaml_helpers import read_yaml_file
 
-        if cls._instance is None:
+        if cls._instance is None or cls._current_monkey != monkey_name:
+            monkey_name = get_monkey_name(monkey_name)  # Find or prompt user to select
+            cls._current_monkey = monkey_name
             monkey_path = os.path.join(MONKEYS_PATH, f"{monkey_name}.yaml")
 
             if not os.path.exists(monkey_path):
