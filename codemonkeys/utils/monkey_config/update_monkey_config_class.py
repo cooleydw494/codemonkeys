@@ -22,7 +22,7 @@ def force_reload_monkey_config_class() -> None:
         importlib.reload(config.framework.monkey_config)
     except ImportError:
         print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
-                'MonkeyConfig class. generate_monkeys', 'warning')
+                'MonkeyConfig class.', 'warning')
 
 
 def update_monkey_config_class() -> None:

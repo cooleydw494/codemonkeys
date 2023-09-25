@@ -25,6 +25,10 @@ except ImportError:
 print_lock = threading.Lock()
 
 
+def verbose_logs_enabled() -> bool:
+    return Theme.verbose_logs_enabled
+
+
 def get_theme(theme: str) -> Tuple[bool, Union[None, str], Union[None, str]]:
     """
     Retrieves the color code and prefix for the specified theme,

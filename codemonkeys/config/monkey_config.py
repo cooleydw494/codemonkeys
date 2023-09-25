@@ -140,27 +140,6 @@ class MonkeyConfig:
         return cls._instance
 
     @classmethod
-    def apply_default_and_validate(cls, data: dict):
-        """
-        Validate the provided dictionary with MonkeyConfig and return it.
-        """
-
-        data = cls._filter_config_values(data)
-        data = cls._apply_defaults(data)
-
-        # Create an instance of MonkeyConfig to perform validation
-        try:
-            validated_config = cls(**data)
-        except (TypeError, ValueError) as e:
-            print_t(f"MonkeyConfig Validation - {e}", 'error')
-            exit()
-
-        data = validated_config.__dict__
-        data.pop('env', None)
-
-        return data
-
-    @classmethod
     def _filter_config_values(cls, config_values: dict) -> dict:
         # Get dictionary of MonkeyConfig properties
         config_properties = {f.name for f in dataclasses.fields(cls)}

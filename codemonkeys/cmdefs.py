@@ -34,8 +34,8 @@ CM_STOR_SNIPPETS_PATH = os.path.join(CM_STOR_PATH, "snippets")
 
 # Define default file paths in CM_STOR_DEFAULTS_PATH
 CM_ENV_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, ".env.default")
-CM_MONKEY_MANIFEST_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "default-monkey-manifest.yaml")
 CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "monkey-config-defaults.yaml")
+CM_MONKEYS_DIR_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "monkeys")
 CM_CONTEXT_FILE_EXAMPLE_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'example-context-file.txt')
 CM_DEFAULT_AUTOMATION_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'default-automation.py')
 CM_GITIGNORE_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, '.default-gitignore')

@@ -5,10 +5,11 @@ import sys
 
 from termcolor import colored
 
-from codemonkeys.cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_MANIFEST_DEFAULT_PATH, CM_ENV_CLASS_PATH,
-                                CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH,CM_THEME_CONFIG_PATH, CM_DEFAULT_AUTOMATION_PATH,
+from codemonkeys.cmdefs import (CM_ENV_DEFAULT_PATH, CM_ENV_CLASS_PATH,
+                                CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, CM_THEME_CONFIG_PATH,
+                                CM_DEFAULT_AUTOMATION_PATH,
                                 CM_MONKEY_CONFIG_CLASS_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
-                                CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH)
+                                CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH, CM_MONKEYS_DIR_DEFAULT_PATH)
 
 top_level_dirs = [
     'automations',
@@ -76,7 +77,7 @@ for stor_dir in stor_dirs:
 # Create the config files
 print(colored("Creating config/example files...", 'cyan'))
 config_path = os.path.join(project_path, 'config')
-shutil.copyfile(CM_MONKEY_MANIFEST_DEFAULT_PATH, os.path.join(config_path, 'monkey-manifest.yaml'))
+shutil.copytree(CM_MONKEYS_DIR_DEFAULT_PATH, os.path.join(config_path, 'monkeys'))
 shutil.copyfile(CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, os.path.join(config_path, 'monkey-config-defaults.yaml'))
 shutil.copyfile(CM_CONTEXT_FILE_EXAMPLE_PATH, os.path.join(project_path, 'stor', 'context', 'context-file.txt'))
 shutil.copyfile(CM_THEME_CONFIG_PATH, os.path.join(config_path, 'framework', 'theme.py'))

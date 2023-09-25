@@ -15,7 +15,7 @@ COMMANDS_PATH = os.path.join(ROOT_PATH, "commands")
 
 ENV_PATH = os.path.join(ROOT_PATH, ".env")
 CONFIG_PATH = os.path.join(ROOT_PATH, "config")
-MONKEY_MANIFEST_PATH = os.path.join(CONFIG_PATH, 'monkey-manifest.yaml')
+MONKEYS_PATH = os.path.join(CONFIG_PATH, 'monkeys')
 MONKEY_CONFIG_DEFAULTS_PATH = os.path.join(CONFIG_PATH, 'monkey-config-defaults.yaml')
 
 FRAMEWORK_CONFIG_PATH = os.path.join(CONFIG_PATH, 'framework')
@@ -25,8 +25,6 @@ MONKEY_CONFIG_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "monkey_config.py
 
 STOR_PATH = os.path.join(ROOT_PATH, "stor")
 TEMP_PATH = os.path.join(STOR_PATH, "temp")
-
-MONKEYS_PATH = os.path.join(TEMP_PATH, 'monkeys')
 
 """  'GLOBAL' HELPERS/VARIABLES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """

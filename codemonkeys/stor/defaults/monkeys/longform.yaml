@@ -1,0 +1,35 @@
+""" A monkey for generating long-form content outside of hard token limits. """
+
+# General
+WORK_PATH: "ROOT_PATH/stor/work_path"
+FILE_TYPES_INCLUDED: ".js,.vue,.php"
+FILEPATH_MATCH_EXCLUDE: ".config,.md,.git,migrations,vite,webpack,.txt"
+FILE_SELECT_MAX_TOKENS: 3000
+#  CONTEXT_FILE_PATH: "help.py"
+
+# Prompts
+MAIN_PROMPT: "Please generate code for the following task..."
+CONTEXT_SUMMARY_PROMPT: "Provide a summary of this file..."
+MAIN_PROMPT_ULTIMATUM: "Limit your response to the full contents of a python script, and nothing else."
+OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
+
+# Output
+OUTPUT_PATH: "ROOT_PATH/stor/output"
+OUTPUT_EXT: ".py"
+OUTPUT_FILENAME_APPEND: ""
+OUTPUT_REMOVE_STRINGS: "```,```python"
+SKIP_EXISTING_OUTPUT_FILES: True
+
+# Output Checks
+OUTPUT_CHECK_PROMPT: 'Examine the following output and determine if it contains the contents of a python script. Respond with only one word: "True" or "False".'
+OUTPUT_TRIES: 1
+
+# Models
+MAIN_MODEL: 4
+SUMMARY_MODEL: 4
+OUTPUT_CHECK_MODEL: 3
+
+# Temps
+MAIN_TEMP: 1.0
+SUMMARY_TEMP: 1.0
+OUTPUT_CHECK_TEMP: .5

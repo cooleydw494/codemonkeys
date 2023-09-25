@@ -20,7 +20,7 @@ def find_project_root() -> str:
     cwd = os.getcwd()
     while cwd != os.path.dirname(cwd):  # Stop when we reach the root directory
         if '.env' in os.listdir(cwd):
-            if os.path.exists(os.path.join(cwd, 'config', 'monkey-manifest.yaml')):
+            if os.path.exists(os.path.join(cwd, 'config', 'monkeys')):
                 return cwd
             else:
                 print(colored("You must run `monk` within a CodeMonkeys project", 'red'))

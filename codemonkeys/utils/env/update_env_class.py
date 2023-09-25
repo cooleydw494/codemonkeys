@@ -26,7 +26,7 @@ def force_reload_env_class() -> None:
     try:
         importlib.reload(config.framework.env)
     except ImportError:
-        print_t('Could not import user Env class from config.framework.env. Using default Env class. generate_monkeys',
+        print_t('Could not import user Env class from config.framework.env. Using default Env class.',
                 'warning')
 
 
