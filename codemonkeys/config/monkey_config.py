@@ -112,7 +112,7 @@ class MonkeyConfig:
             if not os.path.exists(monkey_path):
                 raise FileNotFoundError(f"Monkey configuration file {monkey_path} not found.")
 
-            monkey_dict = read_yaml_file(monkey_path, ruamel=True)
+            monkey_dict = read_yaml_file(monkey_path)
             monkey_dict = cls._filter_config_values(monkey_dict)
             monkey_dict = cls._apply_defaults(monkey_dict)
 
