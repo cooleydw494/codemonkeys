@@ -23,8 +23,8 @@ class ToggleLightMode(Command):
                     is_light_mode = "True" in line
                     print_t(f"{'Disabling' if is_light_mode else 'Enabling'} Light Mode...", 'monkey')
                     if is_light_mode:
-                        line = f"light_mode_enabled: bool = False{nl}"
+                        line = f"    light_mode_enabled: bool = False{nl}"
                     else:
-                        line = f"light_mode_enabled: bool = True{nl}"
+                        line = f"    light_mode_enabled: bool = True{nl}"
                 file.write(line)
             file.truncate()
