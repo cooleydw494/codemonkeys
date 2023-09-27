@@ -23,7 +23,7 @@ except ImportError:
     print('Could not import user Theme class from config.framework.theme. Using default Theme class.')
     from codemonkeys.config.theme import Theme
 
-print_lock = threading.Lock()
+_print_lock = threading.Lock()
 
 
 def verbose_logs_enabled() -> bool:
@@ -115,7 +115,7 @@ def _print_nice(*args, sub_indent: str = '') -> None:
 
     text = color_pattern.sub(lambda m: m.group(1) + _apply_bold_to_keywords(m.group(2)) + m.group(3), text)
 
-    with print_lock:
+    with _print_lock:
         print(text, end=nl, file=None, flush=True)
 
 
@@ -176,11 +176,11 @@ def print_table(table: dict, title: str = None, sub_indent: str = '   ',
     _print_nice()
 
 
-def print_tree(start_dir: str, exclude_dirs: List[str] = None, exclude_file_starts:
-List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
+def print_tree(start_dir: str, exclude_dirs: List[str] = None, exclude_file_starts: List[str] = None,
+               title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
     """
     Prints the file structure starting from start_dir in a nicely formatted tree-like style.
-    directories and files that should be excluded can be specified as well as a title for the tree.
+    Directories and files that should be excluded can be specified as well as a title for the tree.
     """
     if exclude_file_starts is None:
         exclude_file_starts = ['.', '_']
@@ -191,37 +191,27 @@ List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool 
         print_t(f'{nl}{title}{nl}', 'yellow', incl_prefix=incl_prefix)
 
     level = 0
-    within_excluded_dir = False
 
     for root, dirs, files in os.walk(start_dir):
         base_root = os.path.basename(root)
-        # If the current directory is in the exclude list, skip it and its subdirectories
-        if base_root in exclude_dirs:
-            within_excluded_dir = True
-            dirs[:] = []  # This will prevent os.walk from visiting the subdirectories
-            continue
-        # If we're currently within an excluded directory, skip this iteration
-        elif within_excluded_dir:
-            continue
-        else:
-            within_excluded_dir = False  # We're no longer within an excluded directory
 
+        # Skip excluded directories and their subdirectories
+        if base_root in exclude_dirs:
+            dirs.clear()
+            continue
+
+        # Filter out directories starting with exclude_file_starts
         dirs[:] = [d for d in dirs if d[0] not in exclude_file_starts]
 
         relative_root = os.path.relpath(root, start_dir)
 
         if relative_root != ".":
             level = relative_root.count(os.sep) + 1
-            dir_color = 'magenta'
-            if base_root == 'codemonkeys':
-                dir_color = 'white'
-            elif base_root == 'usr':
-                dir_color = 'light_cyan'
-            _print_nice('{}{}'.format(' ' * 2 * level, apply_t(f'{base_root}:', dir_color)))
+            dir_color = 'white' if base_root == 'codemonkeys' else 'light_cyan' if base_root == 'usr' else 'magenta'
+            _print_nice(f"{' ' * 2 * level}{apply_t(f'{base_root}:', dir_color)}")
 
         sub_indent = ' ' * 2 * (level + 1)
         for f in files:
             if not any(f.startswith(start) for start in exclude_file_starts):
-                without_ext = os.path.splitext(f)[0]
-                filename = f if show_exts else without_ext
-                _print_nice('{}{}'.format(sub_indent, apply_t(filename, 'green')))
+                filename = f if show_exts else os.path.splitext(f)[0]
+                _print_nice(f"{sub_indent}{apply_t(filename, 'green')}")
