@@ -33,14 +33,14 @@ def update_monkey_config_class() -> None:
     :raises Exception: If any required markers are not found in the class file.
     :raises ValueError: If the config contains a List with non-string items.
     """
-    config = get_monkey_config_defaults()
+    config_defaults = get_monkey_config_defaults()
 
     formatted_properties = [
-        "    " + key + ": Optional[" + type(config[key]).__name__ + "] = field(default=None)" for key in config.keys()]
+        "    " + key + ": Optional[" + type(config_defaults[key]).__name__ + "] = field(default=None)" for key in config_defaults.keys()]
 
     # Format the validations
     formatted_validations = []
-    for key, value in config.items():
+    for key, value in config_defaults.items():
         if isinstance(value, bool):
             formatted_validations.append(f"        self.{key} = validate_bool('{key}', self.{key})")
         elif isinstance(value, int):
