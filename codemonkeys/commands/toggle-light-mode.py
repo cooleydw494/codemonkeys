@@ -5,8 +5,8 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 class ToggleLightMode(Command):
     """
-    ToggleLightMode is a subclass of the Command class. Its primary function is
-    to allow for toggling of Light Mode in the application's user interface.
+    ToggleLightMode is a subclass of the Command class. When run using the `monk toggle-light-mode` command,
+    it toggles the Light Mode state in a project's Theme.py configuration file.
     """
 
     def run(self) -> None:
