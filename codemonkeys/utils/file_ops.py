@@ -8,7 +8,7 @@ def get_file_contents(path: str) -> str:
     :param str path: The path to the file.
     :return: The contents of the file.
     """
-    path = resolve_file_path(path)
+    path = os.path.expanduser(path)
 
     if not os.path.isfile(path):
         raise FileNotFoundError(f"File does not exist: {path}")
@@ -26,28 +26,7 @@ def write_file_contents(path: str, contents: str) -> None:
     :param str path: The path to the file.
     :param str contents: New file contents
     """
-    path = resolve_file_path(path)
+    path = os.path.expanduser(path)
 
     with open(path, "w") as f:
         f.write(contents)
-
-
-def file_exists(path: str) -> bool:
-    """
-    Checks if a file exists at the specified path.
-
-    :param str path: The path of the file.
-    :return: True if the file exists, otherwise False.
-    """
-    path = resolve_file_path(path)
-    return os.path.isfile(path)
-
-
-def resolve_file_path(path: str) -> str:
-    """
-    Expands a file path that may contain user shortcuts (e.g. ~).
-
-    :param str path: The path to be resolved
-    :return: The expanded file path
-    """
-    return os.path.expanduser(path)
