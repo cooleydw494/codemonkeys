@@ -15,7 +15,7 @@ setup(
     license="MIT",
     packages=find_packages(),
     install_requires=[
-        'openai', 'pyyaml', 'python-dotenv', 'python-Levenshtein',
+        'openai', 'pyyaml', 'python-dotenv', 'Levenshtein', 'pandas',
         'termcolor', 'tiktoken', 'psutil', 'ruamel.yaml'
     ],
     classifiers=[
