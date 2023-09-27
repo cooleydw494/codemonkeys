@@ -61,8 +61,7 @@ def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Union[None,
     return text
 
 
-def print_t(text: str, theme: str = None, incl_prefix: bool = True, attrs: Union[None, List[str]] = None,
-            verbose: bool = False) -> None:
+def print_t(text: str, theme: str = None, incl_prefix: bool = True, verbose: bool = False) -> None:
     """
     Prints the given text with the specified theme applied and optional attributes.
     Can be set to only print whenever verbose logging is enabled.
@@ -74,10 +73,7 @@ def print_t(text: str, theme: str = None, incl_prefix: bool = True, attrs: Union
         text = apply_t(text, theme, incl_prefix=incl_prefix)
         _, __, prefix = get_theme(theme)
         sub_indent = ' ' * (len(prefix) + 1)
-    if Theme.light_mode_enabled:
-        attrs = attrs if isinstance(attrs, list) else [attrs]
-        attrs.append('dark')
-    _print_nice(text, sub_indent=sub_indent, attrs=attrs)
+    _print_nice(text, sub_indent=sub_indent)
 
 
 def input_t(text: str, input_options: str = None, theme: str = 'input') -> str:
@@ -192,7 +188,7 @@ List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool 
         exclude_dirs = []
 
     if title:
-        print_t(f'{nl}{title}{nl}', 'yellow', attrs=['bold'], incl_prefix=incl_prefix)
+        print_t(f'{nl}{title}{nl}', 'yellow', incl_prefix=incl_prefix)
 
     level = 0
     within_excluded_dir = False
