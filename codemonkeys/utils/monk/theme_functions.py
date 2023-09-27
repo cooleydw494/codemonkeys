@@ -13,8 +13,9 @@ from typing import List, Tuple, Union
 
 from termcolor import colored, COLORS
 
-from codemonkeys.cmdefs import VERSION, CM_STOR_SNIPPETS_PATH
+from codemonkeys.cmdefs import VERSION, CM_BANNER_PATH
 from codemonkeys.defs import nl
+from codemonkeys.utils.file_ops import get_file_contents
 
 try:
     from config.framework.theme import Theme
@@ -99,17 +100,13 @@ def input_t(text: str, input_options: str = None, theme: str = 'input') -> str:
     return input_
 
 
-def _print_nice(*args, sub_indent: str = '', **kwargs) -> None:
+def _print_nice(*args, sub_indent: str = '') -> None:
     """
     Internal function to print the given texts (args) with improved indentation and line wrapping.
     Subsequent lines will be indented according to the sub_indent parameter.
     """
-    sep = kwargs.get("sep", " ")
-    end = kwargs.get("end", nl)
-    file = kwargs.get("file", None)
-    flush = kwargs.get("flush", False)
 
-    text = sep.join(str(arg) for arg in args)
+    text = " ".join(str(arg) for arg in args)
 
     terminal_width = min(os.get_terminal_size().columns, Theme.max_terminal_width)
     if len(_strip_color_and_bold_codes(text)) > terminal_width:
@@ -123,7 +120,7 @@ def _print_nice(*args, sub_indent: str = '', **kwargs) -> None:
     text = color_pattern.sub(lambda m: m.group(1) + _apply_bold_to_keywords(m.group(2)) + m.group(3), text)
 
     with print_lock:
-        print(text, end=end, file=file, flush=flush)
+        print(text, end=nl, file=None, flush=True)
 
 
 def _apply_bold_to_keywords(text: str) -> str:
@@ -145,8 +142,7 @@ def print_banner() -> None:
     """
     Prints "banner.txt", the banner of this project.
     """
-    with open(os.path.join(CM_STOR_SNIPPETS_PATH, 'banner.txt'), 'r') as f:
-        art = f.read()
+    art = get_file_contents(CM_BANNER_PATH)
     print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
 
 
@@ -232,17 +228,4 @@ List[str] = None, title: str = None, show_exts: bool = False, incl_prefix: bool 
             if not any(f.startswith(start) for start in exclude_file_starts):
                 without_ext = os.path.splitext(f)[0]
                 filename = f if show_exts else without_ext
-                if f.endswith('.py'):
-                    file_theme = 'green'
-                elif f.endswith('.md'):
-                    file_theme = 'light_blue'
-                elif f.endswith('.yaml'):
-                    file_theme = 'yellow'
-                elif f == 'monk':
-                    file_theme = 'light_yellow'
-                elif f == 'c':
-                    continue
-                else:
-                    file_theme = 'cyan'
-
-                _print_nice('{}{}'.format(sub_indent, apply_t(filename, file_theme)))
+                _print_nice('{}{}'.format(sub_indent, apply_t(filename, 'green')))

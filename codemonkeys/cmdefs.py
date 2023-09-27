@@ -29,6 +29,7 @@ CM_STOR_TEMP_PATH = os.path.join(CM_STOR_PATH, "temp")
 CM_STOR_MONK_PATH = os.path.join(CM_STOR_PATH, "monk")
 CM_STOR_DEFAULTS_PATH = os.path.join(CM_STOR_PATH, "defaults")
 CM_STOR_SNIPPETS_PATH = os.path.join(CM_STOR_PATH, "snippets")
+CM_BANNER_PATH = os.path.join(CM_STOR_SNIPPETS_PATH, 'banner.txt')
 
 # Define default file paths in CM_STOR_DEFAULTS_PATH
 CM_ENV_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, ".env.default")
