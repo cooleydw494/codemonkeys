@@ -84,11 +84,17 @@ class FileIterator:
         :param str file_path: The file path string to check.
         :return: A boolean indicating if the file path should be included.
         """
-        return (
-                any(file_path.endswith(ext) for ext in self.include_extensions) and
-                any(pattern.strip() in file_path for pattern in self.include_patterns) and
-                not any(pattern.strip() in file_path for pattern in self.exclude_patterns)
-        )
+
+        passes_include_patterns = (any(pattern.strip() in file_path for pattern in self.include_patterns) or
+                                   len(self.include_patterns) == 0)
+
+        passes_include_exts = (any(file_path.endswith(ext) for ext in self.include_extensions) or
+                               len(self.include_extensions) == 0)
+
+        passes_exclude_patterns = (not any(pattern.strip() in file_path for pattern in self.exclude_patterns) or
+                                   len(self.exclude_patterns) == 0)
+
+        return passes_include_exts and passes_include_patterns and passes_exclude_patterns
 
     def filter_files(self) -> 'FileIterator':
         """Filter the files in the working path based on include and exclude patterns.
