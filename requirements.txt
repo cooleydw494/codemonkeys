@@ -1,9 +1,11 @@
-openai==0.27.8
+openai==0.28.1
 pyyaml==6.0.1
 python-dotenv~=1.0.0
-python-Levenshtein==0.21.1
+python-Levenshtein==0.22.0
 termcolor~=2.3.0
-tiktoken~=0.4.0
+tiktoken==0.5.1
 Levenshtein==0.21.1
-psutil
+psutil~=5.9.5
 ruamel.yaml==0.17.32
+setuptools==68.2.2
+pandas==2.1.1

@@ -2,9 +2,10 @@ import os
 import sys
 from typing import List, Tuple
 
+import Levenshtein
+
 from codemonkeys.cmdefs import CM_COMMANDS_PATH, CM_HELP_PATH
 from codemonkeys.defs import nl2, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
-from codemonkeys.utils.defs_utils import levenshtein_distance
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 entity_paths = {
@@ -83,6 +84,6 @@ def _find_entities(entity_directory: str, entity_name: str) -> List[Tuple[str, s
             if file.endswith(('.sh', '.py')) and not file.startswith(('.', '_')):
                 name, _ = os.path.splitext(file)
                 full_path = os.path.join(root, file)
-                if name == entity_name or entity_name in name or levenshtein_distance(name, entity_name) <= 3:
+                if name == entity_name or entity_name in name or Levenshtein.distance(name, entity_name) <= 3:
                     matches.append((name, full_path))
     return matches

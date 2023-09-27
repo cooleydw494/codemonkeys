@@ -1,6 +1,5 @@
 import os
 
-import Levenshtein
 from termcolor import colored
 
 """
@@ -28,14 +27,3 @@ def find_project_root() -> str:
         cwd = os.path.dirname(cwd)
     print(colored("Could not find project root", 'red'))
     exit(1)
-
-
-def levenshtein_distance(str1: str, str2: str) -> int:
-    """
-    Calculate the Levenshtein distance between two strings.
-
-    :param str str1: The first string for comparison.
-    :param str str2: The second string for comparison.
-    :return: The Levenshtein distance between the two strings.
-    """
-    return Levenshtein.distance(str1.strip(), str2.strip())
