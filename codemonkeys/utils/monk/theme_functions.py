@@ -72,7 +72,8 @@ def print_t(text: str, theme: str = None, incl_prefix: bool = True, verbose: boo
     if theme:
         text = apply_t(text, theme, incl_prefix=incl_prefix)
         _, __, prefix = get_theme(theme)
-        sub_indent = ' ' * (len(prefix) + 1)
+        if prefix:
+            sub_indent = ' ' * (len(prefix) + 1)
     _print_nice(text, sub_indent=sub_indent)
 
 

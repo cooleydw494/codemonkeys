@@ -1,19 +1,15 @@
 from codemonkeys.utils.monk.theme_functions import print_t, print_table
+from codemonkeys.defs import nl
 
 """Help script for the `list-processes` command."""
 
-print_t("List Processes Help", "important")
-print_t("The `list-processes` command provides an overview of all ongoing Monk processes, their process IDs (PIDs),"
-        "and commands to kill the respective processes. This is useful for managing and controlling Monk-related"
-        "composables and ensuring the smooth operation of the framework.")
+print_t(f"List Processes Help{nl}", "important")
 
-print_t("monk list-processes", "input")
+print_t("The `list-processes` command will print a table of ongoing Monk processes, their process IDs (PIDs), "
+        f"and kill commands. This is useful for managing long-running CLI runnable entities such as Automations.{nl}")
 
-print_t("Usage:", "info")
-print_t("1. Execute `monk list-processes` to display a table with detailed information", "info")
-print_t("2. Use the provided kill commands to terminate a specific Monk process if needed", "info")
+print_t(f"Usage: `monk list-processes`{nl}", "info")
 
-print_t("Example of a table displayed after running `monk list-processes`:", "tip")
 
 USAGE_EXAMPLES_TABLE = {
     "headers": [
@@ -24,8 +20,13 @@ USAGE_EXAMPLES_TABLE = {
     "show_headers": True,
     "rows": [
         [
+            "4432",
+            "monk gpt-models-info --update",
+            "kill 4432"
+        ],
+        [
             "1234",
-            "monk add-monkey",
+            "monk -b NotatePrivateMethods",
             "kill 1234"
         ],
         [
@@ -36,7 +37,7 @@ USAGE_EXAMPLES_TABLE = {
     ]
 }
 
-print_table(USAGE_EXAMPLES_TABLE, "Example")
+print_table(USAGE_EXAMPLES_TABLE, "Example Output")
 
-print_t("Important: Always exercise caution when terminating processes to avoid disrupting your workspace.",
-        "warning")
+print()
+print_t("Important: Always exercise caution when terminating processes.","warning")

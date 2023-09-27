@@ -39,7 +39,9 @@ if action == 'edit':
     subprocess.run(['vim', entity_path.strip()])
 
 elif action == 'help':
+    print()
     subprocess.run([sys.executable, entity_path.strip()])
+    print()
 
 elif action == 'run':
     try:

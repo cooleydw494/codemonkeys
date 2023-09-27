@@ -9,17 +9,16 @@ def run_default_help(monk_args: argparse.Namespace = None):
     print_banner()
 
     # Overview
-    print_t("Welcome to CodeMonkeys, an AI-ready automations framework! The Monk CLI includes built-in framework "
-            "Commands and transforms the user Commands directory into readily usable CLI commands. It is also used "
-            f"to run Automations and Barrels.{nl}", 'white')
+    print_t("Welcome to CodeMonkeys, an AI-ready automations framework! The Monk CLI primarily is used to run "
+            "Automations, Barrels, and framework Commands. It also makes your own `commands` directory readily usable."
+            f"{nl}", 'white')
 
     # Recursive Name-Matching Logic
     print_t("`monk` uses recursive name-matching logic to locate runnable entities. This requires unique filenames "
-            "for each runnable entity type (Commands, Automations, Barrels). While limiting, this keeps things simple "
-            f"and powerful.{nl}", 'important')
+            f"for each runnable entity type (Commands, Automations, Barrels).{nl}", 'white')
 
     # Handling of Barrels, Automations, and Modules
-    print_t("Entity Type flags target Automations and Barrels.", 'info')
+    print_t(f"Entity Type flags target Automations and Barrels.{nl}", 'info')
 
     # Action Flags
     print_t(f"Action flags perform alternate operations on targetable entities.{nl2}", 'info')
@@ -103,5 +102,7 @@ def run_default_help(monk_args: argparse.Namespace = None):
     print_table(monk_actions, apply_t("Actions", 'special'), min_col_width=min_col_widths)
 
     # Wrap up
-    print_t("That's it! For more info, run `monk -h <entity>` or view the CodeMonkeys' docs.", 'done')
+    print_t("That's it! For more, run `monk -h <entity>` or read the docs.", 'done')
+    print_t("🌐 https://cooleydw494.github.io/codemonkeys", 'cyan')
+    print()
     exit(0)
