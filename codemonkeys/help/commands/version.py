@@ -17,5 +17,3 @@ print_t("Version command is simple and straightforward to use- just type in `mon
 
 print()
 print_t("Remember: Regularly updating your software ensures you have the latest features and patches.", "warning")
-
-This script prints out a help summary and usage explanation for the version command. It explains what the command does, shows the usage syntax, provides an example output, and offers a usage tip.

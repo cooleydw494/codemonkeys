@@ -31,6 +31,3 @@ print_t("Enabling Light Mode...{nl}")
 # Caution
 print_t("Tip: Use this command anytime during the project lifecycle to toggle between Light and Dark modes. But always make "
         "sure your project files are saved as these changes will affect your theme configuration, and unsaved changes might be lost.", "warning")
-
-
-This script informs the user about what the `toggle-light-mode` command does, how to apply it, and what kind of output to expect from it.
