@@ -22,7 +22,9 @@ def run_command(entity_path: str, entity_name: str, named_args: Dict[str, Any],
     :param Dict[str, Any] named_args: The named arg data passed to the `Command` instance.
     :param List[str] unnamed_args: The unnamed args passed to the `Command` instance.
     """
-    _run_entity(entity_path, entity_name, named_args, unnamed_args)
+    command = load_class(entity_path, entity_name)
+    instance = command(named_args, unnamed_args)
+    instance.run()
 
 
 def run_automation(entity_path: str, entity_name: str, named_args: Dict[str, Any],
@@ -36,7 +38,9 @@ def run_automation(entity_path: str, entity_name: str, named_args: Dict[str, Any
     :param List[str] unnamed_args: The unnamed args passed to the `Automation` instance.
     :param MonkeyConfig monkey_config: A MonkeyConfig instance or None.
     """
-    _run_entity(entity_path, entity_name, named_args, unnamed_args, monkey_config)
+    automation = load_class(entity_path, entity_name)
+    instance = automation(named_args, unnamed_args, monkey_config)
+    instance.run()
 
 
 def run_barrel(entity_path: str, entity_name: str, named_args: Dict[str, Any], unnamed_args: List[str]):
@@ -48,19 +52,18 @@ def run_barrel(entity_path: str, entity_name: str, named_args: Dict[str, Any], u
     :param Dict[str, Any] named_args: The named arg data passed to the `Barrel` instance.
     :param List[str] unnamed_args: The unnamed args passed to the `Barrel` instance.
     """
-    _run_entity(entity_path, entity_name, named_args, unnamed_args)
+    barrel = load_class(entity_path, entity_name)
+    instance = barrel(named_args, unnamed_args)
+    instance.run()
 
 
-def _run_entity(entity_path: str, entity_name: str, named_args: Dict[str, Any], unnamed_args: List[str],
-                monkey_config: Optional[MonkeyConfig] = None):
+def load_class(entity_path: str, entity_name: str) -> Any:
     """
-    Locates Entity class using path/name, instantiates it, and runs it.
+    Locates Entity class using path/name, loads the module, and returns the class reference for instantiation.
+    This logic assumes an entity's class name is the same as the filename/CLI-name, but in CamelCase.
 
-    :param str entity_path: The file path to an Entity class.
+    :param str entity_path: The file path to the Entity class.
     :param str entity_name: The name of the Entity class.
-    :param Dict[str, Any] named_args: The named arg data passed to the Entity class instance.
-    :param List[str] unnamed_args: The unnamed args passed to the Entity class instance.
-    :param MonkeyConfig monkey_config: A MonkeyConfig instance or None.
     """
     # Convert the entity_name from kebab-case to CamelCase
     entity_name_camel_case = ''.join(word.capitalize() for word in entity_name.split('-'))
@@ -69,19 +72,13 @@ def _run_entity(entity_path: str, entity_name: str, named_args: Dict[str, Any], 
     entity_path = os.path.normpath(entity_path)
 
     # Create module spec
-    spec = importlib.util.spec_from_file_location(entity_name_camel_case, entity_path)
+    module_spec = importlib.util.spec_from_file_location(entity_name_camel_case, entity_path)
 
     # Load module
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    module = importlib.util.module_from_spec(module_spec)
+    module_spec.loader.exec_module(module)
 
-    # Get class from module (assuming the class name is the same as the entity name)
-    class_ = getattr(module, entity_name_camel_case)
+    # Get class from module
+    callable_class = getattr(module, entity_name_camel_case)
 
-    # Instantiate class and run
-    if class_.__name__ == 'Automation':
-        instance = class_(named_args, unnamed_args, monkey_config)
-    else:
-        instance = class_(named_args, unnamed_args)
-
-    instance.run()
+    return callable_class
