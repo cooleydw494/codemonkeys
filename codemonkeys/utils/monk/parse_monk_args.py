@@ -39,9 +39,8 @@ def parse_monk_args():
     """
     Parses the args supplied to the monk command.
 
-    :return: Tuple representing monk_args (argparse.Namespace), named_args (dict),
-             unnamed_args (list), action (str), entity_name (str),
-             and entity_type (str).
+    :return: Tuple representing named_args (dict), unnamed_args (list),
+             action (str), entity_name (str), and entity_type (str).
     """
     import argparse
 
@@ -86,4 +85,4 @@ def parse_monk_args():
     if entity_type in ['help', 'command'] and monk_args.entity_name in [None, 'help']:
         run_default_help()
 
-    return monk_args, named_args, unnamed_args, action, monk_args.entity_name, entity_type
+    return named_args, unnamed_args, action, monk_args.entity_name, entity_type

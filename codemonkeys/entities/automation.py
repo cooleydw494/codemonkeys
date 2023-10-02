@@ -1,4 +1,3 @@
-import argparse
 from typing import Dict, Any, List, Optional
 
 from codemonkeys.entities.cli_runnable import CliRunnable
@@ -21,17 +20,15 @@ class Automation(CliRunnable):
 
     required_config_keys = []
 
-    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str],
-                 monkey_config: Optional[MonkeyConfig] = None):
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey_config: Optional[MonkeyConfig] = None):
         """
         Initializes the `Automation` class.
 
-        :param argparse.Namespace monk_args: Core Monk CLI args. Usually not relevant to subclasses.
         :param Dict[str, Any] named_args: Dict of named args and values (e.g. `--key value`)
         :param List[str] unnamed_args: List of unnamed args (e.g. `value`)
         :param MonkeyConfig | None monkey_config: Optional MonkeyConfig for Automation; otherwise, user is prompted.
         """
-        super().__init__(monk_args, named_args, unnamed_args)
+        super().__init__(named_args, unnamed_args)
 
         if monkey_config is None:
             self.monkey_config: MonkeyConfig = self.load_config()

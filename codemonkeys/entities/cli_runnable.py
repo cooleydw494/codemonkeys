@@ -1,11 +1,13 @@
-import argparse
 from typing import List, Dict, Any, get_type_hints
 
 
 class CliRunnable:
-    """A base class for CLI-runnable classes. Handles management of CLI args."""
+    """
+    A base class for CLI-runnable entities such as Automations, Barrels, and Commands. Handles management of CLI args.
+    Subclasses of `CliRunnable` will override argument-related class attributes and implement the `run` method.
 
-    monk_args: argparse.Namespace | None = None
+    """
+
     named_args: Dict[str, Any] | None = None
     unnamed_args: List[str] | None = None
 
@@ -13,15 +15,13 @@ class CliRunnable:
     unnamed_arg_keys = []
     required_arg_keys = []
 
-    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str]):
         """
         Initializes the `CliRunnable` instance.
         
-        :param argparse.Namespace monk_args: Core Monk CLI args. Usually not relevant to subclasses.
         :param Dict[str, Any] named_args: Dict of named args and values (e.g. `--key value`)
         :param List[str] unnamed_args: List of unnamed args (e.g. `value`)
         """
-        self.monk_args = monk_args
         self.named_args = named_args
         self.unnamed_args = unnamed_args
 

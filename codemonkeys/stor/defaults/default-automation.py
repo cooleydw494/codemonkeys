@@ -1,4 +1,3 @@
-import argparse
 import os
 from typing import Dict, Any, List
 
@@ -23,8 +22,8 @@ class Default(Automation):
         'OUTPUT_CHECK_PROMPT': ['OUTPUT_TRIES'],
     }
 
-    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
-        super().__init__(monk_args, named_args, unnamed_args)
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str]):
+        super().__init__(named_args, unnamed_args)
 
     def run(self) -> None:
         mc = self.monkey_config

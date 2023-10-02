@@ -1,4 +1,3 @@
-import argparse
 from typing import Dict, Any, List, Optional
 
 from codemonkeys.entities.cli_runnable import CliRunnable
@@ -19,15 +18,14 @@ class Barrel(CliRunnable):
 
     monkey_config: Optional[MonkeyConfig] = None
 
-    def __init__(self, monk_args: argparse.Namespace, named_args: Dict[str, Any], unnamed_args: List[str]):
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str]):
         """
         Initializes the `Barrel` class.
 
-        :param argparse.Namespace monk_args: Monk arguments.
         :param Dict[str, Any] named_args: Named arguments.
         :param List[str] unnamed_args: Unnamed arguments.
         """
-        super().__init__(monk_args, named_args, unnamed_args)
+        super().__init__( named_args, unnamed_args)
         print_t("Barrel initialized.", "start")
 
     def with_monkey(self, monkey_name: str | None = None) -> 'Barrel':
@@ -51,7 +49,6 @@ class Barrel(CliRunnable):
         run_automation(
             automation_path,
             automation_name,
-            self.monk_args,
             self.named_args,
             self.unnamed_args,
             self.monkey_config

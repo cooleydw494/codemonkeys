@@ -27,7 +27,7 @@ if version < 3:
     sys.exit(1)
 
 # Setup and Parse Monk Arguments
-monk_args, named_args, unnamed_args, action, entity_name, entity_type = parse_monk_args()
+named_args, unnamed_args, action, entity_name, entity_type = parse_monk_args()
 
 # Find Entity (includes interactive selection)
 entity_path = find_entity(entity_name, entity_type)
@@ -52,7 +52,7 @@ elif action == 'run':
         if entity_type == 'command':
             extension = os.path.splitext(entity_path.strip())[1]
             if extension == ".py":
-                run_command(entity_path.strip(), entity_name, monk_args, named_args, unnamed_args)
+                run_command(entity_path.strip(), entity_name, named_args, unnamed_args)
             elif extension == ".sh":
                 subprocess.call(['bash', entity_path.strip()] + sys.argv[2:])
             elif extension == ".bat":
@@ -63,11 +63,11 @@ elif action == 'run':
 
         # Automations
         elif entity_type == 'automation':
-            run_automation(entity_path.strip(), entity_name, monk_args, named_args, unnamed_args)
+            run_automation(entity_path.strip(), entity_name, named_args, unnamed_args)
 
         # Barrels
         elif entity_type == 'barrel':
-            run_barrel(entity_path.strip(), entity_name, monk_args, named_args, unnamed_args)
+            run_barrel(entity_path.strip(), entity_name, named_args, unnamed_args)
 
         # Unsupported
         else:

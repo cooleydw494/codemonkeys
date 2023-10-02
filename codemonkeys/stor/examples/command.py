@@ -32,4 +32,3 @@ class ExampleCommand(Command):
         Execute your Command logic here,, utilizing args as needed.
         """
         print(f"named_arg_one: {self.named_arg_one}")
-        print(f"Monk Args: {self.monk_args}")
