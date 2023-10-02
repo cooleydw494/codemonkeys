@@ -4,10 +4,10 @@ import openai
 import tiktoken
 from tiktoken import Encoding
 
+from codemonkeys.config.imports.env import Env
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.config.imports.env import Env
 
 
 class GPTClient:

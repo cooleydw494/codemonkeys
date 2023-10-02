@@ -1,7 +1,7 @@
 from typing import Dict, Any, List, Optional
 
-from codemonkeys.entities.cli_runnable import CliRunnable
 from codemonkeys.config.imports.monkey_config import MonkeyConfig
+from codemonkeys.entities.cli_runnable import CliRunnable
 from codemonkeys.utils.monk.theme_functions import print_t
 
 

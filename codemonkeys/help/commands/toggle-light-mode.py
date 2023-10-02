@@ -1,7 +1,7 @@
 Here is a Python script that prints a useful summary and usage instructions for your `toggleLightMode` command:
 
-from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.defs import nl
+from codemonkeys.utils.monk.theme_functions import print_t
 
 # Title
 print_t(f"Toggle Light Mode Help{nl}", "important")

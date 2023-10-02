@@ -3,9 +3,9 @@ import os
 
 import openai
 
+from codemonkeys.config.imports.env import Env
 from codemonkeys.defs import TEMP_PATH
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.config.imports.env import Env
 
 
 def get_gpt_model_info() -> dict | None:

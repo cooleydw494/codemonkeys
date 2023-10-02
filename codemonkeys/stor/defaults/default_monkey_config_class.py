@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
+from codemonkeys.config.imports.env import Env
 from codemonkeys.config.monkey_config import MonkeyConfig as CMMonkeyConfig
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
-from codemonkeys.config.imports.env import Env
 
 
 @dataclass

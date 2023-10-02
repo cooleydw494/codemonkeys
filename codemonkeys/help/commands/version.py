@@ -1,5 +1,5 @@
-from codemonkeys.utils.monk.theme_functions import print_t, print_table
 from codemonkeys.defs import nl
+from codemonkeys.utils.monk.theme_functions import print_t
 
 print_t(f"Version Command Help{nl}", "important")
 
