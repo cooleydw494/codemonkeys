@@ -2,7 +2,7 @@
 #
 # This file is used to set default values for monkey configs.
 # It is also the source of truth for all monkey config options, so if you add or alter
-# something here, it is written to the MonkeyConfig class and .env.default.
+# something here, it is written to the MonkeyConfig class and .env.
 # (you must update .env manually)
 
 # RULES
