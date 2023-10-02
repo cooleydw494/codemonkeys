@@ -33,7 +33,7 @@ named_args, unnamed_args, action, entity_name, entity_type = parse_monk_args()
 # Find Entity (includes interactive selection)
 entity_path = find_entity(entity_name, entity_type)
 
-# Get the correctly chosen entity name without extension (user might have given incorrect name)
+# Get the correctly chosen entity name (sans extension) using exact or fuzzy matching
 entity_name = os.path.splitext(os.path.basename(entity_path))[0]
 
 if action == 'edit':
