@@ -4,13 +4,7 @@ from codemonkeys.entities.cli_runnable import CliRunnable
 from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.run_entities import run_automation
 from codemonkeys.utils.monk.theme_functions import print_t
-
-try:
-    from config.framework.monkey_config import MonkeyConfig
-except ImportError:
-    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
-            'MonkeyConfig class. automation', 'warning')
-    from codemonkeys.config.monkey_config import MonkeyConfig
+from codemonkeys.config_imports import MonkeyConfig
 
 
 class Barrel(CliRunnable):

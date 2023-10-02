@@ -2,14 +2,7 @@ import importlib.util
 import os
 from typing import Any, Dict, List, Optional
 
-from codemonkeys.utils.monk.theme_functions import print_t
-
-try:
-    from config.framework.monkey_config import MonkeyConfig
-except ImportError:
-    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
-            'MonkeyConfig class. automation', 'warning')
-    from codemonkeys.config.monkey_config import MonkeyConfig
+from codemonkeys.config_imports import MonkeyConfig
 
 
 def run_command(entity_path: str, entity_name: str, named_args: Dict[str, Any],

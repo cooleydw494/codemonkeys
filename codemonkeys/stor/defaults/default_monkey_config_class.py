@@ -2,12 +2,7 @@ from dataclasses import dataclass
 
 from codemonkeys.config.monkey_config import MonkeyConfig as CMMonkeyConfig
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
-
-try:
-    from config.framework.env import Env
-except ImportError:
-    print_t('Could not import user Env class from config.framework.env. Using default Env class.', 'warning')
-    from codemonkeys.config.env import Env
+from codemonkeys.config_imports import Env
 
 
 @dataclass

@@ -8,12 +8,7 @@ from codemonkeys.defs import MONKEYS_PATH
 from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_key
-
-try:
-    from config.framework.env import Env
-except ImportError:
-    print_t('Could not import user Env class from config.framework.env. Using default Env class.', 'warning')
-    from codemonkeys.config.env import Env
+from codemonkeys.config_imports import Env
 
 
 @dataclass

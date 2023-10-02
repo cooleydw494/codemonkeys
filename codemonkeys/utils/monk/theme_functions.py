@@ -16,12 +16,8 @@ from termcolor import colored, COLORS
 from codemonkeys.cmdefs import VERSION, CM_BANNER_PATH
 from codemonkeys.defs import nl
 from codemonkeys.utils.file_ops import get_file_contents
+from codemonkeys.config_imports import Theme
 
-try:
-    from config.framework.theme import Theme
-except ImportError:
-    print('Could not import user Theme class from config.framework.theme. Using default Theme class.')
-    from codemonkeys.config.theme import Theme
 
 _print_lock = threading.Lock()
 
