@@ -9,16 +9,6 @@ from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.config.imports.env import Env
 
-# Set up OpenAI client with API key
-env = Env.get()
-openai.api_key = env.OPENAI_API_KEY
-
-
-def check_api_key():
-    """Check if OpenAI API key has been properly set, else raise an Exception."""
-    if not openai.api_key:
-        raise Exception("OPENAI_API_KEY not set in `.env` file.")
-
 
 class GPTClient:
     """A helper class to interact with GPT based models."""
@@ -37,6 +27,10 @@ class GPTClient:
         :param float temperature: The generation temperature. Defaults to 1.0.
         :param int max_tokens: Maximum tokens limit. Defaults to 8000.
         """
+
+        env = Env.get()
+        openai.api_key = env.OPENAI_API_KEY
+
         if model_name not in get_gpt_model_names():
             raise ValueError(f"Invalid GPT model name: {model_name}. Try `monk gpt-models-info --update`.")
 
@@ -55,7 +49,6 @@ class GPTClient:
         :param int rate_limit_delay: The delay in seconds to wait before rate limit retry. Defaults to 60.
         :return: The generated response.
         """
-        check_api_key()
         temperature = temperature or self.temperature
 
         max_tokens = self.max_tokens - self.count_tokens(prompt) - TOKEN_UNCERTAINTY_BUFFER
@@ -74,11 +67,15 @@ class GPTClient:
             import time
             time.sleep(rate_limit_delay)
             return self.generate(prompt, temperature, rate_limit_delay * 2)
+
+        # Commented out because timeouts sometimes recur many times but only for specific prompts (best to skip)
+        #
         # except openai.error.Timeout as e:
         #     print_t(f"Timeout error, trying again in {rate_limit_delay}s: {e}", 'warning')
         #     import time
         #     time.sleep(rate_limit_delay)
         #     return self.generate(prompt, temperature, rate_limit_delay*2)
+
         except openai.error.OpenAIError as e:
             print_t(f"OpenAI error: {e}", 'error')
             return None
