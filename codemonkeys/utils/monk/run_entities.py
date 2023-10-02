@@ -23,8 +23,7 @@ def run_command(entity_path: str, entity_name: str, named_args: Dict[str, Any],
     :param List[str] unnamed_args: The unnamed args passed to the `Command` instance.
     """
     command = load_class(entity_path, entity_name)
-    instance = command(named_args, unnamed_args)
-    instance.run()
+    command(named_args, unnamed_args).run()
 
 
 def run_automation(entity_path: str, entity_name: str, named_args: Dict[str, Any],
@@ -39,8 +38,7 @@ def run_automation(entity_path: str, entity_name: str, named_args: Dict[str, Any
     :param MonkeyConfig monkey_config: A MonkeyConfig instance or None.
     """
     automation = load_class(entity_path, entity_name)
-    instance = automation(named_args, unnamed_args, monkey_config)
-    instance.run()
+    automation(named_args, unnamed_args, monkey_config).run()
 
 
 def run_barrel(entity_path: str, entity_name: str, named_args: Dict[str, Any], unnamed_args: List[str]):
@@ -53,8 +51,7 @@ def run_barrel(entity_path: str, entity_name: str, named_args: Dict[str, Any], u
     :param List[str] unnamed_args: The unnamed args passed to the `Barrel` instance.
     """
     barrel = load_class(entity_path, entity_name)
-    instance = barrel(named_args, unnamed_args)
-    instance.run()
+    barrel(named_args, unnamed_args).run()
 
 
 def load_class(entity_path: str, entity_name: str) -> Any:
@@ -65,20 +62,16 @@ def load_class(entity_path: str, entity_name: str) -> Any:
     :param str entity_path: The file path to the Entity class.
     :param str entity_name: The name of the Entity class.
     """
-    # Convert the entity_name from kebab-case to CamelCase
+    # Convert entity_name from kebab-case to CamelCase
     entity_name_camel_case = ''.join(word.capitalize() for word in entity_name.split('-'))
 
     # Normalize path
     entity_path = os.path.normpath(entity_path)
 
-    # Create module spec
+    # Create module spec, load module, and get class
     module_spec = importlib.util.spec_from_file_location(entity_name_camel_case, entity_path)
-
-    # Load module
     module = importlib.util.module_from_spec(module_spec)
     module_spec.loader.exec_module(module)
+    entity_class = getattr(module, entity_name_camel_case)
 
-    # Get class from module
-    callable_class = getattr(module, entity_name_camel_case)
-
-    return callable_class
+    return entity_class
