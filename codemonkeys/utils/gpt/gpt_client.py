@@ -7,7 +7,7 @@ from tiktoken import Encoding
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names
 from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.config_imports import Env
+from codemonkeys.config.imports.env import Env
 
 # Set up OpenAI client with API key
 env = Env.get()

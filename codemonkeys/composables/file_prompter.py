@@ -4,7 +4,7 @@ from codemonkeys.defs import nl, nl2, _or, content_sep
 from codemonkeys.utils.file_ops import get_file_contents
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
-from codemonkeys.config_imports import Env
+from codemonkeys.config.imports.env import Env
 
 env = Env.get()
 

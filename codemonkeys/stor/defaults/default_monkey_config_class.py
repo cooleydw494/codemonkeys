@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from codemonkeys.config.monkey_config import MonkeyConfig as CMMonkeyConfig
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
-from codemonkeys.config_imports import Env
+from codemonkeys.config.imports.env import Env
 
 
 @dataclass
@@ -61,7 +61,7 @@ class MonkeyConfig(CMMonkeyConfig):
         """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
         Set MonkeyConfig props with validations, generated from monkey-config-defaults & monkey_config_validations. """
         # [MONKEY_CONFIG_VALIDATIONS_START]
-        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path, validate_list_str
+        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, validate_float, validate_path
         self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
         self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
         self.FILEPATH_MATCH_EXCLUDE = validate_str('FILEPATH_MATCH_EXCLUDE', self.FILEPATH_MATCH_EXCLUDE)

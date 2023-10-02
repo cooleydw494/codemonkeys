@@ -2,7 +2,7 @@ import importlib.util
 import os
 from typing import Any, Dict, List, Optional
 
-from codemonkeys.config_imports import MonkeyConfig
+from codemonkeys.config.imports.monkey_config import MonkeyConfig
 
 
 def run_command(entity_path: str, entity_name: str, named_args: Dict[str, Any],
