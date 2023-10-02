@@ -6,10 +6,11 @@ import traceback
 
 from codemonkeys.defs import nl
 from codemonkeys.utils.defs_utils import find_project_root
+sys.path.append(find_project_root())
+
 from codemonkeys.utils.monkey_config.update_monkey_config_class import update_monkey_config_class
 from codemonkeys.utils.env.update_env_class import update_env_class
 
-sys.path.append(find_project_root())
 # Regenerate "magic" config/env stuff
 update_env_class()
 update_monkey_config_class()

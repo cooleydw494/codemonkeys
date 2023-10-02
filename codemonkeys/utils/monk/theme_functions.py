@@ -13,7 +13,7 @@ from typing import List, Tuple, Union
 
 from termcolor import colored, COLORS
 
-from codemonkeys.cmdefs import VERSION, CM_BANNER_PATH
+from codemonkeys.cm_paths import VERSION, CM_BANNER_PATH
 from codemonkeys.defs import nl
 from codemonkeys.utils.file_ops import get_file_contents
 from codemonkeys.config.imports.theme import Theme

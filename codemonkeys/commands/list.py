@@ -1,4 +1,4 @@
-from codemonkeys.cmdefs import CM_COMMANDS_PATH
+from codemonkeys.cm_paths import CM_COMMANDS_PATH
 from codemonkeys.defs import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
 from codemonkeys.entities.command import Command
 from codemonkeys.utils.monk.theme_functions import print_tree

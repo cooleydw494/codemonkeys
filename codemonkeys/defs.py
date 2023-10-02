@@ -29,8 +29,6 @@ TEMP_PATH = os.path.join(STOR_PATH, "temp")
 """  'GLOBAL' HELPERS/VARIABLES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """
 
-ENABLE_RELATIVE_IMPORTS = sys.path.append(ROOT_PATH)
-
 TOKEN_UNCERTAINTY_BUFFER = 10
 
 # OS-agnostic newline characters

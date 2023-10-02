@@ -5,11 +5,11 @@ import sys
 
 from termcolor import colored
 
-from codemonkeys.cmdefs import (CM_ENV_DEFAULT_PATH, CM_MONKEY_CONFIG_CLASS_DEFAULT_PATH,
-                                CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, CM_THEME_CONFIG_PATH,
-                                CM_DEFAULT_AUTOMATION_PATH,
-                                CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
-                                CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH, CM_MONKEYS_DIR_DEFAULT_PATH)
+from codemonkeys.cm_paths import (CM_ENV_DEFAULT_PATH, CM_MONKEY_CONFIG_CLASS_DEFAULT_PATH,
+                                  CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, CM_THEME_CONFIG_PATH,
+                                  CM_DEFAULT_AUTOMATION_PATH,
+                                  CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
+                                  CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH, CM_MONKEYS_DIR_DEFAULT_PATH)
 
 top_level_dirs = [
     'automations',
