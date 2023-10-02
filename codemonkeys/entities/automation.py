@@ -1,14 +1,8 @@
 from typing import Dict, Any, List, Optional
 
 from codemonkeys.entities.cli_runnable import CliRunnable
+from codemonkeys.import_overrides import MonkeyConfig
 from codemonkeys.utils.monk.theme_functions import print_t
-
-try:
-    from config.framework.monkey_config import MonkeyConfig
-except ImportError:
-    print_t('Could not import user MonkeyConfig class from config.framework.monkey_config. Using default '
-            'MonkeyConfig class. automation', 'warning')
-    from codemonkeys.config.monkey_config import MonkeyConfig
 
 
 class Automation(CliRunnable):
@@ -20,7 +14,8 @@ class Automation(CliRunnable):
 
     required_config_keys = []
 
-    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey_config: Optional[MonkeyConfig] = None):
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str],
+                 monkey_config: Optional[MonkeyConfig] = None):
         """
         Initializes the `Automation` class.
 
