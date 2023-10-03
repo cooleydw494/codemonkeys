@@ -6,78 +6,77 @@ from codemonkeys.utils.monk.theme_functions import print_t
 class OutputChecker:
     """A composable class to manage output checking for generated text using GPT models."""
 
-    def __init__(self):
-        self.gpt_client = None
-        self.prompt = ''
-        self.model = ''
-        self.temp = ''
-        self.max_tokens = None
-        self.tries = 1
-        self.current_try = 0
+    _model = ''
+    _temp = ''
+    _max_tokens = None
+    _gpt_client = None
+    _prompt = ''
+    _tries = 1
+    _current_try = 0
 
-    def set_model(self, model: str, temp: float, max_tokens: int) -> 'OutputChecker':
+    def model(self, model: str, temp: float, max_tokens: int) -> 'OutputChecker':
         """
-        Sets the GPT model to use for checking output.
+        Sets the GPT _model to use for checking output.
 
-        :param str model: The model to set.
+        :param str model: The _model to set.
         :param float temp: The temperature to set.
         :param int max_tokens: The maximum amount of tokens to set.
         :return: Self for method chaining.
         """
-        self.model = model
-        self.temp = temp
-        self.max_tokens = max_tokens
-        self.gpt_client = GPTClient(model, temp, max_tokens)
+        self._model = model
+        self._temp = temp
+        self._max_tokens = max_tokens
+        self._gpt_client = GPTClient(model, temp, max_tokens)
         return self
 
-    def set_prompt(self, prompt: str) -> 'OutputChecker':
+    def prompt(self, prompt: str) -> 'OutputChecker':
         """
-        Sets the prompt to use for checking output.
+        Sets the _prompt to use for checking output.
 
-        :param str prompt: The prompt to set.
+        :param str prompt: The _prompt to set.
         :return: Self for method chaining.
         """
-        self.prompt = prompt
+        self._prompt = prompt
         return self
 
-    def set_tries(self, tries: int) -> 'OutputChecker':
+    def tries(self, tries: int) -> 'OutputChecker':
         """
-        Sets the number of tries allowed for output checking.
+        Sets the number of _tries allowed for output checking.
 
-        :param int tries: The number of tries to set.
+        :param int tries: The number of _tries to set.
         :return: Self for method chaining.
         """
-        self.tries = tries
+        self._tries = tries
         return self
 
     def set_current_try(self, current_try: int) -> 'OutputChecker':
         """
         Sets the current try number for output checking.
 
-        :param int current_try: The number current tries.
+        :param int current_try: The number current _tries.
         :return: Self for method chaining.
         """
-        self.current_try = current_try
+        self._current_try = current_try
         return self
 
     def has_tries(self) -> bool:
         """
-        Checks if there are any tries remaining.
+        Checks if there are any _tries remaining.
 
-        :return: True if there are tries remaining, otherwise False.
+        :return: True if there are _tries remaining, otherwise False.
         """
-        return self.current_try <= self.tries
+        return self._current_try <= self._tries
 
     def check_output(self, output: str) -> bool:
         """
-        Checks the given output using the output check prompt.
+        Checks the given output using the output check _prompt.
 
         :param str output: The output to check.
         :return: True if the output passes the check, otherwise False.
         """
-        check_prompt = f"{self.prompt}{nl2}{output}"
-        print_t(f"Checking Output With Prompt:{nl}{self.prompt}", 'quiet')
-        check_result = self.gpt_client.generate(check_prompt)
+        check_prompt = f"{self._prompt}{nl2}{output}"
+        print_t(f"Checking Output With Prompt:{nl}{self._prompt}", 'quiet')
+        check_result = self._gpt_client.generate(check_prompt)
 
         if check_result is None:
             print_t(f"Output Check Failed because output check response could not be generated.", 'warning')
@@ -90,5 +89,5 @@ class OutputChecker:
             print_t(f"Output Check Failed. Result: {check_result}", 'warning')
             output_valid = False
 
-        self.current_try += 1
+        self._current_try += 1
         return output_valid

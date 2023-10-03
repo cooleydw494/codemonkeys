@@ -104,7 +104,7 @@ class MonkeyConfig:
         from codemonkeys.config.yaml_helpers import read_yaml_file
 
         if cls._instance is None or cls._current_monkey != monkey_name:
-            monkey_name = get_monkey_name(monkey_name)  # Find or prompt user to select
+            monkey_name = get_monkey_name(monkey_name)  # Find or _prompt user to select
             cls._current_monkey = monkey_name
             monkey_path = os.path.join(MONKEYS_PATH, f"{monkey_name}.yaml")
 
@@ -176,9 +176,9 @@ class MonkeyConfig:
     @classmethod
     def insert_cop_file_contents(cls, value: str) -> str:
         """
-        Replaces any {cop:file_path} placeholders with the contents of the file at file_path.
+        Replaces any {cop:_file_path} placeholders with the contents of the file at _file_path.
 
-        :param str value: The value to check for {cop:file_path} placeholders.
+        :param str value: The value to check for {cop:_file_path} placeholders.
         :return: The value with the placeholders replaced with the file contents.
         """
         matches = re.findall(r'{cop:(.*?)}', value)

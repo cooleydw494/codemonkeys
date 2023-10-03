@@ -9,7 +9,7 @@ ROOT_PATH = find_project_root()
 
 AUTOMATIONS_PATH = os.path.join(ROOT_PATH, "automations")
 BARRELS_PATH = os.path.join(ROOT_PATH, "barrels")
-COMPOSABLES_PATH = os.path.join(ROOT_PATH, "composables")
+COMPOSABLES_PATH = os.path.join(ROOT_PATH, "builders")
 COMMANDS_PATH = os.path.join(ROOT_PATH, "commands")
 
 ENV_PATH = os.path.join(ROOT_PATH, ".env")
@@ -23,7 +23,7 @@ ENV_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "env.py")
 MONKEY_CONFIG_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "monkey_config.py")
 
 STOR_PATH = os.path.join(ROOT_PATH, "stor")
-TEMP_PATH = os.path.join(STOR_PATH, "temp")
+TEMP_PATH = os.path.join(STOR_PATH, "_temp")
 
 """  'GLOBAL' HELPERS/VARIABLES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """

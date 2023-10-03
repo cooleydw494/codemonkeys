@@ -15,7 +15,7 @@ class ExampleBarrel(Barrel):
     def run(self) -> None:
         """Use this method to load monkey configs and chain multiple automations."""
         (self
-         # Load a monkey config (omit name to prompt user)
+         # Load a monkey config (omit name to _prompt user)
          .with_monkey('comment-monkey')
          .run_automation('default')
 

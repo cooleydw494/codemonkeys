@@ -48,10 +48,10 @@ class Gitter:
 
     def commit(self, message: str, add_all: bool = False) -> str:
         """
-        Commit changes with the provided message.
+        Commit changes with the provided _message.
         If the add_all flag is True, stages all changes.
 
-        :param str message: The commit message.
+        :param str message: The commit _message.
         :param bool add_all: Whether to stage all changes. Default: False.
         :return: The output of the git command.
         """

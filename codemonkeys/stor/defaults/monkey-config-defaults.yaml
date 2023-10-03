@@ -19,7 +19,7 @@
 #   `modules/source/config/monkey_config_validations.py`
 
 # General
-WORK_PATH: "ROOT_PATH/stor/work_path"
+WORK_PATH: "ROOT_PATH/stor/_work_path"
 FILE_TYPES_INCLUDED: ".js,.vue,.php"
 FILEPATH_MATCH_INCLUDE: null
 FILEPATH_MATCH_EXCLUDE: ".config,.md,.git,migrations,vite,webpack,.txt"
@@ -31,7 +31,7 @@ MAIN_PROMPT_ULTIMATUM: "Limit your response to the full contents of a python scr
 OUTPUT_EXAMPLE_PROMPT: "Limit your output strictly to the contents of the file, like this: ```complete contents of file```."
 
 # Context / Summary
-# Note: Insert un-summarized context files into PROMPTs with {cop:<filepath>}
+# Note: Insert un-summarized _context files into PROMPTs with {cop:<filepath>}
 CONTEXT_FILE_PATH: null
 CONTEXT_SUMMARY_PROMPT: null
 

@@ -12,7 +12,7 @@ def get_gpt_model_info() -> dict | None:
     """
     Retrieves cached info on GPT models.
 
-    :return: A dictionary containing GPT model information, or None if the information could not be retrieved.
+    :return: A dictionary containing GPT _model information, or None if the information could not be retrieved.
     :rtype: dict | None
     """
     try:
@@ -20,15 +20,15 @@ def get_gpt_model_info() -> dict | None:
             return json.load(f)
 
     except Exception as e:
-        print_t(f"An error occurred reading cached gpt model info: {e}", 'warning')
+        print_t(f"An error occurred reading cached gpt _model info: {e}", 'warning')
         return None
 
 
 def get_gpt_model_names() -> list[str] | None:
     """
-    Retrieves the names of all GPT models from the cached model info.
+    Retrieves the names of all GPT models from the cached _model info.
 
-    :return: A list of model names, or None if the model info could not be retrieved.
+    :return: A list of _model names, or None if the _model info could not be retrieved.
     :rtype: list[str] | None
     """
     model_info = get_gpt_model_info()
@@ -39,7 +39,7 @@ def get_gpt_model_names() -> list[str] | None:
 
 def update_gpt_model_cache() -> None:
     """
-    Updates the GPT model info cache by querying the openai API.
+    Updates the GPT _model info cache by querying the openai API.
 
     :return: None
     """
@@ -51,14 +51,14 @@ def update_gpt_model_cache() -> None:
                 json.dump(model_info, f)
 
         except Exception as e:
-            print(f"An error occurred updating gpt model info cache: {e}")
+            print(f"An error occurred updating gpt _model info cache: {e}")
 
 
 def _query_model_info() -> dict | None:
     """
     Queries the OpenAI API for a list of models.
 
-    :return: A dictionary mapping model ids to models, or None if the API call failed.
+    :return: A dictionary mapping _model ids to models, or None if the API call failed.
     :rtype: dict | None
     """
     try:
@@ -70,11 +70,11 @@ def _query_model_info() -> dict | None:
 
         model_list = openai.Model.list()
 
-        # We're creating a new dictionary where the key is the model's ID and the value is the model's data
+        # We're creating a new dictionary where the key is the _model's ID and the value is the _model's data
         model_info = {model.id: model for model in model_list.data}
 
         return model_info
 
     except Exception as e:
-        print(f"An error occurred while retrieving the model information: {e}")
+        print(f"An error occurred while retrieving the _model information: {e}")
         return None
