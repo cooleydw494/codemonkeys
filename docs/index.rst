@@ -9,7 +9,7 @@ CodeMonkeys Docs
    :recursive:
 
    entities
-   composables
+   builders
    config
    utils
 
