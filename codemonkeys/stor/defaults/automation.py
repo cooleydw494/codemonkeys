@@ -27,8 +27,6 @@ class Default(Automation):
 
     def run(self) -> None:
         mc = self.monkey_config
-        # replace cop-syntax file contents references
-        mc.cop_paths()
 
         # Prepare summarized or unsummarized _context
         if mc.CONTEXT_FILE_PATH is None:

@@ -1,3 +1,4 @@
+import dataclasses
 import os
 import re
 from dataclasses import dataclass
@@ -99,6 +100,8 @@ class MonkeyConfig:
 
         self.env = Env.get()
 
+        self._cop_paths()
+
     @classmethod
     def load(cls, monkey_name: str | None = None) -> 'MonkeyConfig':
         from codemonkeys.config.yaml_helpers import read_yaml_file
@@ -151,7 +154,14 @@ class MonkeyConfig:
 
         return config_values
 
-    def replace_prompt_str(self, to_replace, replace_with):
+    def replace_prompt_str(self, to_replace, replace_with) -> 'MonkeyConfig':
+        """
+        Replaces any {prompt:<prompt_key>} placeholders with the provided value and returns a copy of the MonkeyConfig.
+
+        :param to_replace: The placeholder to replace.
+        :param replace_with: The value to replace the placeholder with.
+        :return: A copy of the MonkeyConfig instance with the placeholders replaced.
+        """
         copy = MonkeyConfig(**self.__dict__)
         for attr in vars(copy):
             value = getattr(copy, attr)
@@ -159,10 +169,10 @@ class MonkeyConfig:
                 setattr(copy, attr, value.replace(to_replace, replace_with))
         return copy
 
-    def cop_paths(self):
-        # for each property containing 'PATH' word-bound (replace _ with ' '), do a replace on any string matching "{
-        # cop:<a-file-path>}" with the read content of the file at <a-file-path>. Throw a clear error if the file
-        # doesn't exist.
+    def _cop_paths(self) -> None:
+        """
+        Replaces any {cop:<filepath>} placeholders with the contents of the file at <filepath>.
+        """
         for attr in vars(self):
             value = getattr(self, attr)
             if is_prompt_key(attr) and value is not None and re.search(r'{cop:.*?}', value):
@@ -176,18 +186,18 @@ class MonkeyConfig:
     @classmethod
     def insert_cop_file_contents(cls, value: str) -> str:
         """
-        Replaces any {cop:_file_path} placeholders with the contents of the file at _file_path.
+        Replaces any {cop:<filepath>} placeholders with the contents of the file at <filepath>.
 
-        :param str value: The value to check for {cop:_file_path} placeholders.
+        :param str value: The value to check for {cop:<filepath>} placeholders.
         :return: The value with the placeholders replaced with the file contents.
         """
         matches = re.findall(r'{cop:(.*?)}', value)
         for match in matches:
-            expanded_path = os.path.expanduser(match)
-            if os.path.isfile(expanded_path):
-                with open(expanded_path, "r") as file:
+            file_path = os.path.expanduser(match)
+            if os.path.isfile(file_path):
+                with open(file_path, "r") as file:
                     file_content = file.read()
                 value = value.replace(f'{{cop:{match}}}', file_content)
             else:
-                raise FileNotFoundError(f"Could not find the file specified in the 'cop' placeholder: {expanded_path}")
+                raise FileNotFoundError(f"Could not find the file specified in the 'cop' placeholder: {file_path}")
         return value
