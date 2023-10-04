@@ -21,7 +21,7 @@ USAGE_EXAMPLES_TABLE = {
     "rows": [
         [
             "monk gpt-models-info",
-            "Fetches GPT _model information from cache and displays"
+            "Fetches GPT model information from cache and displays"
         ],
         [
             "monk gpt-models-info --update",

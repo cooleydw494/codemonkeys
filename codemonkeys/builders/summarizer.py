@@ -16,9 +16,9 @@ class Summarizer:
 
     def model(self, model: str, temp: float, max_tokens: int) -> 'Summarizer':
         """
-        Set the GPT _model, temperature, and max tokens for the summarizer.
+        Set the GPT model, temperature, and max tokens for the summarizer.
 
-        :param str model: The GPT _model to be used.
+        :param str model: The GPT model to be used.
         :param float temp: The temperature to be used.
         :param int max_tokens: The maximum number of tokens.
         :return: Self for method chaining.
@@ -41,9 +41,9 @@ class Summarizer:
 
     def context(self, context_string: str) -> 'Summarizer':
         """
-        Set the text _context for the summarizer.
+        Set the text context for the summarizer.
 
-        :param str context_string: The _context string to be used.
+        :param str context_string: The context string to be used.
         :return: Self for method chaining.
         """
         self._context = context_string
@@ -51,9 +51,9 @@ class Summarizer:
 
     def context_from_file(self, path: str) -> 'Summarizer':
         """
-        Set the text _context for the summarizer by reading from a file.
+        Set the text context for the summarizer by reading from a file.
 
-        :param str path: The file path to read the _context from.
+        :param str path: The file path to read the context from.
         :return: Self for method chaining.
         """
         self._context = get_file_contents(path)
@@ -61,13 +61,13 @@ class Summarizer:
 
     def summarize(self) -> str:
         """
-        Summarize the given text _context using GPT.
+        Summarize the given text context using GPT.
 
         :return: The summarized text.
-        :raises RuntimeError: When no _context is provided for summary.
+        :raises RuntimeError: When no context is provided for summary.
         """
         if not self._context:
-            raise RuntimeError("No _context provided to summarize.")
+            raise RuntimeError("No context provided to summarize.")
 
         context_tokens = self._gpt_client.count_tokens(self._context)
 
@@ -78,7 +78,7 @@ class Summarizer:
             summary = self._gpt_client.generate(full_prompt)
 
         if summary is None:
-            raise RuntimeError(f"Failed to generate a summary for the _context.")
+            raise RuntimeError(f"Failed to generate a summary for the context.")
 
         print_t("Context summarized.", 'info')
         print_t(f"Summary:{nl}{summary}", 'quiet')
@@ -87,12 +87,12 @@ class Summarizer:
 
     def _summarize_chunked(self) -> str:
         """
-        Summarize the given text _context in chunks using GPT.
+        Summarize the given text context in chunks using GPT.
 
         :return: The summarized text.
         """
         chunked_context = self._gpt_client.split_into_chunks(self._context, self._max_tokens)
-        print_t(f"Split _context into {len(chunked_context)} chunks.", 'info')
+        print_t(f"Split context into {len(chunked_context)} chunks.", 'info')
         print_t('Summarizing each chunk... is not implemented [see TODO in summarizer.py]', 'loading')
-        # TODO: implement summarization of chunked _context
+        # TODO: implement summarization of chunked context
         exit()

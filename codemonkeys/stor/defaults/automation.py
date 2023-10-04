@@ -28,7 +28,7 @@ class Default(Automation):
     def run(self) -> None:
         mc = self.monkey_config
 
-        # Prepare summarized or unsummarized _context
+        # Prepare summarized or unsummarized context
         if mc.CONTEXT_FILE_PATH is None:
             context = ''
         elif mc.CONTEXT_SUMMARY_PROMPT is not None:

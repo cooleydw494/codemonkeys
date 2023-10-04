@@ -23,7 +23,7 @@ ENV_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "env.py")
 MONKEY_CONFIG_CLASS_PATH = os.path.join(FRAMEWORK_CONFIG_PATH, "monkey_config.py")
 
 STOR_PATH = os.path.join(ROOT_PATH, "stor")
-TEMP_PATH = os.path.join(STOR_PATH, "_temp")
+TEMP_PATH = os.path.join(STOR_PATH, "temp")
 
 """  'GLOBAL' HELPERS/VARIABLES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """

@@ -25,7 +25,7 @@ extensions = [
     'sphinx_rtd_theme',
 ]
 autosummary_generate = True
-templates_path = ['_templates']
+templates_path = ['templates']
 exclude_patterns = ['codemonkeys.config.imports.*']
 autodoc_mock_imports = [
     'codemonkeys.defs', 'config.framework'

@@ -25,10 +25,10 @@ config_dirs = [
 ]
 
 stor_dirs = [
-    '_context',
+    'context',
     'output',
-    '_work_path',
-    '_temp',
+    'work_path',
+    'temp',
 ]
 
 # Get the new project name from the command line arguments
@@ -79,7 +79,7 @@ print(colored("Creating config/example files...", 'cyan'))
 config_path = os.path.join(project_path, 'config')
 shutil.copytree(CM_MONKEYS_DIR_DEFAULT_PATH, os.path.join(config_path, 'monkeys'))
 shutil.copyfile(CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, os.path.join(config_path, 'monkey-config-defaults.yaml'))
-shutil.copyfile(CM_CONTEXT_FILE_EXAMPLE_PATH, os.path.join(project_path, 'stor', '_context', '_context-file.txt'))
+shutil.copyfile(CM_CONTEXT_FILE_EXAMPLE_PATH, os.path.join(project_path, 'stor', 'context', 'context-file.txt'))
 shutil.copyfile(CM_THEME_CONFIG_PATH, os.path.join(config_path, 'framework', 'theme.py'))
 
 # Create Env class

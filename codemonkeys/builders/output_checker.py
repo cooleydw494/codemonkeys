@@ -16,9 +16,9 @@ class OutputChecker:
 
     def model(self, model: str, temp: float, max_tokens: int) -> 'OutputChecker':
         """
-        Sets the GPT _model to use for checking output.
+        Sets the GPT model to use for checking output.
 
-        :param str model: The _model to set.
+        :param str model: The model to set.
         :param float temp: The temperature to set.
         :param int max_tokens: The maximum amount of tokens to set.
         :return: Self for method chaining.

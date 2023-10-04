@@ -22,7 +22,7 @@ class FileIterator:
         """Set the working path for the FileIterator.
 
         :param str work_path: The path as a string.
-        :return: The FileIterator instance with the new _work_path value.
+        :return: The FileIterator instance with the new work_path value.
         """
         self._work_path = work_path
         return self
@@ -55,10 +55,10 @@ class FileIterator:
         return self
 
     def token_count_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':
-        """Set the token count _model for the FileIterator.
+        """Set the token count model for the FileIterator.
 
-        :param str model: The name of the _model.
-        :param float temp: The temperature for the _model.
+        :param str model: The name of the model.
+        :param float temp: The temperature for the model.
         :param int max_tokens: The maximum number of tokens.
         :return: Self for method chaining.
         """

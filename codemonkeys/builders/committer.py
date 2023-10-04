@@ -40,11 +40,11 @@ class Committer:
 
     def model(self, model: str, temp: float = None, max_tokens: int = None) -> 'Committer':
         """
-        Sets the GPT _model, temperature, and maximum tokens for the Committer.
+        Sets the GPT model, temperature, and maximum tokens for the Committer.
 
-        :param str model: GPT _model to use.
-        :param float temp: Temperature for the GPT _model.
-        :param int max_tokens: Maximum number of tokens for the GPT _model.
+        :param str model: GPT model to use.
+        :param float temp: Temperature for the GPT model.
+        :param int max_tokens: Maximum number of tokens for the GPT model.
         :return: The updated Committer instance.
         """
         if model is not None:

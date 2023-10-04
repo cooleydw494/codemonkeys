@@ -21,9 +21,9 @@ class GPTClient:
 
     def __init__(self, model_name: str, temperature: float = 1.0, max_tokens: int = 8000):
         """
-        Initialize a GPTClient instance for a specific _model.
+        Initialize a GPTClient instance for a specific model.
         
-        :param str model_name: The _model's name.
+        :param str model_name: The model's name.
         :param float temperature: The generation temperature. Defaults to 1.0.
         :param int max_tokens: Maximum tokens limit. Defaults to 8000.
         """
@@ -32,19 +32,19 @@ class GPTClient:
         openai.api_key = env.OPENAI_API_KEY
 
         if model_name not in get_gpt_model_names():
-            raise ValueError(f"Invalid GPT _model name: {model_name}. Try `monk gpt-models-info --update`.")
+            raise ValueError(f"Invalid GPT model name: {model_name}. Try `monk gpt-models-info --update`.")
 
         self.model = model_name
-        self.hard_max_tokens = 16000  # TODO: use _model-specific token limits
+        self.hard_max_tokens = 16000  # TODO: use model-specific token limits
         self.max_tokens = min(max_tokens, self.hard_max_tokens)
         self.temperature = temperature
         self.encoding = tiktoken.encoding_for_model(self.model)
 
     def generate(self, prompt: str, temperature: float = None, rate_limit_delay: int = 60) -> str | None:
         """
-        Generate a GPT _model response from a given _prompt.
+        Generate a GPT model response from a given _prompt.
         
-        :param str prompt: The text input for the _model.
+        :param str prompt: The text input for the model.
         :param float temperature: The generation temperature. Defaults to None.
         :param int rate_limit_delay: The delay in seconds to wait before rate limit retry. Defaults to 60.
         :return: The generated response.

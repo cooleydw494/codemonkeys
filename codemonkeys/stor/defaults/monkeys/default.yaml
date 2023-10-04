@@ -9,7 +9,7 @@
 
 
 # General
-WORK_PATH: "ROOT_PATH/stor/_work_path"
+WORK_PATH: "ROOT_PATH/stor/work_path"
 FILE_TYPES_INCLUDED: ".js,.vue,.php"
 FILEPATH_MATCH_INCLUDE: null
 FILEPATH_MATCH_EXCLUDE: ".config,.md,.git,migrations,vite,webpack,.txt"

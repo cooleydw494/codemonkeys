@@ -19,8 +19,8 @@ def get_valid_values(key: str) -> List[Any]:
         gpt_model_names = ['gpt-3.5-turbo', 'gpt-4']
 
     valid_values = {
-        '_temp': [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-        '_model': gpt_model_names,
+        'temp': [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        'model': gpt_model_names,
     }
     if key in valid_values:
         return valid_values[key]
@@ -55,7 +55,7 @@ def _is_model_key(key: str) -> bool:
     :param str key: The config key to check.
     :return True if key is a MODEL key, else False.
     """
-    return _has_word(key, '_model')
+    return _has_word(key, 'model')
 
 
 def _is_temp_key(key: str) -> bool:
@@ -65,7 +65,7 @@ def _is_temp_key(key: str) -> bool:
     :param str key: The config key to check.
     :return True if key is a TEMP key, else False.
     """
-    return _has_word(key, '_temp')
+    return _has_word(key, 'temp')
 
 
 def is_prompt_key(key: str) -> bool:
@@ -148,7 +148,7 @@ def validate_int(key: str, value: Any) -> int | None:
     :return: Validated int or None.
     """
     if _is_model_key(key):
-        return validate_type('_model', value, int)
+        return validate_type('model', value, int)
     return validate_type(key, value, int)
 
 
@@ -161,7 +161,7 @@ def validate_float(key: str, value: Any) -> float | None:
     :return: Validated float or None.
     """
     if _is_temp_key(key):
-        return validate_type('_temp', value, float)
+        return validate_type('temp', value, float)
     return validate_type(key, value, float)
 
 
