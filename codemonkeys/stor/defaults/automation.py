@@ -15,12 +15,6 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class Default(Automation):
-    required_config_keys = ['MAIN_PROMPT']
-
-    # TODO: implement this in base class
-    required_config_keys_if = {
-        'OUTPUT_CHECK_PROMPT': ['OUTPUT_TRIES'],
-    }
 
     def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str]):
         super().__init__(named_args, unnamed_args)

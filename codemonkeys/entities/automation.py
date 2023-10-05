@@ -6,13 +6,16 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class Automation(CliRunnable):
-    """A base class for framework and user-created Automations."""
+    """
+    A base class for framework and user-created Automations.
+    Automation is a subclass of CLIRunnable and therefor supports named and unnamed args (required or optional).
+    It adds the `--monkey` named arg, to specify the MonkeyConfig to use for the Automation.
+    When instantiated directly, a MonkeyConfig instance can be passed in the constructor.
+    """
 
     named_arg_keys = ['monkey']
     monkey: str | None = None
     monkey_config: Optional[MonkeyConfig] = None
-
-    required_config_keys = []
 
     def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str],
                  monkey_config: Optional[MonkeyConfig] = None):
@@ -30,8 +33,6 @@ class Automation(CliRunnable):
         else:
             self.monkey_config = monkey_config
 
-        self._check_required_config_keys()
-
         print_t("Automation initialized.", "start")
 
     def load_config(self) -> MonkeyConfig:
@@ -41,16 +42,6 @@ class Automation(CliRunnable):
         :return: Instantiated MonkeyConfig.
         """
         return MonkeyConfig.load(self.monkey)
-
-    def _check_required_config_keys(self):
-        """
-        Verifies that all the required MonkeyConfig keys are present.
-
-        :raises ValueError: If any required keys are missing.
-        """
-        missing_keys = [key for key in self.required_config_keys if key not in vars(self.monkey_config)]
-        if missing_keys:
-            raise ValueError(f"Missing required config keys: {', '.join(missing_keys)}")
 
     def run(self):
         """
