@@ -92,8 +92,8 @@ with open(env_class_path, 'w') as f:
     for line in lines:
         f.write(line.replace('from codemonkeys.config.theme', 'from config.framework.theme'))
 
-# Create the MonkeyConfig class
-shutil.copyfile(CM_MONKEY_CONFIG_CLASS_DEFAULT_PATH, os.path.join(config_path, 'framework', 'monkey_config.py'))
+# Create the Monkey class
+shutil.copyfile(CM_MONKEY_CONFIG_CLASS_DEFAULT_PATH, os.path.join(config_path, 'framework', 'monkey.py'))
 
 # Create the default automation
 print(colored("Creating default automation...", 'cyan'))

@@ -1,7 +1,7 @@
 from codemonkeys.entities.barrel import Barrel
 
 """
-Barrels are intended to orchestrate multiple automations / monkey configs.
+Barrels are intended to orchestrate multiple automations / Monkey configs.
 I'd recommend having a few fleshed out automations working as intended before reaching for barrels.
 """
 
@@ -13,9 +13,9 @@ class ExampleBarrel(Barrel):
     """
 
     def run(self) -> None:
-        """Use this method to load monkey configs and chain multiple automations."""
+        """Use this method to load Monkey configs and chain multiple automations."""
         (self
-         # Load a monkey config (omit name to _prompt user)
+         # Load a Monkey config (omit name to _prompt user)
          .with_monkey('comment-monkey')
          .run_automation('default')
 

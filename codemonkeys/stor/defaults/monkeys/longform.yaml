@@ -1,4 +1,4 @@
-""" A monkey for generating long-form content outside of hard token limits. """
+""" A Monkey for generating long-form content outside of hard token limits. """
 
 # General
 WORK_PATH: "ROOT_PATH/stor/work_path"

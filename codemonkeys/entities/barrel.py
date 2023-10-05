@@ -1,6 +1,6 @@
 from typing import Dict, Any, List, Optional
 
-from codemonkeys.config.imports.monkey_config import MonkeyConfig
+from codemonkeys.config.imports.monkey import Monkey
 from codemonkeys.entities.cli_runnable import CliRunnable
 from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.run_entities import run_automation
@@ -10,7 +10,7 @@ from codemonkeys.utils.monk.theme_functions import print_t
 class Barrel(CliRunnable):
     """A base class that initializes and runs multiple automations."""
 
-    monkey_config: Optional[MonkeyConfig] = None
+    monkey: Optional[Monkey] = None
 
     def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str]):
         """
@@ -24,17 +24,17 @@ class Barrel(CliRunnable):
 
     def with_monkey(self, monkey_name: str | None = None) -> 'Barrel':
         """
-        Set the MonkeyConfig that will be loaded and used to run Automations. Prompts user if None.
+        Set the Monkey that will be loaded and used to run Automations. Prompts user if None.
 
-        :param str | None monkey_name: Name of the monkey configuration.
+        :param str | None monkey_name: Name of the Monkey configuration.
         :return: The current Barrel instance.
         """
-        self.monkey_config = MonkeyConfig.load(monkey_name)
+        self.monkey = Monkey.load(monkey_name)
         return self
 
     def run_automation(self, automation_name: str) -> 'Barrel':
         """
-        Finds and runs the specified Automation, using the current MonkeyConfig.
+        Finds and runs the specified Automation, using the current Monkey.
 
         :param str automation_name: Name of the automation to run.
         :return: The current Barrel instance.
@@ -45,7 +45,7 @@ class Barrel(CliRunnable):
             automation_name,
             self.named_args,
             self.unnamed_args,
-            self.monkey_config
+            self.monkey
         )
         return self
 

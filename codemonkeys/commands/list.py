@@ -29,7 +29,7 @@ class List(Command):
 
         if self.all:
             print_tree(AUTOMATIONS_PATH, exclude_file_starts=['.', '_'],
-                       title="🤖  Automations - Run automations with monkey configs", incl_prefix=False)
+                       title="🤖  Automations - Run automations with Monkey configs", incl_prefix=False)
         if self.all:
             print_tree(BARRELS_PATH, exclude_file_starts=['.', '_'],
                        title="🛢️   Barrels - Combine and orchestrate automations", incl_prefix=False)

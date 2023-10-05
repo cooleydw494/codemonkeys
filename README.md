@@ -28,7 +28,7 @@ CodeMonkeys' project structure aims to allow you to build/configure/run your aut
 * `monk`: CLI command exposed by core package, run from within a CodeMonkeys project.
 * `commands`: Command instances, runnable via `monk <command>`. Also handles bash/bat scripts.
 * `monkeys/monkey-manifest.yaml`: The centralized config file for all monkeys.
-* `stor/temp/monkeys`: Individual validated/cached monkey configs. Includes `.history` for previous versions.
+* `stor/temp/monkeys`: Individual validated/cached Monkey configs. Includes `.history` for previous versions.
 * `automations`: Automation instances, runnable via `monk -a <automation>`.
 * `automations/default.py`: An out-of-the-box Automation, capable of highly configurable mass file operations.
 * `barrels`: Barrel instances, runnable via `monk -b <barrel>`. Barrels allow orchestration of multiple automations.
@@ -41,20 +41,20 @@ CodeMonkeys' project structure aims to allow you to build/configure/run your aut
 CodeMonkeys' CLI interface is used via the `monk` command which handles running Automations, Barrels, Commands, and built-in framework Commands. The `monk` command can be run anywhere in a CodeMonkeys project, and will always run in the context of the project root.
 
 ## Configuration Management 📝
-CodeMonkeys has built-in configuration management, including an Env class and a MonkeyConfig class which are automatically rewritten to include any custom `.env` or `config/monkey-config-defaults` values you add. These are rewritten on every run of `monk` and allow IDE intelligence for you env/config properties.
-_Note: You should never modify the MonkeyConfig or Env class within `config/framework`. These exist to allow automatic rewrites that include full support for user-defined properties._
+CodeMonkeys has built-in configuration management, including an Env class and a Monkey class which are automatically rewritten to include any custom `.env` or `config/monkey-config-defaults` values you add. These are rewritten on every run of `monk` and allow IDE intelligence for you env/config properties.
+_Note: You should never modify the Monkey or Env class within `config/framework`. These exist to allow automatic rewrites that include full support for user-defined properties._
 
-### MonkeyConfig 
-The MonkeyConfig class is a wrapper for a single monkey config, as defined in `monkeys/monkey-manifest.yaml`. It provides a simple interface for accessing monkey config properties via dot notation, and includes built-in validation logic.
+### Monkey 
+The Monkey class is a wrapper for a single Monkey config, as defined in `monkeys/monkey-manifest.yaml`. It provides a simple interface for accessing Monkey config properties via dot notation, and includes built-in validation logic.
 
 ```
-from codemonkeys.utils.monkey_config.load_monkey_config import load_monkey_config
+from codemonkeys.utils.monkey.load_monkey import load_monkey
 
 # load a config
-mc = load_monkey_config('comment-monkey')
+mc = load_monkey('comment-monkey')
 
 # prompt user to choose a config to load
-mc = load_monkey_config()
+mc = load_monkey()
 
 # access a property via dot notation
 main_prompt = mc.MAIN_PROMPT
@@ -73,7 +73,7 @@ openai_api_key = env.OPENAI_API_KEY
 
 ## The Default Automation
 
-The default automation, `automations/default.py`, is a generic but complete template for running automations on files in your `WORK_PATH`. It works well out of the box, and allows you to run GPT-powered mass file operations by simply using monkey configs (`monkey-manifest.yaml`). The default Automation is also a great example of the various capabilities custom automations can have. It includes optional examples of all standard monkey config properties, and serves as a good example of how to use the framework-packaged composables. Whether your custom automations require far less, far more, or more specific functionality, you can copy/paste a pretty good starting point from `automations/default.py`.
+The default automation, `automations/default.py`, is a generic but complete template for running automations on files in your `WORK_PATH`. It works well out of the box, and allows you to run GPT-powered mass file operations by simply using Monkey configs (`monkey-manifest.yaml`). The default Automation is also a great example of the various capabilities custom automations can have. It includes optional examples of all standard Monkey config properties, and serves as a good example of how to use the framework-packaged composables. Whether your custom automations require far less, far more, or more specific functionality, you can copy/paste a pretty good starting point from `automations/default.py`.
 
 ## Attribution
 All forms of attribution will be appreciated, especially when linking directly to the repo.

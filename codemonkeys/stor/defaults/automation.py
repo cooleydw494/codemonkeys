@@ -1,7 +1,7 @@
 import os
 from typing import Dict, Any, List, Optional
 
-from config.framework.monkey_config import MonkeyConfig
+from config.framework.monkey import Monkey
 from pandas.io.common import file_exists
 
 from codemonkeys.builders.committer import Committer
@@ -17,55 +17,55 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 class Default(Automation):
 
-    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey_config: Optional[MonkeyConfig] = None):
-        super().__init__(named_args, unnamed_args, monkey_config)
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey: Optional[Monkey] = None):
+        super().__init__(named_args, unnamed_args, monkey)
 
     def run(self) -> None:
-        mc = self.monkey_config
+        m = self.get_monkey()
 
         # Prepare summarized or unsummarized context
-        if mc.CONTEXT_FILE_PATH is None:
+        if m.CONTEXT_FILE_PATH is None:
             context = ''
-        elif mc.CONTEXT_SUMMARY_PROMPT is not None:
+        elif m.CONTEXT_SUMMARY_PROMPT is not None:
             context = (Summarizer()
-                       .context_from_file(mc.CONTEXT_FILE_PATH)
-                       .model(mc.SUMMARY_MODEL, mc.SUMMARY_TEMP, mc.SUMMARY_MAX_TOKENS)
-                       .prompt(mc.CONTEXT_SUMMARY_PROMPT)
+                       .context_from_file(m.CONTEXT_FILE_PATH)
+                       .model(m.SUMMARY_MODEL, m.SUMMARY_TEMP, m.SUMMARY_MAX_TOKENS)
+                       .prompt(m.CONTEXT_SUMMARY_PROMPT)
                        .summarize())
         else:
-            context = get_file_contents(mc.CONTEXT_FILE_PATH)
+            context = get_file_contents(m.CONTEXT_FILE_PATH)
 
         # Prepare Output Checker
         output_checker = None
-        if mc.OUTPUT_CHECK_PROMPT is not None:
+        if m.OUTPUT_CHECK_PROMPT is not None:
             output_checker = (OutputChecker()
-                              .model(mc.OUTPUT_CHECK_MODEL, mc.OUTPUT_CHECK_TEMP, mc.OUTPUT_CHECK_MAX_TOKENS)
-                              .tries(mc.OUTPUT_TRIES)
-                              .prompt(mc.OUTPUT_CHECK_PROMPT))
+                              .model(m.OUTPUT_CHECK_MODEL, m.OUTPUT_CHECK_TEMP, m.OUTPUT_CHECK_MAX_TOKENS)
+                              .tries(m.OUTPUT_TRIES)
+                              .prompt(m.OUTPUT_CHECK_PROMPT))
 
         # Prepare FileIterator and filter files
         file_iterator = (FileIterator()
-                         .token_count_model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.FILE_SELECT_MAX_TOKENS)
-                         .file_types_included(mc.FILE_TYPES_INCLUDED)
-                         .filepath_match_include(mc.FILEPATH_MATCH_INCLUDE)
-                         .filepath_match_exclude(mc.FILEPATH_MATCH_EXCLUDE)
-                         .work_path(mc.WORK_PATH)
+                         .token_count_model(m.MAIN_MODEL, m.MAIN_TEMP, m.FILE_SELECT_MAX_TOKENS)
+                         .file_types_included(m.FILE_TYPES_INCLUDED)
+                         .filepath_match_include(m.FILEPATH_MATCH_INCLUDE)
+                         .filepath_match_exclude(m.FILEPATH_MATCH_EXCLUDE)
+                         .work_path(m.WORK_PATH)
                          .filter_files())
 
         # Prepare OutputPathResolver, configuring how to create output paths using each file's path
         output_path_resolver = (OutputPathResolver()
-                                .output_path(mc.OUTPUT_PATH)
-                                .output_filename_append(mc.OUTPUT_FILENAME_APPEND)
-                                .output_ext(mc.OUTPUT_EXT)
-                                .work_path(mc.WORK_PATH)
+                                .output_path(m.OUTPUT_PATH)
+                                .output_filename_append(m.OUTPUT_FILENAME_APPEND)
+                                .output_ext(m.OUTPUT_EXT)
+                                .work_path(m.WORK_PATH)
                                 .use_work_path_relative_location(True))
 
         # Prepare Committer to handle git commits
         committer = None
-        if mc.COMMIT_STYLE == 'gpt':
-            committer = Committer(mc.OUTPUT_PATH).model('3', 0.75, mc.SUMMARY_MAX_TOKENS)
-        elif mc.COMMIT_STYLE == 'static':
-            committer = Committer(mc.OUTPUT_PATH).message(mc.STATIC_COMMIT_MESSAGE)
+        if m.COMMIT_STYLE == 'gpt':
+            committer = Committer(m.OUTPUT_PATH).model('3', 0.75, m.SUMMARY_MAX_TOKENS)
+        elif m.COMMIT_STYLE == 'static':
+            committer = Committer(m.OUTPUT_PATH).message(m.STATIC_COMMIT_MESSAGE)
 
         # Iterate through filtered files
         while True:
@@ -79,7 +79,7 @@ class Default(Automation):
                 break
 
             output_file_path = output_path_resolver.get_output_path(file_path)
-            if mc.SKIP_EXISTING_OUTPUT_FILES and file_exists(output_file_path):
+            if m.SKIP_EXISTING_OUTPUT_FILES and file_exists(output_file_path):
                 print_t(f"Skipping file, output exists at: {output_file_path}", 'quiet')
                 continue
 
@@ -88,17 +88,17 @@ class Default(Automation):
 
             # Create a copy for file-specific _prompt replacements
             file_name = os.path.basename(file_path)
-            _mc = mc.replace_prompt_str('{the-file}', file_name)
+            _m = m.replace_prompt_str('{the-file}', file_name)
 
             # Set up a FilePrompter for the current file
             file_prompter = (FilePrompter()
-                             .model(mc.MAIN_MODEL, mc.MAIN_TEMP, mc.MAIN_MAX_TOKENS)
+                             .model(m.MAIN_MODEL, m.MAIN_TEMP, m.MAIN_MAX_TOKENS)
                              .file_path(file_path)
-                             .main_prompt(_mc.MAIN_PROMPT)
+                             .main_prompt(_m.MAIN_PROMPT)
                              .context(context)
-                             .output_example_prompt(_mc.OUTPUT_EXAMPLE_PROMPT)
-                             .ultimatum_prompt(_mc.MAIN_PROMPT_ULTIMATUM)
-                             .output_remove_strings(_mc.OUTPUT_REMOVE_STRINGS))
+                             .output_example_prompt(_m.OUTPUT_EXAMPLE_PROMPT)
+                             .ultimatum_prompt(_m.MAIN_PROMPT_ULTIMATUM)
+                             .output_remove_strings(_m.OUTPUT_REMOVE_STRINGS))
 
             # Generate output, checking it if an OutputChecker is configured
             new_content = None
@@ -127,7 +127,7 @@ class Default(Automation):
 
             # Commit changes if a Committer is configured
             if committer is not None:
-                if mc.COMMIT_STYLE == 'gpt':
+                if m.COMMIT_STYLE == 'gpt':
                     committer.message_from_context(old_content, new_content)
                 committer.commit()
                 message = committer.get_message()

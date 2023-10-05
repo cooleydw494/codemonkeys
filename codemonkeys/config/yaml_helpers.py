@@ -19,6 +19,6 @@ def read_yaml_file(file_path):
         sys.exit(1)
 
 
-def get_monkey_config_defaults():
-    monkey_config_defaults_file = os.path.join(MONKEY_CONFIG_DEFAULTS_PATH)
-    return read_yaml_file(monkey_config_defaults_file)
+def get_monkey_defaults():
+    monkey_defaults_file = os.path.join(MONKEY_CONFIG_DEFAULTS_PATH)
+    return read_yaml_file(monkey_defaults_file)
