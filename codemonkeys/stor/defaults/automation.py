@@ -1,6 +1,7 @@
 import os
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
+from config.framework.monkey_config import MonkeyConfig
 from pandas.io.common import file_exists
 
 from codemonkeys.builders.committer import Committer
@@ -16,8 +17,8 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 class Default(Automation):
 
-    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str]):
-        super().__init__(named_args, unnamed_args)
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey_config: Optional[MonkeyConfig] = None):
+        super().__init__(named_args, unnamed_args, monkey_config)
 
     def run(self) -> None:
         mc = self.monkey_config

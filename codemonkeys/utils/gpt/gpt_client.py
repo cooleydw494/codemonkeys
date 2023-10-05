@@ -80,7 +80,7 @@ class GPTClient:
             print_t(f"OpenAI error: {e}", 'error')
             return None
 
-        return response.choices[0]._message.content.strip()
+        return response.choices[0].message.content.strip()
 
     def tokenize(self, text: str) -> List[int]:
         """

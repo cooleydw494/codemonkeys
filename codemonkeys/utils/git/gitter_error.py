@@ -8,7 +8,7 @@ class GitterError(Exception):
     :param List[str] command: A list of command tokens.
     :param int returncode: The exit status of the command.
     :param str stdout: The output from the command.
-    :param str stderr: The error _message from the command.
+    :param str stderr: The error message from the command.
     """
 
     def __init__(self, command: List[str], returncode: int, stdout: str, stderr: str):
@@ -18,7 +18,7 @@ class GitterError(Exception):
         :param List[str] command: A list of command tokens.
         :param int returncode: The exit status of the command.
         :param str stdout: The output from the command.
-        :param str stderr: The error _message from the command.
+        :param str stderr: The error message from the command.
         """
         self.command = command
         self.returncode = returncode

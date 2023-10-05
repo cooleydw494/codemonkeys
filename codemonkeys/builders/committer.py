@@ -68,9 +68,9 @@ class Committer:
 
     def message(self, commit_message: str) -> 'Committer':
         """
-        Sets the commit _message manually for the Committer.
+        Sets the commit message manually for the Committer.
 
-        :param str commit_message: Commit _message.
+        :param str commit_message: Commit message.
         :return: The updated Committer instance.
         """
         self._message = commit_message
@@ -78,34 +78,34 @@ class Committer:
 
     def message_from_context(self, old_content: str, new_content: str):
         """
-        Generates a commit _message based on the diff of old_content and new_content.
+        Generates a commit message based on the diff of old_content and new_content.
 
         :param str old_content: Original content.
         :param str new_content: Updated content.
-        :return: The generated commit _message.
+        :return: The generated commit message.
         """
         diff = diff_content(old_content.splitlines(), new_content.splitlines())
-        prompt = f"{self._prompt or 'Write a commit _message for the following changes:'}{nl2}{nl}{diff}{nl}{nl2}"
-        prompt += "[Ultimatum: Limit your response to only the git _message, including nothing else.]"
+        prompt = f"{self._prompt or 'Write a commit message for the following changes:'}{nl2}{nl}{diff}{nl}{nl2}"
+        prompt += "[Ultimatum: Limit your response to only the git message, including nothing else.]"
         self._message = self._gpt_client.generate(prompt)
         if self._message is None:
-            print_t('Could not generate commit _message. Using generic commit _message.', 'warning')
+            print_t('Could not generate commit message. Using generic commit message.', 'warning')
             return 'Updated via CodeMonkeys.'
         return self._message
 
     def get_message(self) -> str | None:
         """
-        Gets the current commit _message.
+        Gets the current commit message.
 
-        :return: The current commit _message, or None if not set.
+        :return: The current commit message, or None if not set.
         """
         return self._message
 
     def commit(self) -> None:
         """
-        Performs git commit with the current commit _message.
+        Performs git commit with the current commit message.
 
         Note:
-            All staged changes are committed with the current commit _message.
+            All staged changes are committed with the current commit message.
         """
         self._gitter.commit(self._message, add_all=True)

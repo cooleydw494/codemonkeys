@@ -3,27 +3,24 @@ import os
 import re
 from dataclasses import dataclass
 
-from codemonkeys.config.imports.env import Env
 from codemonkeys.config.yaml_helpers import get_monkey_config_defaults
 from codemonkeys.defs import MONKEYS_PATH
 from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
-from codemonkeys.utils.monk.theme_functions import print_t
-from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_key
+from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
+from codemonkeys.utils.monkey_config.monkey_config_validations import is_prompt_key, is_path_key
 
 
 @dataclass
 class MonkeyConfig:
-    _instance = None
 
+    _instance = None
     _current_monkey = None
 
-    """ MONKEY_CONFIG_PROPS - DO NOT MODIFY
-        Definitions of MonkeyConfig props, generated from monkey-config-defaults. """
+    # DO NOT MODIFY - generated from monkey-config-defaults.
     # [MONKEY_CONFIG_PROPS_START]
     from types import NoneType
     from typing import Optional
 
-    from ruamel.yaml.scalarfloat import ScalarFloat
     from dataclasses import field
     WORK_PATH: Optional[str] = field(default=None)
     FILE_TYPES_INCLUDED: Optional[str] = field(default=None)
@@ -52,55 +49,19 @@ class MonkeyConfig:
     MAIN_MODEL: Optional[str] = field(default=None)
     SUMMARY_MODEL: Optional[str] = field(default=None)
     OUTPUT_CHECK_MODEL: Optional[str] = field(default=None)
-    MAIN_TEMP: Optional[ScalarFloat] = field(default=None)
-    SUMMARY_TEMP: Optional[ScalarFloat] = field(default=None)
-    OUTPUT_CHECK_TEMP: Optional[ScalarFloat] = field(default=None)
+    MAIN_TEMP: Optional[float] = field(default=None)
+    SUMMARY_TEMP: Optional[float] = field(default=None)
+    OUTPUT_CHECK_TEMP: Optional[float] = field(default=None)
     MAIN_MAX_TOKENS: Optional[int] = field(default=None)
     SUMMARY_MAX_TOKENS: Optional[int] = field(default=None)
     OUTPUT_CHECK_MAX_TOKENS: Optional[int] = field(default=None)
     # [MONKEY_CONFIG_PROPS_END]
 
-    env: Optional[Env] = field(default=None)
-
     def __post_init__(self):
-        # print_t(f"Loaded MonkeyConfig: {self.__dict__}", 'info')
-
-        """ MONKEY_CONFIG_VALIDATIONS - DO NOT MODIFY
-        Set MonkeyConfig props with validations, generated from monkey-config-defaults & monkey_config_validations. """
-        # [MONKEY_CONFIG_VALIDATIONS_START]
-        from codemonkeys.utils.monkey_config.monkey_config_validations import validate_str, validate_bool, validate_int, \
-            validate_float, validate_path
-        self.WORK_PATH = validate_path('WORK_PATH', self.WORK_PATH)
-        self.FILE_TYPES_INCLUDED = validate_str('FILE_TYPES_INCLUDED', self.FILE_TYPES_INCLUDED)
-        self.FILEPATH_MATCH_EXCLUDE = validate_str('FILEPATH_MATCH_EXCLUDE', self.FILEPATH_MATCH_EXCLUDE)
-        self.FILE_SELECT_MAX_TOKENS = validate_int('FILE_SELECT_MAX_TOKENS', self.FILE_SELECT_MAX_TOKENS)
-        self.MAX_TOKENS = validate_int('MAX_TOKENS', self.MAX_TOKENS)
-        self.MAIN_PROMPT = validate_str('MAIN_PROMPT', self.MAIN_PROMPT)
-        self.MAIN_PROMPT_ULTIMATUM = validate_str('MAIN_PROMPT_ULTIMATUM', self.MAIN_PROMPT_ULTIMATUM)
-        self.OUTPUT_EXAMPLE_PROMPT = validate_str('OUTPUT_EXAMPLE_PROMPT', self.OUTPUT_EXAMPLE_PROMPT)
-        self.CONTEXT_FILE_PATH = validate_path('CONTEXT_FILE_PATH', self.CONTEXT_FILE_PATH)
-        self.OUTPUT_TRIES = validate_int('OUTPUT_TRIES', self.OUTPUT_TRIES)
-        self.OUTPUT_PATH = validate_path('OUTPUT_PATH', self.OUTPUT_PATH)
-        self.OUTPUT_EXT = validate_str('OUTPUT_EXT', self.OUTPUT_EXT)
-        self.OUTPUT_FILENAME_APPEND = validate_str('OUTPUT_FILENAME_APPEND', self.OUTPUT_FILENAME_APPEND)
-        self.OUTPUT_REMOVE_STRINGS = validate_str('OUTPUT_REMOVE_STRINGS', self.OUTPUT_REMOVE_STRINGS)
-        self.SKIP_EXISTING_OUTPUT_FILES = validate_bool('SKIP_EXISTING_OUTPUT_FILES', self.SKIP_EXISTING_OUTPUT_FILES)
-        self.OUTPUT_SPLIT_TAG = validate_str('OUTPUT_SPLIT_TAG', self.OUTPUT_SPLIT_TAG)
-        self.STATIC_COMMIT_MESSAGE = validate_str('STATIC_COMMIT_MESSAGE', self.STATIC_COMMIT_MESSAGE)
-        self.MAIN_MODEL = validate_str('MAIN_MODEL', self.MAIN_MODEL)
-        self.SUMMARY_MODEL = validate_str('SUMMARY_MODEL', self.SUMMARY_MODEL)
-        self.OUTPUT_CHECK_MODEL = validate_str('OUTPUT_CHECK_MODEL', self.OUTPUT_CHECK_MODEL)
-        self.MAIN_TEMP = validate_float('MAIN_TEMP', self.MAIN_TEMP)
-        self.SUMMARY_TEMP = validate_float('SUMMARY_TEMP', self.SUMMARY_TEMP)
-        self.OUTPUT_CHECK_TEMP = validate_float('OUTPUT_CHECK_TEMP', self.OUTPUT_CHECK_TEMP)
-        self.MAIN_MAX_TOKENS = validate_int('MAIN_MAX_TOKENS', self.MAIN_MAX_TOKENS)
-        self.SUMMARY_MAX_TOKENS = validate_int('SUMMARY_MAX_TOKENS', self.SUMMARY_MAX_TOKENS)
-        self.OUTPUT_CHECK_MAX_TOKENS = validate_int('OUTPUT_CHECK_MAX_TOKENS', self.OUTPUT_CHECK_MAX_TOKENS)
-        # [MONKEY_CONFIG_VALIDATIONS_END]
-
-        self.env = Env.get()
-
+        self._dynamic_validate()
         self._cop_paths()
+        if verbose_logs_enabled():
+            print_t(f"Loaded MonkeyConfig: {self.__dict__}", 'info')
 
     @classmethod
     def load(cls, monkey_name: str | None = None) -> 'MonkeyConfig':
@@ -126,7 +87,6 @@ class MonkeyConfig:
     def _filter_config_values(cls, config_values: dict) -> dict:
         # Get dictionary of MonkeyConfig properties
         config_properties = {f.name for f in dataclasses.fields(cls)}
-        config_properties.remove('env')
 
         # Remove any keys from data that aren't properties of the MonkeyConfig class
         config_values = {k: v for k, v in config_values.items() if k in config_properties}
@@ -143,16 +103,31 @@ class MonkeyConfig:
         :return: dict
         """
 
-        # Get dictionary of MonkeyConfig properties so we don't default to env vars that aren't properties
-        config_properties = {f.name for f in dataclasses.fields(cls)}
-        config_properties.remove('env')
-
         monkey_config_defaults = get_monkey_config_defaults()
         for attribute in monkey_config_defaults:
             if config_values.get(attribute, '**unset') == '**unset' and monkey_config_defaults[attribute] is not None:
                 config_values[attribute] = monkey_config_defaults[attribute]
 
         return config_values
+
+    def _dynamic_validate(self) -> None:
+        from codemonkeys.utils.monkey_config.monkey_config_validations import \
+            validate_str, validate_bool, validate_int, validate_float, validate_path, validate_list_str
+
+        for key, value in self.__dict__.items():
+            if isinstance(value, bool):
+                setattr(self, key, validate_bool(key, value))
+            elif isinstance(value, int):
+                setattr(self, key, validate_int(key, value))
+            elif isinstance(value, float):
+                setattr(self, key, validate_float(key, value))
+            elif is_path_key(key):
+                setattr(self, key, validate_path(key, value))
+            elif isinstance(value, str):
+                setattr(self, key, validate_str(key, value))
+            elif isinstance(value, list):
+                if all(isinstance(item, str) for item in value):
+                    setattr(self, key, validate_list_str(key, value))
 
     def replace_prompt_str(self, to_replace, replace_with) -> 'MonkeyConfig':
         """

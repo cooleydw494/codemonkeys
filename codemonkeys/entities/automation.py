@@ -17,8 +17,7 @@ class Automation(CliRunnable):
     monkey: str | None = None
     monkey_config: Optional[MonkeyConfig] = None
 
-    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str],
-                 monkey_config: Optional[MonkeyConfig] = None):
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey_config: Optional[MonkeyConfig] = None):
         """
         Initializes the `Automation` class.
 
