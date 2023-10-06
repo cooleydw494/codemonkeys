@@ -1,7 +1,7 @@
 import os
 from typing import Dict, Any, List, Optional
 
-from config.framework.monkey import Monkey
+from config.monkeys.monkey import Monkey
 from pandas.io.common import file_exists
 
 from codemonkeys.builders.committer import Committer
@@ -88,7 +88,7 @@ class Default(Automation):
 
             # Create a copy for file-specific _prompt replacements
             file_name = os.path.basename(file_path)
-            _m = m.replace_prompt_str('{the-file}', file_name)
+            _m = m.prompt_replace('{the-file}', file_name)
 
             # Set up a FilePrompter for the current file
             file_prompter = (FilePrompter()

@@ -28,7 +28,7 @@ autosummary_generate = True
 templates_path = ['templates']
 exclude_patterns = ['codemonkeys.config.imports.*']
 autodoc_mock_imports = [
-    'codemonkeys.defs', 'config.framework'
+    'codemonkeys.defs', 'config.env', 'config.monkeys', 'config.theme'
 ]
 autodoc_default_options = {
     'members': True,

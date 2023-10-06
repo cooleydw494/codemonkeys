@@ -50,6 +50,15 @@ class Automation(CliRunnable):
         """
         return self._monkey
 
+    def trigger(self):
+        """
+        Triggers the full Automation lifecycle (Monkey.before_run, Automation.run, Monkey.after_run)
+        :return:
+        """
+        self._monkey.before_run()
+        self.run()
+        self._monkey.after_run()
+
     def run(self):
         """
         The main execution method is implemented in this class and should be overwritten in subclasses.

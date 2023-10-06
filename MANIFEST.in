@@ -1,4 +1,3 @@
-recursive-include codemonkeys *.yaml
 recursive-include codemonkeys *.txt
 recursive-include codemonkeys *.md
 

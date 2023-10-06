@@ -10,10 +10,10 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 try:
     # import this in a non-standard way to allow force-reloading the module
-    import config.framework.env
-    Env = config.framework.env.Env
+    import config.env
+    Env = config.env.Env
 except ImportError as e:
-    print_t('Could not import user Env class from config.framework.env. Using default Env class.', 'warning')
+    print_t('Could not import user Env class from config.env. Using default Env class.', 'warning')
     print_t(str(e))
     from codemonkeys.config.env import Env
 
@@ -24,9 +24,9 @@ ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_
 def force_reload_env_class() -> None:
     """ Force re-import Env because it may have been rewritten after initial import. """
     try:
-        importlib.reload(config.framework.env)
+        importlib.reload(config.env)
     except ImportError:
-        print_t('Could not import user Env class from config.framework.env. Using default Env class.',
+        print_t('Could not import user Env class from config.env. Using default Env class.',
                 'warning')
 
 

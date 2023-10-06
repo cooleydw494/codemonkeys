@@ -14,7 +14,7 @@ def list_monkeys() -> List[str]:
 
     :return List[str]: A list of Monkey config names.
     """
-    file_paths = glob.glob(os.path.join(MONKEYS_PATH, '*.yaml'))
+    file_paths = glob.glob(os.path.join(MONKEYS_PATH, '*.py'))
     return [os.path.splitext(os.path.basename(file))[0] for file in file_paths]
 
 
@@ -42,9 +42,8 @@ def get_monkey_name(given_monkey_name: str = None) -> str:
 
     if given_monkey_name is None:
         monkey_name = _select_monkey_from_list()
-    elif not file_exists(os.path.join(MONKEYS_PATH, f'{given_monkey_name}.yaml')):
-        print_t("Provided Monkey name does not correspond to an existing configuration. Please select an existing "
-                "monkey:", 'important')
+    elif not file_exists(os.path.join(MONKEYS_PATH, f'{given_monkey_name}.py')):
+        print_t("Monkey does not exist. Please select an existing monkey:", 'important')
         monkey_name = _select_monkey_from_list()
     else:
         monkey_name = given_monkey_name

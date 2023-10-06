@@ -7,7 +7,7 @@ For a CodeMonkeys project codebase, it is best to import the extended class dire
 """
 
 try:
-    from config.framework.theme import Theme
+    from config.theme import Theme
 except ImportError:
-    print(colored('Could not import user Theme class from config.framework.theme. Using default Theme class.', 'red'))
+    print(colored('Could not import user Theme class from config.theme. Using default Theme class.', 'red'))
     from codemonkeys.config.theme import Theme

@@ -64,7 +64,7 @@ main_prompt = mc.MAIN_PROMPT
 The Env class provides a simple interface for accessing env properties, as defined in your `.env`, via dot notation. It includes built-in validation logic and supports user-defined properties.
 
 ```
-from config.framework.env import Env
+from config.env import Env
 env = Env.get()
 
 # access a property via dot notation

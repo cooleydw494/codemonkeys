@@ -7,7 +7,7 @@ For a CodeMonkeys project codebase, it is best to import the extended classes di
 """
 
 try:
-    from config.framework.env import Env
+    from config.env import Env
 except ImportError:
-    print(colored('Could not import user Env class from config.framework.env. Using default Env class.', 'red'))
+    print(colored('Could not import user Env class from config.env. Using default Env class.', 'red'))
     from codemonkeys.config.env import Env

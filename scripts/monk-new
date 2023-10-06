@@ -5,11 +5,10 @@ import sys
 
 from termcolor import colored
 
-from codemonkeys.cm_paths import (CM_ENV_DEFAULT_PATH, CM_MONKEY_CONFIG_CLASS_DEFAULT_PATH,
-                                  CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, CM_THEME_CONFIG_PATH,
-                                  CM_DEFAULT_AUTOMATION_PATH,
-                                  CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
-                                  CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH, CM_MONKEYS_DIR_DEFAULT_PATH)
+from codemonkeys.cm_paths import (CM_ENV_DEFAULT_PATH, CM_THEME_CONFIG_PATH,
+                                  CM_DEFAULT_AUTOMATION_PATH, CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH,
+                                  CM_README_DEFAULT_PATH, CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH,
+                                  CM_MONKEYS_DIR_DEFAULT_PATH)
 
 top_level_dirs = [
     'automations',
@@ -18,10 +17,6 @@ top_level_dirs = [
     'config',
     'builders',
     'stor',
-]
-
-config_dirs = [
-    'framework',
 ]
 
 stor_dirs = [
@@ -64,11 +59,6 @@ for top_level_dir in top_level_dirs:
     print(colored(f"Creating directory: {top_level_dir}", 'cyan'))
     os.makedirs(os.path.join(project_path, top_level_dir), exist_ok=True)
 
-# Create the config directories
-for config_dir in config_dirs:
-    print(colored(f"Creating directory: config/{config_dir}", 'cyan'))
-    os.makedirs(os.path.join(project_path, 'config', config_dir), exist_ok=True)
-
 # Create the stor directories
 for stor_dir in stor_dirs:
     print(colored(f"Creating directory: stor/{stor_dir}", 'cyan'))
@@ -78,22 +68,18 @@ for stor_dir in stor_dirs:
 print(colored("Creating config/example files...", 'cyan'))
 config_path = os.path.join(project_path, 'config')
 shutil.copytree(CM_MONKEYS_DIR_DEFAULT_PATH, os.path.join(config_path, 'monkeys'))
-shutil.copyfile(CM_MONKEY_CONFIG_DEFAULTS_DEFAULT_PATH, os.path.join(config_path, 'monkey-config-defaults.yaml'))
 shutil.copyfile(CM_CONTEXT_FILE_EXAMPLE_PATH, os.path.join(project_path, 'stor', 'context', 'context-file.txt'))
-shutil.copyfile(CM_THEME_CONFIG_PATH, os.path.join(config_path, 'framework', 'theme.py'))
+shutil.copyfile(CM_THEME_CONFIG_PATH, os.path.join(config_path, 'theme.py'))
 
 # Create Env class
-env_class_path = os.path.join(config_path, 'framework', 'env.py')
+env_class_path = os.path.join(config_path, 'env.py')
 shutil.copyfile(CM_ENV_CLASS_DEFAULT_PATH, env_class_path)
 # Fix theme import for project config files
 with open(env_class_path, 'r') as f:
     lines = f.readlines()
 with open(env_class_path, 'w') as f:
     for line in lines:
-        f.write(line.replace('from codemonkeys.config.theme', 'from config.framework.theme'))
-
-# Create the Monkey class
-shutil.copyfile(CM_MONKEY_CONFIG_CLASS_DEFAULT_PATH, os.path.join(config_path, 'framework', 'monkey.py'))
+        f.write(line.replace('from codemonkeys.config.theme', 'from config.theme'))
 
 # Create the default automation
 print(colored("Creating default automation...", 'cyan'))
