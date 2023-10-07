@@ -56,7 +56,7 @@ class Make(Command):
         if self.entity_type == 'monkey':
             base_import = f'from codemonkeys.config.monkey import {new_class_name} as Base'
             file_contents = file_contents.replace(base_import, 'from config.monkeys.monkey import Monkey')
-            class_definition = f'class {new_class_name}(Base):'
+            class_definition = f'c{new_class_name}(Base):'
             file_contents = file_contents.replace(class_definition, f'{new_class_name}(Monkey):')
 
         with open(new_entity_path, 'w') as f:
