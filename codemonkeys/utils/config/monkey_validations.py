@@ -1,6 +1,5 @@
 import os
 import re
-from typing import Optional
 
 from codemonkeys.types import OStr, OFloat
 from codemonkeys.utils.gpt.model_info import get_gpt_model_names, update_gpt_model_cache

@@ -1,7 +1,5 @@
 import os
 
-from typing import Optional
-
 from codemonkeys.types import OStr
 
 

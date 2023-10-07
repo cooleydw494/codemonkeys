@@ -2,8 +2,8 @@ from typing import Dict, Any, List
 
 from codemonkeys.config.imports.monkey import Monkey
 from codemonkeys.entities.cli_runnable import CliRunnable
-from codemonkeys.types import OStr
 from codemonkeys.special_types import OMonkey
+from codemonkeys.types import OStr
 from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.run_entities import run_automation
 from codemonkeys.utils.monk.theme_functions import print_t

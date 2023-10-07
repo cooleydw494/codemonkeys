@@ -1,5 +1,3 @@
-from typing import Union
-
 from codemonkeys.entities.command import Command
 from codemonkeys.types import OStr, OBool, OInt
 

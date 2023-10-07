@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 from codemonkeys.utils.defs_utils import find_project_root
 

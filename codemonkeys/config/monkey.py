@@ -7,10 +7,11 @@ from codemonkeys.defs import MONKEYS_PATH, STOR_PATH
 from codemonkeys.types import OStr
 from codemonkeys.utils.config.monkey_validations import is_path_key, validate_path, is_model_key, validate_model, \
     validate_temp, is_temp_key, is_prompt_key
+from codemonkeys.utils.defs_utils import load_class
 from codemonkeys.utils.file_ops import get_file_contents
 from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
-from codemonkeys.utils.defs_utils import load_class
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
+
 OMonkey = Optional['Monkey']
 
 
