@@ -52,7 +52,7 @@ class Monkey:
 
     # Output Splitting
     OUTPUT_SPLIT_PATH: OStr = None
-    OUTPUT_SPLIT_TAG: OStr = '[SPLIT]'
+    OUTPUT_SPLIT_TAG: str = '[SPLIT]'
 
     # Git
     COMMIT_STYLE: OStr = None
