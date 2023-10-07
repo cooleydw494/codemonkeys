@@ -1,6 +1,7 @@
 from typing import Union
 
 from codemonkeys.entities.command import Command
+from codemonkeys.types import OStr, OBool, OInt
 
 
 class ExampleCommand(Command):
@@ -22,10 +23,10 @@ class ExampleCommand(Command):
 
     # Define and set defaults for all args (incl required)
     # Setting type-hints will provide validation in CliRunnable base class.
-    named_arg_one: str = None
-    named_arg_two: bool = True
+    named_arg_one: OStr = None
+    named_arg_two: OBool = True
     unnamed_arg_one: str = 'default_value'
-    unnamed_arg_two: Union[int, None] = None
+    unnamed_arg_two: OInt = None
 
     def run(self) -> None:
         """

@@ -1,21 +1,23 @@
 import os
 import time
+from typing import Optional
 
 from codemonkeys.defs import nl
+from codemonkeys.types import OFloat, OStr, OInt
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class FileIterator:
 
-    _temp = None
-    _model = None
-    _max_tokens = None
-    _gpt_client = None
-    _work_path = None
-    _include_extensions = []
-    _include_patterns = []
-    _exclude_patterns = []
+    _temp: OFloat = None
+    _model: OStr = None
+    _max_tokens: OInt = None
+    _gpt_client: Optional[GPTClient] = None
+    _work_path: OStr = None
+    _include_extensions: tuple = ()
+    _include_patterns: tuple = ()
+    _exclude_patterns: tuple = ()
     _filtered_files = []
 
     def work_path(self, work_path: str) -> 'FileIterator':
@@ -27,31 +29,31 @@ class FileIterator:
         self._work_path = work_path
         return self
 
-    def file_types_included(self, file_types_included: str) -> 'FileIterator':
+    def file_types_included(self, file_types_included: tuple = ()) -> 'FileIterator':
         """Set the included file types for the FileIterator.
 
-        :param str file_types_included: The file types as a comma-separated string.
+        :param tuple file_types_included: The file types as a tuple of strings.
         :return: The FileIterator instance with the new _include_extensions value.
         """
-        self._include_extensions = file_types_included.split(',')
+        self._include_extensions = file_types_included
         return self
 
-    def filepath_match_include(self, filepath_match_include: str) -> 'FileIterator':
+    def filepath_match_include(self, filepath_match_include: tuple) -> 'FileIterator':
         """Set the filepaths to include in the FileIterator.
 
-        :param str filepath_match_include: The include patterns as a comma-separated string.
+        :param tuple filepath_match_include: The include patterns as a tuple of strings.
         :return: The FileIterator instance with the new _include_patterns value.
         """
-        self._include_patterns = filepath_match_include.split(',') if filepath_match_include is not None else []
+        self._include_patterns = filepath_match_include
         return self
 
-    def filepath_match_exclude(self, filepath_match_exclude: str) -> 'FileIterator':
+    def filepath_match_exclude(self, filepath_match_exclude: tuple) -> 'FileIterator':
         """Set the filepaths to exclude from the FileIterator.
 
-        :param str filepath_match_exclude: The exclude patterns as a comma-separated string.
+        :param tuple filepath_match_exclude: The exclude patterns as a tuple of strings.
         :return: The FileIterator instance with the new _exclude_patterns value.
         """
-        self._exclude_patterns = filepath_match_exclude.split(',') if filepath_match_exclude is not None else []
+        self._exclude_patterns = filepath_match_exclude
         return self
 
     def token_count_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':
@@ -121,7 +123,7 @@ class FileIterator:
 
         return self
 
-    def pop_file(self) -> str | None:
+    def pop_file(self) -> OStr:
         """Get the next file in the _filtered_files list and remove it from the list.
 
         :return: The next file string or None if the list is empty.

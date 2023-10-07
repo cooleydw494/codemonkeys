@@ -1,4 +1,7 @@
+from typing import Optional
+
 from codemonkeys.defs import nl, content_sep
+from codemonkeys.types import OStr, OFloat, OInt
 from codemonkeys.utils.file_ops import get_file_contents
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -7,12 +10,12 @@ from codemonkeys.utils.monk.theme_functions import print_t
 class Summarizer:
     """A class to summarize given text using GPT."""
 
-    _model = None
-    _temp = None
-    _max_tokens = None
-    _gpt_client: GPTClient | None = None
-    _prompt = None
-    _context = None
+    _model: OStr = None
+    _temp: OFloat = None
+    _max_tokens: OInt = None
+    _gpt_client: Optional[GPTClient] = None
+    _prompt: OStr = None
+    _context: OStr = None
 
     def model(self, model: str, temp: float, max_tokens: int) -> 'Summarizer':
         """

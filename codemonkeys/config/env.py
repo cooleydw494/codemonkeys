@@ -1,5 +1,6 @@
 import os
 from dataclasses import dataclass
+from typing import Optional
 
 from dotenv import load_dotenv
 
@@ -17,7 +18,7 @@ class Env:
     This section is automatically re-generated each time you run a `monk` command.
     """
 
-    _instance = None
+    _instance: Optional['Env'] = None
 
     # [DEFINE_ENV_PROPS_START]
     OPENAI_API_KEY: str = os.getenv('OPENAI_API_KEY')

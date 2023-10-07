@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, get_type_hints
+from typing import List, Dict, Any, get_type_hints, Optional
 
 
 class CliRunnable:
@@ -8,12 +8,12 @@ class CliRunnable:
 
     """
 
-    named_args: Dict[str, Any] | None = None
-    unnamed_args: List[str] | None = None
+    named_args: Optional[Dict[str, Any]] = None
+    unnamed_args: Optional[List[str]] = None
 
-    named_arg_keys = []
-    unnamed_arg_keys = []
-    required_arg_keys = []
+    named_arg_keys: list = []
+    unnamed_arg_keys: list = []
+    required_arg_keys: list = []
 
     def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str]):
         """

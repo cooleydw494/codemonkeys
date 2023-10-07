@@ -1,7 +1,8 @@
 import difflib
-from typing import Sequence
+from typing import Sequence, Optional
 
 from codemonkeys.defs import nl, nl2
+from codemonkeys.types import OStr, OFloat, OInt
 from codemonkeys.utils.git.gitter import Gitter
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -21,13 +22,13 @@ def diff_content(old_content: Sequence[str], new_content: Sequence[str]) -> str:
 class Committer:
     """A composable class to commit changes to a Git repo."""
 
-    _gitter: Gitter | None = None
-    _gpt_client: GPTClient | None = None
+    _gitter: Optional[Gitter] = None
+    _gpt_client: Optional[GPTClient] = None
     _model: str = '3'
     _temp: float = 0.75
     _max_tokens: int = 32000
-    _prompt: str | None = None
-    _message: str | None = None
+    _prompt: OStr = None
+    _message: OStr = None
 
     def __init__(self, repo_path: str):
         """
@@ -38,7 +39,7 @@ class Committer:
         self._gitter = Gitter(repo_path)
         self._gpt_client = GPTClient(self._model, self._temp, self._max_tokens)
 
-    def model(self, model: str, temp: float = None, max_tokens: int = None) -> 'Committer':
+    def model(self, model: str, temp: OFloat = None, max_tokens: OInt = None) -> 'Committer':
         """
         Sets the GPT model, temperature, and maximum tokens for the Committer.
 
@@ -93,7 +94,7 @@ class Committer:
             return 'Updated via CodeMonkeys.'
         return self._message
 
-    def get_message(self) -> str | None:
+    def get_message(self) -> OStr:
         """
         Gets the current commit message.
 

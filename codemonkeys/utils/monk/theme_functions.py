@@ -9,13 +9,14 @@ import sys
 import textwrap
 import threading
 from math import floor
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Optional
 
 from termcolor import colored, COLORS
 
 from codemonkeys.cm_paths import VERSION, CM_BANNER_PATH
 from codemonkeys.config.imports.theme import Theme
 from codemonkeys.defs import nl
+from codemonkeys.types import OStr
 from codemonkeys.utils.file_ops import get_file_contents
 
 _print_lock = threading.Lock()
@@ -39,7 +40,7 @@ def get_theme(theme: str) -> Tuple[bool, Union[None, str], Union[None, str]]:
     return False, None, None
 
 
-def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Union[None, List[str]] = None) -> str:
+def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Optional[List[str]] = None) -> str:
     """
     Applies the specified theme to the given text and returns the themed text.
     """
@@ -56,7 +57,7 @@ def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Union[None,
     return text
 
 
-def print_t(text: str, theme: str = None, incl_prefix: bool = True, verbose: bool = False) -> None:
+def print_t(text: str, theme: OStr = None, incl_prefix: bool = True, verbose: bool = False) -> None:
     """
     Prints the given text with the specified theme applied and optional attributes.
     Can be set to only print whenever verbose logging is enabled.
@@ -72,7 +73,7 @@ def print_t(text: str, theme: str = None, incl_prefix: bool = True, verbose: boo
     _print_nice(text, sub_indent=sub_indent)
 
 
-def input_t(text: str, input_options: str = None, theme: str = 'input') -> str:
+def input_t(text: str, input_options: OStr = None, theme: str = 'input') -> str:
     """
     Prompts for user input with the given question and options,
     both of which will be presented with the current theme applied.
@@ -138,7 +139,7 @@ def print_banner() -> None:
     print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
 
 
-def print_table(table: dict, title: str = None, sub_indent: str = '   ',
+def print_table(table: dict, title: OStr = None, sub_indent: str = '   ',
                 min_col_width: Union[int, List[int]] = 10) -> None:
     """
     Prints the given table in a nicely formatted manner within the terminal,
@@ -172,8 +173,8 @@ def print_table(table: dict, title: str = None, sub_indent: str = '   ',
     _print_nice()
 
 
-def print_tree(start_dir: str, exclude_dirs: List[str] = None, exclude_file_starts: List[str] = None,
-               title: str = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
+def print_tree(start_dir: str, exclude_dirs: Optional[List[str]] = None, exclude_file_starts: Optional[List[str]] = None,
+               title: OStr = None, show_exts: bool = False, incl_prefix: bool = True) -> None:
     """
     Prints the file structure starting from start_dir in a nicely formatted tree-like style.
     Directories and files that should be excluded can be specified as well as a title for the tree.

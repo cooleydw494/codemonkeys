@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 from codemonkeys.utils.defs_utils import find_project_root
 
@@ -18,7 +19,7 @@ MONKEYS_PATH = os.path.join(CONFIG_PATH, 'monkeys')
 
 THEME_CONFIG_PATH = os.path.join(CONFIG_PATH, 'theme.py')
 ENV_CLASS_PATH = os.path.join(CONFIG_PATH, "env.py")
-USER_BASE_MONKEY_PATH = os.path.join(MONKEYS_PATH, "monkey.py")
+USER_BASE_MONKEY_PATH = os.path.join(MONKEYS_PATH, "base_monkey.py")
 
 STOR_PATH = os.path.join(ROOT_PATH, "stor")
 TEMP_PATH = os.path.join(STOR_PATH, "temp")

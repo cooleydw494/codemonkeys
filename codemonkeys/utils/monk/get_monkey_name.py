@@ -5,6 +5,7 @@ from typing import List
 from pandas.io.common import file_exists
 
 from codemonkeys.defs import MONKEYS_PATH
+from codemonkeys.types import OStr
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
@@ -32,7 +33,7 @@ def _select_monkey_from_list() -> str:
     return monkeys[monkey_index]
 
 
-def get_monkey_name(given_monkey_name: str = None) -> str:
+def get_monkey_name(given_monkey_name: OStr = None) -> str:
     """
     Retrieves the Monkey name and corresponding config path.
 

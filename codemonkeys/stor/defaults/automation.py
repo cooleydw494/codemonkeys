@@ -1,7 +1,6 @@
 import os
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 
-from config.monkeys.monkey import Monkey
 from pandas.io.common import file_exists
 
 from codemonkeys.builders.committer import Committer
@@ -11,13 +10,14 @@ from codemonkeys.builders.output_checker import OutputChecker
 from codemonkeys.builders.output_path_resolver import OutputPathResolver
 from codemonkeys.builders.summarizer import Summarizer
 from codemonkeys.entities.automation import Automation
+from codemonkeys.special_types import OMonkey
 from codemonkeys.utils.file_ops import get_file_contents, write_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class Default(Automation):
 
-    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey: Optional[Monkey] = None):
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey: OMonkey = None):
         super().__init__(named_args, unnamed_args, monkey)
 
     def run(self) -> None:

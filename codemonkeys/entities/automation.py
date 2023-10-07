@@ -2,6 +2,8 @@ from typing import Dict, Any, List, Optional
 
 from codemonkeys.config.imports.monkey import Monkey
 from codemonkeys.entities.cli_runnable import CliRunnable
+from codemonkeys.types import OStr
+from codemonkeys.special_types import OMonkey
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
@@ -13,17 +15,17 @@ class Automation(CliRunnable):
     When instantiated directly, a Monkey instance can be passed in the constructor.
     """
 
-    named_arg_keys = ['monkey']
-    monkey: str | None = None
-    _monkey: Optional[Monkey] = None
+    named_arg_keys: list = ['monkey']
+    monkey: OStr = None
+    _monkey: OMonkey = None
 
-    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey: Optional[Monkey] = None):
+    def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str], monkey: OMonkey = None):
         """
         Initializes the `Automation` class.
 
         :param Dict[str, Any] named_args: Dict of named args and values (e.g. `--key value`)
         :param List[str] unnamed_args: List of unnamed args (e.g. `value`)
-        :param Monkey | None monkey: Optional Monkey for Automation; otherwise, user is prompted.
+        :param OMonkey monkey: Optional Monkey for Automation; otherwise, user is prompted.
         """
         super().__init__(named_args, unnamed_args)
 
@@ -42,7 +44,7 @@ class Automation(CliRunnable):
         """
         return Monkey.load(self.monkey)
 
-    def get_monkey(self) -> Optional[Monkey]:
+    def get_monkey(self) -> OMonkey:
         """
         Returns the Monkey instance for the specified Monkey (or None)
 

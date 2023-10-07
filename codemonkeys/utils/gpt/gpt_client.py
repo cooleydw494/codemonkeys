@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import openai
 import tiktoken
@@ -6,18 +6,19 @@ from tiktoken import Encoding
 
 from codemonkeys.config.imports.env import Env
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
-from codemonkeys.utils.gpt.model_info import get_gpt_model_names
+from codemonkeys.types import OStr, OInt, OFloat
+from codemonkeys.utils.config.monkey_validations import validate_model, validate_temp
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class GPTClient:
     """A helper class to interact with GPT based models."""
 
-    model: str = None
-    hard_max_tokens: int = None
-    max_tokens: int = None
-    temperature: float = None
-    encoding: Encoding = None
+    model: OStr = None
+    hard_max_tokens: OInt = None
+    max_tokens: OInt = None
+    temperature: OFloat = None
+    encoding: Optional[Encoding] = None
 
     def __init__(self, model_name: str, temperature: float = 1.0, max_tokens: int = 8000):
         """
@@ -31,16 +32,13 @@ class GPTClient:
         env = Env.get()
         openai.api_key = env.OPENAI_API_KEY
 
-        if model_name not in get_gpt_model_names():
-            raise ValueError(f"Invalid GPT model name: {model_name}. Try `monk gpt-models-info --update`.")
-
-        self.model = model_name
+        self.model = validate_model(model_name)
         self.hard_max_tokens = 16000  # TODO: use model-specific token limits
         self.max_tokens = min(max_tokens, self.hard_max_tokens)
-        self.temperature = temperature
+        self.temperature = validate_temp(temperature)
         self.encoding = tiktoken.encoding_for_model(self.model)
 
-    def generate(self, prompt: str, temperature: float = None, rate_limit_delay: int = 60) -> str | None:
+    def generate(self, prompt: str, temperature: OFloat = None, rate_limit_delay: int = 60) -> OStr:
         """
         Generate a GPT model response from a given _prompt.
         

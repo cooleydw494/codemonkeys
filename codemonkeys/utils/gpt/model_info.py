@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Optional
 
 import openai
 
@@ -8,12 +9,12 @@ from codemonkeys.defs import TEMP_PATH
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
-def get_gpt_model_info() -> dict | None:
+def get_gpt_model_info() -> Optional[dict]:
     """
     Retrieves cached info on GPT models.
 
     :return: A dictionary containing GPT model information, or None if the information could not be retrieved.
-    :rtype: dict | None
+    :rtype: Optional[dict]
     """
     try:
         with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'r') as f:
@@ -24,12 +25,12 @@ def get_gpt_model_info() -> dict | None:
         return None
 
 
-def get_gpt_model_names() -> list[str] | None:
+def get_gpt_model_names() -> Optional[list[str]]:
     """
     Retrieves the names of all GPT models from the cached model info.
 
     :return: A list of model names, or None if the model info could not be retrieved.
-    :rtype: list[str] | None
+    :rtype: Optional[list[str]]
     """
     model_info = get_gpt_model_info()
     if model_info is None:
@@ -54,12 +55,12 @@ def update_gpt_model_cache() -> None:
             print(f"An error occurred updating gpt model info cache: {e}")
 
 
-def _query_model_info() -> dict | None:
+def _query_model_info() -> Optional[dict]:
     """
     Queries the OpenAI API for a list of models.
 
     :return: A dictionary mapping model ids to models, or None if the API call failed.
-    :rtype: dict | None
+    :rtype: Optional[dict]
     """
     try:
         env = Env.get()

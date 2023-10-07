@@ -1,7 +1,9 @@
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 
 from codemonkeys.config.imports.monkey import Monkey
 from codemonkeys.entities.cli_runnable import CliRunnable
+from codemonkeys.types import OStr
+from codemonkeys.special_types import OMonkey
 from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.run_entities import run_automation
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -10,7 +12,7 @@ from codemonkeys.utils.monk.theme_functions import print_t
 class Barrel(CliRunnable):
     """A base class that initializes and runs multiple automations."""
 
-    monkey: Optional[Monkey] = None
+    monkey: OMonkey = None
 
     def __init__(self, named_args: Dict[str, Any], unnamed_args: List[str]):
         """
@@ -22,11 +24,11 @@ class Barrel(CliRunnable):
         super().__init__( named_args, unnamed_args)
         print_t("Barrel initialized.", "start")
 
-    def with_monkey(self, monkey_name: str | None = None) -> 'Barrel':
+    def with_monkey(self, monkey_name: OStr = None) -> 'Barrel':
         """
         Set the Monkey that will be loaded and used to run Automations. Prompts user if None.
 
-        :param str | None monkey_name: Name of the Monkey configuration.
+        :param OStr monkey_name: Name of the Monkey configuration.
         :return: The current Barrel instance.
         """
         self.monkey = Monkey.load(monkey_name)

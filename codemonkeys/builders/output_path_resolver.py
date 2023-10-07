@@ -2,13 +2,15 @@ import os
 
 from typing import Optional
 
+from codemonkeys.types import OStr
+
 
 class OutputPathResolver:
 
-    _work_path: Optional[str] = None
-    _output_path: Optional[str] = None
-    _output_ext: Optional[str] = None
-    _output_filename_append: Optional[str] = None
+    _work_path: OStr = None
+    _output_path: OStr = None
+    _output_ext: OStr = None
+    _output_filename_append: OStr = None
     _user_work_path_relative_location: bool = False
 
     def output_path(self, output_path: str) -> 'OutputPathResolver':
@@ -74,12 +76,12 @@ class OutputPathResolver:
         """
         return os.path.exists(self.get_output_path(file_path))
 
-    def get_output_path(self, file_path: str, basename: Optional[str] = None) -> str:
+    def get_output_path(self, file_path: str, basename: OStr = None) -> str:
         """
         Get the output path for the given file.
 
         :param str file_path: Path of the file for which the output path is to be calculated
-        :param Optional[str] basename: Base name for file. If not provided, the base name of the given file is used
+        :param OStr basename: Base name for file. If not provided, the base name of the given file is used
         :return: str. Calculated output path for file
         """
         the_file_name = os.path.basename(file_path)

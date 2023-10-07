@@ -1,4 +1,7 @@
+from typing import Optional
+
 from codemonkeys.defs import nl, nl2
+from codemonkeys.types import OStr, OFloat, OInt
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
 
@@ -6,13 +9,13 @@ from codemonkeys.utils.monk.theme_functions import print_t
 class OutputChecker:
     """A composable class to manage output checking for generated text using GPT models."""
 
-    _model = ''
-    _temp = ''
-    _max_tokens = None
-    _gpt_client = None
-    _prompt = ''
-    _tries = 1
-    _current_try = 0
+    _model: OStr = None
+    _temp: OFloat = None
+    _max_tokens: OInt = None
+    _gpt_client: Optional[GPTClient] = None
+    _prompt: OStr = None
+    _tries: int = 1
+    _current_try: int = 0
 
     def model(self, model: str, temp: float, max_tokens: int) -> 'OutputChecker':
         """
