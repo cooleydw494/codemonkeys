@@ -1,4 +1,7 @@
-class Theme:
+from codemonkeys.config.theme import Theme as Base
+
+
+class Theme(Base):
     """Theme configuration for the CLI."""
 
     # Improved readability for psychopaths
@@ -15,28 +18,8 @@ class Theme:
         'command', 'monkey', 'types', 'cli', 'monk'
     ]
 
-    fallback_colors: dict = {
-
-        # Theme-compliant termcolor fallbacks
-        'black': {'color': 'black', 'light_mode': 'black', 'pre': ''},
-        'red': {'color': 'red', 'light_mode': 'blue', 'pre': ''},
-        'green': {'color': 'green', 'light_mode': 'green', 'pre': ''},
-        'yellow': {'color': 'yellow', 'light_mode': 'blue', 'pre': ''},
-        'blue': {'color': 'blue', 'light_mode': 'blue', 'pre': ''},
-        'magenta': {'color': 'magenta', 'light_mode': 'blue', 'pre': ''},
-        'cyan': {'color': 'cyan', 'light_mode': 'blue', 'pre': ''},
-        'white': {'color': 'white', 'light_mode': 'black', 'pre': ''},
-        'light_grey': {'color': 'light_grey', 'light_mode': 'black', 'pre': ''},
-        'dark_grey': {'color': 'dark_grey', 'light_mode': 'black', 'pre': ''},
-        'light_red': {'color': 'light_red', 'light_mode': 'blue', 'pre': ''},
-        'light_green': {'color': 'light_green', 'light_mode': 'green', 'pre': ''},
-        'light_yellow': {'color': 'light_yellow', 'light_mode': 'blue', 'pre': ''},
-        'light_blue': {'color': 'light_blue', 'light_mode': 'blue', 'pre': ''},
-        'light_magenta': {'color': 'light_magenta', 'light_mode': 'blue', 'pre': ''},
-        'light_cyan': {'color': 'light_cyan', 'light_mode': 'blue', 'pre': ''},
-    }
-
     text_themes: dict = {
+
         'start': {'color': 'light_green', 'light_mode': 'green', 'pre': '🚀 '},
         'done': {'color': 'light_green', 'light_mode': 'green', 'pre': '✅ '},
 
@@ -57,7 +40,7 @@ class Theme:
 
         'input': {'color': 'light_cyan', 'light_mode': 'blue', 'pre': '⌨️  '},
         'quiet': {'color': 'dark_grey', 'light_mode': 'black', 'pre': ''},
-    }
 
-    def __init__(self):
-        self.text_themes.update(self.fallback_colors)
+        # All termcolor colors are also defined, inserted in the base class constructor
+
+    }

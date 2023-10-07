@@ -5,9 +5,9 @@ import sys
 
 from termcolor import colored
 
-from codemonkeys.cm_paths import (CM_ENV_DEFAULT_PATH, CM_THEME_CONFIG_PATH,
-                                  CM_DEFAULT_AUTOMATION_PATH, CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH,
-                                  CM_README_DEFAULT_PATH, CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH,
+from codemonkeys.cm_paths import (CM_ENV_DEFAULT_PATH, CM_THEME_DEFAULT_PATH, CM_DEFAULT_AUTOMATION_PATH,
+                                  CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
+                                  CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH,
                                   CM_MONKEYS_DIR_DEFAULT_PATH)
 
 top_level_dirs = [
@@ -69,7 +69,7 @@ print(colored("Creating config/example files...", 'cyan'))
 config_path = os.path.join(project_path, 'config')
 shutil.copytree(CM_MONKEYS_DIR_DEFAULT_PATH, os.path.join(config_path, 'monkeys'))
 shutil.copyfile(CM_CONTEXT_FILE_EXAMPLE_PATH, os.path.join(project_path, 'stor', 'context', 'context-file.txt'))
-shutil.copyfile(CM_THEME_CONFIG_PATH, os.path.join(config_path, 'theme.py'))
+shutil.copyfile(CM_THEME_DEFAULT_PATH, os.path.join(config_path, 'theme.py'))
 
 # Create Env class
 env_class_path = os.path.join(config_path, 'env.py')

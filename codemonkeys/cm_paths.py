@@ -34,6 +34,7 @@ CM_BANNER_PATH = os.path.join(CM_STOR_SNIPPETS_PATH, 'banner.txt')
 # Define default file paths in CM_STOR_DEFAULTS_PATH
 CM_ENV_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, ".env")
 CM_ENV_CLASS_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "env.py")
+CM_THEME_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "theme.py")
 CM_MONKEYS_DIR_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, "monkeys")
 CM_DEFAULT_AUTOMATION_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, 'automation.py')
 CM_GITIGNORE_DEFAULT_PATH = os.path.join(CM_STOR_DEFAULTS_PATH, '._gitignore')
