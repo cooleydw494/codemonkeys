@@ -19,7 +19,7 @@ class FinalizeOutput(Func):
         "type": "object",
         "properties": {
             "output": {
-                "type": "str",
+                "type": "string",
                 "description": "The finalized output, requiring no further processing to be used as intended.",
             },
         },
