@@ -69,7 +69,7 @@ class GPTClient:
                 )
 
                 fc_response = response['choices'][0]['message'].get('function_call')
-                (name, args) = (fc_response['name'], fc_response['args'])
+                (name, args) = (fc_response['name'], fc_response['arguments'])
                 options = {func.name: func for func in funcs}
                 return options[name].call(json.loads(args))
 
@@ -101,8 +101,10 @@ class GPTClient:
         except openai.error.OpenAIError as e:
             print_t(f"OpenAI error: {e}", 'error')
         except Exception as e:
-            print_t(f"Error: {e}", 'error')
-
+            # log a full traceback
+            import traceback
+            traceback.print_exc()
+            print_t(f"Unknown error: {e}", 'error')
         return None
 
     def tokenize(self, text: str) -> List[int]:
