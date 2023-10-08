@@ -1,9 +1,10 @@
+from codemonkeys.entities.func import Func
 from codemonkeys.types import OInt
 
 """This stubbed file isn't intended as an example of a real use-case, but an example of how to use the class."""
 
 
-class Func:
+class ExampleFunc(Func):
     """
     A class to represent a function to be called by a GPT model.
     Pass this in a list to the `funcs` parameter of the GPTClient.generate() method.

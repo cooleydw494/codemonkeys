@@ -26,8 +26,8 @@ class Make(Command):
         'command': (COMMANDS_PATH, CM_EXAMPLE_COMMAND_PATH, 'ExampleCommand'),
         'automation': (AUTOMATIONS_PATH, CM_EXAMPLE_AUTOMATION_PATH, 'ExampleAutomation'),
         'barrel': (BARRELS_PATH, CM_EXAMPLE_BARREL_PATH, 'ExampleBarrel'),
+        'func': (FUNCS_PATH, CM_EXAMPLE_FUNC_PATH, 'ExampleFunc'),
         'monkey': (MONKEYS_PATH, USER_BASE_MONKEY_PATH, 'Monkey'),
-        'func': (FUNCS_PATH, CM_EXAMPLE_FUNC_PATH, 'Func')
     }
 
     def run(self) -> None:

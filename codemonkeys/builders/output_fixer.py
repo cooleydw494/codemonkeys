@@ -1,6 +1,7 @@
 from typing import Optional
 
 from codemonkeys.defs import nl, nl2
+from codemonkeys.funcs.finalize_output import FinalizeOutput
 from codemonkeys.types import OStr, OFloat, OInt
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -44,7 +45,7 @@ class OutputFixer:
 
         fix_prompt = f"{self._prompt}{nl2}{content}"
         print_t(f"Fixing Output With Prompt:{nl}{self._prompt}", 'quiet')
-        fix_result = self._gpt_client.generate(fix_prompt)
+        fix_result = self._gpt_client.generate(fix_prompt, [FinalizeOutput()], enforce_func='finalize_output')
 
         if fix_result is None:
             print_t(f"Failed to generate an Output Fixer response. Using original content.", 'warning')
