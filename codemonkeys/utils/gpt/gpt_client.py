@@ -52,18 +52,19 @@ class GPTClient:
         """
         max_tokens = self.max_tokens - self.count_tokens(prompt) - TOKEN_UNCERTAINTY_BUFFER
 
-        print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'special')
-
         try:
 
             if funcs is not None and len(funcs) > 0:
+                functions_data = [func.data() for func in funcs]
+                max_tokens -= self.count_tokens(json.dumps([func.data() for func in funcs]))
+                print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'special')
                 function_call = {'name': enforce_func} if enforce_func is not None else 'auto'
                 response = openai.ChatCompletion.create(
                     model=self.model,
                     messages=[{'role': 'user', 'content': prompt}],
                     max_tokens=max_tokens,
                     temperature=self.temperature,
-                    functions=[func.data() for func in funcs],
+                    functions=functions_data,
                     function_call=function_call
                 )
 
@@ -73,6 +74,7 @@ class GPTClient:
                 return options[name].call(json.loads(args))
 
             else:
+                print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'special')
                 response = openai.ChatCompletion.create(
                     model=self.model,
                     messages=[{'role': 'user', 'content': prompt}],
