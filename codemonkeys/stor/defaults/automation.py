@@ -1,4 +1,3 @@
-import os
 from typing import Dict, Any, List
 
 from pandas.io.common import file_exists
@@ -6,7 +5,7 @@ from pandas.io.common import file_exists
 from codemonkeys.builders.committer import Committer
 from codemonkeys.builders.file_iterator import FileIterator
 from codemonkeys.builders.file_prompter import FilePrompter
-from codemonkeys.builders.output_checker import OutputChecker
+from codemonkeys.builders.output_fixer import OutputFixer
 from codemonkeys.builders.output_path_resolver import OutputPathResolver
 from codemonkeys.builders.summarizer import Summarizer
 from codemonkeys.entities.automation import Automation
@@ -35,13 +34,12 @@ class Default(Automation):
         else:
             context = get_file_contents(m.CONTEXT_FILE_PATH)
 
-        # Prepare Output Checker
-        output_checker = None
-        if m.OUTPUT_CHECK_PROMPT is not None:
-            output_checker = (OutputChecker()
-                              .model(m.OUTPUT_CHECK_MODEL, m.OUTPUT_CHECK_TEMP, m.OUTPUT_CHECK_MAX_TOKENS)
-                              .tries(m.OUTPUT_TRIES)
-                              .prompt(m.OUTPUT_CHECK_PROMPT))
+        # Prepare Output Fixer
+        output_fixer = None
+        if m.FIX_OUTPUT_PROMPT is not None:
+            output_fixer = (OutputFixer()
+                            .model(m.FIX_OUTPUT_MODEL, m.FIX_OUTPUT_TEMP, m.FIX_OUTPUT_MAX_TOKENS)
+                            .prompt(m.FIX_OUTPUT_PROMPT))
 
         # Prepare FileIterator and filter files
         file_iterator = (FileIterator()
@@ -51,6 +49,15 @@ class Default(Automation):
                          .filepath_match_exclude(m.FILEPATH_MATCH_EXCLUDE)
                          .work_path(m.WORK_PATH)
                          .filter_files())
+
+        # Set up a FilePrompter for prompting output on each file
+        file_prompter = (FilePrompter()
+                         .model(m.MAIN_MODEL, m.MAIN_TEMP, m.MAIN_MAX_TOKENS)
+                         .main_prompt(m.MAIN_PROMPT)
+                         .context(context)
+                         .output_example_prompt(m.OUTPUT_EXAMPLE_PROMPT)
+                         .ultimatum_prompt(m.MAIN_PROMPT_ULTIMATUM)
+                         .output_remove_strings(m.OUTPUT_REMOVE_STRINGS))
 
         # Prepare OutputPathResolver, configuring how to create output paths using each file's path
         output_path_resolver = (OutputPathResolver()
@@ -63,7 +70,7 @@ class Default(Automation):
         # Prepare Committer to handle git commits
         committer = None
         if m.COMMIT_STYLE == 'gpt':
-            committer = Committer(m.OUTPUT_PATH).model('3', 0.75, m.SUMMARY_MAX_TOKENS)
+            committer = Committer(m.OUTPUT_PATH).model('gpt-3.5-turbo', 0.7, 2000)
         elif m.COMMIT_STYLE == 'static':
             committer = Committer(m.OUTPUT_PATH).message(m.STATIC_COMMIT_MESSAGE)
 
@@ -84,42 +91,17 @@ class Default(Automation):
                 continue
 
             print(f"Processing file: {file_path}")
+
             old_content = get_file_contents(file_path)
-
-            # Create a copy for file-specific _prompt replacements
-            file_name = os.path.basename(file_path)
-            _m = m.prompt_replace('{the-file}', file_name)
-
-            # Set up a FilePrompter for the current file
-            file_prompter = (FilePrompter()
-                             .model(m.MAIN_MODEL, m.MAIN_TEMP, m.MAIN_MAX_TOKENS)
-                             .file_path(file_path)
-                             .main_prompt(_m.MAIN_PROMPT)
-                             .context(context)
-                             .output_example_prompt(_m.OUTPUT_EXAMPLE_PROMPT)
-                             .ultimatum_prompt(_m.MAIN_PROMPT_ULTIMATUM)
-                             .output_remove_strings(_m.OUTPUT_REMOVE_STRINGS))
-
-            # Generate output, checking it if an OutputChecker is configured
-            new_content = None
-            if output_checker is not None:
-                output_checker.set_current_try(1)
-                while output_checker.has_tries():
-                    output = file_prompter.get_output()
-                    if output is None:
-                        print_t(f"Valid output could not be generated for: {file_path}", 'error')
-                        print_t("Output Check not run because no output was generated.", 'info')
-                        break
-                    output_valid = output_checker.check_output(output)
-                    if output_valid:
-                        new_content = output
-                        break
-            else:
-                new_content = file_prompter.get_output()
+            new_content = file_prompter.file_path(file_path).get_output()
 
             if new_content is None:
                 print_t(f"Valid output could not be generated for: {file_path}", 'error')
                 continue
+
+            # Fix output if an OutputFixer is configured
+            if output_fixer is not None:
+                new_content = output_fixer.fix(new_content)
 
             # Write output to file
             write_file_contents(output_file_path, new_content)

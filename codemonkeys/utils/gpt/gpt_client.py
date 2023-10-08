@@ -1,3 +1,4 @@
+import json
 from typing import List, Optional
 
 import openai
@@ -6,6 +7,7 @@ from tiktoken import Encoding
 
 from codemonkeys.config.imports.env import Env
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
+from codemonkeys.entities.func import Func
 from codemonkeys.types import OStr, OInt, OFloat
 from codemonkeys.utils.config.monkey_validations import validate_model, validate_temp
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -38,33 +40,53 @@ class GPTClient:
         self.temperature = validate_temp(temperature)
         self.encoding = tiktoken.encoding_for_model(self.model)
 
-    def generate(self, prompt: str, temperature: OFloat = None, rate_limit_delay: int = 60) -> OStr:
+    def generate(self, prompt: str, funcs: Optional[List[Func]] = None, enforce_func: OStr = None, retry_delay: int = 60) -> OStr:
         """
-        Generate a GPT model response from a given _prompt.
+        Generate a GPT model response from a given prompt.
         
+        :param enforce_func: The name of the function to enforce. Defaults to None.
+        :param funcs: list of Func classes to use for function calling.
         :param str prompt: The text input for the model.
-        :param float temperature: The generation temperature. Defaults to None.
-        :param int rate_limit_delay: The delay in seconds to wait before rate limit retry. Defaults to 60.
+        :param int retry_delay: The delay in seconds to wait before rate limit retry. Defaults to 60.
         :return: The generated response.
         """
-        temperature = temperature or self.temperature
-
         max_tokens = self.max_tokens - self.count_tokens(prompt) - TOKEN_UNCERTAINTY_BUFFER
 
         print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'special')
 
         try:
-            response = openai.ChatCompletion.create(
-                model=self.model,
-                messages=[{'role': 'user', 'content': prompt}],
-                max_tokens=max_tokens,
-                temperature=temperature
-            )
+
+            if funcs is not None and len(funcs) > 0:
+                function_call = {'name': enforce_func} if enforce_func is not None else 'auto'
+                response = openai.ChatCompletion.create(
+                    model=self.model,
+                    messages=[{'role': 'user', 'content': prompt}],
+                    max_tokens=max_tokens,
+                    temperature=self.temperature,
+                    functions=[func.data() for func in funcs],
+                    function_call=function_call
+                )
+
+                fc_response = response['choices'][0]['message'].get('function_call')
+                (name, args) = (fc_response['name'], fc_response['args'])
+                options = {func.name: func for func in funcs}
+                return options[name].call(json.loads(args))
+
+            else:
+                response = openai.ChatCompletion.create(
+                    model=self.model,
+                    messages=[{'role': 'user', 'content': prompt}],
+                    max_tokens=max_tokens,
+                    temperature=self.temperature
+                )
+
+                return response.choices[0].message.content.strip()
+
         except openai.error.RateLimitError as e:
-            print_t(f"Rate limit error, trying again in {rate_limit_delay}s: {e}", 'warning')
+            print_t(f"Rate limit error, trying again in {retry_delay}s: {e}", 'warning')
             import time
-            time.sleep(rate_limit_delay)
-            return self.generate(prompt, temperature, rate_limit_delay * 2)
+            time.sleep(retry_delay)
+            return self.generate(prompt, funcs, retry_delay * 2)
 
         # Commented out because timeouts sometimes recur many times but only for specific prompts (best to skip)
         #
@@ -72,13 +94,14 @@ class GPTClient:
         #     print_t(f"Timeout error, trying again in {rate_limit_delay}s: {e}", 'warning')
         #     import time
         #     time.sleep(rate_limit_delay)
-        #     return self.generate(_prompt, temperature, rate_limit_delay*2)
+        #     return self.generate(_prompt, rate_limit_delay*2)
 
         except openai.error.OpenAIError as e:
             print_t(f"OpenAI error: {e}", 'error')
-            return None
+        except Exception as e:
+            print_t(f"Error: {e}", 'error')
 
-        return response.choices[0].message.content.strip()
+        return None
 
     def tokenize(self, text: str) -> List[int]:
         """

@@ -14,6 +14,7 @@ top_level_dirs = [
     'automations',
     'barrels',
     'commands',
+    'funcs',
     'config',
     'builders',
     'stor',

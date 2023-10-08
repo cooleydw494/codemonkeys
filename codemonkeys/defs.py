@@ -11,6 +11,7 @@ AUTOMATIONS_PATH = os.path.join(ROOT_PATH, "automations")
 BARRELS_PATH = os.path.join(ROOT_PATH, "barrels")
 COMPOSABLES_PATH = os.path.join(ROOT_PATH, "builders")
 COMMANDS_PATH = os.path.join(ROOT_PATH, "commands")
+FUNCS_PATH = os.path.join(ROOT_PATH, "funcs")
 
 ENV_PATH = os.path.join(ROOT_PATH, ".env")
 CONFIG_PATH = os.path.join(ROOT_PATH, "config")

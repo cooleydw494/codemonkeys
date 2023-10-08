@@ -1,8 +1,10 @@
 import os
 import shutil
 
-from codemonkeys.cm_paths import CM_EXAMPLE_COMMAND_PATH, CM_EXAMPLE_AUTOMATION_PATH, CM_EXAMPLE_BARREL_PATH
-from codemonkeys.defs import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MONKEYS_PATH, USER_BASE_MONKEY_PATH
+from codemonkeys.cm_paths import CM_EXAMPLE_COMMAND_PATH, CM_EXAMPLE_AUTOMATION_PATH, CM_EXAMPLE_BARREL_PATH, \
+    CM_EXAMPLE_FUNC_PATH
+from codemonkeys.defs import COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MONKEYS_PATH, USER_BASE_MONKEY_PATH, \
+    FUNCS_PATH
 from codemonkeys.entities.command import Command
 from codemonkeys.types import OStr
 
@@ -24,7 +26,8 @@ class Make(Command):
         'command': (COMMANDS_PATH, CM_EXAMPLE_COMMAND_PATH, 'ExampleCommand'),
         'automation': (AUTOMATIONS_PATH, CM_EXAMPLE_AUTOMATION_PATH, 'ExampleAutomation'),
         'barrel': (BARRELS_PATH, CM_EXAMPLE_BARREL_PATH, 'ExampleBarrel'),
-        'monkey': (MONKEYS_PATH, USER_BASE_MONKEY_PATH, 'Monkey')
+        'monkey': (MONKEYS_PATH, USER_BASE_MONKEY_PATH, 'Monkey'),
+        'func': (FUNCS_PATH, CM_EXAMPLE_FUNC_PATH, 'Func')
     }
 
     def run(self) -> None:
@@ -37,8 +40,14 @@ class Make(Command):
         if self.entity_type == 'monkey' and self.entity_name == 'monkey':
             raise ValueError("You cannot create a Monkey named 'monkey' (that's where you set defaults, silly!).")
 
+        # Instead of throwing an error for invalid snake/kebab case, we'll just fix it
+        if self.entity_type in ['monkey', 'func'] and '-' in self.entity_name:
+            self.entity_name = self.entity_name.replace('-', '_')
+        if self.entity_type not in ['monkey', 'func'] and '_' in self.entity_name:
+            self.entity_name = self.entity_name.replace('_', '-')
+
         if not self.entity_name.replace('-', '').replace('_', '').isalpha():
-            raise ValueError(f"Invalid name: {self.entity_name}. Please specify in kebab-case (e.g. entity-name).")
+            raise ValueError(f"Invalid name: {self.entity_name}. Please specify in kebab-case or snake_case.")
 
         # Get info based on the entity type
         entity_path, example_path, example_name = self.ENTITY_TYPE_INFO.get(self.entity_type)
@@ -58,6 +67,9 @@ class Make(Command):
             file_contents = file_contents.replace(base_import, 'from config.monkeys.monkey import Monkey')
             class_definition = f'{new_class_name}(Base):'
             file_contents = file_contents.replace(class_definition, f'{new_class_name}(Monkey):')
+
+        if self.entity_type == 'func':
+            file_contents = file_contents.replace('func_name', self.entity_name)
 
         with open(new_entity_path, 'w') as f:
             f.write(file_contents)

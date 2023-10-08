@@ -23,11 +23,10 @@ class Monkey(Base):
     CONTEXT_FILE_PATH: OStr = f"{STOR_PATH}/context/context-file.txt"
     CONTEXT_SUMMARY_PROMPT: OStr = "Provide a summary of this file..."
 
-    # Output Checks
-    OUTPUT_CHECK_PROMPT: OStr = \
+    # Output Fixing
+    FIX_OUTPUT_PROMPT: OStr = \
         'Examine the following output and determine if it contains the contents of a python script.' \
         ' Respond with only one word: "True" or "False".'
-    OUTPUT_TRIES: int = 1
 
     # Output
     OUTPUT_PATH: str = f"{STOR_PATH}/output"
@@ -51,14 +50,14 @@ class Monkey(Base):
     # Models
     MAIN_MODEL: str = 'gpt-4'
     SUMMARY_MODEL: str = 'gpt-4'
-    OUTPUT_CHECK_MODEL: str = 'gpt-3.5-turbo'
+    FIX_OUTPUT_MODEL: str = 'gpt-3.5-turbo'
 
     # Temps
     MAIN_TEMP: float = 1.0
     SUMMARY_TEMP: float = 1.0
-    OUTPUT_CHECK_TEMP: float = 0.5
+    FIX_OUTPUT_TEMP: float = 0.5
 
     # Max Tokens
     MAIN_MAX_TOKENS: int = 8000
     SUMMARY_MAX_TOKENS: int = 8000
-    OUTPUT_CHECK_MAX_TOKENS: int = 8000
+    FIX_OUTPUT_MAX_TOKENS: int = 8000

@@ -26,11 +26,10 @@ class FinishFiles(Monkey):
 
     OUTPUT_EXAMPLE_PROMPT: OStr = "Make your output a well-structured and readable python script/module only."
 
-    # Output Checks
-    OUTPUT_CHECK_PROMPT: OStr = \
+    # Output Fixing
+    FIX_OUTPUT_PROMPT: OStr = \
         ('Examine the following output and determine if it contains the contents of a python script/module only.'
          ' Respond with only one word: "True" or "False".')
-    OUTPUT_TRIES: int = 1
 
     # Output
     OUTPUT_PATH: str = f"{STOR_PATH}/output"

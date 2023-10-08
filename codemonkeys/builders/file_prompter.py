@@ -127,9 +127,9 @@ class FilePrompter:
 
         :return: tuple of (str, str): Tuple of strings (full_prompt, stubbed_prompt)
         """
-        main_prompt = _or(self._main_prompt)
-        ultimatum = _or(self._ultimatum_prompt)
-        output_example = _or(self._output_example_prompt)
+        main_prompt = _or(self._main_prompt.replace('{the-file}', self._file_name))
+        ultimatum = _or(self._ultimatum_prompt.replace('{the-file}', self._file_name))
+        output_example = _or(self._output_example_prompt.replace('{the-file}', self._file_name))
         file_contents = get_file_contents(self._file_path)
 
         full_prompt = f"{main_prompt}{nl}{self._context}{nl}{self._file_name}:{nl}" \

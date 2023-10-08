@@ -36,9 +36,8 @@ class Monkey:
     CONTEXT_FILE_PATH: OStr = None
     CONTEXT_SUMMARY_PROMPT: OStr = None
 
-    # Output Checks
-    OUTPUT_CHECK_PROMPT: OStr = None
-    OUTPUT_TRIES: int = 1
+    # Output Fixing
+    FIX_OUTPUT_PROMPT: OStr = None
 
     # Output
     OUTPUT_PATH: str = f"{STOR_PATH}/output"
@@ -62,17 +61,17 @@ class Monkey:
     # Models
     MAIN_MODEL: str = 'gpt-4'
     SUMMARY_MODEL: str = 'gpt-4'
-    OUTPUT_CHECK_MODEL: str = 'gpt-3.5-turbo'
+    FIX_OUTPUT_MODEL: str = 'gpt-3.5-turbo'
 
     # Temps
     MAIN_TEMP: float = 1.0
     SUMMARY_TEMP: float = 1.0
-    OUTPUT_CHECK_TEMP: float = 0.5
+    FIX_OUTPUT_TEMP: float = 0.5
 
     # Max Tokens
     MAIN_MAX_TOKENS: int = 8000
     SUMMARY_MAX_TOKENS: int = 8000
-    OUTPUT_CHECK_MAX_TOKENS: int = 8000
+    FIX_OUTPUT_MAX_TOKENS: int = 8000
 
     def __post_init__(self):
         self._dynamic_validate()
@@ -104,21 +103,6 @@ class Monkey:
                 setattr(self, key, validate_model(value, allow_none=True))
             elif is_temp_key(key):
                 setattr(self, key, validate_temp(value, allow_none=True))
-
-    def prompt_replace(self, to_replace, replace_with) -> 'Monkey':
-        """
-        Replaces any {prompt:<prompt_key>} placeholders with the provided value and returns a copy of the Monkey.
-
-        :param to_replace: The placeholder to replace.
-        :param replace_with: The value to replace the placeholder with.
-        :return: A copy of the Monkey instance with the placeholders replaced.
-        """
-        copy = Monkey(**self.__dict__)
-        for attr in vars(copy):
-            value = getattr(copy, attr)
-            if is_prompt_key(attr) and value is not None:
-                setattr(copy, attr, value.replace(to_replace, replace_with))
-        return copy
 
     def _cop_paths(self) -> None:
         """Replaces {cop:<filepath>} syntax within PROMPTs with file contents."""
