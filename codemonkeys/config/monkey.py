@@ -20,12 +20,12 @@ class Monkey:
     _instance: OMonkey = None
     _current_monkey: OStr = None
 
-    # General
+    # File Iteration
     WORK_PATH: str = f'{STOR_PATH}/work_path'
-    FILE_TYPES_INCLUDED: tuple = ('.py', '.js')
-    FILEPATH_MATCH_INCLUDE: tuple = ()
-    FILEPATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py')
-    FILE_SELECT_MAX_TOKENS: int = 3500
+    INCLUDE_EXTS: tuple = ('.py', '.js')
+    PATH_MATCH_INCLUDE: tuple = ()
+    PATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py')
+    FILTER_MAX_TOKENS: int = 3500
 
     # Main Prompts
     MAIN_PROMPT: str = "Please generate code for the following task..."
@@ -43,20 +43,11 @@ class Monkey:
     OUTPUT_PATH: str = f"{STOR_PATH}/output"
     OUTPUT_EXT: OStr = ".py"
     OUTPUT_FILENAME_APPEND: OStr = None
-    OUTPUT_REMOVE_STRINGS: tuple = ('```python\n', '```python', '```')
     SKIP_EXISTING_OUTPUT_FILES: bool = True
-
-    # Editor
-    EDITOR_PROMPT: OStr = None
-    EDITOR_PROMPT_ULTIMATUM: OStr = None
-
-    # Output Splitting
-    OUTPUT_SPLIT_PATH: OStr = None
-    OUTPUT_SPLIT_TAG: str = '[SPLIT]'
+    RELATIVE_OUTPUT_PATHS: bool = True
 
     # Git
-    COMMIT_STYLE: OStr = None
-    STATIC_COMMIT_MESSAGE: str = 'File updated with CodeMonkeys.'
+    GPT_GIT_COMMITS: bool = False
 
     # Models
     MAIN_MODEL: str = 'gpt-4'
@@ -83,7 +74,7 @@ class Monkey:
     def load(cls, name: OStr = None) -> 'Monkey':
 
         if cls._instance is None or cls._current_monkey != name:
-            # Find or _prompt user to select
+            # Find or prompt user to select
             name = get_monkey_name(name)
             cls._current_monkey = name
             file_path = os.path.join(MONKEYS_PATH, f"{name}.py")

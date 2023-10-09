@@ -34,9 +34,9 @@ class Summarizer:
 
     def prompt(self, prompt: str) -> 'Summarizer':
         """
-        Set the GPT _prompt for the summarizer.
+        Set the GPT prompt for the summarizer.
 
-        :param str prompt: The _prompt to be used.
+        :param str prompt: The prompt to be used.
         :return: Self for method chaining.
         """
         self._prompt = prompt

@@ -33,9 +33,9 @@ class OutputFixer:
 
     def prompt(self, prompt: str) -> 'OutputFixer':
         """
-        Sets the _prompt to use for fixing output.
+        Sets the prompt to use for fixing output.
 
-        :param str prompt: The _prompt to set.
+        :param str prompt: The prompt to set.
         :return: Self for method chaining.
         """
         self._prompt = prompt

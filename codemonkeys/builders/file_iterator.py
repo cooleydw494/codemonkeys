@@ -29,31 +29,31 @@ class FileIterator:
         self._work_path = work_path
         return self
 
-    def file_types_included(self, file_types_included: tuple = ()) -> 'FileIterator':
+    def include_exts(self, include_exts: tuple = ()) -> 'FileIterator':
         """Set the included file types for the FileIterator.
 
-        :param tuple file_types_included: The file types as a tuple of strings.
+        :param tuple include_exts: The file types as a tuple of strings.
         :return: The FileIterator instance with the new _include_extensions value.
         """
-        self._include_extensions = file_types_included
+        self._include_extensions = include_exts
         return self
 
-    def filepath_match_include(self, filepath_match_include: tuple) -> 'FileIterator':
+    def path_match_include(self, path_match_include: tuple) -> 'FileIterator':
         """Set the filepaths to include in the FileIterator.
 
-        :param tuple filepath_match_include: The include patterns as a tuple of strings.
+        :param tuple path_match_include: The include patterns as a tuple of strings.
         :return: The FileIterator instance with the new _include_patterns value.
         """
-        self._include_patterns = filepath_match_include
+        self._include_patterns = path_match_include
         return self
 
-    def filepath_match_exclude(self, filepath_match_exclude: tuple) -> 'FileIterator':
+    def path_match_exclude(self, path_match_exclude: tuple) -> 'FileIterator':
         """Set the filepaths to exclude from the FileIterator.
 
-        :param tuple filepath_match_exclude: The exclude patterns as a tuple of strings.
+        :param tuple path_match_exclude: The exclude patterns as a tuple of strings.
         :return: The FileIterator instance with the new _exclude_patterns value.
         """
-        self._exclude_patterns = filepath_match_exclude
+        self._exclude_patterns = path_match_exclude
         return self
 
     def token_count_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':
@@ -144,3 +144,6 @@ class FileIterator:
         :return: The _filtered_files list.
         """
         return self._filtered_files
+
+    def print_files_remaining(self) -> None:
+        print_t(f"Files remaining: {len(self.get_filtered_files())}", 'info')

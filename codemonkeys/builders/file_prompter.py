@@ -27,7 +27,6 @@ class FilePrompter:
     _output_example_prompt: OStr = None
     _ultimatum_prompt: OStr = None
     _skip_existing_output_files: bool = False
-    _output_remove_strings: tuple = ()
 
     def file_path(self, file_path: str) -> 'FilePrompter':
         """Sets the file path and the file name to be used in the prompts.
@@ -39,7 +38,7 @@ class FilePrompter:
         self._file_name = os.path.basename(file_path)
         return self
 
-    def context(self, context: str) -> 'FilePrompter':
+    def context(self, context: OStr = None) -> 'FilePrompter':
         """Sets the context to be used in the prompts.
 
         :param str context: The context string to set
@@ -49,27 +48,27 @@ class FilePrompter:
         return self
 
     def main_prompt(self, main_prompt: str) -> 'FilePrompter':
-        """Sets the main _prompt to be used in the prompts.
+        """Sets the main prompt to be used in the prompts.
 
-        :param str main_prompt: The main _prompt string to set
+        :param str main_prompt: The main prompt string to set
         :return: FilePrompter: returns the updated instance
         """
         self._main_prompt = main_prompt
         return self
 
     def ultimatum_prompt(self, ultimatum_prompt: str) -> 'FilePrompter':
-        """Sets the ultimatum _prompt to be used in the prompts.
+        """Sets the ultimatum prompt to be used in the prompts.
 
-        :param str ultimatum_prompt: The ultimatum _prompt string to set
+        :param str ultimatum_prompt: The ultimatum prompt string to set
         :return: FilePrompter: returns the updated instance
         """
         self._ultimatum_prompt = ultimatum_prompt
         return self
 
     def output_example_prompt(self, output_example_prompt: str) -> 'FilePrompter':
-        """Sets the output example _prompt to be used in the prompts.
+        """Sets the output example prompt to be used in the prompts.
 
-        :param str output_example_prompt: The output example _prompt string to set
+        :param str output_example_prompt: The output example prompt string to set
         :return: FilePrompter: returns the updated instance
         """
         self._output_example_prompt = output_example_prompt
@@ -89,15 +88,6 @@ class FilePrompter:
         self._gpt_client = GPTClient(model, temp, max_tokens)
         return self
 
-    def output_remove_strings(self, output_remove_strings: tuple) -> 'FilePrompter':
-        """Sets the output remove strings to automatically remove them from the generated output.
-
-        :param str output_remove_strings: The comma-separated remove strings to set
-        :return: FilePrompter: returns the updated instance
-        """
-        self._output_remove_strings = output_remove_strings
-        return self
-
     def get_output(self) -> OStr:
         """Gets the generated output from the GPT model using the configured prompts.
 
@@ -113,17 +103,15 @@ class FilePrompter:
         output = self._gpt_client.generate(full_prompt)
 
         if output is None:
+            print_t(f"Valid output could not be generated for: {self._file_path}", 'error')
             return None
-
-        for remove_str in self._output_remove_strings:
-            output = output.replace(remove_str, '')
 
         print_t("Output returned.", 'info')
         print_t(f"{output}", 'quiet')
         return output
 
     def _get_full_prompt(self) -> (str, str):
-        """Creates the full _prompt using the configured input options.
+        """Creates the full prompt using the configured input options.
 
         :return: tuple of (str, str): Tuple of strings (full_prompt, stubbed_prompt)
         """
@@ -132,7 +120,7 @@ class FilePrompter:
         output_example = _or(self._output_example_prompt.replace('{the-file}', self._file_name))
         file_contents = get_file_contents(self._file_path)
 
-        full_prompt = f"{main_prompt}{nl}{self._context}{nl}{self._file_name}:{nl}" \
+        full_prompt = f"{main_prompt}{nl}{self._context or ''}{nl}{self._file_name}:{nl}" \
                       f"{content_sep}{nl}{file_contents}{content_sep}{nl}{ultimatum}{nl}{output_example}"
 
         stubbed_prompt = f"{main_prompt}{nl2}<context>{nl2}{self._file_name}:{nl}" \

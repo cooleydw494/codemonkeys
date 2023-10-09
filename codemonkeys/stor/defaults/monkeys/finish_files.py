@@ -9,12 +9,12 @@ from codemonkeys.types import OStr
 @dataclass
 class FinishFiles(Monkey):
 
-    # General
+    # File Iteration
     WORK_PATH: str = f'{STOR_PATH}/work_path'
-    FILE_TYPES_INCLUDED: tuple = ('.py', '.js', '.txt')
-    FILEPATH_MATCH_INCLUDE: tuple = ()
-    FILEPATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py', 'help.py')
-    FILE_SELECT_MAX_TOKENS: int = 3500
+    INCLUDE_EXTS: tuple = ('.py', '.js', '.txt')
+    PATH_MATCH_INCLUDE: tuple = ()
+    PATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py', 'help.py')
+    FILTER_MAX_TOKENS: int = 3500
 
     # Main Prompts
     MAIN_PROMPT: str = \
@@ -33,5 +33,4 @@ class FinishFiles(Monkey):
 
     # Output
     OUTPUT_PATH: str = f"{STOR_PATH}/output"
-    OUTPUT_REMOVE_STRINGS: tuple = ('```python\n', '```python', '```')
     SKIP_EXISTING_OUTPUT_FILES: bool = True

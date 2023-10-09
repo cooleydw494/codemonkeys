@@ -7,12 +7,12 @@ from codemonkeys.types import OStr
 
 @dataclass
 class Monkey(Base):
-    # General
+    # File Iteration
     WORK_PATH: str = f'{STOR_PATH}/work_path'
-    FILE_TYPES_INCLUDED: tuple = ('.py', '.js')
-    FILEPATH_MATCH_INCLUDE: tuple = ()
-    FILEPATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py')
-    FILE_SELECT_MAX_TOKENS: int = 3500
+    INCLUDE_EXTS: tuple = ('.py', '.js')
+    PATH_MATCH_INCLUDE: tuple = ()
+    PATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py')
+    FILTER_MAX_TOKENS: int = 3500
 
     # Main Prompts
     MAIN_PROMPT: str = "Please generate code for the following task..."
@@ -32,7 +32,6 @@ class Monkey(Base):
     OUTPUT_PATH: str = f"{STOR_PATH}/output"
     OUTPUT_EXT: OStr = ".py"
     OUTPUT_FILENAME_APPEND: OStr = None
-    OUTPUT_REMOVE_STRINGS: tuple = ('```python\n', '```python', '```')
     SKIP_EXISTING_OUTPUT_FILES: bool = True
 
     # Editor
@@ -44,8 +43,7 @@ class Monkey(Base):
     OUTPUT_SPLIT_TAG: str = '[SPLIT]'
 
     # Git
-    COMMIT_STYLE: OStr = None
-    STATIC_COMMIT_MESSAGE: str = 'File updated with CodeMonkeys.'
+    GPT_GIT_COMMITS: bool = False
 
     # Models
     MAIN_MODEL: str = 'gpt-4'

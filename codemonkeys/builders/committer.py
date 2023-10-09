@@ -28,7 +28,7 @@ class Committer:
     _temp: float = 0.75
     _max_tokens: int = 32000
     _prompt: OStr = None
-    _message: OStr = None
+    _message: OStr = 'Updated via CodeMonkeys.'
 
     def __init__(self, repo_path: str):
         """
@@ -41,7 +41,7 @@ class Committer:
 
     def model(self, model: str, temp: OFloat = None, max_tokens: OInt = None) -> 'Committer':
         """
-        Sets the GPT model, temperature, and maximum tokens for the Committer.
+        Sets the GPT model, temperature, and maximum tokens.
 
         :param str model: GPT model to use.
         :param float temp: Temperature for the GPT model.
@@ -59,9 +59,9 @@ class Committer:
 
     def prompt(self, prompt: str) -> 'Committer':
         """
-        Sets the GPT _prompt for the Committer
+        Sets the GPT prompt
 
-        :param str prompt: The GPT _prompt.
+        :param str prompt: The GPT prompt.
         :return: The updated Committer instance.
         """
         self._prompt = prompt
@@ -69,7 +69,7 @@ class Committer:
 
     def message(self, commit_message: str) -> 'Committer':
         """
-        Sets the commit message manually for the Committer.
+        Sets the commit message manually.
 
         :param str commit_message: Commit message.
         :return: The updated Committer instance.
@@ -110,3 +110,4 @@ class Committer:
             All staged changes are committed with the current commit message.
         """
         self._gitter.commit(self._message, add_all=True)
+        print_t(f"Git changes committed with message: {self._message}.", 'info')
