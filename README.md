@@ -9,17 +9,7 @@ CodeMonkeys gives developers of varying levels control over their automated GPT 
 CodeMonkeys includes a default automation to handle a wide array of automated file operations.
 
 ### Alpha Status (updated Oct 10, 2023) 🚧
-CodeMonkeys will soon have a stable Alpha release. This release will focus on establishing the framework, solidifying architecture/concepts to a point of relative stability, and providing a flexible, immediately useful default Automation that is instructional in how it utilizes the framework.
-
-There are concerns to be handled for eventual Beta release that have been set aside while focusing on a stable Alpha:
-- Test Coverage
-- More testing on Windows/Linux (Should Work ™️, but tested thoroughly on macOS only)
-- Handling longer files (a major limitation currently)
-- Streamlined support for fine-tuning (existing fine-tuned models already work)
-- Expansion of pre-packaged Automations, Monkey config options, and Builders
-  - Particular focus on function calling support and pre-packaged Funcs
-- More intentional git strategy, and contribution docs/standards
-- Improve CLI UI in general, and accessibility-focused presets for Theme config
+CodeMonkeys will soon have a stable Alpha release. This release will focus on establishing the framework, solidifying architecture/concepts to a point of relative stability, and providing a flexible, immediately useful default Automation that is instructional in how it utilizes the framework. More details on medium-term, post-stable-Alpha goals [here](#medium-term-goals-).
 
 ## Index
 - [Getting Started](#getting-started-)
@@ -29,6 +19,7 @@ There are concerns to be handled for eventual Beta release that have been set as
 - [Monkeys](#monkeys-)
 - [Env](#env-)
 - [The Default Automation](#the-default-automation-)
+- [Medium-term Goals](#medium-term-goals-)
 - [Attribution](#attribution-)
 
 
@@ -102,6 +93,17 @@ openai_api_key = env.OPENAI_API_KEY
 ## The Default Automation 🤖
 
 The default automation, `automations/default.py`, is a generic but complete template for running automations on files in your `WORK_PATH`. Out-of-the-box, it allows you to run GPT-powered mass file operations simply by configuring Monkeys. The default Automation is also an instructive example of using the framework, as it includes configurable implementations of all stock Monkey properties.
+
+## Medium-term Goals 📅
+Some concerns have been set aside as I prepare for a stable Alpha release. The next major areas of focus:
+- Test Coverage
+- More testing on Windows/Linux (Should Work ™️, but tested thoroughly on macOS only)
+- Handling longer files (a major limitation currently)
+- Streamlined support for fine-tuning (existing fine-tuned models already work)
+- Expansion of pre-packaged Automations, Monkey config options, and Builders
+  - Particular focus on function calling support and pre-packaged Funcs
+- More intentional git strategy, and contribution docs/standards
+- Improve CLI UI in general, and accessibility-focused presets for Theme config
 
 ## Attribution 🙏
 All forms of attribution will be greatly appreciated, especially linking directly to this repo.
