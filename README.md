@@ -4,16 +4,29 @@ A framework for automating GPT-powered tasks, from simple to complex. Read the d
 
 ## Overview 🌐
 
-CodeMonkeys gives developers of varying skill levels control over their automated GPT logic, providing a more intentional alternative to tools like AutoGPT. The primary goal is to help you build GPT-powered automations that are reliable, predictable, and tailored to your needs, only involving AI at crucial areas of strength. The framework combines built-in utilities, composable classes for running GPT-powered tasks, and a robust configuration management system. CodeMonkeys includes a default automation to handle a wide array of mass file operations via simple configuration, but is meant to be extensible enough to enable *your* use-case.
+CodeMonkeys gives developers of varying levels control over their automated GPT logic, focusing on the goal of working on codebases but designed to enable automations of all kinds. Its purpose is to help you build GPT-powered automations that are reliable, predictable, and tailored to your needs. There is a strong focus on only involving AI at crucial areas of strength, and leveraging more controllable and intentional methods for everything else. There is much more to it than just automation logic, and I invite you to read on to see it for yourself.
 
-### Alpha Status 🚧
-A lot of care has been put into a solid starting point for the vision, but a lot of work remains, including: testing, expanded modular functionality such as web browsing, content chunking, memory management, alternative LLMs (including local), and much more. CodeMonkeys has an early focus on mass file operations, but is designed for growth and expansion, and to become a powerful tool for creating incredible things.
+CodeMonkeys includes a default automation to handle a wide array of automated file operations.
+
+### Alpha Status (updated Oct 10, 2023) 🚧
+CodeMonkeys will soon have a stable Alpha release. This release will focus on establishing the framework, solidifying architecture/concepts to a point of relative stability, and providing a flexible, immediately useful default Automation that is instructional in how it utilizes the framework.
+
+There are concerns to be handled for eventual Beta release that have been set aside while focusing on a stable Alpha:
+- Test Coverage
+- More testing on Windows/Linux (Should Work ™️, but tested thoroughly on macOS only)
+- Handling longer files (a major limitation currently)
+- Streamlined support for fine-tuning (existing fine-tuned models already work)
+- Expansion of pre-packaged Automations, Monkey config options, and Builders
+  - Particular focus on function calling support and pre-packaged Funcs
+- More intentional git strategy, and contribution docs/standards
+
+## Index
 
 ## Getting Started 🚀
 
 First, install the framework with pip:
 ```
-pip3 install codemonkeys
+pip install codemonkeys
 ```
 
 Then, use the `monk-new` command to create a new project:
@@ -21,6 +34,8 @@ Then, use the `monk-new` command to create a new project:
 monk-new [project_name]
 ```
 This will scaffold a new project with the given name. _Note: CodeMonkeys treats your project as a package, so your project name should respect package name requirements (snake_case)._
+
+`cd` into your project and run `monk` or `monk help`. If scaffolded successfully this will print a general help screen.
 
 ## Project Structure Overview 📁
 CodeMonkeys' project structure aims to allow you to build/configure/run your automations in a simple, powerful way. You're encouraged to get creative with your Automation/Command/Barrel `run()` methods, custom config properties, and utilize any additional modules/classes/dirs you create. However, the base project scaffolding is assumed by the Monk CLI and built-in config management. Don't fight these paradigms unless you're prepared to replace them.
@@ -44,36 +59,39 @@ CodeMonkeys' CLI interface is used via the `monk` command which handles running 
 CodeMonkeys has built-in configuration management, including an Env class and a Monkey class which are automatically rewritten to include any custom `.env` or `config/monkey-config-defaults` values you add. These are rewritten on every run of `monk` and allow IDE intelligence for you env/config properties.
 _Note: You should never modify the Monkey or Env class within `config/framework`. These exist to allow automatic rewrites that include full support for user-defined properties._
 
-### Monkey 
-The Monkey class is a wrapper for a single Monkey config, as defined in `monkeys/monkey-manifest.yaml`. It provides a simple interface for accessing Monkey config properties via dot notation, and includes built-in validation logic.
+## Monkeys
+Monkeys are your tool for specifying the exact behavior of your Automations. Your prompts, models, temperature, paths, and behavior specifications live here. The class-based approach unlocks advantages like inheritance, custom logic, and lifecycle hooks, but at heart the Monkey class maintains the simplicity of a config file. It is possible to configure your Automation behavior by doing no more than changing hard-coded class properties, not unlike editing a yaml file (but better).
+
+You can specify a Monkey when running an Automation using the `--monkey=<name>` CLI arg.
 
 ```
-from codemonkeys.utils.monkey.load_monkey import load_monkey
+from config.monkeys.monkey import Monkey
+from config.monkeys.docblock_monkey import DocblockMonkey
 
-# load a config
-mc = load_monkey('comment-monkey')
+# You can also load a specific Monkey
+m = DocblockMonkey()
 
-# prompt user to choose a config to load
-mc = load_monkey()
+# or simply use your base Monkey class to load any Monkey dynamically
+m = Monkey.load(<name>)
 
-# access a property via dot notation
-main_prompt = mc.MAIN_PROMPT
+# access properties easily
+main_prompt = m.MAIN_PROMPT
 ```
 
-### Env
-The Env class provides a simple interface for accessing env properties, as defined in your `.env`, via dot notation. It includes built-in validation logic and supports user-defined properties.
+## Env
+The Env class is a simple interface for accessing env properties, as defined in your `.env` file. You may customize your `config/env.py`, but don't edit the tags in place for property generation. On every run of the `monk` CLI, it is re-generated, injecting dynamically type-hinted properties that help you avoid mistakes and make your IDE smarter. You're free to ignore it and use whatever method you prefer, but core framework code uses your `config/env.py`, so _don't remove it_.
 
 ```
 from config.env import Env
 env = Env.get()
 
-# access a property via dot notation
+# access properties easily
 openai_api_key = env.OPENAI_API_KEY
 ```
 
 ## The Default Automation
 
-The default automation, `automations/default.py`, is a generic but complete template for running automations on files in your `WORK_PATH`. It works well out of the box, and allows you to run GPT-powered mass file operations by simply using Monkey configs (`monkey-manifest.yaml`). The default Automation is also a great example of the various capabilities custom automations can have. It includes optional examples of all standard Monkey config properties, and serves as a good example of how to use the framework-packaged composables. Whether your custom automations require far less, far more, or more specific functionality, you can copy/paste a pretty good starting point from `automations/default.py`.
+The default automation, `automations/default.py`, is a generic but complete template for running automations on files in your `WORK_PATH`. Out-of-the-box, it allows you to run GPT-powered mass file operations simply by configuring Monkeys. The default Automation is also an instructive example of using the framework, as it includes configurable implementations of all stock Monkey properties.
 
 ## Attribution
 All forms of attribution will be appreciated, especially when linking directly to the repo.
