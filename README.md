@@ -19,8 +19,10 @@ There are concerns to be handled for eventual Beta release that have been set as
 - Expansion of pre-packaged Automations, Monkey config options, and Builders
   - Particular focus on function calling support and pre-packaged Funcs
 - More intentional git strategy, and contribution docs/standards
+- Improve CLI UI in general, and accessibility-focused presets for Theme config
 
 ## Index
+
 
 ## Getting Started 🚀
 
