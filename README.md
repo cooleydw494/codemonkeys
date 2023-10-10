@@ -1,6 +1,6 @@
 # CodeMonkeys 🐒
 
-A framework for automating GPT-powered tasks, from simple to complex. Read the docs [here](https://cooleydw494.github.io/codemonkeys).
+A framework for automating GPT-powered tasks, from simple to complex. Sphinx docs [here](https://cooleydw494.github.io/codemonkeys).
 
 ## Overview 🌐
 
