@@ -4,9 +4,7 @@ A framework for automating GPT-powered tasks, from simple to complex. Read the d
 
 ## Overview 🌐
 
-CodeMonkeys gives developers of varying levels control over their automated GPT logic, focusing on the goal of working on codebases but designed to enable automations of all kinds. Its purpose is to help you build GPT-powered automations that are reliable, predictable, and tailored to your needs. There is a strong focus on only involving AI at crucial areas of strength, and leveraging more controllable and intentional methods for everything else. There is much more to it than just automation logic, and I invite you to read on to see it for yourself.
-
-CodeMonkeys includes a default automation to handle a wide array of automated file operations.
+CodeMonkeys gives devs control over their automated GPT logic. The current focus is working on codebases but it is lovingly designed to enable automations of all kinds. This framework aims to use AI effectively, while being reliable, predictable, and tailored to your needs. There is a strong focus on only involving AI at crucial areas of strength, and using good old-fashioned code for everything else.
 
 ### Alpha Status (updated Oct 10, 2023) 🚧
 CodeMonkeys will soon have a stable Alpha release. This release will focus on establishing the framework, solidifying architecture/concepts to a point of relative stability, and providing a flexible, immediately useful default Automation that is instructional in how it utilizes the framework. More details on medium-term, post-stable-Alpha goals [here](#medium-term-goals-).
