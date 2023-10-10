@@ -78,7 +78,7 @@ main_prompt = m.MAIN_PROMPT
 ```
 
 ## Env 📝
-The Env class is a simple interface for accessing env properties, as defined in your `.env` file. You may customize your `config/env.py`, but don't edit the tags in place for property generation. On every run of the `monk` CLI, it is re-generated, injecting dynamically type-hinted properties that help you avoid mistakes and make your IDE smarter. You're free to ignore it and use whatever method you prefer, but core framework code uses your `config/env.py`, so _don't remove it_.
+The Env class is a simple interface for accessing env properties defined in your `.env`. On every run of the `monk` CLI, it is re-generated, injecting type-hinted properties that help you avoid mistakes and make your IDE smarter. You may customize or ignore your `config/env.py`, but it is used by core framework code, so _don't remove it or edit eh property generation tags_.
 
 ```
 from config.env import Env
