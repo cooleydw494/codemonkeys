@@ -67,10 +67,10 @@ You can specify a Monkey when running an Automation using the `--monkey=<name>` 
 from config.monkeys.monkey import Monkey
 from config.monkeys.docblock_monkey import DocblockMonkey
 
-# You can also load a specific Monkey
+# Load a specific Monkey directly
 m = DocblockMonkey()
 
-# or simply use your base Monkey class to load any Monkey dynamically
+# Load any Monkey dynamically using your base Monkey class
 m = Monkey.load(<name>)
 
 # access properties easily
