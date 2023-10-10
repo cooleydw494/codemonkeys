@@ -5,7 +5,7 @@ import openai
 import tiktoken
 from tiktoken import Encoding
 
-from codemonkeys.config.imports.env import Env
+from codemonkeys.utils.imports.env import Env
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
 from codemonkeys.entities.func import Func
 from codemonkeys.types import OStr, OInt, OFloat

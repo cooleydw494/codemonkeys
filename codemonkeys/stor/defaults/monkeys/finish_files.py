@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from config.monkeys.monkey import Monkey
+from monkeys.monkey import Monkey
 
 from codemonkeys.defs import STOR_PATH
 from codemonkeys.types import OStr
@@ -12,8 +12,8 @@ class FinishFiles(Monkey):
     # File Iteration
     WORK_PATH: str = f'{STOR_PATH}/work_path'
     INCLUDE_EXTS: tuple = ('.py', '.js', '.txt')
-    PATH_MATCH_INCLUDE: tuple = ()
-    PATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py', 'help.py')
+    FILEPATH_MATCH_INCLUDE: tuple = ()
+    FILEPATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py', 'help.py')
     FILTER_MAX_TOKENS: int = 3500
 
     # Main Prompts

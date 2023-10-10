@@ -15,8 +15,9 @@ It is also used anywhere else a framework-level path is needed.
 CM_ROOT_PATH = os.path.dirname(__file__)
 
 # Define important directory paths rooted in CM_ROOT_PATH
-CM_COMPOSABLES_PATH = os.path.join(CM_ROOT_PATH, "builders")
+CM_BUILDERS_PATH = os.path.join(CM_ROOT_PATH, "builders")
 CM_COMMANDS_PATH = os.path.join(CM_ROOT_PATH, "commands")
+CM_FUNCS_PATH = os.path.join(CM_ROOT_PATH, "funcs")
 CM_CONFIG_PATH = os.path.join(CM_ROOT_PATH, "config")
 CM_HELP_PATH = os.path.join(CM_ROOT_PATH, "help")
 CM_STOR_PATH = os.path.join(CM_ROOT_PATH, "stor")

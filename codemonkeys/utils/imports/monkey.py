@@ -7,8 +7,8 @@ For a CodeMonkeys project codebase, it is best to import the extended class dire
 """
 
 try:
-    from config.monkeys.monkey import Monkey
+    from monkeys.monkey import Monkey
 except ImportError:
-    print(colored('Could not import user Monkey class from config.monkeys.monkey. Using default '
+    print(colored('Could not import user Monkey class from monkeys.monkey. Using default '
                   'Monkey class. automation', 'red'))
-    from codemonkeys.config.monkey import Monkey
+    from codemonkeys.entities.monkey import Monkey

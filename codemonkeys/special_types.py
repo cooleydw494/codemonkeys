@@ -1,6 +1,6 @@
 from typing import Optional
 
-from codemonkeys.config.imports.monkey import Monkey
+from codemonkeys.utils.imports.monkey import Monkey
 
 """ Custom Framework Types """
 

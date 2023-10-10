@@ -13,7 +13,6 @@ CodeMonkeys will soon have a stable Alpha release focused on establishing the fr
 - [Getting Started](#getting-started-)
 - [Project Structure](#project-structure-)
 - [Monk CLI](#monk-cli-)
-- [Configuration](#configuration-)
 - [Monkeys](#monkeys-)
 - [Env](#env-)
 - [The Default Automation](#the-default-automation-)
@@ -39,24 +38,17 @@ This will scaffold a new project with the given name. _Note: CodeMonkeys treats 
 ## Project Structure 📁
 CodeMonkeys' project structure aims to allow you to build/configure/run your automations in a simple, powerful way. You're encouraged to get creative with your Automation/Command/Barrel `run()` methods, custom config properties, and utilize any additional modules/classes/dirs you create. However, the base project scaffolding is assumed by the Monk CLI and built-in config management. Don't fight these paradigms unless you're prepared to replace them.
 
-* `monk`: CLI command exposed by core package, run from within a CodeMonkeys project.
-* `commands`: Command instances, runnable via `monk <command>`. Also handles bash/bat scripts.
-* `monkeys/monkey-manifest.yaml`: The centralized config file for all monkeys.
-* `stor/temp/monkeys`: Individual validated/cached Monkey configs. Includes `.history` for previous versions.
-* `automations`: Automation instances, runnable via `monk -a <automation>`.
-* `automations/default.py`: An out-of-the-box Automation, capable of highly configurable mass file operations.
-* `barrels`: Barrel instances, runnable via `monk -b <barrel>`. Barrels allow orchestration of multiple automations.
-* `barrels/default.py`: Pre-packaged barrel, which enables running a series of parallel or sequential automations.
-* `composables`: Custom composable classes for automation functionality, or extended core framework composables.
-* `defs.py`: A core framework file exposing crucial PATHs dynamically set based on a specific project (ex: COMMANDS_PATH).
+* `/commands`: Command instances, runnable via `monk <command>`. Also handles bash/bat scripts.
+* `/automations`: Automation instances, runnable via `monk -a <automation>`.
+* `/barrels`: Custom or extended Barrel classes used to orchestrate multiple Automation/Monkeys.
+* `/monkeys`: Custom or extended Monkey classes used to precisely configure Automation behavior.
+* `/builders`: Custom or extended Builder classes for re-usable automation logic.
+* `/funcs`: Custom or extended Func classes for GPT function-calling.
+* `codemonkeys.defs`: A core module that dynamically exposes important PATHs for your project (ex: COMMANDS_PATH).
 
 ## Monk CLI 🐵
 
 CodeMonkeys' CLI interface is used via the `monk` command which handles running Automations, Barrels, Commands, and built-in framework Commands. The `monk` command can be run anywhere in a CodeMonkeys project, and will always run in the context of the project root.
-
-## Configuration 🛠️
-CodeMonkeys has built-in configuration management, including an Env class and a Monkey class which are automatically rewritten to include any custom `.env` or `config/monkey-config-defaults` values you add. These are rewritten on every run of `monk` and allow IDE intelligence for you env/config properties.
-_Note: You should never modify the Monkey or Env class within `config/framework`. These exist to allow automatic rewrites that include full support for user-defined properties._
 
 ## Monkeys 🐒
 Monkeys are your tool for specifying the exact behavior of your Automations. Your prompts, models, temperature, paths, and behavior specifications live here. The class-based approach unlocks advantages like inheritance, custom logic, and lifecycle hooks, but at heart the Monkey class maintains the simplicity of a config file. It is possible to configure your Automation behavior by doing no more than changing hard-coded class properties, not unlike editing a yaml file (but better).
@@ -64,8 +56,8 @@ Monkeys are your tool for specifying the exact behavior of your Automations. You
 You can specify a Monkey when running an Automation using the `--monkey=<name>` CLI arg.
 
 ```
-from config.monkeys.monkey import Monkey
-from config.monkeys.docblock_monkey import DocblockMonkey
+from monkeys.monkey import Monkey
+from monkeys.docblock_monkey import DocblockMonkey
 
 # Load a specific Monkey directly
 m = DocblockMonkey()
@@ -100,6 +92,7 @@ Some concerns have been set aside as I prepare for a stable Alpha release. The n
 - Streamlined support for fine-tuning (existing fine-tuned models already work)
 - Expansion of pre-packaged Automations, Monkey config options, and Builders
   - Particular focus on function calling support and pre-packaged Funcs
+- Improved error handling throughout framework (already decent, but sometimes errors are unclear)
 - More intentional git strategy, and contribution docs/standards
 - Improve CLI UI in general, and accessibility-focused presets for Theme config
 

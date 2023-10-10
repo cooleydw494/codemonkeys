@@ -63,8 +63,8 @@ class Make(Command):
 
         # When making a Monkey, we need to fix base class import/usage
         if self.entity_type == 'monkey':
-            base_import = f'from codemonkeys.config.monkey import {new_class_name} as Base'
-            file_contents = file_contents.replace(base_import, 'from config.monkeys.monkey import Monkey')
+            base_import = f'from codemonkeys.entities.monkey import {new_class_name} as Base'
+            file_contents = file_contents.replace(base_import, 'from monkeys.monkey import Monkey')
             class_definition = f'{new_class_name}(Base):'
             file_contents = file_contents.replace(class_definition, f'{new_class_name}(Monkey):')
 

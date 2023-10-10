@@ -38,8 +38,8 @@ class Default(Automation):
         file_iterator = (FileIterator()
                          .work_path(m.WORK_PATH)
                          .include_exts(m.INCLUDE_EXTS)
-                         .path_match_include(m.PATH_MATCH_INCLUDE)
-                         .path_match_exclude(m.PATH_MATCH_EXCLUDE)
+                         .filepath_match_include(m.FILEPATH_MATCH_INCLUDE)
+                         .filepath_match_exclude(m.FILEPATH_MATCH_EXCLUDE)
                          .token_count_model(m.MAIN_MODEL, m.MAIN_TEMP, m.FILTER_MAX_TOKENS)
                          .filter_files())
 

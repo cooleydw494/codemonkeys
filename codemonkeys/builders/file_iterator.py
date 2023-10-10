@@ -38,22 +38,22 @@ class FileIterator:
         self._include_extensions = include_exts
         return self
 
-    def path_match_include(self, path_match_include: tuple) -> 'FileIterator':
+    def filepath_match_include(self, filepath_match_include: tuple) -> 'FileIterator':
         """Set the filepaths to include in the FileIterator.
 
-        :param tuple path_match_include: The include patterns as a tuple of strings.
+        :param tuple filepath_match_include: The include patterns as a tuple of strings.
         :return: The FileIterator instance with the new _include_patterns value.
         """
-        self._include_patterns = path_match_include
+        self._include_patterns = filepath_match_include
         return self
 
-    def path_match_exclude(self, path_match_exclude: tuple) -> 'FileIterator':
+    def filepath_match_exclude(self, filepath_match_exclude: tuple) -> 'FileIterator':
         """Set the filepaths to exclude from the FileIterator.
 
-        :param tuple path_match_exclude: The exclude patterns as a tuple of strings.
+        :param tuple filepath_match_exclude: The exclude patterns as a tuple of strings.
         :return: The FileIterator instance with the new _exclude_patterns value.
         """
-        self._exclude_patterns = path_match_exclude
+        self._exclude_patterns = filepath_match_exclude
         return self
 
     def token_count_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':

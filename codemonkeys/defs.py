@@ -9,17 +9,18 @@ ROOT_PATH = find_project_root()
 
 AUTOMATIONS_PATH = os.path.join(ROOT_PATH, "automations")
 BARRELS_PATH = os.path.join(ROOT_PATH, "barrels")
-COMPOSABLES_PATH = os.path.join(ROOT_PATH, "builders")
+BUILDERS_PATH = os.path.join(ROOT_PATH, "builders")
 COMMANDS_PATH = os.path.join(ROOT_PATH, "commands")
 FUNCS_PATH = os.path.join(ROOT_PATH, "funcs")
 
-ENV_PATH = os.path.join(ROOT_PATH, ".env")
-CONFIG_PATH = os.path.join(ROOT_PATH, "config")
-MONKEYS_PATH = os.path.join(CONFIG_PATH, 'monkeys')
+MONKEYS_PATH = os.path.join(ROOT_PATH, 'monkeys')
+USER_BASE_MONKEY_PATH = os.path.join(MONKEYS_PATH, "monkey.py")
 
+ENV_PATH = os.path.join(ROOT_PATH, ".env")
+
+CONFIG_PATH = os.path.join(ROOT_PATH, "config")
 THEME_CONFIG_PATH = os.path.join(CONFIG_PATH, 'theme.py')
 ENV_CLASS_PATH = os.path.join(CONFIG_PATH, "env.py")
-USER_BASE_MONKEY_PATH = os.path.join(MONKEYS_PATH, "monkey.py")
 
 STOR_PATH = os.path.join(ROOT_PATH, "stor")
 TEMP_PATH = os.path.join(STOR_PATH, "temp")
