@@ -60,9 +60,6 @@ class GPTClient:
                 print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'special')
                 function_call = {'name': enforce_func} if enforce_func is not None else 'auto'
 
-                print_t(f"funcs: {funcs}\nfunctions_data: {functions_data}\nfunction_call: {function_call}", 'special')
-                print_t(f'temp: {self.temperature}\n max_tokens: {max_tokens}', 'special')
-                print_t(f'model: {self.model}', 'special')
                 response = openai.ChatCompletion.create(
                     model=self.model,
                     messages=[{'role': 'user', 'content': prompt}],

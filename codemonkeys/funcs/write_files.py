@@ -60,7 +60,6 @@ class WriteFiles(Func):
             file_path = file_data['file_path']
             file_contents = file_data['file_contents']
             if root_path is not None:
-                print_t(f'Root path provided: {root_path}', 'info')
                 file_path = os.path.join(root_path, file_path)
             file_path = os.path.expanduser(file_path)
 
