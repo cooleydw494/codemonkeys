@@ -1,6 +1,9 @@
-from typing import Optional
+from typing import NewType, Optional
 
 """ Custom Framework Types """
 
-(OStr, OBool, OInt, OFloat) = \
-    (Optional[str], Optional[bool], Optional[int], Optional[float])
+# Note: PyCharm doesn't understand Optional/Union syntax correctly (I'd use Optional if possible)
+OStr = str | None
+OBool = bool | None
+OInt = int | None
+OFloat = float | None

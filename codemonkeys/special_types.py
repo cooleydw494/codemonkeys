@@ -1,7 +1,6 @@
-from typing import Optional
-
 from codemonkeys.utils.imports.monkey import Monkey
 
-""" Custom Framework Types """
+"""Custom Framework Types which are more likely to trigger circular imports if not separated."""
 
-(OMonkey) = (Optional[Monkey])
+# Note: PyCharm doesn't understand Optional/Union syntax correctly (I'd use Optional if possible)
+OMonkey = Monkey | None
