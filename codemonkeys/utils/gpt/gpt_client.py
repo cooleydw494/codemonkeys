@@ -1,5 +1,5 @@
 import json
-from typing import List, Optional
+from typing import List, Optional, Any
 
 import openai
 import tiktoken
@@ -40,7 +40,7 @@ class GPTClient:
         self.temperature = validate_temp(temperature)
         self.encoding = tiktoken.encoding_for_model(self.model)
 
-    def generate(self, prompt: str, funcs: Optional[List[Func]] = None, enforce_func: OStr = None, retry_delay: int = 60) -> OStr:
+    def generate(self, prompt: str, funcs: Optional[List[Func]] = None, enforce_func: OStr = None, retry_delay: int = 60) -> Any:
         """
         Generate a GPT model response from a given prompt.
         
@@ -59,6 +59,10 @@ class GPTClient:
                 max_tokens -= self.count_tokens(json.dumps([func.data() for func in funcs]))
                 print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'special')
                 function_call = {'name': enforce_func} if enforce_func is not None else 'auto'
+
+                print_t(f"funcs: {funcs}\nfunctions_data: {functions_data}\nfunction_call: {function_call}", 'special')
+                print_t(f'temp: {self.temperature}\n max_tokens: {max_tokens}', 'special')
+                print_t(f'model: {self.model}', 'special')
                 response = openai.ChatCompletion.create(
                     model=self.model,
                     messages=[{'role': 'user', 'content': prompt}],
@@ -99,12 +103,13 @@ class GPTClient:
         #     return self.generate(_prompt, rate_limit_delay*2)
 
         except openai.error.OpenAIError as e:
-            print_t(f"OpenAI error: {e}", 'error')
-        except Exception as e:
-            # log a full traceback
+            print_t(f"OpenAI error:", 'error')
             import traceback
             traceback.print_exc()
-            print_t(f"Unknown error: {e}", 'error')
+        except Exception as e:
+            print_t(f"Unknown error:", 'error')
+            import traceback
+            traceback.print_exc()
         return None
 
     def tokenize(self, text: str) -> List[int]:

@@ -26,6 +26,21 @@ class WriteFiles(Func):
             "files_data": {
                 "type": "array",
                 "description": "An array of objects with the following properties: file_path and file_contents.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "file_path": {
+                            "type": "string",
+                            "description": "The path to write the file to. If root_path is provided, this will be "
+                                           "appended to root_path.",
+                        },
+                        "file_contents": {
+                            "type": "string",
+                            "description": "The contents of the file to write.",
+                        }
+                    },
+                    "required": ["file_path", "file_contents"],
+                },
             },
             "root_path": {
                 "type": "string",
@@ -37,13 +52,17 @@ class WriteFiles(Func):
     }
 
     @classmethod
-    def _execute(cls, files_data: list, root_path: OStr = None) -> str:
-        # note: don't forget to prompt user to confirm each file write
+    def _execute(cls, files_data: list, root_path: OStr = None) -> list[str]:
+
+        written_filepaths = []
+
         for file_data in files_data:
             file_path = file_data['file_path']
             file_contents = file_data['file_contents']
             if root_path is not None:
+                print_t(f'Root path provided: {root_path}', 'info')
                 file_path = os.path.join(root_path, file_path)
+            file_path = os.path.expanduser(file_path)
 
             print_t(f'Preparing to write file to {file_path} with contents:{nl2}{file_contents}{nl}')
 
@@ -60,4 +79,6 @@ class WriteFiles(Func):
 
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             write_file_contents(file_path, file_contents)
-            return file_path
+            written_filepaths.append(file_path)
+
+        return written_filepaths
