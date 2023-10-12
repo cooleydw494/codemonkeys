@@ -72,7 +72,8 @@ class GPTClient:
                 fc_response = response['choices'][0]['message'].get('function_call')
                 (name, args) = (fc_response['name'], fc_response['arguments'])
                 options = {func.name: func for func in funcs}
-                return options[name].call(json.loads(args))
+                sanitized_args = ''.join(ch for ch in args if ord(ch) >= 32)
+                return options[name].call(json.loads(sanitized_args))
 
             else:
                 print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'special')

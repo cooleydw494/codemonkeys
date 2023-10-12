@@ -2,7 +2,6 @@ import os
 
 from codemonkeys.defs import nl2, nl
 from codemonkeys.entities.func import Func
-from codemonkeys.types import OStr
 from codemonkeys.utils.file_ops import write_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
@@ -18,50 +17,41 @@ class WriteFiles(Func):
 
     name: str = 'write_files'
 
-    _description: str = 'This function handles writing files to disk to fulfill the requirements of a prompt.'
+    _description: str = 'Writes files to disk to fulfill the requirements of a prompt.'
 
     _parameters: dict = {
         "type": "object",
         "properties": {
             "files_data": {
                 "type": "array",
-                "description": "An array of objects with the following properties: file_path and file_contents.",
+                "description": "Array of file data objects",
                 "items": {
                     "type": "object",
                     "properties": {
                         "file_path": {
                             "type": "string",
-                            "description": "The path to write the file to. If root_path is provided, this will be "
-                                           "appended to root_path.",
+                            "description": "Absolute filepath (relative paths not supported)",
                         },
                         "file_contents": {
                             "type": "string",
-                            "description": "The contents of the file to write.",
+                            "description": "The file contents",
                         }
                     },
                     "required": ["file_path", "file_contents"],
                 },
             },
-            "root_path": {
-                "type": "string",
-                "description": "The root path to append the file_path within files_data for each file. Required if "
-                               "files_data does not include absolute paths.",
-            }
         },
         "required": ["files_data"],
     }
 
     @classmethod
-    def _execute(cls, files_data: list, root_path: OStr = None) -> list[str]:
+    def _execute(cls, files_data: list) -> list[str]:
 
         written_filepaths = []
 
         for file_data in files_data:
-            file_path = file_data['file_path']
+            file_path = os.path.expanduser(file_data['file_path'])
             file_contents = file_data['file_contents']
-            if root_path is not None:
-                file_path = os.path.join(root_path, file_path)
-            file_path = os.path.expanduser(file_path)
 
             print_t(f'Preparing to write file to {file_path} with contents:{nl2}{file_contents}{nl}')
 
@@ -77,7 +67,11 @@ class WriteFiles(Func):
                 continue
 
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            write_file_contents(file_path, file_contents)
-            written_filepaths.append(file_path)
+
+            try:
+                write_file_contents(file_path, file_contents)
+                written_filepaths.append(file_path)
+            except Exception as e:
+                print_t(f'File write failed: {e}', 'error')
 
         return written_filepaths

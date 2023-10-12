@@ -24,8 +24,8 @@ class Committer:
 
     _gitter: Optional[Gitter] = None
     _gpt_client: Optional[GPTClient] = None
-    _model: str = '3'
-    _temp: float = 0.75
+    _model: str = 'gpt-3.5-turbo'
+    _temp: float = 0.7
     _max_tokens: int = 32000
     _prompt: OStr = None
     _message: OStr = 'Updated via CodeMonkeys.'
@@ -77,7 +77,7 @@ class Committer:
         self._message = commit_message
         return self
 
-    def message_from_context(self, old_content: str, new_content: str):
+    def message_from_context(self, old_content: str, new_content: str) -> 'Committer':
         """
         Generates a commit message based on the diff of old_content and new_content.
 
@@ -91,8 +91,8 @@ class Committer:
         self._message = self._gpt_client.generate(prompt)
         if self._message is None:
             print_t('Could not generate commit message. Using generic commit message.', 'warning')
-            return 'Updated via CodeMonkeys.'
-        return self._message
+            self._message = 'Updated via CodeMonkeys.'
+        return self
 
     def get_message(self) -> OStr:
         """
