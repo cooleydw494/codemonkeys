@@ -6,6 +6,7 @@ from typing import List
 from dotenv import dotenv_values
 
 from codemonkeys.defs import ENV_CLASS_PATH, ROOT_PATH, nl
+from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.monk.theme_functions import print_t
 
 try:
@@ -14,7 +15,7 @@ try:
     Env = config.env.Env
 except ImportError as e:
     print_t('Could not import user Env class from config.env. Using default Env class.', 'warning')
-    print_t(str(e))
+    handle_exception(e, always_continue=True)
     from codemonkeys.config.env import Env
 
 ENV_DEFINITION_TEMPLATE = "    {var_name}: {var_type} = os.getenv('{var_name}')"
@@ -25,9 +26,10 @@ def force_reload_env_class() -> None:
     """ Force re-import Env because it may have been rewritten after initial import. """
     try:
         importlib.reload(config.env)
-    except ImportError:
+    except ImportError as e:
         print_t('Could not import user Env class from config.env. Using default Env class.',
                 'warning')
+        handle_exception(e, always_continue=True)
 
 
 def get_env_prop_type(env_value: str) -> str:

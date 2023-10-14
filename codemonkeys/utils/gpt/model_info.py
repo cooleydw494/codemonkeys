@@ -6,6 +6,7 @@ import openai
 
 from codemonkeys.defs import TEMP_PATH
 from codemonkeys.utils.imports.env import Env
+from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
@@ -21,7 +22,8 @@ def get_gpt_model_info() -> Optional[dict]:
             return json.load(f)
 
     except Exception as e:
-        print_t(f"An error occurred reading cached gpt model info: {e}", 'warning')
+        print_t(f"An error occurred reading cached gpt model info.", 'warning')
+        handle_exception(e, always_continue=True)
         return None
 
 
@@ -44,15 +46,16 @@ def update_gpt_model_cache() -> None:
 
     :return: None
     """
-    model_info = _query_model_info()
 
-    if model_info is not None:
-        try:
+    try:
+        model_info = _query_model_info()
+        if model_info is not None:
             with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'w') as f:
                 json.dump(model_info, f)
 
-        except Exception as e:
-            print(f"An error occurred updating gpt model info cache: {e}")
+    except Exception as e:
+        print_t(f"An error occurred updating GPT model info cache.", 'error')
+        handle_exception(e)
 
 
 def _query_model_info() -> Optional[dict]:
@@ -62,20 +65,16 @@ def _query_model_info() -> Optional[dict]:
     :return: A dictionary mapping model ids to models, or None if the API call failed.
     :rtype: Optional[dict]
     """
-    try:
-        env = Env.get()
-        openai.api_key = env.OPENAI_API_KEY
 
-        if openai.api_key is None:
-            raise Exception("OPENAI_API_KEY not set in environment variables")
+    env = Env.get()
+    openai.api_key = env.OPENAI_API_KEY
 
-        model_list = openai.Model.list()
+    if openai.api_key is None:
+        raise Exception("OPENAI_API_KEY not set in environment variables")
 
-        # We're creating a new dictionary where the key is the model's ID and the value is the model's data
-        model_info = {model.id: model for model in model_list.data}
+    model_list = openai.Model.list()
 
-        return model_info
+    # We're creating a new dictionary where the key is the model's ID and the value is the model's data
+    model_info = {model.id: model for model in model_list.data}
 
-    except Exception as e:
-        print(f"An error occurred while retrieving the model information: {e}")
-        return None
+    return model_info

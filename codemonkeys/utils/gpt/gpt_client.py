@@ -12,6 +12,7 @@ from codemonkeys.entities.func import Func
 from codemonkeys.types import OStr, OInt, OFloat
 from codemonkeys.utils.config.monkey_validations import validate_model, validate_temp
 from codemonkeys.utils.imports.env import Env
+from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
@@ -60,7 +61,8 @@ class GPTClient:
             else:
                 return self._generate(prompt)
         except openai.error.RateLimitError as e:
-            print_t(f"Rate limit error, trying again in {retry_delay}s: {e}", 'warning')
+            print_t(f"Rate limit error, trying again in {retry_delay}s", 'warning')
+            handle_exception(e, always_continue=True)
             time.sleep(retry_delay)
             return self.generate(prompt, funcs, enforce_func, retry_delay * 2)
 
@@ -73,11 +75,11 @@ class GPTClient:
         #     return self.generate(_prompt, rate_limit_delay*2)
 
         except openai.error.OpenAIError as e:
-            print_t(f"OpenAI error:", 'error')
-            traceback.print_exc()
+            print_t(f"OpenAIError generating GPT response.", 'error')
+            handle_exception(e, always_continue=True)
         except Exception as e:
-            print_t(f"{type(e).__name__} error:", 'error')
-            traceback.print_exc()
+            print_t(f"Error generating GPT response.", 'error')
+            handle_exception(e, always_continue=True)
         return None
 
     def _generate(self, prompt: str) -> str:

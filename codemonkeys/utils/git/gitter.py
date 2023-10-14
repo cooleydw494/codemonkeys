@@ -2,6 +2,7 @@ import subprocess
 from typing import List
 
 from codemonkeys.utils.git.gitter_error import GitterError
+from codemonkeys.utils.misc.handle_exception import handle_exception
 
 
 class Gitter:
@@ -103,4 +104,4 @@ class Gitter:
             )
             return result.stdout
         except subprocess.CalledProcessError as e:
-            raise GitterError(command, e.returncode, e.stdout, e.stderr)
+            handle_exception(GitterError(command, e.returncode, e.stdout, e.stderr))

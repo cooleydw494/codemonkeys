@@ -31,7 +31,7 @@ stor_dirs = [
 try:
     new_project_name = sys.argv[1]
 except IndexError:
-    print(colored('Please provide a project name.', 'red'))
+    print(colored('Please provide a project name, like `monk-new my_project`.', 'red'))
     sys.exit(1)
 
 if os.path.exists(new_project_name):

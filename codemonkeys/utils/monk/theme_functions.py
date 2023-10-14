@@ -82,11 +82,7 @@ def input_t(text: str, input_options: OStr = None, theme: str = 'input') -> str:
     if input_options:
         text += f' {apply_t(input_options, "magenta")}' if len(input_options) <= 20 \
             else nl + apply_t(input_options, "magenta")
-    try:
-        input_ = input(f'{nl}{text}:{nl}' + apply_t('>> ', 'light_cyan', False, ['blink']))
-    except KeyboardInterrupt:
-        print_t(f"{nl}KeyboardInterrupt", 'yellow')
-        sys.exit(1)
+    input_ = input(f'{nl}{text}:{nl}' + apply_t('>> ', 'light_cyan', False, ['blink']))
     if input_ in ("exit", "exit()", "quit"):
         print_t("✋ Exiting.", 'done')
         sys.exit(0)

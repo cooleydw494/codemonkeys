@@ -8,6 +8,7 @@ from codemonkeys.utils.config.monkey_validations import is_path_key, validate_pa
     validate_temp, is_temp_key, is_prompt_key
 from codemonkeys.utils.misc.defs_utils import load_class
 from codemonkeys.utils.misc.file_ops import get_file_contents
+from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
 
@@ -72,7 +73,7 @@ class Monkey:
     def load(cls, name: OStr = None) -> 'Monkey':
 
         if cls._instance is None or cls._current_monkey != name:
-            name, abspath = find_entity(name, 'monkey')
+            name, abspath = find_entity(name or '', 'monkey')
             cls._current_monkey = name
             cls._instance = load_class(abspath, name)()
 
@@ -80,12 +81,27 @@ class Monkey:
 
     def _dynamic_validate(self) -> None:
         for key, value in self.__dict__.items():
+
             if is_path_key(key):
-                setattr(self, key, validate_path(value, allow_none=True))
+                try:
+                    setattr(self, key, validate_path(value, allow_none=True))
+                except Exception as e:
+                    print_t(f"PATH validation failed for {key}={value}, {self.__class__.__name__}.", 'error')
+                    handle_exception(e, always_exit=True)
+
             elif is_model_key(key):
-                setattr(self, key, validate_model(value, allow_none=True))
+                try:
+                    setattr(self, key, validate_model(value, allow_none=True))
+                except Exception as e:
+                    print_t(f"MODEL validation failed for {key}={value}, {self.__class__.__name__}.", 'error')
+                    handle_exception(e, always_exit=True)
+
             elif is_temp_key(key):
-                setattr(self, key, validate_temp(value, allow_none=True))
+                try:
+                    setattr(self, key, validate_temp(value, allow_none=True))
+                except Exception as e:
+                    print_t(f"TEMP validation failed for {key}={value}, {self.__class__.__name__}.", 'error')
+                    handle_exception(e, always_exit=True)
 
     def _cop_paths(self) -> None:
         """Replaces {cop:<filepath>} syntax within PROMPTs with file contents."""
@@ -97,7 +113,8 @@ class Monkey:
                         value = value.replace(f'{{cop:{match}}}', get_file_contents(match))
                     setattr(self, attr, value)
                 except FileNotFoundError as e:
-                    print_t(f"PROMPT cop file not found: {e}", 'error')
+                    print_t(f"PROMPT cop-file not found for {attr}", 'error')
+                    handle_exception(e, always_exit=True)
 
     def before_run(self) -> None:
         """Called before an Automation's run() method."""

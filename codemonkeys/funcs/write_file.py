@@ -4,6 +4,7 @@ from codemonkeys.defs import nl2, nl
 from codemonkeys.entities.func import Func
 from codemonkeys.types import OStr
 from codemonkeys.utils.misc.file_ops import write_file_contents
+from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
@@ -55,6 +56,7 @@ class WriteFile(Func):
         try:
             write_file_contents(file_path, contents)
         except Exception as e:
-            print_t(f'File write failed: {e}', 'error')
+            print_t(f'Failed to write file: {file_path}.', 'error')
+            handle_exception(e, always_continue=True)
 
         return file_path

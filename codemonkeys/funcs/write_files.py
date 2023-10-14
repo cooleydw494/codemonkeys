@@ -72,6 +72,7 @@ class WriteFiles(Func):
                 write_file_contents(file_path, file_contents)
                 written_filepaths.append(file_path)
             except Exception as e:
-                print_t(f'File write failed: {e}', 'error')
+                print_t(f'Failed to write file: {file_path}.', 'error')
+                handle_exception(e, always_continue=True)
 
         return written_filepaths

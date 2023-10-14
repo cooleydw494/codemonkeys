@@ -2,13 +2,13 @@
 import os
 import subprocess
 import sys
-import traceback
 
-from codemonkeys.defs import nl
 from codemonkeys.utils.misc.defs_utils import find_project_root
+
 sys.path.append(find_project_root())
 
 from codemonkeys.utils.config.update_env_class import update_env_class
+from codemonkeys.utils.misc.handle_exception import handle_exception
 
 # Regenerate Env class
 update_env_class()
@@ -47,14 +47,18 @@ elif action == 'run':
         # Commands
         if entity_type == 'command':
             extension = os.path.splitext(entity_path.strip())[1]
+
             if extension == ".py":
                 run_command(entity_path.strip(), entity_name, named_args, unnamed_args)
+
             elif extension == ".sh":
                 subprocess.call(['bash', entity_path.strip()] + sys.argv[2:])
+
             elif extension == ".bat":
                 subprocess.call([entity_path.strip()] + sys.argv[2:])
+
             else:
-                print_t(f"Unsupported entity_type: {extension}. find_entity should filter this.", 'error')
+                print_t(f"Unsupported Command ext: {extension}. find_entity should filter this.", 'error')
                 exit(1)
 
         # Automations
@@ -70,18 +74,9 @@ elif action == 'run':
             print_t(f'unsupported entity_type: {entity_type}', 'error')
             exit(1)
 
-    except KeyboardInterrupt:
-        print_t(f"{nl}Exiting due to KeyboardInterrupt from user.", 'quiet')
-        exit(1)
-
-    except ValueError as e:
-        print_t(f"{nl}Error: {e}", 'error')
-        exit(1)
-
     except Exception as e:
-        print_t(f"{nl}Error: {e}", 'error')
-        print_t(f"{nl}Error Trace:{nl}{nl.join(traceback.format_exc().splitlines())}")
-        exit(1)
+        handle_exception(e)
+
 else:
     print_t(f'unsupported action: {action}', 'error')
     exit(1)

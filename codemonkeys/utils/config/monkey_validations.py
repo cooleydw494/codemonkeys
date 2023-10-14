@@ -92,12 +92,9 @@ def validate_model(model_name: OStr, allow_none: bool = False) -> OStr:
         raise TypeError("Model name value cannot be None.")
     valid_models = get_gpt_model_names()
     if model_name not in valid_models:
-        try:
-            update_gpt_model_cache()
-            valid_models = get_gpt_model_names()
-            if model_name not in valid_models:
-                raise ValueError(f"Invalid GPT model name: {model_name}.")
-        except Exception:
+        update_gpt_model_cache()
+        valid_models = get_gpt_model_names()
+        if model_name not in valid_models:
             raise ValueError(f"Invalid GPT model name: {model_name}.")
     return model_name
 
