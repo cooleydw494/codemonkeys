@@ -12,3 +12,5 @@ except ImportError:
     print(colored('Could not import user Monkey class from monkeys.monkey. Using default '
                   'Monkey class. automation', 'red'))
     from codemonkeys.entities.monkey import Monkey
+
+OMonkey = Monkey | None

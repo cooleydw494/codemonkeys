@@ -1,6 +1,6 @@
 from typing import Any, Dict, List
 
-from codemonkeys.special_types import OMonkey
+from codemonkeys.utils.imports.monkey import OMonkey
 from codemonkeys.utils.defs_utils import load_class
 
 
