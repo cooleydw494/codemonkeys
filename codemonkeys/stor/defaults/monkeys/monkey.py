@@ -44,6 +44,7 @@ class Monkey(Base):
 
     # Git
     GPT_GIT_COMMITS: bool = False
+    GIT_REPO_PATH: OStr = None
 
     # Models
     MAIN_MODEL: str = 'gpt-4'

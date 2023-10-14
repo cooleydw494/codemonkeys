@@ -30,7 +30,7 @@ class WriteFiles(Func):
                     "properties": {
                         "file_path": {
                             "type": "string",
-                            "description": "Absolute filepath (relative paths not supported)",
+                            "description": "Absolute filepath (relative not supported)",
                         },
                         "file_contents": {
                             "type": "string",
@@ -45,7 +45,7 @@ class WriteFiles(Func):
     }
 
     @classmethod
-    def _execute(cls, files_data: list) -> list[str]:
+    def __execute(cls, files_data: list) -> list[str]:
 
         written_filepaths = []
 

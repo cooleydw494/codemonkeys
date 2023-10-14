@@ -22,7 +22,7 @@ class WriteFile(Func):
         "properties": {
             "path": {
                 "type": "string",
-                "description": "Absolute filepath (relative paths not supported)",
+                "description": "Absolute filepath (relative not supported)",
             },
             "contents": {
                 "type": "string",
@@ -33,7 +33,7 @@ class WriteFile(Func):
     }
 
     @classmethod
-    def _execute(cls, path: str, contents: str) -> OStr:
+    def __execute(cls, path: str, contents: str) -> OStr:
 
         file_path = os.path.expanduser(path)
 
@@ -45,10 +45,10 @@ class WriteFile(Func):
         if not os.path.exists(os.path.dirname(file_path)):
             print_t(f'This file write will create new directories.', 'info')
 
-        user_input = input_t(f'Confirm file write?', '(y/n)')
-        if user_input.lower() != 'y':
-            print_t(f'Skipping file write.', 'warning')
-            return None
+        # user_input = input_t(f'Confirm file write?', '(y/n)')
+        # if user_input.lower() != 'y':
+        #     print_t(f'Skipping file write.', 'warning')
+        #     return None
 
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
 

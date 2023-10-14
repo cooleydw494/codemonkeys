@@ -25,7 +25,7 @@ class Func:
     }
 
     @classmethod
-    def _execute(cls, **args) -> Any:
+    def __execute(cls, **args) -> Any:
         raise NotImplementedError('This function must be implemented in subclasses of Func.')
 
     def data(self) -> dict:
@@ -37,4 +37,4 @@ class Func:
 
     def call(self, args: dict) -> Any:
         valid_args = {k: args.get(k) for k in self._parameters['properties'].keys()}
-        return self._execute(**valid_args)
+        return self.__execute(**valid_args)
