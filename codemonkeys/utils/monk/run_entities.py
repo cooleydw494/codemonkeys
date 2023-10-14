@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 
 from codemonkeys.utils.imports.monkey import OMonkey
-from codemonkeys.utils.defs_utils import load_class
+from codemonkeys.utils.misc.defs_utils import load_class
 
 
 def run_command(path: str, name: str, named_args: Dict[str, Any], unnamed_args: List[str]):

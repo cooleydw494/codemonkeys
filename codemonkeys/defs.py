@@ -1,6 +1,6 @@
 import os
 
-from codemonkeys.utils.defs_utils import find_project_root
+from codemonkeys.utils.misc.defs_utils import find_project_root
 
 """  PREDEFINED FRAMEWORK INSTANCE PATHS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  """

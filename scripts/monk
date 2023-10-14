@@ -5,7 +5,7 @@ import sys
 import traceback
 
 from codemonkeys.defs import nl
-from codemonkeys.utils.defs_utils import find_project_root
+from codemonkeys.utils.misc.defs_utils import find_project_root
 sys.path.append(find_project_root())
 
 from codemonkeys.utils.config.update_env_class import update_env_class

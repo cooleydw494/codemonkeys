@@ -3,7 +3,7 @@ from typing import Optional
 
 from codemonkeys.defs import nl, nl2, _or, content_sep
 from codemonkeys.types import OStr, OFloat, OInt
-from codemonkeys.utils.file_ops import get_file_contents
+from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.imports.env import Env
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled

@@ -7,7 +7,7 @@ from codemonkeys.builders.output_fixer import OutputFixer
 from codemonkeys.builders.output_path_resolver import OutputPathResolver
 from codemonkeys.builders.summarizer import Summarizer
 from codemonkeys.entities.automation import Automation
-from codemonkeys.utils.file_ops import get_file_contents, write_file_contents
+from codemonkeys.utils.misc.file_ops import get_file_contents, write_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
