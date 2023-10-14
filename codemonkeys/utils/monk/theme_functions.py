@@ -14,10 +14,10 @@ from typing import List, Tuple, Union, Optional
 from termcolor import colored, COLORS
 
 from codemonkeys.cm_paths import VERSION, CM_BANNER_PATH
-from codemonkeys.utils.imports.theme import Theme
 from codemonkeys.defs import nl
 from codemonkeys.types import OStr
 from codemonkeys.utils.file_ops import get_file_contents
+from codemonkeys.utils.imports.theme import Theme
 
 _print_lock = threading.Lock()
 

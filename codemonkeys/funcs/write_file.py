@@ -4,7 +4,7 @@ from codemonkeys.defs import nl2, nl
 from codemonkeys.entities.func import Func
 from codemonkeys.types import OStr
 from codemonkeys.utils.file_ops import write_file_contents
-from codemonkeys.utils.monk.theme_functions import print_t, input_t
+from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class WriteFile(Func):

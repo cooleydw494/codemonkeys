@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from codemonkeys.entities.monkey import Monkey as Base
 from codemonkeys.defs import STOR_PATH
+from codemonkeys.entities.monkey import Monkey as Base
 from codemonkeys.types import OStr
 
 

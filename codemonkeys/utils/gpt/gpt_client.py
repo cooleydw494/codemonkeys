@@ -7,11 +7,11 @@ import openai
 import tiktoken
 from tiktoken import Encoding
 
-from codemonkeys.utils.imports.env import Env
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
 from codemonkeys.entities.func import Func
 from codemonkeys.types import OStr, OInt, OFloat
 from codemonkeys.utils.config.monkey_validations import validate_model, validate_temp
+from codemonkeys.utils.imports.env import Env
 from codemonkeys.utils.monk.theme_functions import print_t
 
 

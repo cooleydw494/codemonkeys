@@ -4,8 +4,8 @@ from typing import Optional
 
 import openai
 
-from codemonkeys.utils.imports.env import Env
 from codemonkeys.defs import TEMP_PATH
+from codemonkeys.utils.imports.env import Env
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
