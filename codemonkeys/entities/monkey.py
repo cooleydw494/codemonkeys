@@ -72,7 +72,6 @@ class Monkey:
     def load(cls, name: OStr = None) -> 'Monkey':
 
         if cls._instance is None or cls._current_monkey != name:
-
             name, abspath = find_entity(name, 'monkey')
             cls._current_monkey = name
             cls._instance = load_class(abspath, name)()

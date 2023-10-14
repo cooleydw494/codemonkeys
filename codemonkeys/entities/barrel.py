@@ -21,7 +21,7 @@ class Barrel(CliRunnable):
         :param Dict[str, Any] named_args: Named arguments.
         :param List[str] unnamed_args: Unnamed arguments.
         """
-        super().__init__( named_args, unnamed_args)
+        super().__init__(named_args, unnamed_args)
         print_t("Barrel initialized.", "start")
 
     def with_monkey(self, monkey_name: OStr = None) -> 'Barrel':
@@ -34,17 +34,17 @@ class Barrel(CliRunnable):
         self.monkey = Monkey.load(monkey_name)
         return self
 
-    def run_automation(self, automation_name: str) -> 'Barrel':
+    def run_automation(self, name: str) -> 'Barrel':
         """
         Finds and runs the specified Automation, using the current Monkey.
 
-        :param str automation_name: Name of the automation to run.
+        :param str name: Name of the automation to run.
         :return: The current Barrel instance.
         """
-        automation_path = find_entity(automation_name, 'automation', exact_match_only=True)
+        name, abspath = find_entity(name, 'automation', exact_match_only=True)
         run_automation(
-            automation_path,
-            automation_name,
+            abspath,
+            name,
             self.named_args,
             self.unnamed_args,
             self.monkey
