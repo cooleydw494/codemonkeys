@@ -5,18 +5,19 @@ from typing import List, Tuple
 import Levenshtein
 
 from codemonkeys.cm_paths import CM_COMMANDS_PATH, CM_HELP_PATH
-from codemonkeys.defs import nl2, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH
+from codemonkeys.defs import nl2, COMMANDS_PATH, AUTOMATIONS_PATH, BARRELS_PATH, MONKEYS_PATH
 from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 entity_paths = {
     'command': [COMMANDS_PATH, CM_COMMANDS_PATH],
     'automation': [AUTOMATIONS_PATH],
     'barrel': [BARRELS_PATH],
+    'monkey': [MONKEYS_PATH],
     'help': [CM_HELP_PATH],
 }
 
 
-def user_select_entity(prompt: str, entity_options: List[Tuple[str, str, str]]) -> str:
+def user_select_entity(prompt: str, entity_options: List[Tuple[str, str, str]]) -> tuple[str, str]:
     """
     Process user input for selecting an entity from a list of available options.
 
@@ -33,13 +34,14 @@ def user_select_entity(prompt: str, entity_options: List[Tuple[str, str, str]]) 
 
     index = int(input_t("Select an option", "(^C to quit)")) - 1
     if 0 <= index < len(entity_options):
-        return entity_options[index][2]
-
+        name = entity_options[index][0]
+        abspath = entity_options[index][2]
+        return name, abspath
     print_t("Invalid input. Please try again.", 'error')
     return user_select_entity(prompt, entity_options)
 
 
-def find_entity(entity_name: str, entity_type: str, exact_match_only: bool = False) -> str:
+def find_entity(entity_name: str, entity_type: str, exact_match_only: bool = False) -> tuple[str, str]:
     """
     Search for an entity of a certain type.
 
@@ -60,7 +62,9 @@ def find_entity(entity_name: str, entity_type: str, exact_match_only: bool = Fal
 
     exact_matches = [m for m in matches if m[0] == entity_name]
     if len(exact_matches) == 1:
-        return exact_matches[0][2]
+        name = exact_matches[0][0]
+        abspath = exact_matches[0][2]
+        return name, abspath
 
     if exact_match_only:
         raise ValueError(f"Exact match not found for '{entity_name}' in {entity_type}s.")

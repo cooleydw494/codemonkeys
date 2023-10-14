@@ -1,15 +1,14 @@
-import os
 import re
 from dataclasses import dataclass
-from typing import Optional, NewType
+from typing import Optional
 
-from codemonkeys.defs import MONKEYS_PATH, STOR_PATH
+from codemonkeys.defs import STOR_PATH
 from codemonkeys.types import OStr
 from codemonkeys.utils.config.monkey_validations import is_path_key, validate_path, is_model_key, validate_model, \
     validate_temp, is_temp_key, is_prompt_key
 from codemonkeys.utils.defs_utils import load_class
 from codemonkeys.utils.file_ops import get_file_contents
-from codemonkeys.utils.monk.get_monkey_name import get_monkey_name
+from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
 
 
@@ -73,15 +72,10 @@ class Monkey:
     def load(cls, name: OStr = None) -> 'Monkey':
 
         if cls._instance is None or cls._current_monkey != name:
-            # Find or prompt user to select
-            name = get_monkey_name(name)
+
+            name, abspath = find_entity(name, 'monkey')
             cls._current_monkey = name
-            file_path = os.path.join(MONKEYS_PATH, f"{name}.py")
-
-            if not os.path.exists(file_path):
-                raise FileNotFoundError(f"Monkey file {file_path} not found.")
-
-            cls._instance = load_class(file_path, name)()
+            cls._instance = load_class(abspath, name)()
 
         return cls._instance
 
