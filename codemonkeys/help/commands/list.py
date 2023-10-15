@@ -29,10 +29,4 @@ USAGE_EXAMPLES_TABLE = {
 }
 
 print_table(USAGE_EXAMPLES_TABLE, "Example Commands")
-
 print()
-print_t("Note: Be mindful when using the 'all' argument, as it could result in a large amount of output depending on the structure of your project.", "warning")
-
-print_t("{nl}In the table above, you can see examples of how to use the `list` command. "
-        "The first command lists the base file paths, while the second command lists all file paths, including optional ones like Automations and Barrels. "
-        "Remember that the 'all' argument is not required but can be extremely useful if you want a more comprehensive list of your project's file paths. ", "info") 

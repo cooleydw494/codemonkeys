@@ -3,10 +3,9 @@ from codemonkeys.utils.monk.theme_functions import print_t, print_table
 
 """Help script for the `make` command."""
 
-print_t(f"Make Command Help{nl}", "important")
+print_t(f"Make Command{nl}", "important")
 
-print_t("The `make` command creates a new command, automation, or barrel entity by copying an example entity and renaming based on the input parameters. "
-        f"It is required to specify the entity type (command, automation, or barrel) and entity name in kebab-case (e.g. entity-name). This is useful for quickly creating new command files.{nl}")
+print_t("The `make` command creates a new entity, copying an example and renaming based on the input parameters.")
 
 print_t(f"Usage: `monk make [entity_type] [entity_name]`{nl}", "info")
 
@@ -15,32 +14,42 @@ USAGE_EXAMPLES_TABLE = {
         "Entity Type",
         "Entity Name",
         "Command",
-        "Resultant File"
+        "Result"
     ],
     "show_headers": True,
     "rows": [
         [
             "command",
-            "test-command",
-            "monk make command test-command",
-            "test-command.py - created under the command's path"
+            "my-command",
+            "monk make command my-command",
+            "commands/my-command.py"
         ],
         [
             "automation",
-            "example-automation",
-            "monk make automation example-automation",
-            "example-automation.py - created under the automation's path"
+            "my-automation",
+            "monk make automation my-automation",
+            "automations/my-automation.py"
         ],
         [
             "barrel",
-            "default-barrel",
-            "monk make barrel default-barrel",
-            "default-barrel.py - created under the barrel's path"
+            "my-barrel",
+            "monk make barrel my-barrel",
+            "barrels/my-barrel.py"
         ],
+        [
+            "func",
+            "my_func",
+            "monk make func my_func",
+            "funcs/my_func.py"
+        ],
+        [
+            "monkey",
+            "my_monkey",
+            "monk make monkey my_monkey",
+            "monkeys/my_monkey.py"
+        ]
     ]
 }
 
 print_table(USAGE_EXAMPLES_TABLE, "Usage Examples")
-
 print()
-print_t("Important: If the specified entity_name isn't in a valid format (kebab-case), the command will raise a ValueError.","warning")

@@ -29,8 +29,9 @@ def run_default_help():
             "Description",
             "Note"
         ],
-        "show_headers": False,
+        "show_headers": True,
         "rows": [
+            ['', '', ''],
             [
                 "monk help",
                 "Run this help script",
@@ -50,19 +51,9 @@ def run_default_help():
                 "monk <command>",
                 "Run a command",
                 "default action/entity"
-            ]
-        ]
-    }
-    print_table(monk_general_json, apply_t("Monk CLI", 'special'), min_col_width=min_col_widths)
-
-    monk_types = {
-        "headers": [
-            "Command",
-            "Description",
-            "Note"
-        ],
-        "show_headers": False,
-        "rows": [
+            ],
+            ['', '', ''],
+            ['', '', ''],
             [
                 "monk -a <automation>",
                 "Run an automation",
@@ -73,18 +64,8 @@ def run_default_help():
                 "Run a barrel",
                 "--barrel"
             ],
-        ],
-    }
-    print_table(monk_types, apply_t("Entity Types", 'special'), min_col_width=min_col_widths)
-
-    monk_actions = {
-        "headers": [
-            "Command",
-            "Description",
-            "Note"
-        ],
-        "show_headers": False,
-        "rows": [
+            ['', '', ''],
+            ['', '', ''],
             [
                 "monk -e <entity>",
                 "Open in vim",
@@ -95,11 +76,13 @@ def run_default_help():
                 "Help for an entity",
                 "--help"
             ],
-        ],
+        ]
     }
-    print_table(monk_actions, apply_t("Actions", 'special'), min_col_width=min_col_widths)
+    print_table(monk_general_json, apply_t("Monk CLI", 'special'))
 
     # Wrap up
+    print()
+    print()
     print_t("That's it! For more, run `monk -h <entity>` or read the docs.", 'done')
     print_t("🌐 https://cooleydw494.github.io/codemonkeys", 'cyan')
     print()

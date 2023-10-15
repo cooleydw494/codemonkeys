@@ -135,38 +135,42 @@ def print_banner() -> None:
     print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
 
 
-def print_table(table: dict, title: OStr = None, sub_indent: str = '   ',
-                min_col_width: Union[int, List[int]] = 10) -> None:
-    """
-    Prints the given table in a nicely formatted manner within the terminal,
-    with the specified title and minimum column widths.
-    """
-    terminal_width = min(os.get_terminal_size().columns, Theme.max_terminal_width)
-    t_width = terminal_width - len(sub_indent)
+def calculate_col_widths(headers: List[str], rows: List[List[Union[str, int]]], min_col_widths: List[int],
+                         terminal_width: int) -> List[int]:
+    raw_col_widths = [max(len(str(x)) for x in col) for col in zip(*rows)]
+    raw_col_widths = [max(raw, min_width) for raw, min_width in zip(raw_col_widths, min_col_widths)]
+    total_width = sum(raw_col_widths) + len(headers) - 1
+    remaining_space = terminal_width - total_width
 
-    if title:
-        print_t(title, 'special')
+    return [raw + floor(remaining_space / len(headers)) for raw in raw_col_widths]
+
+
+def print_table(table: dict, title: str = None, sub_indent: str = '  ', min_col_width: Union[int, List[int]] = 10) -> None:
+    terminal_width = min(os.get_terminal_size().columns, 120)  # Replace 120 with your Theme.max_terminal_width
+    terminal_width -= len(sub_indent)
+
+    if len(table["headers"]) != len(table["rows"][0]):
+        raise ValueError("Mismatch between header and row column count")
 
     if not isinstance(min_col_width, list):
         min_col_width = [min_col_width] * len(table["headers"])
 
-    raw_col_widths = [max(len(str(x)) for x in col) for col in zip(*table["rows"])]
-    raw_col_widths = [max(width, min_width) for width, min_width in zip(raw_col_widths, min_col_width)]
+    col_widths = calculate_col_widths(table["headers"], table["rows"], min_col_width, terminal_width)
 
-    col_widths = [min(width + 2, floor((t_width - len(table["headers"]) + 1) / len(table["headers"]))) for width
-                  in raw_col_widths]
-    col_widths = [min(width, raw_width + 2) for width, raw_width in zip(col_widths, raw_col_widths)]
+    if title:
+        print_t(f'{sub_indent}{title}', 'special')
+        print()
 
-    if table["show_headers"]:
-        header = ''.join([apply_t(name.ljust(width), 'magenta') for name, width in zip(table["headers"], col_widths)])
-        print_t(sub_indent + header, 'yellow')
-        print_t(sub_indent + '-' * len(header), 'magenta')
+    if table.get("show_headers", True):
+        header = ''.join([apply_t(h.ljust(w), 'magenta') for h, w in zip(table["headers"], col_widths)])
+        print_t(f"{sub_indent}{header}", 'yellow')
+        underline_length = sum(col_widths)
+        print_t(f"{sub_indent}{'-' * underline_length}", 'magenta')
 
     for row in table["rows"]:
-        colored_row = [apply_t(str(val).ljust(width), 'cyan' if i == 0 else 'green' if i == 1 else 'dark_grey')
-                       for i, (val, width) in enumerate(zip(row, col_widths))]
-        print_t(sub_indent + ''.join(colored_row))
-    _print_nice()
+        row_str = ''.join([apply_t(str(r).ljust(w), 'cyan' if i == 0 else 'green' if i == 1 else 'dark_grey')
+                           for i, (r, w) in enumerate(zip(row, col_widths))])
+        print_t(f"{sub_indent}{row_str}")
 
 
 def print_tree(start_dir: str, exclude_dirs: Optional[List[str]] = None, exclude_file_starts: Optional[List[str]] = None,
