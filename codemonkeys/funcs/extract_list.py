@@ -21,5 +21,5 @@ class ExtractList(Func):
     }
 
     @classmethod
-    def __execute(cls, extracted_list: list[str]) -> list[str]:
+    def _execute(cls, extracted_list: list[str]) -> list[str]:
         return extracted_list

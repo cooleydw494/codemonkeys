@@ -35,7 +35,7 @@ class WriteFile(Func):
     }
 
     @classmethod
-    def __execute(cls, path: str, contents: str) -> OStr:
+    def _execute(cls, path: str, contents: str) -> OStr:
 
         file_path = os.path.expanduser(path)
 

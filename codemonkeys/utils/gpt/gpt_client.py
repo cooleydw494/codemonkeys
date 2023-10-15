@@ -128,9 +128,10 @@ class GPTClient:
         fc_response = response['choices'][0]['message'].get('function_call')
         (name, args) = (fc_response['name'], fc_response['arguments'])
         available_funcs = {func.name: func for func in funcs}
+        sanitized_args = ''.join(ch for ch in args if ord(ch) >= 32)
         func = available_funcs[name]
 
-        return func.call(json.loads(json.dumps(args, ensure_ascii=False)))
+        return func.call(json.loads(sanitized_args))
 
     def tokenize(self, text: str) -> List[int]:
         """

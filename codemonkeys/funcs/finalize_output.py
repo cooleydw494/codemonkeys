@@ -25,5 +25,5 @@ class FinalizeOutput(Func):
     }
 
     @classmethod
-    def __execute(cls, output: str) -> str:
+    def _execute(cls, output: str) -> str:
         return output

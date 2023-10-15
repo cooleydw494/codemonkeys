@@ -34,18 +34,13 @@ entity_name, entity_path = find_entity(entity_name, entity_type)
 if action == 'edit':
     subprocess.run(['vim', entity_path.strip()])
 
-elif action == 'help':
-    print()
-    subprocess.run([sys.executable, entity_path.strip()])
-    print()
-
 elif action == 'run':
     try:
 
         print_t(f'{entity_type}: {entity_name}', 'quiet')
 
         # Commands
-        if entity_type == 'command':
+        if entity_type in ['command', 'help']:
             extension = os.path.splitext(entity_path.strip())[1]
 
             if extension == ".py":

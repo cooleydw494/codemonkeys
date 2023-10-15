@@ -70,17 +70,15 @@ def parse_monk_args():
     action = 'run'
     if monk_args.edit is True:
         action = 'edit'
-    elif monk_args.help is True:
-        action = 'help'
 
     # Entity Type
     entity_type = 'command'
-    if action == 'help':
-        entity_type = 'help'
-    elif monk_args.automation is True:
+    if monk_args.automation is True:
         entity_type = 'automation'
     elif monk_args.barrel is True:
         entity_type = 'barrel'
+    elif monk_args.help is True:
+        entity_type = 'help'
 
     if entity_type in ['help', 'command'] and monk_args.entity_name in [None, 'help']:
         run_default_help()

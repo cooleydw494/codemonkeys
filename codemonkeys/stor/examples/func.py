@@ -37,7 +37,7 @@ class ExampleFunc(Func):
     }
 
     @classmethod
-    def __execute(cls, arg1: int, arg2: OInt) -> int:
+    def _execute(cls, arg1: int, arg2: OInt) -> int:
         if arg2 is None:
             return arg1
         return arg1 + arg2
