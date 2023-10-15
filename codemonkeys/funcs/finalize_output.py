@@ -4,23 +4,21 @@ from codemonkeys.entities.func import Func
 class FinalizeOutput(Func):
 
     """
-    This Func is intended to be used in the default automation along with the FIX_OUTPUT_PROMPT.
-    It is a very vague function that allows the FIX_OUTPUT_PROMPT to be used with flexibility to dictate the output.
-    The intention is to coerce GPT to do a better job of delivering a result that doesn't include extraneous text.
-
-    The default FIX_OUTPUT_PROMPT is meant to ensure the result contains nothing but the contents of a file.
+    This Func is intended to be used in the default automation to finalize output for file writing.
+    It is a very vague function that coerces GPT into intuiting the desired output and omitting extraneous text.
+    As long as prompts include language that allow GPT to intuit the use-case properly, it can be used in other ways.
     """
 
     name: str = 'finalize_output'
 
-    _description: str = 'This function handles finalized output for a variety of cases, such as writing a file.'
+    _description: str = 'This function is a handler for finalized output for various uses.'
 
     _parameters: dict = {
         "type": "object",
         "properties": {
             "output": {
                 "type": "string",
-                "description": "The finalized output, requiring no further processing to be used as intended.",
+                "description": "Finalized output requiring no further processing to be used as intended.",
             },
         },
         "required": ["output"],

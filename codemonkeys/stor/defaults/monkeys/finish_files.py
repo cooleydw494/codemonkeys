@@ -24,12 +24,7 @@ class FinishFiles(Monkey):
         ('Return only the contents of a script/module that meets the requirements of the description'
          ' existing within {the-file}.')
 
-    OUTPUT_EXAMPLE_PROMPT: OStr = "Make your output a well-structured and readable python script/module only."
-
-    # Output Fixing
-    FIX_OUTPUT_PROMPT: OStr = \
-        ('Examine the following output and determine if it contains the contents of a python script/module only.'
-         ' Respond with only one word: "True" or "False".')
+    OUTPUT_PROMPT: OStr = "Output should be nothing more than the updated file contents."
 
     # Output
     OUTPUT_PATH: str = f"{STOR_PATH}/output"

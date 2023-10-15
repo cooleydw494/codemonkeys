@@ -5,13 +5,14 @@ from codemonkeys.entities.func import Func
 from codemonkeys.types import OStr
 from codemonkeys.utils.misc.file_ops import write_file_contents
 from codemonkeys.utils.misc.handle_exception import handle_exception
-from codemonkeys.utils.monk.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t, input_t
 
 
 class WriteFile(Func):
 
     """
-    This Func is a single-file-only version of WriteFiles.
+    This Func is intended to be used to handle the result of prompts that ask GPT to write a file.
+    Unlike FinalizeOutput, this Func does not return file contents, but directly writes the files itself.
     """
 
     name: str = 'write_file'
@@ -46,10 +47,10 @@ class WriteFile(Func):
         if not os.path.exists(os.path.dirname(file_path)):
             print_t(f'This file write will create new directories.', 'info')
 
-        # user_input = input_t(f'Confirm file write?', '(y/n)')
-        # if user_input.lower() != 'y':
-        #     print_t(f'Skipping file write.', 'warning')
-        #     return None
+        user_input = input_t(f'Confirm file write?', '(y/n)')
+        if user_input.lower() != 'y':
+            print_t(f'Skipping file write.', 'warning')
+            return None
 
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
 

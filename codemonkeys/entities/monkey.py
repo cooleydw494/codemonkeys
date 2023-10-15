@@ -28,14 +28,11 @@ class Monkey:
     # Main Prompts
     MAIN_PROMPT: str = "Please generate code for the following task..."
     MAIN_PROMPT_ULTIMATUM: OStr = "Limit your response to the contents of a python script, and nothing else."
-    OUTPUT_EXAMPLE_PROMPT: OStr = "Limit your output to file contents, like: ```<new file contents>```."
+    OUTPUT_PROMPT: OStr = "Output should be nothing more than the updated file contents."
 
     # Context / Summary
     CONTEXT_FILE_PATH: OStr = None
     CONTEXT_SUMMARY_PROMPT: OStr = None
-
-    # Output Fixing
-    FIX_OUTPUT_PROMPT: OStr = None
 
     # Output
     OUTPUT_PATH: str = f"{STOR_PATH}/output"
@@ -51,17 +48,14 @@ class Monkey:
     # Models
     MAIN_MODEL: str = 'gpt-4'
     SUMMARY_MODEL: str = 'gpt-4'
-    FIX_OUTPUT_MODEL: str = 'gpt-3.5-turbo'
 
     # Temps
     MAIN_TEMP: float = 1.0
     SUMMARY_TEMP: float = 1.0
-    FIX_OUTPUT_TEMP: float = 0.5
 
     # Max Tokens
     MAIN_MAX_TOKENS: int = 8000
     SUMMARY_MAX_TOKENS: int = 8000
-    FIX_OUTPUT_MAX_TOKENS: int = 8000
 
     def __post_init__(self):
         self._dynamic_validate()
