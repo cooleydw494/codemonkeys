@@ -56,7 +56,7 @@ class WriteFile(Func):
 
         try:
             write_file_contents(file_path, contents)
-        except Exception as e:
+        except BaseException as e:
             print_t(f'Failed to write file: {file_path}.', 'error')
             handle_exception(e, always_continue=True)
 

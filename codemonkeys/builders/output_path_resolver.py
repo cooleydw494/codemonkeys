@@ -46,7 +46,6 @@ class OutputPathResolver:
         This means a file read from relative_root_path/abc/def.txt will be written to OUTPUT_PATH/abc/def.txt.
 
         :param relative_path_root: Root path to use for relative path
-        :raises Exception: If work path has not been set before this function call.
         :return: OutputPathResolver instance
         """
         self._relative_path_root = relative_path_root

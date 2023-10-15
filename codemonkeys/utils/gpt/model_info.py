@@ -21,7 +21,7 @@ def get_gpt_model_info() -> Optional[dict]:
         with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'r') as f:
             return json.load(f)
 
-    except Exception as e:
+    except BaseException as e:
         print_t(f"An error occurred reading cached gpt model info.", 'warning')
         handle_exception(e, always_continue=True)
         return None
@@ -53,7 +53,7 @@ def update_gpt_model_cache() -> None:
             with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'w') as f:
                 json.dump(model_info, f)
 
-    except Exception as e:
+    except BaseException as e:
         print_t(f"An error occurred updating GPT model info cache.", 'error')
         handle_exception(e)
 

@@ -1,7 +1,7 @@
 from typing import List
 
 
-class GitterError(Exception):
+class GitterError(BaseException):
     """
     Custom exception for Gitter errors.
 

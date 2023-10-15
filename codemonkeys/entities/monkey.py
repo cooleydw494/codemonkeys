@@ -79,21 +79,21 @@ class Monkey:
             if is_path_key(key):
                 try:
                     setattr(self, key, validate_path(value, allow_none=True))
-                except Exception as e:
+                except BaseException as e:
                     print_t(f"PATH validation failed for {key}={value}, {self.__class__.__name__}.", 'error')
                     handle_exception(e, always_exit=True)
 
             elif is_model_key(key):
                 try:
                     setattr(self, key, validate_model(value, allow_none=True))
-                except Exception as e:
+                except BaseException as e:
                     print_t(f"MODEL validation failed for {key}={value}, {self.__class__.__name__}.", 'error')
                     handle_exception(e, always_exit=True)
 
             elif is_temp_key(key):
                 try:
                     setattr(self, key, validate_temp(value, allow_none=True))
-                except Exception as e:
+                except BaseException as e:
                     print_t(f"TEMP validation failed for {key}={value}, {self.__class__.__name__}.", 'error')
                     handle_exception(e, always_exit=True)
 

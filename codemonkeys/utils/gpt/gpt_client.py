@@ -1,4 +1,5 @@
 import json
+import sys
 import time
 import traceback
 from typing import List, Optional, Any
@@ -77,8 +78,8 @@ class GPTClient:
         except openai.error.OpenAIError as e:
             print_t(f"OpenAIError generating GPT response.", 'error')
             handle_exception(e, always_continue=True)
-        except Exception as e:
-            print_t(f"Error generating GPT response.", 'error')
+        except BaseException as e:
+            print_t(f"GPT call failed.", 'error')
             handle_exception(e, always_continue=True)
         return None
 

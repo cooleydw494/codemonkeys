@@ -25,18 +25,18 @@ if version < 3:
     print_t("It appears you're running Python 2. Please use Python 3.", 'error')
     sys.exit(1)
 
-# Setup and Parse Monk Arguments
-named_args, unnamed_args, action, entity_name, entity_type = parse_monk_args()
+try:
 
-# Find Entity (includes interactive selection)
-entity_name, entity_path = find_entity(entity_name, entity_type)
+    # Setup and Parse Monk Arguments
+    named_args, unnamed_args, action, entity_name, entity_type = parse_monk_args()
 
-if action == 'edit':
-    subprocess.run(['vim', entity_path.strip()])
+    # Find Entity (includes interactive selection)
+    entity_name, entity_path = find_entity(entity_name, entity_type)
 
-elif action == 'run':
-    try:
+    if action == 'edit':
+        subprocess.run(['vim', entity_path.strip()])
 
+    elif action == 'run':
         print_t(f'{entity_type}: {entity_name}', 'quiet')
 
         # Commands
@@ -69,11 +69,11 @@ elif action == 'run':
             print_t(f'unsupported entity_type: {entity_type}', 'error')
             exit(1)
 
-    except Exception as e:
-        handle_exception(e)
+    else:
+        print_t(f'unsupported action: {action}', 'error')
+        exit(1)
 
-else:
-    print_t(f'unsupported action: {action}', 'error')
-    exit(1)
+except BaseException as e:
+    handle_exception(e)
 
 exit(0)
