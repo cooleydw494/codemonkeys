@@ -129,17 +129,20 @@ class FilePrompter:
         """
         main_prompt = _or(self._main_prompt.replace('{the-file}', self._file_name))
         ultimatum = _or(self._ultimatum_prompt.replace('{the-file}', self._file_name))
-        output_example = _or(self._output_prompt.replace('{the-file}', self._file_name))
+        output_prompt = _or(self._output_prompt.replace('{the-file}', self._file_name))
         file_contents = get_file_contents(self._file_path)
 
         full_prompt = f"{main_prompt}{nl}{self._context or ''}{nl}{self._file_name}:{nl}" \
-                      f"{content_sep}{nl}{file_contents}{content_sep}{nl}{ultimatum}{nl}{output_example}"
+                      f"{content_sep}{nl}{file_contents}{content_sep}{nl}{ultimatum}{nl}{output_prompt}"
 
         if print_prompt and verbose_logs_enabled():
             print_t(f'Prompt: {full_prompt}', 'quiet')
         elif print_prompt:
-            stubbed_prompt = f"{main_prompt}{nl2}<context>{nl2}{self._file_name}:{nl}" \
-                             f"{content_sep}<file contents>{content_sep}{nl2}<ultimatum>{nl2}<output example>"
+            stubbed_context = f'<context>{nl2}' if self._context else ''
+            stubbed_ultimatum = f'<ultimatum>{nl2}' if self._ultimatum_prompt else ''
+            stubbed_output_prompt = f'<output example>{nl2}' if self._output_prompt else ''
+            stubbed_prompt = f"{main_prompt}{nl2}{stubbed_context}{self._file_name}:{nl}" \
+                             f"{content_sep}<file contents>{content_sep}{nl2}{stubbed_ultimatum}{stubbed_output_prompt}"
             print_t(f"Prompt: {stubbed_prompt}", 'quiet')
 
         return full_prompt

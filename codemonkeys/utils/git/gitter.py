@@ -18,6 +18,14 @@ class Gitter:
         """
         self.repo_path = repo_path
 
+    def init(self) -> str:
+        """
+        Initializes the git repo.
+
+        :return: The output of the git command.
+        """
+        return self._run_git_command(["init"])
+
     def clone(self, repo_url: str) -> str:
         """
         Clones the repo at the provided URL.

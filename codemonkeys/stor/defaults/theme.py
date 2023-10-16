@@ -23,8 +23,8 @@ class Theme(Base):
         'start': {'color': 'light_green', 'light_mode': 'green', 'pre': '🚀 '},
         'done': {'color': 'light_green', 'light_mode': 'green', 'pre': '✅ '},
 
-        'warning': {'color': 'red', 'light_mode': 'light_red', 'pre': '⚠️  Warning: '},
-        'error': {'color': 'light_red', 'light_mode': 'light_red', 'pre': '❌ Error: '},
+        'warning': {'color': 'red', 'light_mode': 'light_red', 'pre': '⚠️  '},
+        'error': {'color': 'light_red', 'light_mode': 'light_red', 'pre': '❌ '},
 
         'super_important': {'color': 'light_magenta', 'light_mode': 'magenta', 'pre': ''},
         'important': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '👉 '},

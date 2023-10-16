@@ -6,6 +6,7 @@ from typing import List, Optional, Any
 
 import openai
 import tiktoken
+from json_repair import repair_json
 from tiktoken import Encoding
 
 from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
@@ -14,7 +15,7 @@ from codemonkeys.types import OStr, OInt, OFloat
 from codemonkeys.utils.config.monkey_validations import validate_model, validate_temp
 from codemonkeys.utils.imports.env import Env
 from codemonkeys.utils.misc.handle_exception import handle_exception
-from codemonkeys.utils.monk.theme_functions import print_t
+from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
 
 
 class GPTClient:
@@ -129,10 +130,15 @@ class GPTClient:
         fc_response = response['choices'][0]['message'].get('function_call')
         (name, args) = (fc_response['name'], fc_response['arguments'])
         available_funcs = {func.name: func for func in funcs}
-        sanitized_args = ''.join(ch for ch in args if ord(ch) >= 32)
+        try:
+            args = json.loads(args)
+        except json.JSONDecodeError:
+            if verbose_logs_enabled():
+                print_t(f'sanitizing args due to decoding error', 'super_important')
+            args = json.loads(repair_json(args))
         func = available_funcs[name]
 
-        return func.call(json.loads(sanitized_args))
+        return func.call(args)
 
     def tokenize(self, text: str) -> List[int]:
         """
