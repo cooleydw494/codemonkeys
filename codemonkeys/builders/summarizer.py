@@ -75,7 +75,7 @@ class Summarizer:
         context_tokens = self._gpt_client.count_tokens(self._context)
 
         if context_tokens > self._max_tokens:
-            summary = self._summarize_chunked()
+            raise RuntimeError(f"Context ({context_tokens} tokens) longer than max tokens ({self._max_tokens}).")
         else:
             full_prompt = f"{self._prompt}: {content_sep}{self._context}{content_sep}"
             summary = self._gpt_client.generate(full_prompt)
@@ -87,15 +87,3 @@ class Summarizer:
         print_t(f"Summary:{nl}{summary}", 'quiet')
 
         return summary
-
-    def _summarize_chunked(self) -> str:
-        """
-        Summarize the given text context in chunks using GPT.
-
-        :return: The summarized text.
-        """
-        chunked_context = self._gpt_client.split_into_chunks(self._context, self._max_tokens)
-        print_t(f"Split context into {len(chunked_context)} chunks.", 'info')
-        print_t('Summarizing each chunk... is not implemented [see TODO in summarizer.py]', 'loading')
-        # TODO: implement summarization of chunked context
-        exit()

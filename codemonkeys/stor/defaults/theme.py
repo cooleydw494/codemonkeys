@@ -26,21 +26,15 @@ class Theme(Base):
         'warning': {'color': 'red', 'light_mode': 'light_red', 'pre': '⚠️  '},
         'error': {'color': 'light_red', 'light_mode': 'light_red', 'pre': '❌ '},
 
-        'super_important': {'color': 'light_magenta', 'light_mode': 'magenta', 'pre': ''},
-        'important': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '👉 '},
-        'special': {'color': 'magenta', 'light_mode': 'magenta', 'pre': ''},
-        'loading': {'color': 'yellow', 'light_mode': 'magenta', 'pre': '⏳ '},
-        'monkey': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '🐒 '},
+        'super_important': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '👀 '},
+        'important': {'color': 'yellow', 'light_mode': 'magenta', 'pre': '👉 '},
+        'special': {'color': 'light_magenta', 'light_mode': 'magenta', 'pre': ''},
+        'loading': {'color': 'magenta', 'light_mode': 'magenta', 'pre': '⏳ '},
 
-        'file': {'color': 'dark_grey', 'light_mode': 'black', 'pre': ''},
-
-        'tip': {'color': 'light_cyan', 'light_mode': 'blue', 'pre': '💡 '},
         'info': {'color': 'cyan', 'light_mode': 'blue', 'pre': '🔹 '},
-        'option': {'color': 'white', 'light_mode': 'black', 'pre': ''},
 
         'input': {'color': 'light_cyan', 'light_mode': 'blue', 'pre': '⌨️  '},
         'quiet': {'color': 'dark_grey', 'light_mode': 'black', 'pre': ''},
 
         # All termcolor colors are also defined, inserted in the base class constructor
-
     }

@@ -46,9 +46,6 @@ def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Optional[Li
     """
     has_theme, color, prefix = get_theme(theme)
     if has_theme:
-        if theme == 'super_important':
-            attrs = attrs if isinstance(attrs, list) else []
-            attrs.append('blink')
         if incl_prefix:
             text = f"{prefix}{text}"
         text = colored(text, color, attrs=attrs)

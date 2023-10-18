@@ -14,4 +14,4 @@ class Version(Command):
         Prints the version of the CodeMonkeys framework.
         """
 
-        print_t(f"CodeMonkeys v{VERSION}", 'monkey')
+        print_t(f"CodeMonkeys v{VERSION}", 'important')

@@ -39,4 +39,4 @@ class GptModelsInfo(Command):
 
         print()
         print_t("Note: Call `monk gpt-models-info --update` whenever you need the most up-to-date list of GPT models.",
-                "tip")
+                "special")

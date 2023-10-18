@@ -26,10 +26,10 @@ def user_select_entity(prompt: str, entity_options: List[Tuple[str, str, str]]) 
         Each tuple is of the form (entity name, entity type, entity full path)
     :return str: Full path of the selected entity.
     """
-    print_t(f"{prompt}{nl2}", 'monkey')
+    print_t(f"{prompt}{nl2}", 'important')
     print('`' * 40)
     for i, (name, entity_type, _) in enumerate(entity_options):
-        print_t(f" ({i + 1}) {name} ({entity_type})", 'option')
+        print_t(f" ({i + 1}) {name} ({entity_type})")
     print('.' * 40)
 
     index = int(input_t("Select an option", "(^C to quit)")) - 1

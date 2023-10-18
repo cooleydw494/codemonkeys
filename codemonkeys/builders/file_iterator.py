@@ -119,7 +119,7 @@ class FileIterator:
                     if num_tokens <= self._max_tokens:
                         self._filtered_files.append(absolute_path)
 
-        print_t("File filtering complete.", 'quiet')
+        print_t(f"File filtering complete.{nl}", 'quiet')
 
         return self
 
@@ -146,4 +146,5 @@ class FileIterator:
         return self._filtered_files
 
     def print_files_remaining(self) -> None:
+        print()
         print_t(f"Files remaining: {len(self.get_filtered_files())}", 'info')

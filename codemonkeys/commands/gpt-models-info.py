@@ -30,4 +30,4 @@ class GptModelsInfo(Command):
         else:
             print_t(f'Available Models{nl}', 'special')
             for model_name, model_data in model_info.items():
-                print_t(f"{model_name}", 'option')
+                print_t(f"{model_name}")

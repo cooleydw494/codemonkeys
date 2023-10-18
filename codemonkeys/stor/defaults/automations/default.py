@@ -5,6 +5,7 @@ from codemonkeys.builders.file_iterator import FileIterator
 from codemonkeys.builders.file_prompter import FilePrompter
 from codemonkeys.builders.output_path_resolver import OutputPathResolver
 from codemonkeys.builders.summarizer import Summarizer
+from codemonkeys.defs import nl
 from codemonkeys.entities.automation import Automation
 from codemonkeys.utils.misc.file_ops import get_file_contents, write_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -60,9 +61,7 @@ class Default(Automation):
         # Iterate through filtered files
         while True:
 
-            files_remaining = len(file_iterator.get_filtered_files())
-            print_t(f"Files remaining: {files_remaining}", 'info')
-
+            file_iterator.print_files_remaining()
             file_path = file_iterator.pop_file()
             if file_path is None:
                 print_t("All Files Handled.", 'done')
@@ -70,7 +69,7 @@ class Default(Automation):
 
             output_file_path = output_path_resolver.get_output_path(file_path)
             if m.SKIP_EXISTING_OUTPUT_FILES and file_exists(output_file_path):
-                print_t(f"Skipping file, output exists at: {output_file_path}", 'quiet')
+                print_t(f"Skipping file, output exists at: {output_file_path}", 'special')
                 continue
 
             print(f"Processing file: {file_path}")

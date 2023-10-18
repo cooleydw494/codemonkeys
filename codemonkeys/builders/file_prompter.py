@@ -107,7 +107,6 @@ class FilePrompter:
         """
         full_prompt = self._get_full_prompt(print_prompt=True)
 
-        print_t("Generating output...", 'loading')
         if self._finalize_output:
             output = self._gpt_client.generate(full_prompt, [FinalizeOutput()], 'finalize_output')
         else:
