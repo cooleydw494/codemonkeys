@@ -9,12 +9,13 @@ import tiktoken
 from json_repair import repair_json
 from tiktoken import Encoding
 
-from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER
+from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER, nl2, nl
 from codemonkeys.entities.func import Func
 from codemonkeys.types import OStr, OInt, OFloat
 from codemonkeys.utils.config.monkey_validations import validate_model, validate_temp
 from codemonkeys.utils.imports.env import Env
 from codemonkeys.utils.misc.handle_exception import handle_exception
+from codemonkeys.utils.misc.log import Log
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
 
 
@@ -134,8 +135,12 @@ class GPTClient:
             args = json.loads(args)
         except json.JSONDecodeError:
             if verbose_logs_enabled():
-                print_t(f'sanitizing args due to decoding error', 'super_important')
+                print_t(f'sanitizing args due to decoding error', 'important')
+
+            Log.warning(f'function call ({name}) produced invalid raw JSON args:{nl2}{repr(args)}{nl2}')
             args = json.loads(repair_json(args))
+            Log.warning(f'function call ({name}) sanitized JSON args:{nl2}{repr(args)}{nl2}')
+
         func = available_funcs[name]
 
         return func.call(args)
