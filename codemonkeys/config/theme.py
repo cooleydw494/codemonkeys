@@ -10,9 +10,8 @@ class Theme:
 
     # KEYWORDS (bold in CLI prints)
     keywords: list = [
-        'entity types', 'defs.py', 'CodeMonkeys', 'automations', 'action flags', 'entity type',
-        'barrels', 'modules', 'commands', 'monkeys', 'actions', 'barrel', 'module', 'action flag', 'automation',
-        'command', 'monkey', 'types', 'cli', 'monk'
+        'CodeMonkeys', 'entity types', 'entity type', 'automations', 'automation', 'action flags', 'action flag',
+        'barrels', 'barrel', 'funcs', 'func', 'commands', 'command', 'monkeys', 'monkey', 'monk cli', 'monk'
     ]
 
     fallback_colors: dict = {
@@ -37,6 +36,7 @@ class Theme:
     }
 
     text_themes: dict = {
+
         'start': {'color': 'light_green', 'light_mode': 'green', 'pre': '🚀 '},
         'done': {'color': 'light_green', 'light_mode': 'green', 'pre': '✅ '},
 
@@ -44,14 +44,16 @@ class Theme:
         'error': {'color': 'light_red', 'light_mode': 'light_red', 'pre': '❌ '},
 
         'super_important': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '👀 '},
-        'important': {'color': 'yellow', 'light_mode': 'magenta', 'pre': '👉 '},
+        'important': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '👉 '},
         'special': {'color': 'light_magenta', 'light_mode': 'magenta', 'pre': ''},
-        'loading': {'color': 'magenta', 'light_mode': 'magenta', 'pre': '⏳ '},
+        'loading': {'color': 'yellow', 'light_mode': 'magenta', 'pre': '⏳ '},
 
         'info': {'color': 'cyan', 'light_mode': 'blue', 'pre': '🔹 '},
 
         'input': {'color': 'light_cyan', 'light_mode': 'blue', 'pre': '⌨️  '},
         'quiet': {'color': 'dark_grey', 'light_mode': 'black', 'pre': ''},
+
+        # All termcolor colors are also defined, inserted in the base class constructor
     }
 
     def __init__(self):

@@ -93,6 +93,7 @@ class GPTClient:
         """
 
         max_tokens = self.max_tokens - self.count_tokens(prompt)
+        print()
         print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'loading')
 
         response = openai.ChatCompletion.create(
@@ -117,6 +118,7 @@ class GPTClient:
         function_call = {'name': enforce_func} if enforce_func else 'auto'
 
         max_tokens = self.max_tokens - self.count_tokens(prompt) - self.count_tokens(json.dumps(functions_data))
+        print()
         print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'loading')
 
         response = openai.ChatCompletion.create(
@@ -134,12 +136,10 @@ class GPTClient:
         try:
             args = json.loads(args)
         except json.JSONDecodeError:
-            if verbose_logs_enabled():
-                print_t(f'sanitizing args due to decoding error', 'special')
-
-            Log.warning(f'function call ({name}) produced invalid raw JSON args:{nl2}{repr(args)}{nl2}')
+            print_t(f'sanitizing args due to decoding error', 'special', verbose=True)
+            Log.warning(f'function call ({name}) produced invalid raw JSON args:{nl}{repr(args)}')
             args = json.loads(repair_json(args))
-            Log.warning(f'function call ({name}) sanitized JSON args:{nl2}{repr(args)}{nl2}')
+            Log.warning(f'function call ({name}) sanitized JSON args:{nl}{repr(args)}')
 
         func = available_funcs[name]
 

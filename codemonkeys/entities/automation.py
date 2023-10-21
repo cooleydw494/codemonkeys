@@ -33,7 +33,7 @@ class Automation(CliRunnable):
         else:
             self._monkey = monkey
 
-        print_t("Automation initialized.", "start")
+        print_t(f"Automation initialized: {self.__class__.__name__}", 'start')
 
     def load_monkey(self) -> Monkey:
         """

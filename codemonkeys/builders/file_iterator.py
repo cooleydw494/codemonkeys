@@ -6,6 +6,7 @@ from codemonkeys.defs import nl
 from codemonkeys.types import OFloat, OStr, OInt
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
+from codemonkeys.utils.imports.theme import Theme
 
 
 class FileIterator:
@@ -104,12 +105,11 @@ class FileIterator:
         """
         self._filtered_files = []
         print_t("Filtering files...", 'loading')
-        print_t(f'WORK_PATH: {self._work_path}', 'info')
 
         for root, _, files in os.walk(self._work_path):
             for file in files:
                 print(".", end='', flush=True)
-                time.sleep(0.001)
+                time.sleep(0.005)
 
                 absolute_path = self.resolve_path(os.path.join(root, file))
                 if self._should_include(absolute_path):
@@ -119,7 +119,7 @@ class FileIterator:
                     if num_tokens <= self._max_tokens:
                         self._filtered_files.append(absolute_path)
 
-        print_t(f"File filtering complete.{nl}", 'quiet')
+        print_t(f"{nl}File filtering complete.{nl}", 'quiet')
 
         return self
 
@@ -145,6 +145,11 @@ class FileIterator:
         """
         return self._filtered_files
 
-    def print_files_remaining(self) -> None:
-        print()
+    def print_files_remaining(self, incl_next_file: bool = False) -> None:
+        print(nl)
+        terminal_max = min(Theme.max_terminal_width, os.get_terminal_size().columns)
+        num_of_spacers = int(terminal_max / 3)
+        print_t(f"{'---' * num_of_spacers}", 'info', incl_prefix=False)
         print_t(f"Files remaining: {len(self.get_filtered_files())}", 'info')
+        if incl_next_file:
+            print_t(f"-> {self.get_filtered_files()[0]}{nl}")

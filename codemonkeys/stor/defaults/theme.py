@@ -13,9 +13,8 @@ class Theme(Base):
 
     # KEYWORDS (bold in CLI prints)
     keywords: list = [
-        'entity types', 'defs.py', 'CodeMonkeys', 'automations', 'action flags', 'entity type',
-        'barrels', 'modules', 'commands', 'monkeys', 'actions', 'barrel', 'module', 'action flag', 'automation',
-        'command', 'monkey', 'types', 'cli', 'monk'
+        'CodeMonkeys', 'entity types', 'entity type', 'automations', 'automation', 'action flags', 'action flag',
+        'barrels', 'barrel', 'funcs', 'func', 'commands', 'command', 'monkeys', 'monkey', 'monk cli', 'monk'
     ]
 
     text_themes: dict = {
@@ -27,9 +26,9 @@ class Theme(Base):
         'error': {'color': 'light_red', 'light_mode': 'light_red', 'pre': '❌ '},
 
         'super_important': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '👀 '},
-        'important': {'color': 'yellow', 'light_mode': 'magenta', 'pre': '👉 '},
+        'important': {'color': 'light_yellow', 'light_mode': 'magenta', 'pre': '👉 '},
         'special': {'color': 'light_magenta', 'light_mode': 'magenta', 'pre': ''},
-        'loading': {'color': 'magenta', 'light_mode': 'magenta', 'pre': '⏳ '},
+        'loading': {'color': 'yellow', 'light_mode': 'magenta', 'pre': '⏳ '},
 
         'info': {'color': 'cyan', 'light_mode': 'blue', 'pre': '🔹 '},
 

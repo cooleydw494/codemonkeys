@@ -21,7 +21,7 @@ class Barrel(CliRunnable):
         :param List[str] unnamed_args: Unnamed arguments.
         """
         super().__init__(named_args, unnamed_args)
-        print_t("Barrel initialized.", "start")
+        print_t(f"Barrel initialized: {self.__class__.__name__}", 'start')
 
     def with_monkey(self, monkey_name: OStr = None) -> 'Barrel':
         """

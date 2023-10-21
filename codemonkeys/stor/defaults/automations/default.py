@@ -61,7 +61,7 @@ class Default(Automation):
         # Iterate through filtered files
         while True:
 
-            file_iterator.print_files_remaining()
+            file_iterator.print_files_remaining(incl_next_file=True)
             file_path = file_iterator.pop_file()
             if file_path is None:
                 print_t("All Files Handled.", 'done')
@@ -72,16 +72,15 @@ class Default(Automation):
                 print_t(f"Skipping file, output exists at: {output_file_path}", 'special')
                 continue
 
-            print(f"Processing file: {file_path}")
             old_content = get_file_contents(file_path)
-            new_content = file_prompter.file_path(file_path).get_output()
+            new_content = file_prompter.file_path(file_path).generate_output()
 
             if new_content is None:
                 continue
 
             # Write output to file
             write_file_contents(output_file_path, new_content)
-            print(f"Output saved to: {output_file_path}", 'info')
+            print(f"Output saved to: {output_file_path}", 'done')
 
             # Commit changes if a Committer was configured
             if committer is not None:

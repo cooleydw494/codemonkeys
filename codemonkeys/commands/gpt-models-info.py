@@ -28,6 +28,9 @@ class GptModelsInfo(Command):
             print_t('Model info is not cached. Please run `monk gpt-models-info --update`.', 'info')
 
         else:
-            print_t(f'Available Models{nl}', 'special')
+            print()
+            print_t(f'Available Models:', 'special')
+            print_t('(most do not support function calling)', 'quiet')
+            print()
             for model_name, model_data in model_info.items():
                 print_t(f"{model_name}")

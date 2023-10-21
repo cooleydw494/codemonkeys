@@ -54,12 +54,15 @@ def apply_t(text: str, theme: str, incl_prefix: bool = False, attrs: Optional[Li
     return text
 
 
-def print_t(text: str, theme: OStr = None, incl_prefix: bool = True, verbose: bool = False) -> None:
+def print_t(text: str, theme: OStr = None, incl_prefix: bool = True, verbose: bool = False, not_verbose: bool = False)\
+        -> None:
     """
     Prints the given text with the specified theme applied and optional attributes.
     Can be set to only print whenever verbose logging is enabled.
     """
     if verbose and not Theme.verbose_logs_enabled:
+        return
+    if not_verbose and Theme.verbose_logs_enabled:
         return
     sub_indent = ''
     if theme:

@@ -10,7 +10,7 @@ from codemonkeys.utils.misc.defs_utils import load_class
 from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.monk.find_entity import find_entity
-from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
+from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled, print_table
 
 
 @dataclass
@@ -60,8 +60,7 @@ class Monkey:
     def __post_init__(self):
         self._dynamic_validate()
         self._cop_paths()
-        if verbose_logs_enabled():
-            print_t(f"Loaded Monkey: {self.__dict__}", 'info')
+        self._monkey_loaded_log()
 
     @classmethod
     def load(cls, name: OStr = None) -> 'Monkey':
@@ -109,6 +108,19 @@ class Monkey:
                 except FileNotFoundError as e:
                     print_t(f"PROMPT cop-file not found for {attr}", 'error')
                     handle_exception(e, always_exit=True)
+
+    def _monkey_loaded_log(self) -> None:
+        print_t(f'Monkey Loaded: {self.__class__.__name__}', 'start')
+        if verbose_logs_enabled():
+            filtered_props = {k: v for k, v in self.__dict__.items() if not k.startswith('_')}
+            rows = [[k, str(v)[:64] + '...' if len(str(v)) > 64 else str(v)] for k, v in filtered_props.items()]
+            print()
+            print_table({
+                "headers": ["Prop", "Computed Value"],
+                "show_headers": True,
+                "rows": rows,
+            })
+            print()
 
     def before_run(self) -> None:
         """Called before an Automation's run() method."""
