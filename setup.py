@@ -3,11 +3,16 @@ from setuptools import setup, find_packages
 setup(
     name='codemonkeys',
     version='0.3.0',
-    description="CodeMonkeys is a highly configurable tool for creating/running strategic AI automations (and "
-                "more). Beyond that, its a thoughtful and extensible framework for creating automations. "
-                "CodeMonkeys' design was heavily influenced by how much it was used in its own development, "
-                "naturally converging to a sublime synergy of the tool and the codemonkeys files.",
-    long_description=open('README.md').read(),
+    description="CodeMonkeys gives devs control over their automated GPT logic. The current focus is working on "
+                "codebases but it is lovingly designed to enable automations of all kinds. This framework aims to use "
+                "AI effectively, while being reliable, predictable, and tailored to your needs. There is a strong "
+                "focus on only involving AI at crucial areas of strength, and using good old-fashioned code for "
+                "everything else.",
+    long_description="CodeMonkeys gives devs control over their automated GPT logic. The current focus is working on "
+                     "codebases but it is lovingly designed to enable automations of all kinds. This framework aims "
+                     "to use AI effectively, while being reliable, predictable, and tailored to your needs. There is "
+                     "a strong focus on only involving AI at crucial areas of strength, and using good old-fashioned "
+                     "code for everything else.",
     long_description_content_type='text/markdown',
     url='https://github.com/cooleydw494/codemonkeys',
     author='David Wallace Cooley Jr',
@@ -15,7 +20,7 @@ setup(
     license="MIT",
     packages=find_packages(),
     install_requires=[
-        'openai',  'python-dotenv', 'Levenshtein', 'pandas', 'termcolor', 'tiktoken', 'psutil',
+        'openai',  'python-dotenv', 'Levenshtein', 'pandas', 'termcolor', 'tiktoken', 'psutil', 'json-repair',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -31,7 +36,8 @@ setup(
     entry_points={
         'console_scripts': [
             'codemonkeys=codemonkeys.__main__:main',
+            'monk=codemonkeys.scripts.monk:main',
+            'monk-new=codemonkeys.scripts.monk_new:main',
         ],
-    },
-    scripts=['scripts/monk', 'scripts/monk-new']
+    }
 )
