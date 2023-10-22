@@ -20,7 +20,7 @@ setup(
     license="MIT",
     packages=find_packages(),
     install_requires=[
-        'openai',  'python-dotenv', 'Levenshtein', 'pandas', 'termcolor', 'tiktoken', 'psutil', 'json-repair',
+        'openai', 'python-dotenv', 'Levenshtein', 'pandas', 'termcolor', 'tiktoken', 'psutil', 'json-repair',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -36,7 +36,7 @@ setup(
     entry_points={
         'console_scripts': [
             'codemonkeys=codemonkeys.__main__:main',
-            'monk=codemonkeys.scripts.monk:main',
+            'monk=codemonkeys.scripts.monk',
             'monk-new=codemonkeys.scripts.monk_new:main',
         ],
     }
