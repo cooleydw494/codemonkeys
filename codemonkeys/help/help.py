@@ -21,8 +21,6 @@ def run_default_help():
     # Action Flags
     print_t(f"Action flags perform alternate operations on targetable entities.{nl2}", 'info')
 
-    min_col_widths = [23, 25, 13]
-
     monk_general_json = {
         "headers": [
             "Command",
@@ -84,6 +82,7 @@ def run_default_help():
     print()
     print()
     print_t("That's it! For more, run `monk -h <entity>` or read the docs.", 'done')
+    print()
     print_t("🌐 https://cooleydw494.github.io/codemonkeys", 'cyan')
     print()
     exit(0)

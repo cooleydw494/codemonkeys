@@ -28,6 +28,6 @@ class ExampleCommand(Command):
 
     def run(self) -> None:
         """
-        Execute your Command logic here,, utilizing args as needed.
+        Execute your Command logic here, utilizing args as needed.
         """
         print(f"named_arg_one: {self.named_arg_one}")
