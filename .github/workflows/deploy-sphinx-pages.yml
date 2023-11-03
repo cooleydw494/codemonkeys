@@ -1,10 +1,10 @@
-name: Deploy Sphinx documentation to Pages
+name: Deploy Sphinx Docs to GitHub Pages
 
 on:
-
   push:
-
-    branches: [main] # branch to trigger deployment
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
 
