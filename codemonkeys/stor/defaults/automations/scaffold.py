@@ -22,11 +22,11 @@ class Scaffold(Automation):
         # Fetch the context (should be a file detailing a codebase)
         context = get_file_contents(m.CONTEXT_FILE_PATH)
 
-        extract_prompt = f"{m.FILE_EXTRACTION_PROMPT}:{nl}{content_sep}{nl}{context}{nl}{content_sep}"
+        extract_prompt = f"{m.FILE_SELECT_PROMPT}:{nl}{content_sep}{nl}{context}{nl}{content_sep}"
         print_t(f"Filepath extraction prompt:{nl}{extract_prompt}{nl}", "quiet")
 
         # Use ExtractList Func to get a list of absolute filepaths that the context file references
-        file_paths: list = (GPTClient(m.FILE_EXTRACTION_MODEL, m.FILE_EXTRACTION_TEMP, m.FILE_EXTRACTION_MAX_TOKENS)
+        file_paths: list = (GPTClient(m.FILE_SELECT_MODEL, m.FILE_SELECT_TEMP, m.FILE_SELECT_MAX_TOKENS)
                             .generate(extract_prompt, [ExtractList()], 'extract_list'))
 
         if len(file_paths) == 0:

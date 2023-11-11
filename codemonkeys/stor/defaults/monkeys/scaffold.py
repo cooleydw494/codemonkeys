@@ -22,7 +22,7 @@ class Scaffold(Monkey):
     PROJECT_ROOT: str = '~/local-git/twitter_poster'
 
     # Filepath Extraction
-    FILE_EXTRACTION_PROMPT: str = ("Review the following architectural documentation for a codebase and extract a list "
+    FILE_SELECT_PROMPT: str = ("Review the following architectural documentation for a codebase and extract a list "
                                    "of all the filepaths that need to be created to scaffold it. Use absolute paths, "
                                    f"with the project root dir {PROJECT_ROOT}.")
 
@@ -35,12 +35,12 @@ class Scaffold(Monkey):
 
     # Models
     MAIN_MODEL: str = 'gpt-4'
-    FILE_EXTRACTION_MODEL: str = 'gpt-4'
+    FILE_SELECT_MODEL: str = 'gpt-4'
 
     # Temps
     MAIN_TEMP: float = 1.0
-    FILE_EXTRACTION_TEMP: float = 0.8
+    FILE_SELECT_TEMP: float = 0.8
 
     # Max Tokens
     MAIN_MAX_TOKENS: int = 6000
-    FILE_EXTRACTION_MAX_TOKENS: int = 3000
+    FILE_SELECT_MAX_TOKENS: int = 3000
