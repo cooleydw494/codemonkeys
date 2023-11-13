@@ -33,7 +33,9 @@ class Default(Automation):
                          .include_exts(m.INCLUDE_EXTS)
                          .filepath_match_include(m.FILEPATH_MATCH_INCLUDE)
                          .filepath_match_exclude(m.FILEPATH_MATCH_EXCLUDE)
-                         .token_count_model(m.MAIN_MODEL, m.MAIN_TEMP, m.FILTER_MAX_TOKENS)
+                         .token_count_model(m.MAIN_MODEL, m.FILTER_MAX_TOKENS)
+                         .file_select_prompt(m.FILE_SELECT_PROMPT)
+                         .file_select_model(m.FILE_SELECT_MODEL, m.FILE_SELECT_TEMP, m.FILE_SELECT_MAX_TOKENS)
                          .filter_files())
 
         # Build a FilePrompter for prompting output on each file
@@ -80,7 +82,7 @@ class Default(Automation):
 
             # Write output to file
             write_file_contents(output_file_path, new_content)
-            print(f"Output saved to: {output_file_path}", 'done')
+            print_t(f"Output saved to: {output_file_path}", 'done')
 
             # Commit changes if a Committer was configured
             if committer is not None:

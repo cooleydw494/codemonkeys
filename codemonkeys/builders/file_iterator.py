@@ -2,7 +2,8 @@ import os
 import time
 from typing import Optional
 
-from codemonkeys.defs import nl
+from codemonkeys.defs import nl, content_sep
+from codemonkeys.funcs.extract_list import ExtractList
 from codemonkeys.types import OFloat, OStr, OInt
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.monk.theme_functions import print_t
@@ -11,15 +12,23 @@ from codemonkeys.utils.imports.theme import Theme
 
 class FileIterator:
 
-    _temp: OFloat = None
-    _model: OStr = None
-    _max_tokens: OInt = None
-    _gpt_client: Optional[GPTClient] = None
-    _work_path: OStr = None
-    _include_extensions: tuple = ()
-    _include_patterns: tuple = ()
-    _exclude_patterns: tuple = ()
-    _filtered_files = []
+    def __init__(self):
+
+        self._token_count_client: Optional[GPTClient] = None
+        self._token_count_model: OStr = None
+        self._filter_max_tokens: OInt = None
+
+        self._file_select_client: Optional[GPTClient] = None
+        self._file_select_prompt: OStr = None
+        self._file_select_model: OStr = 'gpt-3.5-turbo'
+        self._file_select_temp: OFloat = 0.8
+        self._file_select_max_tokens: OInt = 3000
+
+        self._work_path: OStr = None
+        self._include_extensions: tuple = ()
+        self._include_patterns: tuple = ()
+        self._exclude_patterns: tuple = ()
+        self._filtered_files = []
 
     def work_path(self, work_path: str) -> 'FileIterator':
         """Set the working path for the FileIterator.
@@ -57,18 +66,39 @@ class FileIterator:
         self._exclude_patterns = filepath_match_exclude
         return self
 
-    def token_count_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':
+    def file_select_prompt(self, file_select_prompt: OStr) -> 'FileIterator':
+        """Set the file select prompt for the FileIterator.
+
+        :param str file_select_prompt: The file select prompt as a string.
+        :return: Self for method chaining.
+        """
+        self._file_select_prompt = file_select_prompt
+        return self
+
+    def token_count_model(self, model: str, filter_max_tokens: int) -> 'FileIterator':
         """Set the token count model for the FileIterator.
+
+        :param str model: The name of the model.
+        :param int filter_max_tokens: The maximum number of tokens per file (not a max for the client)
+        :return: Self for method chaining.
+        """
+        self._token_count_model = model
+        self._filter_max_tokens = filter_max_tokens
+        self._token_count_client = GPTClient(model)
+        return self
+
+    def file_select_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':
+        """Set the file select model for the FileIterator.
 
         :param str model: The name of the model.
         :param float temp: The temperature for the model.
         :param int max_tokens: The maximum number of tokens.
         :return: Self for method chaining.
         """
-        self._model = model
-        self._temp = temp
-        self._max_tokens = max_tokens
-        self._gpt_client = GPTClient(model, temp, max_tokens)
+        self._file_select_model = model
+        self._file_select_temp = temp
+        self._file_select_max_tokens = max_tokens
+        self._file_select_client = GPTClient(model, temp, max_tokens)
         return self
 
     @staticmethod
@@ -101,6 +131,8 @@ class FileIterator:
     def filter_files(self) -> 'FileIterator':
         """Filter the files in the working path based on include and exclude patterns.
 
+        Optionally, if file_select_prompt is provided, GPT will be used to further filter the files.
+
         :return: Self for method chaining.
         """
         self._filtered_files = []
@@ -114,10 +146,19 @@ class FileIterator:
                 absolute_path = self.resolve_path(os.path.join(root, file))
                 if self._should_include(absolute_path):
                     with open(absolute_path, 'r') as f:
-                        num_tokens = self._gpt_client.count_tokens(f.read())
+                        num_tokens = self._token_count_client.count_tokens(f.read())
 
-                    if num_tokens <= self._max_tokens:
+                    if num_tokens <= self._filter_max_tokens:
                         self._filtered_files.append(absolute_path)
+
+        if self._file_select_prompt:
+            print_t(f"Further filtering with FILE_SELECT_PROMPT: {self._file_select_prompt}", 'info', verbose=True)
+            current_list = str(self._filtered_files)
+            prompt = (f"Examine the following list of filepaths: {content_sep}{current_list}{content_sep}"
+                      f"Return the list of filepaths filtered by this prompt: {self._file_select_prompt}.")
+            self._filtered_files = \
+                (GPTClient(self._file_select_model, self._file_select_temp, self._file_select_max_tokens)
+                 .generate(prompt, [ExtractList()], 'extract_list'))
 
         print_t(f"{nl}File filtering complete.{nl}", 'quiet')
 
