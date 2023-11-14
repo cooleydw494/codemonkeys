@@ -10,12 +10,13 @@ from codemonkeys.utils.monk.theme_functions import print_t
 class Summarizer:
     """A class to summarize given text using GPT."""
 
-    _model: OStr = None
-    _temp: OFloat = None
-    _max_tokens: OInt = None
-    _gpt_client: Optional[GPTClient] = None
-    _prompt: OStr = None
-    _context: OStr = None
+    def __init__(self):
+        self._model: OStr = None
+        self._temp: OFloat = None
+        self._max_tokens: OInt = None
+        self._gpt_client: Optional[GPTClient] = None
+        self._prompt: OStr = None
+        self._context: OStr = None
 
     def model(self, model: str, temp: float, max_tokens: int) -> 'Summarizer':
         """

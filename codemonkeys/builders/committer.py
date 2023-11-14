@@ -22,22 +22,19 @@ def diff_content(old_content: Sequence[str], new_content: Sequence[str]) -> str:
 class Committer:
     """A composable class to commit changes to a Git repo."""
 
-    _gitter: Optional[Gitter] = None
-    _gpt_client: Optional[GPTClient] = None
-    _model: str = 'gpt-3.5-turbo'
-    _temp: float = 0.7
-    _max_tokens: int = 32000
-    _prompt: OStr = None
-    _message: OStr = 'Updated via CodeMonkeys.'
-
     def __init__(self, repo_path: str):
         """
         Initializes the `Committer` class.
 
         :param str repo_path: Path to the Git repository.
         """
-        self._gitter = Gitter(repo_path)
-        self._gpt_client = GPTClient(self._model, self._temp, self._max_tokens)
+        self._gitter: Gitter = Gitter(repo_path)
+        self._gpt_client: GPTClient = GPTClient(self._model, self._temp, self._max_tokens)
+        self._model: str = 'gpt-3.5-turbo'
+        self._temp: float = 0.8
+        self._max_tokens: int = 8000
+        self._prompt: OStr = None
+        self._message: str = 'Updated via CodeMonkeys.'
 
     def model(self, model: str, temp: OFloat = None, max_tokens: OInt = None) -> 'Committer':
         """

@@ -5,10 +5,11 @@ from codemonkeys.types import OStr
 
 class OutputPathResolver:
 
-    _output_path: OStr = None
-    _output_ext: OStr = None
-    _output_filename_append: OStr = None
-    _relative_path_root: OStr = None
+    def __init__(self):
+        self._output_path: OStr = None
+        self._output_ext: OStr = None
+        self._output_filename_append: OStr = None
+        self._relative_path_root: OStr = None
 
     def output_path(self, output_path: str) -> 'OutputPathResolver':
         """
