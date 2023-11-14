@@ -1,7 +1,5 @@
 import json
-import sys
 import time
-import traceback
 from typing import List, Optional, Any
 
 import openai
@@ -9,24 +7,18 @@ import tiktoken
 from json_repair import repair_json
 from tiktoken import Encoding
 
-from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER, nl2, nl
+from codemonkeys.defs import TOKEN_UNCERTAINTY_BUFFER, nl
 from codemonkeys.entities.func import Func
-from codemonkeys.types import OStr, OInt, OFloat
+from codemonkeys.types import OStr
 from codemonkeys.utils.config.monkey_validations import validate_model, validate_temp
 from codemonkeys.utils.imports.env import Env
 from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.misc.log import Log
-from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
+from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class GPTClient:
     """A helper class to interact with GPT based models."""
-
-    model: OStr = None
-    hard_max_tokens: OInt = None
-    max_tokens: OInt = None
-    temperature: OFloat = None
-    encoding: Optional[Encoding] = None
 
     def __init__(self, model_name: str, temperature: float = 1.0, max_tokens: int = 8000):
         """
@@ -40,11 +32,10 @@ class GPTClient:
         env = Env.get()
         openai.api_key = env.OPENAI_API_KEY
 
-        self.model = validate_model(model_name)
-        self.hard_max_tokens = 16000  # TODO: use model-specific token limits
-        self.max_tokens = min(max_tokens, self.hard_max_tokens) - TOKEN_UNCERTAINTY_BUFFER
-        self.temperature = validate_temp(temperature)
-        self.encoding = tiktoken.encoding_for_model(self.model)
+        self.model: str = validate_model(model_name)
+        self.max_tokens: int = max_tokens - TOKEN_UNCERTAINTY_BUFFER
+        self.temperature: float = validate_temp(temperature)
+        self.encoding: Encoding = tiktoken.encoding_for_model(self.model)
 
     def generate(self, prompt: str, funcs: Optional[List[Func]] = None, enforce_func: OStr = None,
                  retry_delay: int = 60) -> Any:

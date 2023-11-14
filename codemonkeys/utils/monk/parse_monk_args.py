@@ -7,8 +7,17 @@ def _split_unknown_args(unknown_args: List[str]) -> Tuple[Dict[str, bool], List[
     """
     Splits unknown args into named/unnamed args.
     
-    :param List[str] unknown_args: Unknown args.
-    :return: Tuple containing dictionary of named args and list of unnamed args.
+    Takes a list of arguments provided in an unknown format and separates
+    them into named arguments (options) and unnamed arguments (positional).
+    Named arguments are expected to start with `--` or `-` and may include
+    `=` for inline values. Any argument following a named argument is
+    considered a value for that argument, unless it also starts with `--` or `-`.
+
+    :param unknown_args: A list of command-line arguments to be split.
+    :type unknown_args: List[str]
+    :return: A tuple consisting of a dictionary for named arguments and a list
+             for unnamed arguments.
+    :rtype: Tuple[Dict[str, bool], List[str]]
     """
     from collections import OrderedDict
     unknown_named_args = OrderedDict()
@@ -39,8 +48,14 @@ def parse_monk_args():
     """
     Parses the args supplied to the monk command.
 
-    :return: Tuple representing named_args (dict), unnamed_args (list),
-             action (str), entity_name (str), and entity_type (str).
+    Interprets arguments given to the 'monk' CLI command by first using argparse
+    to identify action and entity type flags, then processes any remaining known
+    and unknown arguments. Unknown arguments are handled by _split_unknown_args
+    to separate them into named and unnamed arguments.
+
+    :return: A tuple containing the dictionaries and lists of named and unnamed
+             arguments, the action to perform, the entity name, and the entity type.
+    :rtype: Tuple[Dict[str, bool], List[str], str, str, str]
     """
     import argparse
 

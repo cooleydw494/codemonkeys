@@ -5,15 +5,32 @@ from codemonkeys.builders.file_iterator import FileIterator
 from codemonkeys.builders.file_prompter import FilePrompter
 from codemonkeys.builders.output_path_resolver import OutputPathResolver
 from codemonkeys.builders.summarizer import Summarizer
-from codemonkeys.defs import nl
 from codemonkeys.entities.automation import Automation
 from codemonkeys.utils.misc.file_ops import get_file_contents, write_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class Default(Automation):
+    """
+    Automation for running default GPT-powered file operations.
+
+    This class encapsulates the overall procedure for executing
+    a generic automation which involves reading files, generating content
+    based on the contents and context, and writing the results back
+    to files. It is designed to be configurable using Monkeys and
+    can operate with various builder classes for handling steps of
+    the automation process.
+    """
 
     def run(self) -> None:
+        """
+        Execute the automation using configured settings from a Monkey.
+
+        This method goes through the process of reading the target files,
+        applying GPT-powered transformations, and saving the results.
+        It utilizes builder classes to manage specific automation steps,
+        such as file iteration, prompting, and committing changes.
+        """
         m = self._monkey
 
         # Prepare summarized or unsummarized context
@@ -33,7 +50,9 @@ class Default(Automation):
                          .include_exts(m.INCLUDE_EXTS)
                          .filepath_match_include(m.FILEPATH_MATCH_INCLUDE)
                          .filepath_match_exclude(m.FILEPATH_MATCH_EXCLUDE)
-                         .token_count_model(m.MAIN_MODEL, m.MAIN_TEMP, m.FILTER_MAX_TOKENS)
+                         .token_count_model(m.MAIN_MODEL, m.FILTER_MAX_TOKENS)
+                         .file_select_prompt(m.FILE_SELECT_PROMPT)
+                         .file_select_model(m.FILE_SELECT_MODEL, m.FILE_SELECT_TEMP, m.FILE_SELECT_MAX_TOKENS)
                          .filter_files())
 
         # Build a FilePrompter for prompting output on each file
@@ -80,7 +99,7 @@ class Default(Automation):
 
             # Write output to file
             write_file_contents(output_file_path, new_content)
-            print(f"Output saved to: {output_file_path}", 'done')
+            print_t(f"Output saved to: {output_file_path}", 'done')
 
             # Commit changes if a Committer was configured
             if committer is not None:

@@ -9,7 +9,12 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class Barrel(CliRunnable):
-    """A base class that initializes and runs multiple automations."""
+    """A base class that initializes and runs multiple automations.
+
+    A Barrel is a way to orchestrate multiple Automations/Monkeys into a single cli-runnable entity. It allows
+    you to sequentially run multiple automations with specific configurations, and provides a framework to
+    encapsulate this logic in a clean and repeatable way.
+    """
 
     monkey: OMonkey = None
 
@@ -17,8 +22,10 @@ class Barrel(CliRunnable):
         """
         Initializes the `Barrel` class.
 
-        :param Dict[str, Any] named_args: Named arguments.
-        :param List[str] unnamed_args: Unnamed arguments.
+        :param named_args: Named arguments passed via the CLI.
+        :type named_args: Dict[str, Any]
+        :param unnamed_args: Unnamed arguments passed via the CLI.
+        :type unnamed_args: List[str]
         """
         super().__init__(named_args, unnamed_args)
         print_t(f"Barrel initialized: {self.__class__.__name__}", 'start')
@@ -27,8 +34,10 @@ class Barrel(CliRunnable):
         """
         Set the Monkey that will be loaded and used to run Automations. Prompts user if None.
 
-        :param OStr monkey_name: Name of the Monkey configuration.
+        :param monkey_name: Name of the Monkey configuration. If None, the user will be prompted.
+        :type monkey_name: OStr, optional
         :return: The current Barrel instance.
+        :rtype: Barrel
         """
         self.monkey = Monkey.load(monkey_name)
         return self
@@ -37,8 +46,10 @@ class Barrel(CliRunnable):
         """
         Finds and runs the specified Automation, using the current Monkey.
 
-        :param str name: Name of the automation to run.
+        :param name: Name of the automation to run.
+        :type name: str
         :return: The current Barrel instance.
+        :rtype: Barrel
         """
         name, abspath = find_entity(name, 'automation', exact_match_only=True)
         run_automation(
@@ -53,6 +64,9 @@ class Barrel(CliRunnable):
     def run(self):
         """
         Defines the abstract method to be implemented in a subclass of Barrel.
+
+        This method should contain the concrete logic for running multiple automations that are sequenced
+        and configured according to the needs of the specific Barrel implementation.
 
         :raises NotImplementedError: The run() method must be implemented in a subclass of Barrel.
         """

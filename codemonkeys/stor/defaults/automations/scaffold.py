@@ -1,32 +1,43 @@
 import os
 
-from codemonkeys.defs import content_sep, nl, nl2
-from codemonkeys.funcs.write_file import WriteFile
-from codemonkeys.utils.gpt.gpt_client import GPTClient
+from monkeys.scaffold import Scaffold as ScaffoldMonkey
 from pandas.io.common import file_exists
 
 from codemonkeys.builders.committer import Committer
+from codemonkeys.defs import content_sep, nl, nl2
 from codemonkeys.entities.automation import Automation
+from codemonkeys.funcs.extract_list import ExtractList
+from codemonkeys.funcs.write_file import WriteFile
+from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
-
-from codemonkeys.funcs.extract_list import ExtractList
-from monkeys.scaffold import Scaffold as ScaffoldMonkey
 
 
 class Scaffold(Automation):
 
     def run(self) -> None:
+        """
+        Run the scaffold process according to the monkey configuration.
+
+        This method processes a context file that details a codebase, extracts a list of file paths, then iteratively
+        generates scaffold files for each file path using prompts with GPT powered by specific functionalities
+        from the framework classes like ExtractList and WriteFile.
+
+        If GPT Git Commits are enabled, scaffolded files are committed using the Commiter.
+
+        :raises Exception: Raises an exception if no file paths are extracted from the context or if issues
+                            occur during file writing and commit processes.
+        """
         m: ScaffoldMonkey = self._monkey
 
         # Fetch the context (should be a file detailing a codebase)
         context = get_file_contents(m.CONTEXT_FILE_PATH)
 
-        extract_prompt = f"{m.FILE_EXTRACTION_PROMPT}:{nl}{content_sep}{nl}{context}{nl}{content_sep}"
+        extract_prompt = f"{m.FILE_SELECT_PROMPT}:{nl}{content_sep}{nl}{context}{nl}{content_sep}"
         print_t(f"Filepath extraction prompt:{nl}{extract_prompt}{nl}", "quiet")
 
         # Use ExtractList Func to get a list of absolute filepaths that the context file references
-        file_paths: list = (GPTClient(m.FILE_EXTRACTION_MODEL, m.FILE_EXTRACTION_TEMP, m.FILE_EXTRACTION_MAX_TOKENS)
+        file_paths: list = (GPTClient(m.FILE_SELECT_MODEL, m.FILE_SELECT_TEMP, m.FILE_SELECT_MAX_TOKENS)
                             .generate(extract_prompt, [ExtractList()], 'extract_list'))
 
         if len(file_paths) == 0:

@@ -8,7 +8,8 @@ from termcolor import colored
 from codemonkeys.cm_paths import (CM_ENV_DEFAULT_PATH, CM_THEME_DEFAULT_PATH, CM_AUTOMATIONS_DIR_DEFAULT_PATH,
                                   CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
                                   CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH,
-                                  CM_MONKEYS_DIR_DEFAULT_PATH)
+                                  CM_MONKEYS_DIR_DEFAULT_PATH, CM_EXAMPLE_MIXIN_PATH, CM_EXAMPLE_FUNC_PATH,
+                                  CM_EXAMPLE_BARREL_PATH)
 
 top_level_dirs = [
     'barrels',
@@ -16,6 +17,7 @@ top_level_dirs = [
     'funcs',
     'config',
     'builders',
+    'mixins',
     'stor',
 ]
 
@@ -28,6 +30,15 @@ stor_dirs = [
 
 
 def main():
+    """
+    Create a new CodeMonkeys project directory structure and initial files.
+
+    This script initializes a new CodeMonkeys project with the necessary directory structure
+    and a set of starting files, including a default .env file, config files, automation scripts,
+    monkey definitions, functions, and barrels. It also copies example mixin and func classes
+    to help the user get started with custom logic.
+    """
+
     # Get the new project name from the command line arguments
     try:
         new_project_name = sys.argv[1]
@@ -88,6 +99,18 @@ def main():
     # Create the default automation
     print(colored("Creating default automations...", 'cyan'))
     shutil.copytree(CM_AUTOMATIONS_DIR_DEFAULT_PATH, os.path.join(project_path, 'automations'))
+
+    # Create the example barrels
+    print(colored("Creating default barrels...", 'cyan'))
+    shutil.copyfile(CM_EXAMPLE_BARREL_PATH, os.path.join(project_path, 'barrels', 'example_barrel.py'))
+
+    # Create the default mixins
+    print(colored("Creating default mixins...", 'cyan'))
+    shutil.copyfile(CM_EXAMPLE_MIXIN_PATH, os.path.join(project_path, 'mixins', 'my_project_workspace.py'))
+
+    # Create the default funcs
+    print(colored("Creating default funcs...", 'cyan'))
+    shutil.copyfile(CM_EXAMPLE_FUNC_PATH, os.path.join(project_path, 'funcs', 'example_func.py'))
 
     # Create the default gitignore
     print(colored("Creating default .gitignore...", 'cyan'))

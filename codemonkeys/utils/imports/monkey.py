@@ -3,9 +3,10 @@ from termcolor import colored
 from codemonkeys.utils.misc.handle_exception import handle_exception
 
 """
-This "module" simplifies importing a user-extendable class within core framework code.
-For a CodeMonkeys project codebase, it is best to import the extended class directly.
-
+This module acts as a bridge for importing the user-extended Monkey class that may contain project-specific
+configurations and logic. In core framework code where user extension is expected, this module will import
+the extended class directly if available. On import failure, the default Monkey class from the codemonkeys
+package is used instead.
 """
 
 try:

@@ -12,6 +12,10 @@ class Version(Command):
     def run(self) -> None:
         """
         Prints the version of the CodeMonkeys framework.
+
+        When invoked, this command retrieves the current version number from the
+        VERSION constant and prints it out with emphasis, utilizing the theming
+        capabilities of the CodeMonkeys framework.
         """
 
         print_t(f"CodeMonkeys v{VERSION}", 'important')

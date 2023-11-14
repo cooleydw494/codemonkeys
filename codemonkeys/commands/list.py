@@ -6,11 +6,13 @@ from codemonkeys.utils.monk.theme_functions import print_tree
 
 class List(Command):
     """
-    This is a subclass of Command class which lists certain file paths,
-    and has an optional 'all' argument to list additional file paths.
-    The 'all' argument is False by default.
+    List entities in the command, automations, and barrels directories.
 
-    :param bool all: An optional argument to list additional file paths. Default is False.
+    This command provides a tree view of available entities within the CodeMonkeys project structure.
+    Running the list command with the '--all' flag will include both automations and barrels in the output alongside commands.
+
+    :param all: Include automations and barrels in the list if True.
+    :type all: bool
     """
     named_arg_keys = ['all']
     all: bool = False
@@ -19,9 +21,10 @@ class List(Command):
         """
         Prints the file paths in a tree structure.
 
-        If the 'all' argument is set to True, it prints additional file paths.
+        If the 'all' argument is set to True, it prints additional file paths for automations and barrels.
 
         :return: None
+        :rtype: NoneType
         """
         print_tree(CM_COMMANDS_PATH, exclude_file_starts=['.', '_'],
                    title="📁  Commands - Run CLI commands", incl_prefix=False)

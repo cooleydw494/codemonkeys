@@ -1,5 +1,5 @@
 import difflib
-from typing import Sequence, Optional
+from typing import Sequence
 
 from codemonkeys.defs import nl, nl2
 from codemonkeys.types import OStr, OFloat, OInt
@@ -12,41 +12,53 @@ def diff_content(old_content: Sequence[str], new_content: Sequence[str]) -> str:
     """
     Generates a unified diff between old_content and new_content.
 
-    :param Sequence[str] old_content: The original content.
-    :param Sequence[str] new_content: The updated content.
-    :return: The unified diff as a string.
+    Compares two sequences of strings, usually lines of text from files, and
+    produces a human-readable mismatch highlighting the differences using the unified diff format.
+
+    :param old_content: The original content to compare.
+    :type old_content: Sequence[str]
+    :param new_content: The updated content to compare.
+    :type new_content: Sequence[str]
+    :return: The unified diff as a string, with line changes indicated.
+    :rtype: str
     """
     return nl.join(list(difflib.unified_diff(old_content, new_content)))
 
 
 class Committer:
-    """A composable class to commit changes to a Git repo."""
-
-    _gitter: Optional[Gitter] = None
-    _gpt_client: Optional[GPTClient] = None
-    _model: str = 'gpt-3.5-turbo'
-    _temp: float = 0.7
-    _max_tokens: int = 32000
-    _prompt: OStr = None
-    _message: OStr = 'Updated via CodeMonkeys.'
+    """A builder class to commit changes to a Git repo."""
 
     def __init__(self, repo_path: str):
         """
         Initializes the `Committer` class.
 
-        :param str repo_path: Path to the Git repository.
+        Sets up a `Gitter` instance for Git operations and a `GPTClient` for generating commit messages.
+
+        :param repo_path: Path to the Git repository where commits will be made.
+        :type repo_path: str
         """
-        self._gitter = Gitter(repo_path)
-        self._gpt_client = GPTClient(self._model, self._temp, self._max_tokens)
+        self._gitter: Gitter = Gitter(repo_path)
+        self._gpt_client: GPTClient = GPTClient(self._model, self._temp, self._max_tokens)
+        self._model: str = 'gpt-3.5-turbo'
+        self._temp: float = 0.8
+        self._max_tokens: int = 8000
+        self._prompt: OStr = None
+        self._message: str = 'Updated via CodeMonkeys.'
 
     def model(self, model: str, temp: OFloat = None, max_tokens: OInt = None) -> 'Committer':
         """
         Sets the GPT model, temperature, and maximum tokens.
 
-        :param str model: GPT model to use.
-        :param float temp: Temperature for the GPT model.
-        :param int max_tokens: Maximum number of tokens for the GPT model.
-        :return: The updated Committer instance.
+        Configures the GPT client with model specifications for generating commit messages.
+
+        :param model: GPT model to use.
+        :type model: str
+        :param temp: Temperature for the GPT model.
+        :type temp: OFloat, optional
+        :param max_tokens: Maximum number of tokens for the GPT model.
+        :type max_tokens: OInt, optional
+        :return: The updated Committer instance with new model settings.
+        :rtype: Committer
         """
         if model is not None:
             self._model = model
@@ -59,10 +71,14 @@ class Committer:
 
     def prompt(self, prompt: str) -> 'Committer':
         """
-        Sets the GPT prompt
+        Sets the GPT prompt.
 
-        :param str prompt: The GPT prompt.
-        :return: The updated Committer instance.
+        Defines the prompt that will be used to generate commit messages.
+
+        :param prompt: The GPT prompt.
+        :type prompt: str
+        :return: The updated Committer instance with the new prompt.
+        :rtype: Committer
         """
         self._prompt = prompt
         return self
@@ -71,8 +87,12 @@ class Committer:
         """
         Sets the commit message manually.
 
-        :param str commit_message: Commit message.
-        :return: The updated Committer instance.
+        Directly sets the commit message to be used for commits.
+
+        :param commit_message: Commit message.
+        :type commit_message: str
+        :return: The updated Committer instance with the provided commit message.
+        :rtype: Committer
         """
         self._message = commit_message
         return self
@@ -81,9 +101,15 @@ class Committer:
         """
         Generates a commit message based on the diff of old_content and new_content.
 
-        :param str old_content: Original content.
-        :param str new_content: Updated content.
-        :return: The generated commit message.
+        Uses the difference between the old and new content to generate a commit description.
+        If the message cannot be generated, a generic message will be used.
+
+        :param old_content: Original content.
+        :type old_content: str
+        :param new_content: Updated content.
+        :type new_content: str
+        :return: The Committer instance with the generated or default commit message.
+        :rtype: Committer
         """
         diff = diff_content(old_content.splitlines(), new_content.splitlines())
         prompt = f"{self._prompt or 'Write a commit message for the following changes:'}{nl2}{nl}{diff}{nl}{nl2}"
@@ -98,7 +124,10 @@ class Committer:
         """
         Gets the current commit message.
 
+        Returns the commit message set in the Committer instance, if any.
+
         :return: The current commit message, or None if not set.
+        :rtype: OStr
         """
         return self._message
 
@@ -106,8 +135,10 @@ class Committer:
         """
         Performs git commit with the current commit message.
 
-        Note:
-            All staged changes are committed with the current commit message.
+        Stages and commits all changes in the provided Git repository using the set commit message.
+        Note that unstaged changes are not included unless already staged.
+
+        :raises Exception: If committing fails.
         """
         self._gitter.commit(self._message, add_all=True)
         print_t(f"Git changes committed with message: {self._message}.", 'info')

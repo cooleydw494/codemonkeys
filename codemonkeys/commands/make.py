@@ -11,10 +11,14 @@ from codemonkeys.types import OStr
 
 class Make(Command):
     """
-    The Make Class is a command that copies an example entity in a specified path and renames it accordingly.
-    
-    :param str entity_type: The type of the entity to be created, e.g., command, automation, barrel.
-    :param str entity_name: The name of the entity to be created.
+    The Make command is a CLI command to generate boilerplate code for new entities such as commands, automations, barrels, or funcs.
+
+    This command streamlines the creation of new entities by copying and renaming example entity files accordingly.
+
+    :param entity_type: The type of the entity to be created. Can be one of 'command', 'automation', 'barrel', 'func', or 'monkey'.
+    :type entity_type: str
+    :param entity_name: The name of the entity to be created, expecting kebab-case for commands, barrels and funcs, and snake_case for monkeys.
+    :type entity_name: str
     """
     required_arg_keys: list = ['entity_type', 'entity_name']
     unnamed_arg_keys: list = ['entity_type', 'entity_name']
@@ -32,9 +36,14 @@ class Make(Command):
 
     def run(self) -> None:
         """
-        The main execution method for the Make command.
-        
-        :raises ValueError: If the entity_name isn't in a valid format (kebab-case)
+        Execute the creation of a new entity file based on the provided arguments.
+
+        This method handles the logic for creating a new entity by copying an example file, renaming it, and adjusting its contents
+        as necessary to reflect the new entity's name and type. It enforces naming conventions and ensures that the new entity's
+        class name matches the expected format for its type.
+
+        :raises ValueError: If 'entity_name' is not specified in a valid format for its entity type or if attempting to create a
+                            Monkey named 'monkey'.
         """
 
         if self.entity_type == 'monkey' and self.entity_name == 'monkey':

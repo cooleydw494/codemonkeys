@@ -14,15 +14,18 @@ def get_gpt_model_info() -> Optional[dict]:
     """
     Retrieves cached info on GPT models.
 
-    :return: A dictionary containing GPT model information, or None if the information could not be retrieved.
+    Attempts to read a JSON file containing cached GPT model information.
+    It ensures that this data is readily available without querying the openai API repeatedly.
+
+    :return: Dictionary containing GPT model information if successful, None otherwise.
     :rtype: Optional[dict]
     """
     try:
         with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'r') as f:
             return json.load(f)
 
-    except BaseException as e:
-        print_t(f"An error occurred reading cached gpt model info.", 'warning')
+    except Exception as e:
+        print_t("An error occurred reading cached gpt model info.", 'warning')
         handle_exception(e, always_continue=True)
         return None
 
@@ -31,7 +34,7 @@ def get_gpt_model_names() -> Optional[list[str]]:
     """
     Retrieves the names of all GPT models from the cached model info.
 
-    :return: A list of model names, or None if the model info could not be retrieved.
+    :return: List of model names if model info is available, None otherwise.
     :rtype: Optional[list[str]]
     """
     model_info = get_gpt_model_info()
@@ -42,7 +45,10 @@ def get_gpt_model_names() -> Optional[list[str]]:
 
 def update_gpt_model_cache() -> None:
     """
-    Updates the GPT model info cache by querying the openai API.
+    Updates the GPT model info cache.
+
+    Contacts the OpenAI API to fetch the latest list of models and updates the
+    model info cache file.
 
     :return: None
     """
@@ -53,17 +59,22 @@ def update_gpt_model_cache() -> None:
             with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'w') as f:
                 json.dump(model_info, f)
 
-    except BaseException as e:
-        print_t(f"An error occurred updating GPT model info cache.", 'error')
+    except Exception as e:
+        print_t("An error occurred updating GPT model info cache.", 'error')
         handle_exception(e)
 
 
 def _query_model_info() -> Optional[dict]:
     """
-    Queries the OpenAI API for a list of models.
+    Queries the OpenAI API for the list of models.
 
-    :return: A dictionary mapping model ids to models, or None if the API call failed.
+    Private method that makes an API call to OpenAI to fetch a list of current models.
+    The response is then shaped into a dictionary mapping model IDs to their respective details.
+
+    :return: A dictionary mapping model ids to their details if successful, None otherwise.
     :rtype: Optional[dict]
+
+    :raises Exception: If the OPENAI_API_KEY is not set in the environment variables.
     """
 
     env = Env.get()

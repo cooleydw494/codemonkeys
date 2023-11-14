@@ -4,9 +4,9 @@ from typing import Optional
 from codemonkeys.defs import nl, nl2, _or, content_sep
 from codemonkeys.funcs.finalize_output import FinalizeOutput
 from codemonkeys.types import OStr, OFloat, OInt
-from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.imports.env import Env
+from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
 
 env = Env.get()
@@ -17,18 +17,19 @@ class FilePrompter:
     Builder for generating output based on files' content using configured PROMPTs.
     """
 
-    _model: OStr = None
-    _temp: OFloat = None
-    _max_tokens: OInt = None
-    _gpt_client: Optional[GPTClient] = None
-    _finalize_output: bool = False
-    _file_path: OStr = None
-    _file_name: OStr = None
-    _main_prompt: OStr = None
-    _context: OStr = None
-    _output_prompt: OStr = None
-    _ultimatum_prompt: OStr = None
-    _skip_existing_output_files: bool = False
+    def __init__(self):
+        self._model: OStr = None
+        self._temp: OFloat = None
+        self._max_tokens: OInt = None
+        self._gpt_client: Optional[GPTClient] = None
+        self._finalize_output: bool = False
+        self._file_path: OStr = None
+        self._file_name: OStr = None
+        self._main_prompt: OStr = None
+        self._context: OStr = None
+        self._output_prompt: OStr = None
+        self._ultimatum_prompt: OStr = None
+        self._skip_existing_output_files: bool = False
 
     def file_path(self, file_path: str) -> 'FilePrompter':
         """Sets the file path and the file name to be used in the prompts.

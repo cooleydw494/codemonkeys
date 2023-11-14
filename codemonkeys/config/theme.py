@@ -1,5 +1,18 @@
 class Theme:
-    """Theme configuration for the CLI."""
+    """
+    Theme configuration for the CLI.
+
+    This class defines color themes and additional UI settings for the CLI.
+
+    Attributes:
+        light_mode_enabled (bool): Flag to enable light mode for better readability.
+        max_terminal_width (int): Maximum width allowed for the terminal output.
+        verbose_logs_enabled (bool): Enables verbose logging.
+        keywords (list): List of keywords to be bolded in CLI prints.
+        fallback_colors (dict): Theme-compliant color fallbacks for terminal output.
+        text_themes (dict): Dictionary defining the themes for CLI text.
+
+    """
 
     # Improved readability for psychopaths
     light_mode_enabled: bool = False
