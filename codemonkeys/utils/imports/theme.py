@@ -1,9 +1,12 @@
 from termcolor import colored
 
 """
-This "module" simplifies importing a user-extendable class within core framework code.
-For a CodeMonkeys project codebase, it is best to import the extended class directly.
+This module acts as a bridge for importing a user-extendable theme class within the CodeMonkeys framework.
+It attempts to import the extended Theme class from the user's config.theme module. If it fails to import due to
+an ImportError, it falls back to using the default Theme class provided by the framework itself.
 
+The Theme class is responsible for theming and coloring the printed output in the terminal, and users can
+customize this by extending the Theme class with their own theme configurations.
 """
 
 try:

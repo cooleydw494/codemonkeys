@@ -4,6 +4,20 @@ from codemonkeys.types import OStr
 
 
 class OutputPathResolver:
+    """
+    A utility class for resolving output paths and filenames for file operations.
+
+    This class provides methods to set up various aspects of file output paths,
+    including the base output path, file extension, filename appendages, and more.
+    It also allows checking the existence of output files and getting full,
+    properly constructed output file paths based on the configuration.
+
+    Attributes:
+        _output_path (OStr): The root path for output files.
+        _output_ext (OStr): The default file extension for output files.
+        _output_filename_append (OStr): A string to append to output filenames.
+        _relative_path_root (OStr): The root path for relative resolution.
+    """
 
     def __init__(self):
         self._output_path: OStr = None

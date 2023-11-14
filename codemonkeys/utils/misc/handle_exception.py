@@ -6,17 +6,31 @@ from codemonkeys.utils.monk.theme_functions import input_t, print_t, verbose_log
 
 def handle_exception(exception: BaseException, always_exit=False, always_continue=False) -> None:
     """
-    This function is a catch-all for common exception handling logic and unexpected exceptions.
+    Handle common and unexpected exceptions, allowing for user-interaction on continuation.
 
-    Print Exception information w/ traceback, handling some generally applicable cases (i.e. KeyboardInterrupt),
-    and optionally prompting the user to continue or exit.
+    This function is designed to provide a consistent approach to exception handling across the
+    framework. It takes care of printing the exception information, optionally including a traceback,
+    and determines whether to exit the program or to prompt the user with a choice to continue or exit.
 
-    Note: KeyboardInterrupt and SystemExist cases ignore any other exit logic, always inferring intentional exit
-
-    :param exception: The exception to handle.
-    :param always_exit: Disable user option to continue.
-    :param always_continue: Disable user option to exit.
+    :param exception: The exception being handled.
+    :type exception: BaseException
+    :param always_exit: If True, the program will exit without prompting the user.
+    :type always_exit: bool
+    :param always_continue: If True, the program will continue without prompting the user.
+    :type always_continue: bool
     :return: None
+    :rtype: None
+
+    :raises SystemExit: On triggering an exit due to KeyboardInterrupt or user choice.
+
+    Example:
+        >>> handle_exception(ValueError("Some error"))
+        (ValueError) Some error
+        Do you want to continue? (y/n) y
+
+    .. note:: KeyboardInterrupt and SystemExist cases ignore any other exit logic,
+        always inferring intentional exit.
+    .. warning:: Verbose logging is disabled by default. Enable verbose logs in config/theme.py to see tracebacks.
     """
 
     # Note, at this time, many exceptions are handled the same, but left in this format for future customization

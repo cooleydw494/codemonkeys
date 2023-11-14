@@ -1,13 +1,18 @@
 from dataclasses import dataclass
 
 from monkeys.monkey import Monkey
-
 from codemonkeys.defs import STOR_PATH
 from codemonkeys.types import OStr
 
 
-@dataclass
 class Scaffold(Monkey):
+    """
+    Monkey subclass for scaffolding a codebase from architectural documentation.
+
+    This Monkey automates the creation of a file structure based on an architectural
+    overview of a codebase. It generates a list of required filepaths to be created and
+    suggests the best implementation for specified files.
+    """
 
     # Main Prompts
     MAIN_PROMPT: str = ("Review the following architectural documentation for a codebase, and write the best "
@@ -22,8 +27,8 @@ class Scaffold(Monkey):
 
     # Filepath Extraction
     FILE_SELECT_PROMPT: str = ("Review the following architectural documentation for a codebase and extract a list "
-                                   "of all the filepaths that need to be created to scaffold it. Use absolute paths, "
-                                   f"with the project root dir {PROJECT_ROOT}.")
+                               "of all the filepaths that need to be created to scaffold it. Use absolute paths, "
+                               f"with the project root dir {PROJECT_ROOT}.")
 
     # Output
     SKIP_EXISTING_OUTPUT_FILES = True

@@ -11,8 +11,26 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class Default(Automation):
+    """
+    Automation for running default GPT-powered file operations.
+
+    This class encapsulates the overall procedure for executing
+    a generic automation which involves reading files, generating content
+    based on the contents and context, and writing the results back
+    to files. It is designed to be configurable using Monkeys and
+    can operate with various builder classes for handling steps of
+    the automation process.
+    """
 
     def run(self) -> None:
+        """
+        Execute the automation using configured settings from a Monkey.
+
+        This method goes through the process of reading the target files,
+        applying GPT-powered transformations, and saving the results.
+        It utilizes builder classes to manage specific automation steps,
+        such as file iteration, prompting, and committing changes.
+        """
         m = self._monkey
 
         # Prepare summarized or unsummarized context

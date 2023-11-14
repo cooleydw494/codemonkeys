@@ -16,6 +16,18 @@ from codemonkeys.utils.monk.theme_functions import print_t
 class Scaffold(Automation):
 
     def run(self) -> None:
+        """
+        Run the scaffold process according to the monkey configuration.
+
+        This method processes a context file that details a codebase, extracts a list of file paths, then iteratively
+        generates scaffold files for each file path using prompts with GPT powered by specific functionalities
+        from the framework classes like ExtractList and WriteFile.
+
+        If GPT Git Commits are enabled, scaffolded files are committed using the Commiter.
+
+        :raises Exception: Raises an exception if no file paths are extracted from the context or if issues
+                            occur during file writing and commit processes.
+        """
         m: ScaffoldMonkey = self._monkey
 
         # Fetch the context (should be a file detailing a codebase)

@@ -2,7 +2,24 @@ from codemonkeys.config.theme import Theme as Base
 
 
 class Theme(Base):
-    """Theme configuration for the CLI."""
+    """
+    Theme configuration for the CLI.
+
+    This class provides settings for the visual theme of the CLI including color schemes,
+    keyword highlighting, and layout parameters. It allows for customization of the
+    CLI appearance to improve readability and differentiate types of output.
+
+    Attributes:
+        light_mode_enabled (bool): If set to true, enables the light color mode for
+            improved readability. Defaults to False.
+        max_terminal_width (int): The maximum width of the terminal output to prevent
+            overly wide text. Defaults to 120.
+        verbose_logs_enabled (bool): If set to True, enables verbose logging details.
+            Defaults to False.
+        keywords (list[str]): A list of keywords that will be highlighted in CLI output.
+        text_themes (dict): A dictionary mapping theme names to their styling
+            configurations such as color, light mode color, and prefixes.
+    """
 
     # Improved readability for psychopaths
     light_mode_enabled: bool = False

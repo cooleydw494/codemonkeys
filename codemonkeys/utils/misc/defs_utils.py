@@ -16,7 +16,14 @@ def find_project_root() -> str:
     """
     Find the root directory of the project (i.e., the closest parent directory containing a `.env` file).
 
+    This function searches upwards from the current working directory for the .env file that
+    signifies the root of a CodeMonkeys project. Once found, it confirms the 'monkeys/monkey.py'
+    file exists to ensure it's a valid project root. If neither are found, it terminates execution.
+
     :return: The project root directory path.
+    :rtype: str
+
+    :raises SystemExit: If the CodeMonkeys project root cannot be located or validated.
     """
     cwd = os.getcwd()
     while cwd != os.path.dirname(cwd):  # Stop when we reach the root directory
@@ -36,8 +43,15 @@ def load_class(entity_path: str, entity_name: str) -> Any:
     Locates Entity class using path/name, loads the module, and returns the class reference for instantiation.
     This logic assumes an entity's class name is the same as the filename/CLI-name, but in CamelCase.
 
-    :param str entity_path: The file path to the Entity class.
-    :param str entity_name: The name of the Entity class.
+    The function dynamically imports a module based on its file location and extracts the class of the same
+    name in CamelCase. It is used for dynamic CLI operation where entities are loaded based on user input.
+
+    :param entity_path: The file path to the Entity class.
+    :type entity_path: str
+    :param entity_name: The name of the Entity class.
+    :type entity_name: str
+    :return: A reference to the Entity class.
+    :rtype: Any
     """
     # Convert entity_name from kebab-case/snake_case to CamelCase
     seperator = '-' if entity_name.find('-') != -1 else '_'

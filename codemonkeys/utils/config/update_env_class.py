@@ -23,7 +23,17 @@ ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_
 
 
 def force_reload_env_class() -> None:
-    """ Force re-import Env because it may have been rewritten after initial import. """
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     try:
         importlib.reload(config.env)
     except ImportError as e:
@@ -33,14 +43,11 @@ def force_reload_env_class() -> None:
 
 
 def get_env_prop_type(env_value: str) -> str:
-    """
-    Determines the appropriate Python type for the given env variable.
-    Types handled: 'bool', 'List[str]', 'int', 'float', and 'str'.
+    
+    
+    
 
-    :param str env_value: The value of the env variable.
-    :return: The type as a str.
-    """
-
+    
     # Check for boolean
     if env_value.lower() in ('true', 'false'):
         return 'bool'
@@ -66,12 +73,16 @@ def get_env_prop_type(env_value: str) -> str:
 
 
 def update_env_class() -> None:
-    """
-    Update the env.py file to include all environment variables as attributes of the Env class.
-    This allows for type hinting and IDE auto-complete.
-
-    :return: None
-    """
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     # Get the .env file variables
     env_vars = dotenv_values(os.path.join(ROOT_PATH, ".env"))

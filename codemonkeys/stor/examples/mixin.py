@@ -1,5 +1,9 @@
 class MyProjectWorkspace:
 
+    """
+    A mixin class providing a set of properties for workspace configuration.
+    """
+
     # File Iteration
     WORK_PATH: str = "~/my_project"
     INCLUDE_EXTS: tuple = ('.py',)

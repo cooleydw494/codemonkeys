@@ -30,6 +30,15 @@ stor_dirs = [
 
 
 def main():
+    """
+    Create a new CodeMonkeys project directory structure and initial files.
+
+    This script initializes a new CodeMonkeys project with the necessary directory structure
+    and a set of starting files, including a default .env file, config files, automation scripts,
+    monkey definitions, functions, and barrels. It also copies example mixin and func classes
+    to help the user get started with custom logic.
+    """
+
     # Get the new project name from the command line arguments
     try:
         new_project_name = sys.argv[1]
