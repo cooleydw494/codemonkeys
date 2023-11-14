@@ -8,7 +8,7 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class Summarizer:
-    """A class to summarize given text using GPT."""
+    """A builder class to summarize given text using GPT."""
 
     def __init__(self):
         self._model: OStr = None

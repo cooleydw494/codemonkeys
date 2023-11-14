@@ -7,7 +7,7 @@ from codemonkeys.utils.misc.handle_exception import handle_exception
 
 class Gitter:
     """
-    A composable class used to interact with git repos.
+    A builder class used to interact with git repos.
 
     :param str repo_path: a string representing the path to the git repo.
     """

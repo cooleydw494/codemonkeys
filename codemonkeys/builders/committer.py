@@ -20,7 +20,7 @@ def diff_content(old_content: Sequence[str], new_content: Sequence[str]) -> str:
 
 
 class Committer:
-    """A composable class to commit changes to a Git repo."""
+    """A builder class to commit changes to a Git repo."""
 
     def __init__(self, repo_path: str):
         """
