@@ -6,8 +6,8 @@ from codemonkeys.defs import nl, content_sep
 from codemonkeys.funcs.extract_list import ExtractList
 from codemonkeys.types import OFloat, OStr, OInt
 from codemonkeys.utils.gpt.gpt_client import GPTClient
-from codemonkeys.utils.monk.theme_functions import print_t
 from codemonkeys.utils.imports.theme import Theme
+from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class FileIterator:

@@ -2,7 +2,6 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
-from codemonkeys.defs import STOR_PATH
 from codemonkeys.types import OStr
 from codemonkeys.utils.config.monkey_validations import is_path_key, validate_path, is_model_key, validate_model, \
     validate_temp, is_temp_key, is_prompt_key

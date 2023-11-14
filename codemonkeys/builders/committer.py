@@ -1,5 +1,5 @@
 import difflib
-from typing import Sequence, Optional
+from typing import Sequence
 
 from codemonkeys.defs import nl, nl2
 from codemonkeys.types import OStr, OFloat, OInt

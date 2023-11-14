@@ -1,17 +1,16 @@
 import os
 
-from codemonkeys.defs import content_sep, nl, nl2
-from codemonkeys.funcs.write_file import WriteFile
-from codemonkeys.utils.gpt.gpt_client import GPTClient
+from monkeys.scaffold import Scaffold as ScaffoldMonkey
 from pandas.io.common import file_exists
 
 from codemonkeys.builders.committer import Committer
+from codemonkeys.defs import content_sep, nl, nl2
 from codemonkeys.entities.automation import Automation
+from codemonkeys.funcs.extract_list import ExtractList
+from codemonkeys.funcs.write_file import WriteFile
+from codemonkeys.utils.gpt.gpt_client import GPTClient
 from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
-
-from codemonkeys.funcs.extract_list import ExtractList
-from monkeys.scaffold import Scaffold as ScaffoldMonkey
 
 
 class Scaffold(Automation):

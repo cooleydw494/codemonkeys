@@ -1,5 +1,5 @@
-import traceback
 import sys
+import traceback
 
 from codemonkeys.utils.monk.theme_functions import input_t, print_t, verbose_logs_enabled
 
