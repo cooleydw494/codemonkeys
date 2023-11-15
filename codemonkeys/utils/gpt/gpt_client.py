@@ -54,7 +54,7 @@ class GPTClient:
                 return self._generate_with_funcs(prompt, funcs, enforce_func)
             else:
                 return self._generate(prompt)
-        except openai.error.RateLimitError as e:
+        except openai.RateLimitError as e:
             print_t(f"Rate limit error, trying again in {retry_delay}s", 'warning')
             handle_exception(e, always_continue=True)
             time.sleep(retry_delay)
@@ -62,13 +62,13 @@ class GPTClient:
 
         # Commented out because timeouts sometimes recur many times but only for specific prompts (best to skip)
         #
-        # except openai.error.Timeout as e:
+        # except openai.Timeout as e:
         #     print_t(f"Timeout error, trying again in {rate_limit_delay}s: {e}", 'warning')
         #     import time
         #     time.sleep(rate_limit_delay)
         #     return self.generate(_prompt, rate_limit_delay*2)
 
-        except openai.error.OpenAIError as e:
+        except openai.OpenAIError as e:
             print_t(f"OpenAIError generating GPT response.", 'error')
             handle_exception(e, always_continue=True)
         except BaseException as e:
