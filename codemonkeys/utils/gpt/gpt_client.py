@@ -30,7 +30,7 @@ class GPTClient:
         """
 
         env = Env.get()
-        openai.api_key = env.OPENAI_API_KEY
+        self._openai = openai.OpenAI(api_key=env.OPENAI_API_KEY)
 
         self.model: str = validate_model(model_name)
         self.max_tokens: int = max_tokens - TOKEN_UNCERTAINTY_BUFFER
@@ -87,7 +87,7 @@ class GPTClient:
         print()
         print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'loading')
 
-        response = openai.ChatCompletion.create(
+        response = self._openai.chat.completions.create(
             model=self.model,
             messages=[{'role': 'user', 'content': prompt}],
             max_tokens=max_tokens,
@@ -105,24 +105,24 @@ class GPTClient:
         :return: The result of the Func call (can be anything).
         """
 
-        functions_data = [func.data() for func in funcs]
-        function_call = {'name': enforce_func} if enforce_func else 'auto'
+        tools = [func.data() for func in funcs]
+        tool_choice = {'type': 'function', 'function': {'name': enforce_func}} if enforce_func else 'auto'
 
-        max_tokens = self.max_tokens - self.count_tokens(prompt) - self.count_tokens(json.dumps(functions_data))
+        max_tokens = self.max_tokens - self.count_tokens(prompt) - self.count_tokens(json.dumps(tools))
         print()
         print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'loading')
 
-        response = openai.ChatCompletion.create(
+        response = self._openai.chat.completions.create(
             model=self.model,
             messages=[{'role': 'user', 'content': prompt}],
             max_tokens=max_tokens,
             temperature=self.temperature,
-            functions=functions_data,
-            function_call=function_call
+            tools=tools,
+            tool_choice=tool_choice
         )
 
-        fc_response = response['choices'][0]['message'].get('function_call')
-        (name, args) = (fc_response['name'], fc_response['arguments'])
+        function_response = response.choices[0].message.tool_calls[0].function
+        (name, args) = (function_response.name, function_response.arguments)
         available_funcs = {func.name: func for func in funcs}
         try:
             args = json.loads(args)
@@ -136,15 +136,6 @@ class GPTClient:
 
         return func.call(args)
 
-    def tokenize(self, text: str) -> List[int]:
-        """
-        Tokenize a given text into a list of tokens.
-        
-        :param str text: The input text.
-        :return: The list of tokens.
-        """
-        return self.encoding.encode(text)
-
     def count_tokens(self, text: str) -> int:
         """
         Count the number of tokens in a given text.
@@ -152,4 +143,13 @@ class GPTClient:
         :param str text: The input text.
         :return: The number of tokens in the text.
         """
-        return len(self.tokenize(text))
+        return len(self._tokenize(text))
+
+    def _tokenize(self, text: str) -> List[int]:
+        """
+        Tokenize a given text into a list of tokens.
+
+        :param str text: The input text.
+        :return: The list of tokens.
+        """
+        return self.encoding.encode(text)

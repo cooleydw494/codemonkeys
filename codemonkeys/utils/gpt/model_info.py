@@ -2,7 +2,9 @@ import json
 import os
 from typing import Optional
 
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=env.OPENAI_API_KEY)
 
 from codemonkeys.defs import TEMP_PATH
 from codemonkeys.utils.imports.env import Env
@@ -78,12 +80,12 @@ def _query_model_info() -> Optional[dict]:
     """
 
     env = Env.get()
-    openai.api_key = env.OPENAI_API_KEY
+    
 
     if openai.api_key is None:
         raise Exception("OPENAI_API_KEY not set in environment variables")
 
-    model_list = openai.Model.list()
+    model_list = client.models.list()
 
     # We're creating a new dictionary where the key is the model's ID and the value is the model's data
     model_info = {model.id: model for model in model_list.data}
