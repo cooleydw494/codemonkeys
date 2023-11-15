@@ -51,6 +51,7 @@ class Func:
         :rtype: dict
         """
         return {
+            'type': 'function',
             'name': self.name,
             'description': self._description,
             'parameters': self._parameters,

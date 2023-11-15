@@ -106,7 +106,7 @@ class GPTClient:
         """
 
         tools = [func.data() for func in funcs]
-        tool_choice = {'type': 'function', 'function': {'name': enforce_func or 'auto'}}
+        tool_choice = {'type': 'function', 'function': {'name': enforce_func}} if enforce_func else 'auto'
 
         max_tokens = self.max_tokens - self.count_tokens(prompt) - self.count_tokens(json.dumps(tools))
         print()
