@@ -52,9 +52,11 @@ class Func:
         """
         return {
             'type': 'function',
-            'name': self.name,
-            'description': self._description,
-            'parameters': self._parameters,
+            'function': {
+                'name': self.name,
+                'description': self._description,
+                'parameters': self._parameters,
+            }
         }
 
     def call(self, args: dict) -> Any:
