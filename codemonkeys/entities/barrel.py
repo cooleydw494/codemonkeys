@@ -9,11 +9,14 @@ from codemonkeys.utils.monk.theme_functions import print_t
 
 
 class Barrel(CliRunnable):
-    """A base class that initializes and runs multiple automations.
+    """A base class for orchestrating multiple automations as a single cli-runnable entity.
 
-    A Barrel is a way to orchestrate multiple Automations/Monkeys into a single cli-runnable entity. It allows
-    you to sequentially run multiple automations with specific configurations, and provides a framework to
-    encapsulate this logic in a clean and repeatable way.
+    A Barrel allows for sequentially running multiple Automations with specific Monkey configurations,
+    encapsulating this logic in a clean and repeatable way. It is utilized when automations need to be
+    performed in a specific order or with interdependent settings.
+
+    Attributes:
+        monkey (OMonkey): The Monkey instance used to configure automations. Can be set with `with_monkey`.
     """
 
     monkey: OMonkey = None

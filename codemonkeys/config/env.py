@@ -14,6 +14,10 @@ class Env:
     """
     The Env class provides easy dot notation access to .env vars.
 
+    The Env class encapsulates the environment variables defined in the .env file,
+    providing a convenient singleton pattern for accessing these values throughout
+    the codebase with dot notation.
+
     DO NOT MODIFY the section between [DEFINE_ENV_PROPS_START] and [DEFINE_ENV_PROPS_END].
     This section is automatically re-generated each time you run a `monk` command.
     """
@@ -29,7 +33,11 @@ class Env:
         """
         Get the instance of the Env class, or create one if it doesn't exist.
 
+        This method ensures a singleton pattern is enforced for accessing the Env
+        instance, which holds the environment variables loaded from the .env file.
+
         :return: Singleton instance of the Env class
+        :rtype: Env
         """
         if Env._instance is None:
             Env._instance = Env()

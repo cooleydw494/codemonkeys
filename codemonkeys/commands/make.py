@@ -11,14 +11,22 @@ from codemonkeys.types import OStr
 
 class Make(Command):
     """
-    The Make command is a CLI command to generate boilerplate code for new entities such as commands, automations, barrels, or funcs.
+    The Make command is a CLI command to generate boilerplate code for new entities such as commands, automations,
+    barrels, or funcs.
 
     This command streamlines the creation of new entities by copying and renaming example entity files accordingly.
 
-    :param entity_type: The type of the entity to be created. Can be one of 'command', 'automation', 'barrel', 'func', or 'monkey'.
+    :param entity_type: The type of the entity to be created. ('command', 'automation', 'barrel', 'func', or 'monkey')
     :type entity_type: str
     :param entity_name: The name of the entity to be created, expecting kebab-case for commands, barrels and funcs, and snake_case for monkeys.
     :type entity_name: str
+
+    :raises ValueError: If 'entity_name' is not specified in a valid format for its entity type or if attempting to create a
+                            Monkey named 'monkey'.
+
+    Example:
+        >>> monk make command my-command
+        # This will create a new command named 'test-command' in the commands directory.
     """
     required_arg_keys: list = ['entity_type', 'entity_name']
     unnamed_arg_keys: list = ['entity_type', 'entity_name']

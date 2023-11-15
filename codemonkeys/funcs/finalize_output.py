@@ -2,7 +2,6 @@ from codemonkeys.entities.func import Func
 
 
 class FinalizeOutput(Func):
-
     """
     This Func is intended to be used in default automation to finalize output for file writing.
 

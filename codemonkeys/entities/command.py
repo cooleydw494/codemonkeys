@@ -8,7 +8,6 @@ class Command(CliRunnable):
     The Command class processes named and unnamed arguments and provides a `run()` method that derived classes must
     implement to execute command-specific logic. The class manages CLI arguments, passing them from `argparse` to the
     constructor and allowing subclasses to define argument handling through class variables.
-
     """
 
     def run(self) -> None:

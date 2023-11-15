@@ -4,8 +4,11 @@ from codemonkeys.types import OStr, OBool, OInt
 
 class ExampleCommand(Command):
     """
-    Use this class to define CLI arguments, requirements, etc (look at Command and CliRunnable for more info).
-    Of course, use the run() method to implement the Command functionality.
+    Define command-line interface behavior for custom commands.
+
+    This class serves as a scaffold for creating new CLI commands within the CodeMonkeys framework.
+    It specifies the CLI arguments and the command's functionality which can be tailored based on the
+    developer's requirements.
     """
 
     # Specify args that are required (must be initialized as None)
@@ -28,6 +31,9 @@ class ExampleCommand(Command):
 
     def run(self) -> None:
         """
-        Execute your Command logic here, utilizing args as needed.
+        Execute the defined command-line interface behavior.
+
+        This method should be implemented with the command's functionality. It will be invoked when
+        the command is run from the CLI, utilizing arguments as necessary.
         """
         print(f"named_arg_one: {self.named_arg_one}")

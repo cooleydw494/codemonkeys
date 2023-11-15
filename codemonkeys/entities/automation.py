@@ -19,6 +19,11 @@ class Automation(CliRunnable):
         named_arg_keys: A list of named arguments that the CLI command expects.
         monkey: The name of the Monkey to use for the Automation, passed as a CLI argument.
         _monkey: The actual Monkey instance used by the Automation.
+
+    :param named_arg_keys: A list of named arguments that the CLI command expects.
+    :type named_arg_keys: list
+    :param _monkey: The current Monkey instance used by this Automation.
+    :type _monkey: OMonkey
     """
 
     named_arg_keys: list = ['monkey']
@@ -33,8 +38,9 @@ class Automation(CliRunnable):
         :type named_args: Dict[str, Any]
         :param unnamed_args: Unnamed arguments passed via the CLI.
         :type unnamed_args: List[str]
-        :param OMonkey monkey: An optional Monkey instance to use for this Automation. If None,
-                              the Automation will attempt to load a Monkey based on CLI input or default configuration.
+        :param monkey: An optional Monkey instance to use for this Automation. If None,
+                      the Automation will attempt to load a Monkey based on CLI input or default configuration.
+        :type monkey: OMonkey
         """
         super().__init__(named_args, unnamed_args)
 

@@ -23,17 +23,12 @@ ENV_DEFINITION_TEMPLATE_DEFAULT = "    {var_name}: {var_type} = os.getenv('{var_
 
 
 def force_reload_env_class() -> None:
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    """
+    Force reload of the user Env class.
+
+    This function attempts to reload the custom user-defined Env class from
+    the config.env module.
+    """
     try:
         importlib.reload(config.env)
     except ImportError as e:
@@ -43,11 +38,18 @@ def force_reload_env_class() -> None:
 
 
 def get_env_prop_type(env_value: str) -> str:
-    
-    
-    
+    """
+    Determine the Python type for a given environment variable value.
 
-    
+    This function reads the value of the environment variable and determines
+    its corresponding Python type. It recognizes booleans, integers, floats, lists,
+    and defaults to a string type if none of the specific types match.
+
+    :param env_value: The value of the environment variable.
+    :type env_value: str
+    :return: The Python type as a string.
+    :rtype: str
+    """
     # Check for boolean
     if env_value.lower() in ('true', 'false'):
         return 'bool'
@@ -73,17 +75,16 @@ def get_env_prop_type(env_value: str) -> str:
 
 
 def update_env_class() -> None:
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    """
+    Update the Env class with properties defined in the .env file.
 
+    This function reads the .env file at the project's root and dynamically
+    generates type-hinted properties in the Env class to match defined environment
+    variables. It uses markers within the Env class file to identify the insertion
+    points for generated code.
+
+    :raises Exception: If start or stop markers for env prop definitions are missing.
+    """
     # Get the .env file variables
     env_vars = dotenv_values(os.path.join(ROOT_PATH, ".env"))
 

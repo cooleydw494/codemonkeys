@@ -1,15 +1,20 @@
+"""
+Utility functions for the CodeMonkeys project framework.
+
+This module contains helper functions that are used throughout the CodeMonkeys project to perform
+operations such as finding the project root and dynamically loading classes from files.
+The functions in this module are designed to be used without the need for importing other project-specific
+modules, configurations, etc., to prevent circular imports.
+"""
+
 import os
 from importlib.util import spec_from_file_location, module_from_spec
 from typing import Any
 
 from termcolor import colored
 
-"""
-This module is imported to defs and/or cmdefs.
-It houses code that can be run without importing other project modules (which would result in circular imports).
 
-NO PROJECT MODULES, CONFIGS, ETC SHOULD BE IMPORTED HERE.
-"""
+# NO PROJECT MODULES, CONFIGS, ETC SHOULD BE IMPORTED HERE.
 
 
 def find_project_root() -> str:

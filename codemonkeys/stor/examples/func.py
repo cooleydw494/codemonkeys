@@ -1,18 +1,13 @@
 from codemonkeys.entities.func import Func
 from codemonkeys.types import OInt
 
-"""This stubbed file isn't intended as an example of a real use-case, but an example of how to use the class."""
-
 
 class ExampleFunc(Func):
     """
     A class to represent a function to be called by a GPT model.
-    Pass this in a list to the `funcs` parameter of the GPTClient.generate() method.
-    The generate method will handle passing the data correctly and return the result of the _execute method.
-    The _execute method can be fully custom or you can simply invoke an exiting function.
 
-    You can pass multiple Funcs in the list. You can also set the `enforce_func` parameter
-    to the "name" to force the model to use a specific function.
+    This class allows for defining a custom function that can be invoked by
+    the GPT model during text generation.
     """
 
     name: str = 'func_name'

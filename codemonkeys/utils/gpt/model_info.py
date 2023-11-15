@@ -15,10 +15,15 @@ def get_gpt_model_info() -> Optional[dict]:
     Retrieves cached info on GPT models.
 
     Attempts to read a JSON file containing cached GPT model information.
-    It ensures that this data is readily available without querying the openai API repeatedly.
+    If the file does not exist or contains invalid data, this function will
+    gracefully handle the error and return None, allowing the automation flow
+    to continue.
 
     :return: Dictionary containing GPT model information if successful, None otherwise.
     :rtype: Optional[dict]
+
+    :raises FileNotFoundError: If the model info cache file does not exist.
+    :raises JSONDecodeError: If the cache file contains invalid JSON.
     """
     try:
         with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'r') as f:
@@ -34,6 +39,9 @@ def get_gpt_model_names() -> Optional[list[str]]:
     """
     Retrieves the names of all GPT models from the cached model info.
 
+    Extracts and returns a list of model names from the cached model information obtained
+    by the `get_gpt_model_info` function. If the model info is not available, it returns None.
+
     :return: List of model names if model info is available, None otherwise.
     :rtype: Optional[list[str]]
     """
@@ -48,7 +56,8 @@ def update_gpt_model_cache() -> None:
     Updates the GPT model info cache.
 
     Contacts the OpenAI API to fetch the latest list of models and updates the
-    model info cache file.
+    model info cache file. If there's an error during the update (e.g., an API issue),
+    the function will catch the Exception and use the handle_exception utility to manage it.
 
     :return: None
     """
@@ -70,6 +79,7 @@ def _query_model_info() -> Optional[dict]:
 
     Private method that makes an API call to OpenAI to fetch a list of current models.
     The response is then shaped into a dictionary mapping model IDs to their respective details.
+    It only queries the OpenAI API if the environment variable for the API key is set.
 
     :return: A dictionary mapping model ids to their details if successful, None otherwise.
     :rtype: Optional[dict]

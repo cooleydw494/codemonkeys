@@ -17,12 +17,21 @@ class Env(CMEnv):
     providing better IDE support and error-checking. The environment variables
     are loaded using os.getenv and are type-annotated for clarity.
 
-    Attributes:
-        OPENAI_API_KEY: A string representing the OpenAI API key.
-        CUSTOM_PROP: A string representing a custom property.
-
     DO NOT MODIFY the section between [DEFINE_ENV_PROPS_START] and [DEFINE_ENV_PROPS_END].
     This section is automatically re-generated each time you run a `monk` command.
+
+    Example:
+        Assuming you have set `OPENAI_API_KEY = 'your-key-here'` and `CUSTOM_PROP = 'value'` in your .env file,
+        you can access these properties as follows:
+
+        >>> env = Env()
+        >>> env.OPENAI_API_KEY
+        'your-key-here'
+        >>> env.CUSTOM_PROP
+        'value'
+
+    Note:
+        If an environment variable is not set, its value will default to `None`.
     """
 
     # [DEFINE_ENV_PROPS_START]

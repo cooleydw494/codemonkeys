@@ -152,7 +152,7 @@ class FileIterator:
                         self._filtered_files.append(absolute_path)
 
         if self._file_select_prompt:
-            print_t(f"Further filtering with FILE_SELECT_PROMPT: {self._file_select_prompt}", 'info', verbose=True)
+            print_t(f"Further filtering with FILE_SELECT_PROMPT: {self._file_select_prompt}", 'info')
             current_list = str(self._filtered_files)
             prompt = (f"Examine the following list of filepaths: {content_sep}{current_list}{content_sep}"
                       f"Return the list of filepaths filtered by this prompt: {self._file_select_prompt}.")
@@ -160,7 +160,9 @@ class FileIterator:
                 (GPTClient(self._file_select_model, self._file_select_temp, self._file_select_max_tokens)
                  .generate(prompt, [ExtractList()], 'extract_list'))
 
-        print_t(f"{nl}File filtering complete.{nl}", 'quiet')
+        print()
+        print_t(f"File filtering complete.{nl}", 'done')
+        print_t(f'Selected Files:{nl}{self._filtered_files}', 'special')
 
         return self
 
@@ -191,6 +193,7 @@ class FileIterator:
         terminal_max = min(Theme.max_terminal_width, os.get_terminal_size().columns)
         num_of_spacers = int(terminal_max / 3)
         print_t(f"{'---' * num_of_spacers}", 'info', incl_prefix=False)
-        print_t(f"Files remaining: {len(self.get_filtered_files())}", 'info')
-        if incl_next_file:
+        count_remaining = len(self.get_filtered_files())
+        print_t(f"Files remaining: {count_remaining}", 'info')
+        if incl_next_file and count_remaining > 0:
             print_t(f"-> {self.get_filtered_files()[0]}{nl}")

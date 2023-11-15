@@ -42,6 +42,10 @@ class GPTClient:
         """
         Generate a GPT model response from a given prompt.
 
+        Utilizes the specified GPT model and settings to create a response based on the input prompt,
+        optionally including function calling with predefined funcs. Handles rate limit errors by retrying
+        after a specified delay, doubling the delay with each retry.
+
         :param enforce_func: The name of the function to enforce. Defaults to None.
         :param funcs: list of Func classes to use for function calling.
         :param str prompt: The text input for the model.

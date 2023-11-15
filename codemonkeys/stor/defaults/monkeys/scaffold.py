@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-
 from monkeys.monkey import Monkey
 from codemonkeys.defs import STOR_PATH
 from codemonkeys.types import OStr

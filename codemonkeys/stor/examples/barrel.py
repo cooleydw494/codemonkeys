@@ -3,8 +3,15 @@ from codemonkeys.entities.barrel import Barrel
 
 class ExampleBarrel(Barrel):
     """
-    Barrels are extended from CliRunnable, so you can define/pass/default/require CLI args if you wish.
-    Check out the CliRunnable class or look at Command implementations to get a feel for this.
+    A Barrel for orchestrating multiple automation tasks with different Monkeys.
+
+    ExampleBarrel is a class that extends from CliRunnable and is designed to chain together
+    multiple automations using specified Monkey configurations. It demonstrates how to run
+    automations sequentially and pass different Monkeys to alter their behavior.
+
+    Note:
+        Refer to the CliRunnable class for more details on defining, passing,
+        defaulting, and requiring CLI arguments.
     """
 
     def run(self) -> None:

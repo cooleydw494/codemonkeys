@@ -71,6 +71,10 @@ def validate_path(path: OStr, allow_none: bool = False) -> OStr:
     """
     Validates a PATH by checking its existence and ensuring it is a file or a directory.
 
+    Given a path, this function checks if the path exists and whether it is a valid
+    file or directory path. Optional parameter allow_none determines whether
+    a None value is acceptable.
+
     :param path: The path to validate.
     :type path: OStr
     :param allow_none: Allows the value None as a valid PATH. Defaults to False.
@@ -94,6 +98,9 @@ def validate_path(path: OStr, allow_none: bool = False) -> OStr:
 def validate_model(model_name: OStr, allow_none: bool = False) -> OStr:
     """
     Validates a GPT model name against a list of known model names.
+
+    Checks if the provided model name is in the list of known GPT model names. Optional
+    parameter allow_none determines whether a None value is acceptable.
 
     :param model_name: The model name to validate.
     :type model_name: OStr
@@ -120,6 +127,10 @@ def validate_model(model_name: OStr, allow_none: bool = False) -> OStr:
 def validate_temp(value: OFloat, allow_none: bool = False) -> OFloat:
     """
     Validates that a given value falls within the expected range of temperature settings.
+
+    This function ensures that the provided temperature setting is within the valid
+    range GPT can accept. The optional parameter allow_none indicates if a None value
+    is permissible.
 
     :param value: The temperature setting to validate.
     :type value: OFloat

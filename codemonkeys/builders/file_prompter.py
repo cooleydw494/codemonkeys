@@ -15,6 +15,25 @@ env = Env.get()
 class FilePrompter:
     """
     Builder for generating output based on files' content using configured PROMPTs.
+
+    This builder class orchestrates the construction and execution of GPT-based file content editing tasks,
+    providing a fluid interface for setting up inputs and generating outputs using specific GPT model configurations.
+    It serves as a bridge between the file contents and the GPT client, translating file data into contextual information
+    that the GPT model can use to generate desired outputs.
+
+    Attributes:
+        _model (OStr): GPT model to be used.
+        _temp (OFloat): Temperature setting for GPT model.
+        _max_tokens (OInt): Maximum tokens for response generation.
+        _gpt_client (Optional[GPTClient]): GPT client instance for interaction with the API.
+        _finalize_output (bool): Flag indicating whether the FinalizeOutput function should be used.
+        _file_path (OStr): Path of the file being processed.
+        _file_name (OStr): Name of the file extracted from the file path.
+        _main_prompt (OStr): Main GPT prompt to frame the task.
+        _context (OStr): Additional context provided to the GPT model.
+        _output_prompt (OStr): Example prompt to guide the expected output format.
+        _ultimatum_prompt (OStr): Ultimatum prompt to coerce GPT towards desired output.
+        _skip_existing_output_files (bool): Flag indicating whether existing output files should be skipped.
     """
 
     def __init__(self):

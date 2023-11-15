@@ -6,6 +6,13 @@ class CliRunnable:
     A base class for CLI-runnable entities such as Automations, Barrels, and Commands. Handles management of CLI args.
     Subclasses of `CliRunnable` will override argument-related class attributes and implement the `run` method.
 
+    Attributes:
+        named_args (Dict[str, Any]): A dictionary holding the named arguments provided to the CLI.
+        unnamed_args (List[str]): A list holding the unnamed arguments provided to the CLI.
+        named_arg_keys (list): A list of keys for named arguments that this CLI entity accepts.
+        unnamed_arg_keys (list): A list of keys for unnamed arguments that this CLI entity accepts.
+        required_arg_keys (list): A list of keys for arguments that are required for this CLI entity.
+
     """
 
     named_args: Optional[Dict[str, Any]] = None
@@ -19,8 +26,10 @@ class CliRunnable:
         """
         Initializes the `CliRunnable` instance.
         
-        :param Dict[str, Any] named_args: Dict of named args and values (e.g. `--key value`)
-        :param List[str] unnamed_args: List of unnamed args (e.g. `value`)
+        :param named_args: Dict of named args and values (e.g. `--key value`).
+        :type named_args: Dict[str, Any]
+        :param unnamed_args: List of unnamed args (e.g. `value`).
+        :type unnamed_args: List[str]
         """
         self.named_args = named_args
         self.unnamed_args = unnamed_args
@@ -50,8 +59,10 @@ class CliRunnable:
         """
         Sets an argument's value, with type checking if a type hint is specified.
         
-        :param str key: The key of the argument to set.
-        :param Any value: The value of the argument to set.
+        :param key: The key of the argument to set.
+        :type key: str
+        :param value: The value of the argument to set.
+        :type value: Any
         """
 
         # Get the expected type from the type hint, if any
@@ -85,7 +96,8 @@ class CliRunnable:
     def run(self) -> None:
         """
         The main logic of the CliRunnable (e.g. Command, Automation, Barrel).
-
         Subclasses must implement this method.
+
+        :raises NotImplementedError: Always, unless overridden by subclass implementation.
         """
         raise NotImplementedError("Subclasses must implement this method")

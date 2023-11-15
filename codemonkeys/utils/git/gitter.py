@@ -7,86 +7,97 @@ from codemonkeys.utils.misc.handle_exception import handle_exception
 
 class Gitter:
     """
-    A builder class used to interact with git repos.
+    A utility class for interacting with Git repositories.
 
-    This class provides a high-level interface to execute git commands. It can be used to init, clone, pull,
-    push, commit, and manage branches in a git repository.
+    Provides methods for common Git operations such as initializing, cloning, pulling, pushing, and committing to a
+    repository. It is designed to encapsulate the command-line interface of Git and expose it through a user-friendly
+    Python interface.
 
     Attributes:
-        repo_path (str): The file system path to the git repository.
+        repo_path (str): The filesystem path to the Git repository.
+
+    Example:
+        >>> gitter = Gitter(repo_path='/path/to/repo')
+        >>> gitter.status()
+        'On branch master\nYour branch is up to date with 'origin/master'.\n\nnothing to commit, working tree clean'
     """
 
     def __init__(self, repo_path: str):
         """
-        Initialize a Gitter instance with the specified repository path.
+        Initialize the Gitter instance for a given repository path.
 
-        :param repo_path: The file system path to the git repository.
+        :param repo_path: The filesystem path to the Git repository.
         :type repo_path: str
         """
         self.repo_path = repo_path
 
     def init(self) -> str:
         """
-        Initialize a new or existing git repository.
+        Initialize a new or reinitialize an existing Git repository.
 
-        This method creates an empty Git repository or reinitialize an existing one.
+        This method sets up the necessary Git files and directories, if not already present.
 
-        :return: The standard output from the git init command.
+        :return: The standard output from the Git 'init' command.
         :rtype: str
         """
         return self._run_git_command(["init"])
 
     def clone(self, repo_url: str) -> str:
         """
-        Clone a git repository from a given URL into a new directory.
+        Clone a Git repository from the specified URL.
 
-        :param repo_url: The URL of the repository to clone.
+        This method will create a local copy of the remote repository provided by 'repo_url'.
+
+        :param repo_url: The URL of the Git repository to clone.
         :type repo_url: str
-        :return: The standard output from the git clone command.
+        :return: The standard output from the Git 'clone' command.
         :rtype: str
         """
         return self._run_git_command(["clone", repo_url])
 
     def pull(self, remote: str = "origin", branch: str = "main") -> str:
         """
-        Pull updates from a remote branch into the current branch.
+        Update the local working copy from the specified remote branch.
+
+        This method fetches and merges changes from the remote 'branch' of 'remote'.
 
         :param remote: The name of the remote repository. Defaults to 'origin'.
         :type remote: str
         :param branch: The name of the branch to pull changes from. Defaults to 'main'.
         :type branch: str
-        :return: The standard output from the git pull command.
+        :return: The standard output from the Git 'pull' command.
         :rtype: str
         """
         return self._run_git_command(["pull", remote, branch])
 
     def push(self, remote: str = "origin", branch: str = "main") -> str:
         """
-        Push local changes to a remote branch.
+        Push local commits to the specified remote branch.
+
+        This method sends the local branch commits to the 'branch' of 'remote'.
 
         :param remote: The name of the remote repository. Defaults to 'origin'.
         :type remote: str
         :param branch: The name of the branch to push changes to. Defaults to 'main'.
         :type branch: str
-        :return: The standard output from the git push command.
+        :return: The standard output from the Git 'push' command.
         :rtype: str
         """
         return self._run_git_command(["push", remote, branch])
 
     def commit(self, message: str, add_all: bool = False) -> str:
         """
-        Commit staged changes to the repository with a message.
+        Commit staged changes to the repository with the specified message.
 
-        If add_all is set to True, all changes including new files, deletions, and modifications will be staged.
+        If 'add_all' is True, stages all changes including untracked files before committing.
 
-        :param message: The commit message that summarizes the change.
+        :param message: The commit message to use.
         :type message: str
-        :param add_all: If True, automatically stage all changes. Defaults to False.
+        :param add_all: If True, stages all changes. Defaults to False.
         :type add_all: bool
-        :return: The standard output from the git commit command.
+        :return: The standard output from the Git 'commit' command.
         :rtype: str
-
-        :raises GitterError: If the git command fails.
+        :raises GitterError: If the Git command fails.
         """
         if add_all:
             self._run_git_command(["add", "-A"])
@@ -94,50 +105,53 @@ class Gitter:
 
     def status(self) -> str:
         """
-        Check the status of the git repository.
+        Retrieve the current status of the Git repository.
 
-        This method returns the current state of the repository, including staged changes, untracked files, and other statuses.
+        This method displays the working tree status, showing staged, unstaged, and untracked changes.
 
-        :return: The standard output from the git status command.
+        :return: The standard output from the Git 'status' command.
         :rtype: str
         """
         return self._run_git_command(["status"])
 
     def checkout(self, branch_name: str) -> str:
         """
-        Switch to another branch in the git repository.
+        Switch to the specified branch in the repository.
 
-        This method allows you to switch your working directory to another branch, creating it if it doesn't exist.
+        This method changes the active branch in the local repository to 'branch_name'.
 
-        :param branch_name: The name of the branch to switch to.
+        :param branch_name: The name of the branch to check out.
         :type branch_name: str
-        :return: The standard output from the git checkout command.
+        :return: The standard output from the Git 'checkout' command.
         :rtype: str
         """
         return self._run_git_command(["checkout", branch_name])
 
     def create_branch(self, branch_name: str) -> str:
         """
-        Create a new branch with the specified name.
+        Create a new branch in the repository with the given name.
 
-        :param branch_name: The name of the new branch to create.
+        :param branch_name: The name of the branch to create.
         :type branch_name: str
-        :return: The standard output indicating successful branch creation, or an error message.
+        :return: The standard output or error message resulting from branch creation.
         :rtype: str
+
+        :raises GitterError: If creation of the branch fails.
         """
         return self._run_git_command(["branch", branch_name])
 
     def _run_git_command(self, command: List[str]) -> str:
         """
-        A private method to execute the specified git command.
+        Run git command and return its output.
 
-        The git command is executed within the current working directory set to `self.repo_path` and its output is captured and returned.
+        This private method runs a Git command and returns its output or raises an exception in case of an error.
 
-        :param command: The git command as a list of arguments.
+        :param command: The Git command to run, as a list of arguments.
         :type command: List[str]
-        :return: The standard output of the git command if it executes successfully.
+        :return: The output of the Git command execution.
         :rtype: str
-        :raise GitterError: If the git command fails to execute properly, encapsulating detailed error info.
+
+        :raises GitterError: If there's a problem running the Git command.
         """
         try:
             result = subprocess.run(
