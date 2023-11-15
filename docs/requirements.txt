@@ -1,8 +1,12 @@
-sphinx_rtd_theme==1.3.0
-openai==0.28.1
+openai==1.2.4
 python-dotenv~=1.0.0
 termcolor~=2.3.0
 tiktoken==0.5.1
-Levenshtein==0.22.0
-psutil
-pandas==2.1.1
+Levenshtein==0.23.0
+psutil==5.9.6
+setuptools==67.8.0
+pandas==2.1.3
+json-repair==0.2.0
+codemonkeys
+
+sphinx_rtd_theme==1.3.0
