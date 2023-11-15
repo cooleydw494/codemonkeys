@@ -30,6 +30,9 @@ exclude_patterns = []
 autodoc_mock_imports = [
     'codemonkeys.defs',
     'monkey.monkeys',
+    'codemonkeys.utils.imports.monkey',
+    'codemonkeys.utils.imports.env',
+    'codemonkeys.utils.imports.theme',
 ]
 autodoc_default_options = {
     'members': True,
