@@ -14,10 +14,6 @@ class CliRunnable:
         required_arg_keys (list): A list of keys for arguments that are required for this CLI entity.
 
     """
-
-    named_args: Optional[Dict[str, Any]] = None
-    unnamed_args: Optional[List[str]] = None
-
     named_arg_keys: list = []
     unnamed_arg_keys: list = []
     required_arg_keys: list = []
@@ -31,8 +27,8 @@ class CliRunnable:
         :param unnamed_args: List of unnamed args (e.g. `value`).
         :type unnamed_args: List[str]
         """
-        self.named_args = named_args
-        self.unnamed_args = unnamed_args
+        self.named_args: Optional[Dict[str, Any]] = named_args
+        self.unnamed_args: Optional[List[str]] = unnamed_args
 
         # Named args: mapped by key
         for key in self.named_arg_keys:

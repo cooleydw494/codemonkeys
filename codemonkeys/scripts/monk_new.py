@@ -9,11 +9,10 @@ from codemonkeys.cm_paths import (CM_ENV_DEFAULT_PATH, CM_THEME_DEFAULT_PATH, CM
                                   CM_ENV_CLASS_DEFAULT_PATH, CM_GITIGNORE_DEFAULT_PATH, CM_README_DEFAULT_PATH,
                                   CM_CONTEXT_FILE_EXAMPLE_PATH, CM_DEFAULT_REQUIREMENTS_PATH,
                                   CM_MONKEYS_DIR_DEFAULT_PATH, CM_EXAMPLE_MIXIN_PATH, CM_EXAMPLE_FUNC_PATH,
-                                  CM_EXAMPLE_BARREL_PATH)
+                                  CM_EXAMPLE_BARREL_PATH, CM_COMMANDS_DIR_DEFAULT_PATH)
 
 top_level_dirs = [
     'barrels',
-    'commands',
     'funcs',
     'config',
     'builders',
@@ -95,6 +94,10 @@ def main():
     with open(env_class_path, 'w') as f:
         for line in lines:
             f.write(line.replace('from codemonkeys.config.theme', 'from config.theme'))
+
+    # Create the default commands
+    print(colored("Creating default commands...", 'cyan'))
+    shutil.copytree(os.path.join(CM_COMMANDS_DIR_DEFAULT_PATH), os.path.join(project_path, 'commands'))
 
     # Create the default automation
     print(colored("Creating default automations...", 'cyan'))
