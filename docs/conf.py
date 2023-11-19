@@ -52,5 +52,23 @@ autodoc_class_signature = 'separated'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_material'
 html_static_path = ['_static']
+
+html_theme_options = {
+    'nav_title': 'CodeMonkeys Sphinx Docs',
+    'base_url': 'https://cooleydw494.github.io/codemonkeys',
+    'color_primary': '#16141c',
+    'color_accent': '#059fff',
+
+    'repo_url': 'https://github.com/cooleydw494/codemonkeys',
+    'repo_name': 'CodeMonkeys Framework Repo',
+    'repo_type': 'github',
+
+    'globaltoc_depth': 3,
+    'globaltoc_collapse': True,
+    'globaltoc_includehidden': True,
+
+    'html_minify': True,
+    'css_minify': True,
+}
