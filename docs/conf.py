@@ -23,6 +23,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx_rtd_theme',
+    'sphinx.ext.viewcode',
 ]
 autosummary_generate = True
 templates_path = ['templates']
@@ -40,7 +41,7 @@ autodoc_default_options = {
     'undoc-members': True,
     'private-members': True,
     'show-inheritance': True,
-
+    'inherited-members': True,  # Added to include inherited members in documentation
 }
 
 # -- Options for HTML output -------------------------------------------------
