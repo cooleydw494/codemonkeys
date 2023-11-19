@@ -66,10 +66,6 @@ html_theme_options = {
     'repo_name': 'CodeMonkeys Framework Repo',
     'repo_type': 'github',
 
-    'globaltoc_depth': 3,
-    'globaltoc_collapse': True,
-    'globaltoc_includehidden': True,
-
     'html_minify': True,
     'css_minify': True,
 }
