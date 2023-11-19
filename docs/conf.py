@@ -26,7 +26,7 @@ extensions = [
     'sphinx_material',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.napoleon',
+    # 'sphinx.ext.napoleon',
 ]
 autosummary_generate = True
 templates_path = ['templates']
@@ -44,7 +44,7 @@ autodoc_default_options = {
     'undoc-members': True,
     'private-members': True,
     'show-inheritance': True,
-    'inherited-members': True,  # Added to include inherited members in documentation
+    'inherited-members': True,
 }
 
 autodoc_typehints = 'description'
