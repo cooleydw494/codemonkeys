@@ -24,6 +24,8 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx_rtd_theme',
     'sphinx.ext.viewcode',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
 ]
 autosummary_generate = True
 templates_path = ['templates']
@@ -37,12 +39,15 @@ autodoc_mock_imports = [
 ]
 autodoc_default_options = {
     'members': True,
-    'member-order': 'bysource',
+    'member-order': 'groupwise',
     'undoc-members': True,
     'private-members': True,
     'show-inheritance': True,
     'inherited-members': True,  # Added to include inherited members in documentation
 }
+
+autodoc_typehints = 'description'
+autodoc_class_signature = 'separated'
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
