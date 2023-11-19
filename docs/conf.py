@@ -22,7 +22,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx_rtd_theme',
+    # 'sphinx_rtd_theme',
     'sphinx_material',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
