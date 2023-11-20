@@ -50,7 +50,6 @@ autodoc_typehints = 'description'
 autodoc_class_signature = 'separated'
 
 html_logo = './_static/codemonkeys-sphinx-logo.png'
-logo_only = True
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -76,7 +75,8 @@ html_theme_options = {
     'sticky_navigation': True,
     'navigation_depth': 4,
     'includehidden': True,
-    'titles_only': False
+    'titles_only': False,
+    'logo_only': True,
 }
 
 # html_theme = 'sphinx_material'
