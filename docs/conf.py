@@ -50,7 +50,7 @@ autodoc_typehints = 'description'
 autodoc_class_signature = 'separated'
 
 html_logo = './_static/codemonkeys-sphinx-logo.png'
-html_favicon = './_static/codemonkeys-sphinx-favicon.png'
+html_favicon = './_static/favicon.ico'
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
