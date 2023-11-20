@@ -10,5 +10,4 @@ json-repair==0.3.0
 codemonkeys
 
 sphinx_rtd_theme==1.3.0
-sphinx-rtd-dark-mode
 # sphinx-material==0.0.36
