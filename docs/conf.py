@@ -64,6 +64,7 @@ html_context = {
 
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
+    'github_url': 'https://github.com/cooleydw494/codemonkeys',
     'analytics_id': 'G-DPDC9P9GP6',
     'display_version': True,
     'prev_next_buttons_location': 'bottom',
