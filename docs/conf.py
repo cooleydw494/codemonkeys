@@ -23,6 +23,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx_rtd_theme',
+    'sphinx_rtd_dark_mode',
     # 'sphinx_material',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
@@ -51,6 +52,7 @@ autodoc_class_signature = 'separated'
 
 html_logo = './_static/codemonkeys-sphinx-logo.png'
 html_favicon = './_static/favicon.ico'
+default_dark_mode = True
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
