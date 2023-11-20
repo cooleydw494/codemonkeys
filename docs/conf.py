@@ -49,13 +49,16 @@ autodoc_default_options = {
 autodoc_typehints = 'description'
 autodoc_class_signature = 'separated'
 
+html_logo = './_static/codemonkeys-150x150.png'
+logo_only = False
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_static_path = ['_static']
 
 html_context = {
-    'display_github': True,
+    # 'display_github': True,
     'github_user': 'cooleydw494',
     'github_repo': 'codemonkeys',
     'github_version': 'main',
