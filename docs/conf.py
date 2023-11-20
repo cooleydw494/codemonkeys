@@ -49,8 +49,8 @@ autodoc_default_options = {
 autodoc_typehints = 'description'
 autodoc_class_signature = 'separated'
 
-html_logo = './_static/codemonkeys-150x150.png'
-logo_only = False
+html_logo = './_static/codemonkeys-sphinx-logo.png'
+logo_only = True
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
