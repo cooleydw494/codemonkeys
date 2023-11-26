@@ -23,7 +23,6 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx_rtd_theme',
-    # 'sphinx_material',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
 ]
@@ -79,18 +78,3 @@ html_theme_options = {
     'titles_only': False,
     'logo_only': True,
 }
-
-# html_theme = 'sphinx_material'
-# html_theme_options = {
-#     'nav_title': 'CodeMonkeys Sphinx Docs',
-#     'base_url': 'https://cooleydw494.github.io/codemonkeys',
-#     'color_primary': '#16141c',
-#     'color_accent': '#059fff',
-#
-#     'repo_url': 'https://github.com/cooleydw494/codemonkeys',
-#     'repo_name': 'CodeMonkeys Framework Repo',
-#     'repo_type': 'github',
-#
-#     'html_minify': True,
-#     'css_minify': True,
-# }
