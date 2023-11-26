@@ -10,7 +10,7 @@ from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
-def get_gpt_model_info() -> Optional[dict]:
+def get_gpt_model_info() -> Optional[list[str]]:
     """
     Retrieves cached info on GPT models.
 
@@ -48,7 +48,7 @@ def get_gpt_model_names() -> Optional[list[str]]:
     model_info = get_gpt_model_info()
     if model_info is None:
         return None
-    return [model_name for model_name in model_info.keys()]
+    return model_info
 
 
 def update_gpt_model_cache() -> None:
