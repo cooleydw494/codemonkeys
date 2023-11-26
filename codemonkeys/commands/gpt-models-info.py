@@ -42,5 +42,5 @@ class GptModelsInfo(Command):
             print_t(f'Available Models:', 'special')
             print_t('(most do not support function calling)', 'quiet')
             print()
-            for model_name, model_data in model_info.items():
+            for model_name in model_info:
                 print_t(f"{model_name}")

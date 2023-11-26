@@ -66,7 +66,8 @@ def update_gpt_model_cache() -> None:
         model_info = _query_model_info()
         if model_info is not None:
             with open(os.path.join(TEMP_PATH, 'model_info_cache.json'), 'w') as f:
-                json.dump(model_info, f)
+                model_names = list(model_info.keys())
+                json.dump(model_names, f)
 
     except Exception as e:
         print_t("An error occurred updating GPT model info cache.", 'error')
