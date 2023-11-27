@@ -44,5 +44,5 @@ class Scaffold(Monkey):
     FILE_SELECT_TEMP: float = 0.8
 
     # Max Tokens
-    MAIN_MAX_TOKENS: int = 6000
-    FILE_SELECT_MAX_TOKENS: int = 3000
+    MAIN_MAX_TOKENS: int = 4000
+    FILE_SELECT_MAX_TOKENS: int = 4000

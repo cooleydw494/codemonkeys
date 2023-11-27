@@ -18,7 +18,7 @@ class FinishFiles(Monkey):
     INCLUDE_EXTS: tuple = ('.py', '.js', '.txt')
     FILEPATH_MATCH_INCLUDE: tuple = ()
     FILEPATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py', 'help.py')
-    FILTER_MAX_TOKENS: int = 3500
+    FILTER_MAX_TOKENS: int = 4000
 
     # Main Prompts
     MAIN_PROMPT: str = "Read the contents of {the-file} and write a fully implemented version of whatever is described."
