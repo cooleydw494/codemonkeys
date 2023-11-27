@@ -68,6 +68,7 @@ class Default(Automation):
         output_path_resolver = (OutputPathResolver()
                                 .output_path(m.OUTPUT_PATH)
                                 .output_filename_append(m.OUTPUT_FILENAME_APPEND)
+                                .output_filename_prepend(m.OUTPUT_FILENAME_PREPEND)
                                 .output_ext(m.OUTPUT_EXT)
                                 .relative_from_root(m.WORK_PATH if m.RELATIVE_OUTPUT_PATHS else None))
 

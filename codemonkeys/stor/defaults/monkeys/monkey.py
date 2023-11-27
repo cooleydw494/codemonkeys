@@ -65,6 +65,7 @@ class Monkey(Base):
     OUTPUT_PATH: str = f"{STOR_PATH}/output"
     OUTPUT_EXT: OStr = ".py"
     OUTPUT_FILENAME_APPEND: OStr = None
+    OUTPUT_FILENAME_PREPEND: OStr = None
     SKIP_EXISTING_OUTPUT_FILES: bool = True
     RELATIVE_OUTPUT_PATHS: bool = True
 

@@ -16,6 +16,7 @@ class OutputPathResolver:
         _output_path (OStr): The root path for output files.
         _output_ext (OStr): The default file extension for output files.
         _output_filename_append (OStr): A string to append to output filenames.
+        _output_filename_prepend (OStr): A string to prepend to output filenames.
         _relative_path_root (OStr): The root path for relative resolution.
     """
 
@@ -23,6 +24,7 @@ class OutputPathResolver:
         self._output_path: OStr = None
         self._output_ext: OStr = None
         self._output_filename_append: OStr = None
+        self._output_filename_prepend = None
         self._relative_path_root: OStr = None
 
     def output_path(self, output_path: str) -> 'OutputPathResolver':
@@ -43,6 +45,16 @@ class OutputPathResolver:
         :return: OutputPathResolver instance
         """
         self._output_filename_append = output_filename_append
+        return self
+
+    def output_filename_prepend(self, output_filename_prepend: OStr = None) -> 'OutputPathResolver':
+        """
+        Sets a string to prepend to output filenames
+
+        :param str output_filename_prepend: String to prepend to output filenames
+        :return: OutputPathResolver instance
+        """
+        self._output_filename_prepend = output_filename_prepend
         return self
 
     def output_ext(self, output_ext: str) -> 'OutputPathResolver':
@@ -88,7 +100,7 @@ class OutputPathResolver:
         without_ext = os.path.splitext(file_name)[0]
         ext = self._output_ext or os.path.splitext(file_name)[1]
 
-        output_file_name = f"{without_ext}{self._output_filename_append or ''}{ext}"
+        output_file_name = f"{self._output_filename_prepend or ''}{without_ext}{self._output_filename_append or ''}{ext}"
 
         output_file_path = self._output_path
         if self._relative_path_root:
