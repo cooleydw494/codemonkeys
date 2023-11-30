@@ -61,9 +61,6 @@ class Monkey:
     SUMMARY_MAX_TOKENS: int = 8000
     FILE_SELECT_MAX_TOKENS: int = 4000
 
-    # Max Response Tokens
-    MAX_RESPONSE_TOKENS: int = 4096
-
     def __post_init__(self):
         self._apply_mixins()
         self._dynamic_validate()

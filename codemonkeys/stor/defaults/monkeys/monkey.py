@@ -87,6 +87,3 @@ class Monkey(Base):
     MAIN_MAX_TOKENS: int = 8000
     SUMMARY_MAX_TOKENS: int = 8000
     FILE_SELECT_MAX_TOKENS: int = 4000
-
-    # Max Response Tokens
-    MAX_RESPONSE_TOKENS: int = 4096
