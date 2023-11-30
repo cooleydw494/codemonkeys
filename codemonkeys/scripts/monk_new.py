@@ -49,7 +49,7 @@ def main():
         print(colored(f"Directory '{new_project_name}' already exists.", 'red'))
         sys.exit(1)
 
-    if not new_project_name.isalpha():
+    if not new_project_name.replace('_', '').isalpha():
         print(
             colored("Project name must only contain letters/underscores to enable relative imports within user modules",
                     'red'))
