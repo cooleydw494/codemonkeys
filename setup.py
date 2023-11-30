@@ -36,7 +36,7 @@ setup(
     entry_points={
         'console_scripts': [
             'codemonkeys=codemonkeys.__main__:main',
-            'monk=codemonkeys.scripts.monk',
+            'monk=codemonkeys.scripts.monk:main',
             'monk-new=codemonkeys.scripts.monk_new:main',
         ],
     }
