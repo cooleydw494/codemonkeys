@@ -1,7 +1,7 @@
 import os
 
 # Version of the module
-VERSION = '1.0.9'
+VERSION = '1.0.10'
 
 """
 CORE PATHS
