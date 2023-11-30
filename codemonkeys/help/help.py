@@ -17,7 +17,7 @@ def run_default_help():
 
     # Action Flags
     print_t(
-        f"Action flags perform alternate operations on targetable entities ('run' is the default action').{nl2}",
+        f"Action flags perform alternate operations on targetable entities ('run' is the default action).{nl2}",
         'info'
     )
 
