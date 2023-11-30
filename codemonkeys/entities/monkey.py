@@ -14,6 +14,43 @@ from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
 
 @dataclass
 class Monkey:
+    """
+    A configuration entity for defining monkey behavior in the CodeMonkeys framework.
+
+    The Monkey class holds configuration that determines the file iteration behavior,
+    prompt composition, model selections, and output settings for GPT-powered
+    file operations within the CodeMonkeys automation tasks.
+
+    Attributes:
+        WORK_PATH: The directory path where file processing will take place.
+        INCLUDE_EXTS: A tuple of file extensions to include during processing.
+        FILEPATH_MATCH_INCLUDE: A tuple of file patterns to specifically include during iteration.
+        FILEPATH_MATCH_EXCLUDE: A tuple of file patterns to exclude during iteration.
+        FILTER_MAX_TOKENS: The maximum number of tokens each file must be below to be processed.
+        FILE_SELECT_PROMPT: An optional string to define a specific prompt when selecting files for processing.
+        MAIN_PROMPT: The primary prompt text provided to GPT models during processing.
+        MAIN_PROMPT_ULTIMATUM: An additional prompt to limit GPT responses to appropriate content.
+        OUTPUT_PROMPT: A prompt that instructs GPT to specifically format the output.
+        CONTEXT_FILE_PATH: An optional path for providing additional context during GPT processing.
+        CONTEXT_SUMMARY_PROMPT: An optional prompt that can provide summary information for context.
+        OUTPUT_PATH: The directory path where processed outputs will be stored.
+        OUTPUT_EXT: The file extension for output files.
+        OUTPUT_FILENAME_APPEND: An optional string to append to output filenames.
+        SKIP_EXISTING_OUTPUT_FILES: A boolean that indicates whether existing output files should be skipped.
+        RELATIVE_OUTPUT_PATHS: A boolean to indicate if output paths should be relative to the WORK_PATH.
+        GPT_GIT_COMMITS: A boolean indicating whether GPT should make git commits after processing.
+        GIT_REPO_PATH: An optional path that directs where GPT should perform git operations.
+        MAIN_MODEL: The GPT model used for the main processing.
+        SUMMARY_MODEL: The GPT model used for generating summaries if needed.
+        FILE_SELECT_MODEL: The model used when prompting for file selection.
+        MAIN_TEMP: The temperature setting for the main model processing.
+        SUMMARY_TEMP: The temperature setting for summary model processing.
+        FILE_SELECT_TEMP: The temperature setting for the file selection model.
+        MAIN_MAX_TOKENS: The maximum token count allowed for the main processing responses.
+        SUMMARY_MAX_TOKENS: The maximum token count allowed for summary responses.
+        FILE_SELECT_MAX_TOKENS: The maximum token count for file selection prompts.
+    """
+
     _instance: Optional['Monkey'] = None
     _current_monkey: OStr = None
     _mixins: tuple = ()
@@ -65,7 +102,7 @@ class Monkey:
         self._apply_mixins()
         self._dynamic_validate()
         self._cop_paths()
-        self._monkey_loaded_log()
+        self.print_monkey_details()
 
     @classmethod
     def load(cls, name: OStr = None) -> 'Monkey':
@@ -138,7 +175,7 @@ class Monkey:
                     print_t(f"PROMPT cop-file not found for {attr}", 'error')
                     handle_exception(e, always_exit=True)
 
-    def _monkey_loaded_log(self) -> None:
+    def print_monkey_details(self) -> None:
         print_t(f'Monkey Loaded: {self.__class__.__name__}', 'start')
         if verbose_logs_enabled():
             filtered_props = {k: v for k, v in self.__dict__.items() if not k.startswith('_')}

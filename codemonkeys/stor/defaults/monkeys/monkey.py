@@ -14,6 +14,9 @@ class Monkey(Base):
     prompt composition, model selections, and output settings for GPT-powered
     file operations within the CodeMonkeys automation tasks.
 
+    This class, which overrides the framework base class, can be used to set defaults for your project.
+    It can also be used to extend the base class with additional properties and behavior.
+
     Attributes:
         WORK_PATH: The directory path where file processing will take place.
         INCLUDE_EXTS: A tuple of file extensions to include during processing.
