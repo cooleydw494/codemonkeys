@@ -19,6 +19,7 @@ setup(
     author_email='cooleydw494@gmail.com',
     license="MIT",
     packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         'openai', 'python-dotenv', 'Levenshtein', 'pandas', 'termcolor', 'tiktoken', 'psutil', 'json-repair',
     ],
