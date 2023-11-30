@@ -9,7 +9,9 @@ This is the repo for the **CodeMonkeys** package. To learn about the CodeMonkeys
 
 ## 🚧 Alpha Status
 
-There will soon be a stable Alpha release focused on establishing the framework's architecture/concepts to a point of relative stability, and providing a flexible, immediately useful default Automation that is instructional in how it utilizes the framework.
+As of November 30th, I have released a stable Alpha focused on establishing the framework's architecture/concepts to a point of relative stability, and providing a flexible, immediately useful default Automation that is instructional in how it utilizes the framework.
+
+*The developer docs at codemonkeys.lol are still a work in progress, although I hope they're good enough to get you started. More updates coming soon! Updates almost every day.*
 
 ## 🌐 Overview
 
