@@ -11,7 +11,7 @@ import sys
 project = 'codemonkeys'
 copyright = '2023, David Cooley'
 author = 'David Cooley'
-release = '1.0.14'
+release = '1.1.0'
 
 sys.path.insert(0, os.path.abspath('../codemonkeys'))
 
