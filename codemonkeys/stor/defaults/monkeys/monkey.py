@@ -81,7 +81,7 @@ class Monkey(Base):
     # Models
     MAIN_MODEL: str = 'gpt-4-1106-preview'
     SUMMARY_MODEL: str = 'gpt-4-1106-preview'
-    FILE_SELECT_MODEL: str = 'gpt-3.5-turbo'
+    FILE_SELECT_MODEL: str = 'gpt-4-1106-preview'
 
     # Temps
     MAIN_TEMP: float = 1.0

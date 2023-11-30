@@ -1,6 +1,6 @@
 from monkeys.monkey import Monkey
 from codemonkeys.defs import STOR_PATH
-from codemonkeys.types import OStr
+from mixins.my_project_workspace import MyProjectWorkspace
 
 
 class Scaffold(Monkey):
@@ -12,37 +12,23 @@ class Scaffold(Monkey):
     suggests the best implementation for specified files.
     """
 
-    # Main Prompts
-    MAIN_PROMPT: str = ("Review the following architectural documentation for a codebase, and write the best "
-                        "implementation of the specified file as possible, with close attention to other usable"
-                        " elements declared in the architecture overview (classes, functions, etc).")
-
-    # Context / Summary
-    CONTEXT_FILE_PATH: str = f"{STOR_PATH}/context/scaffold.txt"
-
-    # Project Root Dir
-    PROJECT_ROOT: str = '~/local-git/twitter_poster'
+    mixins = (
+        MyProjectWorkspace,
+    )
 
     # Filepath Extraction
     FILE_SELECT_PROMPT: str = ("Review the following architectural documentation for a codebase and extract a list "
-                               "of all the filepaths that need to be created to scaffold it. Use absolute paths, "
-                               f"with the project root dir {PROJECT_ROOT}.")
+                               "of all the filepaths that need to be created to scaffold it. Always use absolute "
+                               f"paths, beginning with this fully qualified root path: {MyProjectWorkspace.OUTPUT_PATH}.")
 
-    # Output
-    SKIP_EXISTING_OUTPUT_FILES = True
+    # Main Prompts
+    MAIN_PROMPT: str = ("Review the following architectural documentation for a codebase, and write the best "
+                        "implementation of the specified file as possible, with close attention to other usable "
+                        "elements declared in the architecture overview (classes, functions, etc).")
 
-    # Git
-    GPT_GIT_COMMITS: bool = False
-    GIT_REPO_PATH: OStr = None
+    MAIN_PROMPT_ULTIMATUM: str = ("Take your time carefully considering architecture information and how it affects "
+                                  "implementation of each file, ensuring among other things, that naming and imports "
+                                  "are correct.")
 
-    # Models
-    MAIN_MODEL: str = 'gpt-4'
-    FILE_SELECT_MODEL: str = 'gpt-4'
-
-    # Temps
-    MAIN_TEMP: float = 1.0
-    FILE_SELECT_TEMP: float = 0.8
-
-    # Max Tokens
-    MAIN_MAX_TOKENS: int = 4000
-    FILE_SELECT_MAX_TOKENS: int = 4000
+    # Context / Summary
+    CONTEXT_FILE_PATH: str = f"{STOR_PATH}/context/scaffold-architecture.txt"

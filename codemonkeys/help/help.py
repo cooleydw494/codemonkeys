@@ -1,25 +1,25 @@
+from codemonkeys.cm_paths import VERSION
 from codemonkeys.defs import nl2, nl
-from codemonkeys.utils.monk.theme_functions import print_banner, print_table, print_t, apply_t
+from codemonkeys.utils.monk.theme_functions import print_table, print_t, apply_t
 
 
 def run_default_help():
-    # CodeMonkeys Banner
-    print_banner()
+
+    print_t(f"CodeMonkeys v{VERSION}", 'important')
+    print()
 
     # Overview
-    print_t("Welcome to CodeMonkeys, an AI-ready automations framework! The Monk CLI primarily is used to run "
-            "Automations, Barrels, and framework Commands. It also makes your own `commands` directory readily usable."
-            f"{nl}", 'white')
-
-    # Recursive Name-Matching Logic
-    print_t("`monk` uses recursive name-matching logic to locate runnable entities. This requires unique filenames "
-            f"for each runnable entity type (Commands, Automations, Barrels).{nl}", 'white')
+    print_t("Welcome to CodeMonkeys! The Monk CLI is used to run Automations, Barrels, and framework"
+            f"Commands. It also makes your own `commands` directory readily usable. {nl}", 'white')
 
     # Handling of Barrels, Automations, and Modules
-    print_t(f"Entity Type flags target Automations and Barrels.{nl}", 'info')
+    print_t(f"Entity Type flags target non-Command entities (Commands are the default entity).{nl}", 'info')
 
     # Action Flags
-    print_t(f"Action flags perform alternate operations on targetable entities.{nl2}", 'info')
+    print_t(
+        f"Action flags perform alternate operations on targetable entities ('run' is the default action').{nl2}",
+        'info'
+    )
 
     monk_general_json = {
         "headers": [
@@ -37,13 +37,13 @@ def run_default_help():
             ],
             [
                 "monk list",
-                "List existing entities",
-                "-b/a/m, --all"
+                "List existing Commands",
+                "--all (list all entities)"
             ],
             [
-                "monk -v",
+                "monk version",
                 "Print version",
-                "--version"
+                ""
             ],
             [
                 "monk <command>",
@@ -53,7 +53,7 @@ def run_default_help():
             ['', '', ''],
             ['', '', ''],
             [
-                "monk -a <automation>",
+                "monk -a <automation> --monkey=[name]",
                 "Run an automation",
                 "--automation"
             ],
@@ -70,18 +70,18 @@ def run_default_help():
                 "--edit"
             ],
             [
-                "monk -h <entity>",
-                "Help for an entity",
+                "monk -h <command>",
+                "Help for a Command",
                 "--help"
             ],
         ]
     }
-    print_table(monk_general_json, apply_t("Monk CLI", 'special'))
+    print_table(monk_general_json, apply_t("Basic Commands", 'special'))
 
     # Wrap up
     print()
     print()
-    print_t("That's it! For more, run `monk -h <entity>` or read the docs.", 'done')
+    print_t("That's it! For more, run `monk -h <command>` or read the docs.", 'done')
     print()
     print_t("Developer Docs    https://codemonkeys.lol", 'info')
     print_t("Sphinx Docs       https://sphinx.codemonkeys.lol", 'info')

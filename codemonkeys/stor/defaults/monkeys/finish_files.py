@@ -30,4 +30,4 @@ class FinishFiles(Monkey):
 
     # Output
     OUTPUT_PATH: str = f"{STOR_PATH}/output"
-    SKIP_EXISTING_OUTPUT_FILES: bool = True
+    SKIP_EXISTING_OUTPUT_FILES: bool = False

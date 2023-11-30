@@ -127,14 +127,6 @@ def _strip_color_and_bold_codes(s: str) -> str:
     return re.sub(r'\x1b\[[0-9;]*m', '', s)
 
 
-def print_banner() -> None:
-    """
-    Prints "banner.txt", the banner of this project.
-    """
-    art = get_file_contents(CM_BANNER_PATH)
-    print_t(art.replace('vX.X.X', f'v{VERSION}') + nl, 'light_yellow')
-
-
 def calculate_col_widths(headers: List[str], rows: List[List[Union[str, int]]], min_col_widths: List[int],
                          terminal_width: int) -> List[int]:
     raw_col_widths = [max(len(str(x)) for x in col) for col in zip(*rows)]
