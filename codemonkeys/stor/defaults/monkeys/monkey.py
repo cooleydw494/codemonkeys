@@ -53,6 +53,8 @@ class Monkey(Base):
     FILEPATH_MATCH_INCLUDE: tuple = ()
     FILEPATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', '__init__.py')
     FILTER_MAX_TOKENS: int = 3500
+
+    # GPT File Selection
     FILE_SELECT_PROMPT: OStr = None
 
     # Main Prompts

@@ -10,6 +10,7 @@ from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.misc.handle_exception import handle_exception
 from codemonkeys.utils.monk.find_entity import find_entity
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled, print_table
+from codemonkeys.defs import STOR_PATH
 
 
 @dataclass
@@ -56,11 +57,13 @@ class Monkey:
     _mixins: tuple = ()
 
     # File Iteration
-    WORK_PATH: str = "~/local-git/codemonkeys/codemonkeys"
+    WORK_PATH: str = f"{STOR_PATH}/work_path"
     INCLUDE_EXTS: tuple = ('.py',)
     FILEPATH_MATCH_INCLUDE: tuple = ()
     FILEPATH_MATCH_EXCLUDE: tuple = ('.config', '.md', '.git', 'help', '__', 'defs.py')
     FILTER_MAX_TOKENS: int = 8000
+
+    # GPT File Selection
     FILE_SELECT_PROMPT: OStr = None
 
     # Main Prompts
@@ -73,7 +76,7 @@ class Monkey:
     CONTEXT_SUMMARY_PROMPT: OStr = None
 
     # Output
-    OUTPUT_PATH: str = "~/local-git/codemonkeys/codemonkeys"
+    OUTPUT_PATH: str = f"{STOR_PATH}/output"
     OUTPUT_EXT: OStr = None
     OUTPUT_FILENAME_APPEND: OStr = None
     OUTPUT_FILENAME_PREPEND: OStr = None
@@ -119,7 +122,6 @@ class Monkey:
             self._mixins = getattr(self, 'mixins')
         final_subclass_attrs = self.attrs_defined_in_final_subclass()
         for mixin in self._mixins:
-            print_t(mixin)
             for key, value in vars(mixin).items():
                 if not key.startswith("__") and key not in final_subclass_attrs:
                     setattr(self, key, value)
