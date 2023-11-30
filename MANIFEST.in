@@ -2,5 +2,5 @@ recursive-include codemonkeys *.txt
 recursive-include codemonkeys *.md
 
 # Include hidden txt files
-include codemonkeys/stor/defaults/.env.default
-include codemonkeys/stor/defaults/.default-gitignore
+include codemonkeys/stor/defaults/.env
+include codemonkeys/stor/defaults/._gitignore
