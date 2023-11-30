@@ -8,7 +8,7 @@ from codemonkeys.defs import content_sep, nl, nl2
 from codemonkeys.entities.automation import Automation
 from codemonkeys.funcs.extract_list import ExtractList
 from codemonkeys.funcs.write_file import WriteFile
-from codemonkeys.utils.gpt.gpt_client import GPTClient
+from codemonkeys.utils.gpt.gpt_client import GptClient
 from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
 
@@ -37,7 +37,7 @@ class Scaffold(Automation):
         print_t(f"Filepath extraction prompt:{nl}{extract_prompt}{nl}", "quiet")
 
         # Use ExtractList Func to get a list of absolute filepaths that the context file references
-        file_paths: list = (GPTClient(m.FILE_SELECT_MODEL, m.FILE_SELECT_TEMP, m.FILE_SELECT_MAX_TOKENS)
+        file_paths: list = (GptClient(m.FILE_SELECT_MODEL, m.FILE_SELECT_TEMP, m.FILE_SELECT_MAX_TOKENS)
                             .generate(extract_prompt, [ExtractList()], 'extract_list'))
 
         if len(file_paths) == 0:
@@ -79,7 +79,7 @@ class Scaffold(Automation):
                                f"implement/write is {file_path} (this is the absolute path for writing).")
             print_t(f"Scaffolding prompt:{nl}{scaffold_prompt}{nl}", "quiet")
 
-            written_file_path = (GPTClient(m.MAIN_MODEL, m.MAIN_TEMP, m.MAIN_MAX_TOKENS)
+            written_file_path = (GptClient(m.MAIN_MODEL, m.MAIN_TEMP, m.MAIN_MAX_TOKENS)
                                  .generate(scaffold_prompt, [write_file_func], 'write_file'))
 
             if written_file_path is None:

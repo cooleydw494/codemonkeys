@@ -2,7 +2,7 @@ from typing import Optional
 
 from codemonkeys.defs import nl, content_sep
 from codemonkeys.types import OStr, OFloat, OInt
-from codemonkeys.utils.gpt.gpt_client import GPTClient
+from codemonkeys.utils.gpt.gpt_client import GptClient
 from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t
 
@@ -20,7 +20,7 @@ class Summarizer:
         _model (OStr): The GPT model identifier.
         _temp (OFloat): The temperature setting for the GPT model.
         _max_tokens (OInt): The maximum number of tokens allowed in the GPT output.
-        _gpt_client (Optional[GPTClient]): The GPT client instance for API interactions.
+        _gpt_client (Optional[GptClient]): The GPT client instance for API interactions.
         _prompt (OStr): The prompt to direct GPT's text summarization task.
         _context (OStr): The text content to be summarized by GPT.
     """
@@ -29,7 +29,7 @@ class Summarizer:
         self._model: OStr = None
         self._temp: OFloat = None
         self._max_tokens: OInt = None
-        self._gpt_client: Optional[GPTClient] = None
+        self._gpt_client: Optional[GptClient] = None
         self._prompt: OStr = None
         self._context: OStr = None
 
@@ -45,7 +45,7 @@ class Summarizer:
         self._model = model
         self._temp = temp
         self._max_tokens = max_tokens
-        self._gpt_client = GPTClient(self._model, self._temp, self._max_tokens)
+        self._gpt_client = GptClient(self._model, self._temp, self._max_tokens)
         return self
 
     def prompt(self, prompt: str) -> 'Summarizer':

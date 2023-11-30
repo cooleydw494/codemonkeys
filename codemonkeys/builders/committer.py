@@ -4,7 +4,7 @@ from typing import Sequence
 from codemonkeys.defs import nl, nl2
 from codemonkeys.types import OStr, OFloat, OInt
 from codemonkeys.utils.git.gitter import Gitter
-from codemonkeys.utils.gpt.gpt_client import GPTClient
+from codemonkeys.utils.gpt.gpt_client import GptClient
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
@@ -32,13 +32,13 @@ class Committer:
         """
         Initializes the `Committer` class.
 
-        Sets up a `Gitter` instance for Git operations and a `GPTClient` for generating commit messages.
+        Sets up a `Gitter` instance for Git operations and a `GptClient` for generating commit messages.
 
         :param repo_path: Path to the Git repository where commits will be made.
         :type repo_path: str
         """
         self._gitter: Gitter = Gitter(repo_path)
-        self._gpt_client: GPTClient = GPTClient(self._model, self._temp, self._max_tokens)
+        self._gpt_client: GptClient = GptClient(self._model, self._temp, self._max_tokens)
         self._model: str = 'gpt-3.5-turbo'
         self._temp: float = 0.8
         self._max_tokens: int = 8000
@@ -66,7 +66,7 @@ class Committer:
             self._temp = temp
         if max_tokens is not None:
             self._max_tokens = max_tokens
-        self._gpt_client = GPTClient(self._model, self._temp, self._max_tokens)
+        self._gpt_client = GptClient(self._model, self._temp, self._max_tokens)
         return self
 
     def prompt(self, prompt: str) -> 'Committer':

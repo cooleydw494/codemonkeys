@@ -17,12 +17,12 @@ from codemonkeys.utils.misc.log import Log
 from codemonkeys.utils.monk.theme_functions import print_t
 
 
-class GPTClient:
+class GptClient:
     """A helper class to interact with GPT based models."""
 
-    def __init__(self, model_name: str, temperature: float = 1.0, max_tokens: int = 8000):
+    def __init__(self, model_name: str, temperature: float = 1.0, max_tokens: int = 8000, max_response_tokens: int = 4096):
         """
-        Initialize a GPTClient instance for a specific model.
+        Initialize a GptClient instance for a specific model.
         
         :param str model_name: The model's name.
         :param float temperature: The generation temperature. Defaults to 1.0.
@@ -34,6 +34,7 @@ class GPTClient:
 
         self.model: str = validate_model(model_name)
         self.max_tokens: int = max_tokens - TOKEN_UNCERTAINTY_BUFFER
+        self.max_response_tokens: int = max_response_tokens
         self.temperature: float = validate_temp(temperature)
         self.encoding: Encoding = tiktoken.encoding_for_model(self.model)
 
@@ -88,6 +89,7 @@ class GPTClient:
         """
 
         max_tokens = self.max_tokens - self.count_tokens(prompt)
+        max_tokens = min(max_tokens, self.max_response_tokens)
         print()
         print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'loading')
 
@@ -113,6 +115,7 @@ class GPTClient:
         tool_choice = {'type': 'function', 'function': {'name': enforce_func}} if enforce_func else 'auto'
 
         max_tokens = self.max_tokens - self.count_tokens(prompt) - self.count_tokens(json.dumps(tools))
+        max_tokens = min(max_tokens, self.max_response_tokens)
         print()
         print_t(f"Generating with {max_tokens}/{self.max_tokens} tokens remaining for response", 'loading')
 

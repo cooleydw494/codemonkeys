@@ -5,7 +5,7 @@ from typing import Optional
 from codemonkeys.defs import nl, content_sep
 from codemonkeys.funcs.extract_list import ExtractList
 from codemonkeys.types import OFloat, OStr, OInt
-from codemonkeys.utils.gpt.gpt_client import GPTClient
+from codemonkeys.utils.gpt.gpt_client import GptClient
 from codemonkeys.utils.imports.theme import Theme
 from codemonkeys.utils.monk.theme_functions import print_t
 
@@ -14,11 +14,11 @@ class FileIterator:
 
     def __init__(self):
 
-        self._token_count_client: Optional[GPTClient] = None
+        self._token_count_client: Optional[GptClient] = None
         self._token_count_model: OStr = None
         self._filter_max_tokens: OInt = None
 
-        self._file_select_client: Optional[GPTClient] = None
+        self._file_select_client: Optional[GptClient] = None
         self._file_select_prompt: OStr = None
         self._file_select_model: OStr = 'gpt-3.5-turbo'
         self._file_select_temp: OFloat = 0.8
@@ -84,7 +84,7 @@ class FileIterator:
         """
         self._token_count_model = model
         self._filter_max_tokens = filter_max_tokens
-        self._token_count_client = GPTClient(model)
+        self._token_count_client = GptClient(model)
         return self
 
     def file_select_model(self, model: str, temp: float, max_tokens: int) -> 'FileIterator':
@@ -98,7 +98,7 @@ class FileIterator:
         self._file_select_model = model
         self._file_select_temp = temp
         self._file_select_max_tokens = max_tokens
-        self._file_select_client = GPTClient(model, temp, max_tokens)
+        self._file_select_client = GptClient(model, temp, max_tokens)
         return self
 
     @staticmethod
@@ -157,7 +157,7 @@ class FileIterator:
             prompt = (f"Examine the following list of filepaths: {content_sep}{current_list}{content_sep}"
                       f"Return the list of filepaths filtered by this prompt: {self._file_select_prompt}.")
             self._filtered_files = \
-                (GPTClient(self._file_select_model, self._file_select_temp, self._file_select_max_tokens)
+                (GptClient(self._file_select_model, self._file_select_temp, self._file_select_max_tokens)
                  .generate(prompt, [ExtractList()], 'extract_list'))
 
         print()

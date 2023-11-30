@@ -5,7 +5,7 @@ class Func:
     """
     A class to represent a function to be called by a GPT model.
 
-    Pass this in a list to the `funcs` parameter of the GPTClient.generate() method.
+    Pass this in a list to the `funcs` parameter of the GptClient.generate() method.
     The generate method will handle passing the data correctly and return the result of the _execute method.
     The _execute method can be fully custom or you can simply invoke an exiting function.
 

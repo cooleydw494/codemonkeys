@@ -4,7 +4,7 @@ from typing import Optional
 from codemonkeys.defs import nl, nl2, _or, content_sep
 from codemonkeys.funcs.finalize_output import FinalizeOutput
 from codemonkeys.types import OStr, OFloat, OInt
-from codemonkeys.utils.gpt.gpt_client import GPTClient
+from codemonkeys.utils.gpt.gpt_client import GptClient
 from codemonkeys.utils.imports.env import Env
 from codemonkeys.utils.misc.file_ops import get_file_contents
 from codemonkeys.utils.monk.theme_functions import print_t, verbose_logs_enabled
@@ -25,7 +25,7 @@ class FilePrompter:
         _model (OStr): GPT model to be used.
         _temp (OFloat): Temperature setting for GPT model.
         _max_tokens (OInt): Maximum tokens for response generation.
-        _gpt_client (Optional[GPTClient]): GPT client instance for interaction with the API.
+        _gpt_client (Optional[GptClient]): GPT client instance for interaction with the API.
         _finalize_output (bool): Flag indicating whether the FinalizeOutput function should be used.
         _file_path (OStr): Path of the file being processed.
         _file_name (OStr): Name of the file extracted from the file path.
@@ -40,7 +40,7 @@ class FilePrompter:
         self._model: OStr = None
         self._temp: OFloat = None
         self._max_tokens: OInt = None
-        self._gpt_client: Optional[GPTClient] = None
+        self._gpt_client: Optional[GptClient] = None
         self._finalize_output: bool = False
         self._file_path: OStr = None
         self._file_name: OStr = None
@@ -107,7 +107,7 @@ class FilePrompter:
         self._model = model
         self._temp = temp
         self._max_tokens = max_tokens
-        self._gpt_client = GPTClient(model, temp, max_tokens)
+        self._gpt_client = GptClient(model, temp, max_tokens)
         return self
 
     def finalize_output(self, finalize_output: bool = True) -> 'FilePrompter':
