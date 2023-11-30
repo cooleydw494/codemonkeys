@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='codemonkeys',
-    version='1.0.10',
+    version='1.0.11',
     description="CodeMonkeys gives devs control over their automated GPT logic. The current focus is working on "
                 "codebases but it is lovingly designed to enable automations of all kinds. This framework aims to use "
                 "AI effectively, while being reliable, predictable, and tailored to your needs. There is a strong "

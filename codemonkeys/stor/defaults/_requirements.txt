@@ -1,1 +1,1 @@
-codemonkeys==1.0.10
+codemonkeys==1.0.11
