@@ -18,11 +18,11 @@ class Make(Command):
 
     :param entity_type: The type of the entity to be created. ('command', 'automation', 'barrel', 'func', or 'monkey')
     :type entity_type: str
-    :param entity_name: The name of the entity to be created, expecting kebab-case for commands, barrels and funcs, and snake_case for monkeys.
+    :param entity_name: The name of the entity to be created
+                        (snake-case for commands, automations, barrels & snail_case for funcs, monkeys)
     :type entity_name: str
 
-    :raises ValueError: If 'entity_name' is not specified in a valid format for its entity type or if attempting to create a
-                            Monkey named 'monkey'.
+    :raises ValueError: If 'entity_name' is not specified in a valid format for its entity type
 
     Example:
         >>> monk make command my-command
@@ -46,12 +46,12 @@ class Make(Command):
         """
         Execute the creation of a new entity file based on the provided arguments.
 
-        This method handles the logic for creating a new entity by copying an example file, renaming it, and adjusting its contents
-        as necessary to reflect the new entity's name and type. It enforces naming conventions and ensures that the new entity's
-        class name matches the expected format for its type.
+        This method handles the logic for creating a new entity by copying an example file, renaming it,
+        and adjusting its contents as necessary to reflect the new entity's name and type. It enforces naming
+        conventions and ensures that the new entity's class name matches the expected format for its type.
 
-        :raises ValueError: If 'entity_name' is not specified in a valid format for its entity type or if attempting to create a
-                            Monkey named 'monkey'.
+        :raises ValueError: If 'entity_name' is not specified in a valid format for its entity type or if attempting
+        to create a Monkey named 'monkey'.
         """
 
         if self.entity_type == 'monkey' and self.entity_name == 'monkey':
