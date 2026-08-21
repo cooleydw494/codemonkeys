@@ -1,3 +1,5 @@
+
+
 # CodeMonkeys
 
 A framework for automating GPT-powered tasks, from simple to complex.
@@ -6,6 +8,8 @@ This is the repo for the **CodeMonkeys** package. To learn about the CodeMonkeys
 
 - [CodeMonkeys Docs](https://codemonkeys.lol) or its [GitHub Repo](https://github.com/cooleydw494/codemonkeys-docs)
 - [CodeMonkeys Sphinx Docs](https://sphinx.codemonkeys.lol)
+
+To create a new CodeMonkeys project, run `monk-new <project_name>`.
 
 ## 🚧 Alpha Status
 
